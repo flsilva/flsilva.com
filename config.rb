@@ -11,11 +11,8 @@
 #   config.output_style = :compact
 # end
 
-###
-# Slim
-###
 require "slim"
-# end
+require "zurb-foundation"
 
 ###
 # Page options, layouts, aliases and proxies

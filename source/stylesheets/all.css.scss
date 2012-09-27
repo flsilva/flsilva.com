@@ -1,9 +1,10 @@
-/**
+//Compass + Zurb Foundation
+@import "compass";
+@import "foundation";
 
 //HTML5 Boilerplate + Normalize
-*= require "vendor/normalize.css"
-*= require "vendor/html5bp.css"
+@import "vendor/normalize.css";
+@import "vendor/html5bp.css";
 
-*= require_tree .
-
-*/
+//Application
+@import "layouts/default";
