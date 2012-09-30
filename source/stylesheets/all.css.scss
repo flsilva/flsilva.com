@@ -1,10 +1,9 @@
+@import "_settings";
+
 //Compass + Zurb Foundation
 @import "compass";
+@import "compass/layout/sticky-footer";
 @import "foundation";
-
-//HTML5 Boilerplate + Normalize
-@import "vendor/normalize.css";
-@import "vendor/html5bp.css";
 
 //Application
 @import "layouts/default";

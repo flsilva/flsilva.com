@@ -127,7 +127,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  middleman (~> 3.0.5)
+  middleman (~> 3.0)
   middleman-smusher
   slim
   therubyracer

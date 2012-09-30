@@ -1,0 +1,52 @@
+@charset "utf-8"
+
++sticky-footer(65px, ".container", ".push-footer", "footer.page")
+
+body
+  background-color: $backgroundColor
+
+header.page
+  padding-top: 20px
+  h1.logo
+    a
+      display: block
+      width: 46px
+      height: 40px
+      text-indent: -9999px
+      background: url("/images/logo.png") no-repeat
+
+.nav-bar.social-media
+  height: 32px
+  margin-top: 0px
+  background: none
+  li
+    border: none!important
+    margin-left: 6px
+    box-shadow: none!important
+    a
+      width: 32px
+      height: 32px
+      padding: 0px
+      text-indent: -9999px
+  li:first-child
+    margin-left: 0px
+  .twitter
+    background: url("/images/social-media/twitter-icon.png") no-repeat
+  .linkedin
+    background: url("/images/social-media/linkedin-icon.png") no-repeat
+  .delicious
+    background: url("/images/social-media/delicious-icon.png") no-repeat
+  .facebook
+    background: url("/images/social-media/facebook-icon.png") no-repeat
+
+.main-nav
+  li
+    a
+      color: $headerFontColor
+      text-transform: uppercase
+
+footer.page
+  background-color: #191919
+  p
+    line-height: 65px
+    text-align: center
