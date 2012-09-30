@@ -1,13 +1,21 @@
 @charset "utf-8"
 
++font-face("CaviarDreams", font-files("CaviarDreams.woff", "CaviarDreams.ttf", "CaviarDreams.svg", "CaviarDreams.eot"))
++font-face("OpenSans-Regular", font-files("OpenSans-Regular.woff", "OpenSans-Regular.ttf", "OpenSans-Regular.svg", "OpenSans-Regular.eot"))
+
 +sticky-footer(65px, ".container", ".push-footer", "footer.page")
 
 body
   background-color: $backgroundColor
 
+h1, h2, h3, h4, h5, h6
+  font-weight: normal
+  font-style: normal
+
 header.page
-  padding-top: 20px
+  padding: 20px 0px 60px 0px
   h1.logo
+    margin: 0px
     a
       display: block
       width: 46px
@@ -17,7 +25,7 @@ header.page
 
 .nav-bar.social-media
   height: 32px
-  margin-top: 0px
+  margin: 0px
   background: none
   li
     border: none!important
@@ -40,9 +48,23 @@ header.page
     background: url("/images/social-media/facebook-icon.png") no-repeat
 
 .main-nav
+  padding-top: 0px !important
   li
-    a
-      color: $headerFontColor
+    h4
+      a
+        font-family: "OpenSans-Regular", "Verdana", Arial, sans-serif
+        font-size: 20px
+        color: $headerFontColor
+        text-transform: uppercase
+    h4:first-child
+      margin-top: 0px
+
+section[role=main]
+  header
+    border-bottom: 1px solid #5a5a5a
+    margin-bottom: 14px
+    h2
+      margin-top: 0px
       text-transform: uppercase
 
 footer.page

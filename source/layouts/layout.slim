@@ -29,15 +29,16 @@ body class=page_classes
   .container
     header.page
       .row
-        .three.columns
+        .two.columns
           == partial "partials/logo"
-        .nine.columns
+        .ten.columns
           == partial "partials/social-media-nav"
     .row
-      .three.columns
+      .two.columns
         == partial "partials/main-nav"
-      .nine.columns
-        == yield
+      .ten.columns
+        section role="main"
+          == yield
     .push-footer
   == partial "partials/footer"
   == javascript_include_tag  "all"
