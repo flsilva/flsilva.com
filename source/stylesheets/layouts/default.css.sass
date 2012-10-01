@@ -3,17 +3,56 @@
 +font-face("CaviarDreams", font-files("CaviarDreams.woff", "CaviarDreams.ttf", "CaviarDreams.svg", "CaviarDreams.eot"))
 +font-face("OpenSans-Regular", font-files("OpenSans-Regular.woff", "OpenSans-Regular.ttf", "OpenSans-Regular.svg", "OpenSans-Regular.eot"))
 
-+sticky-footer(65px, ".container", ".push-footer", "footer.page")
++sticky-footer(80px, ".container", ".push-footer", "footer.page")
 
 body
   background-color: $backgroundColor
+
+/*body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td
+  font-size: inherit
+
+/*p
+  font-size: 1em
+
+p
+  line-height: 1.5!important
+  &.lead
+    line-height: 1.5!important
+
 
 h1, h2, h3, h4, h5, h6
   font-weight: normal
   font-style: normal
 
+a:hover
+  text-decoration: underline!important
+
+/*h1
+  font-size: 4.4em
+
+/*h2
+  font-size: 3.7em
+
+/*h3
+  font-size: 2.7em
+
+/*h4
+  font-size: 2.3em
+
+/*h5
+  font-size: 1.7em
+
+/*h6
+  font-size: 1.4em
+
+.row
+  width: 800px
+
 header.page
-  padding: 20px 0px 60px 0px
+  padding: 20px 0px 20px 0px
+  margin-bottom: 30px
+  background-color: #191919
+  border-bottom: 4px solid #C9C9C9
   h1.logo
     margin: 0px
     a
@@ -29,7 +68,7 @@ header.page
   background: none
   li
     border: none!important
-    margin-left: 6px
+    margin-left: 8px
     box-shadow: none!important
     a
       width: 32px
@@ -47,28 +86,95 @@ header.page
   .facebook
     background: url("/images/social-media/facebook-icon.png") no-repeat
 
+=main-nav-active-item
+  border-top: 2px solid #F9F9F9
+  padding-top: 0px!important
+  text-decoration: none!important
+
 .main-nav
-  padding-top: 0px !important
+  //display: table
+  //margin: 0px auto
+  margin: 0px
+  background: none
   li
-    h4
-      a
-        font-family: "OpenSans-Regular", "Verdana", Arial, sans-serif
-        font-size: 20px
-        color: $headerFontColor
-        text-transform: uppercase
-    h4:first-child
-      margin-top: 0px
+    border: none!important
+    margin-left: 14px
+    //padding-top: 6px
+    box-shadow: none!important
+    background: none!important
+    a
+      padding: 2px 0px 0px!important
+      font-family: "OpenSans-Regular", "Verdana", Arial, sans-serif
+      font-size: 23px!important
+      color: $headerFontColor
+      text-transform: uppercase
+      //display: inline-block
+      &:hover
+        +main-nav-active-item
+  li.active
+    a
+      +main-nav-active-item
+  li:first-child
+    padding-top: 0px
+    margin-left: 0px
 
 section[role=main]
-  header
+  padding-bottom: 40px
+  > header
     border-bottom: 1px solid #5a5a5a
-    margin-bottom: 14px
+    margin-bottom: 35px
     h2
       margin-top: 0px
       text-transform: uppercase
+      //text-align: center
 
 footer.page
+  padding: 25px 0px
   background-color: #191919
   p
-    line-height: 65px
-    text-align: center
+    margin: 0px
+    padding-top: 4px
+    //text-align: center
+
+.job
+  margin-bottom: 60px
+  h3
+    margin-bottom: 6px
+    //text-align: center
+    span
+      color: #8F8F8F
+  .date
+    margin: 5px 0px 20px 0px
+    font-family: "CaviarDreams", "Verdana", sans-serif
+    color: #8F8F8F
+    font-size: 14px
+    //text-align: center
+  img
+    border: 1px solid #5a5a5a
+
+.post
+  padding-bottom: 40px
+  margin-bottom: 40px
+  border-bottom: 2px solid #C9C9C9
+  header
+    margin-bottom: 8px
+  footer
+    padding-bottom: 12px
+    border-bottom: 1px solid #5A5A5A
+    margin-bottom: 15px
+    > p
+      margin-bottom: 3px
+      //font-size: 12px
+      > time
+        color: #dddddd
+        font-weight: bold
+    .tags
+      a
+        padding: 0px 6px
+        &:first-child
+          padding-left: 8px
+  .content
+    p
+      margin: 15px 0px 0px
+  &:last-child
+    border-bottom: none

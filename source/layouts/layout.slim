@@ -15,7 +15,7 @@ head
   title = data.page.title || "The Middleman"
 
   meta name="description" content=""
-  meta name="viewport" content="width=device-width"
+  meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
 
   == stylesheet_link_tag "all"
   == javascript_include_tag  "vendor/modernizr-2.6.2.min.js"
@@ -29,16 +29,14 @@ body class=page_classes
   .container
     header.page
       .row
-        .two.columns
+        .twelve.columns
           == partial "partials/logo"
-        .ten.columns
-          == partial "partials/social-media-nav"
+          == partial "partials/main-nav"
     .row
-      .two.columns
-        == partial "partials/main-nav"
-      .ten.columns
+      .twelve.columns
         section role="main"
           == yield
     .push-footer
+  = current_resource.url
   == partial "partials/footer"
   == javascript_include_tag  "all"
