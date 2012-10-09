@@ -1,0 +1,24 @@
+Hi. My name is Flavio Silva, I'm a brazilian full-stack (client/server) web and mobile application developer and Linux administration apprentice with eight years of industry experience. I was born in 1985 in São Paulo, Brazil.
+
+I carefully design and implement software and I'm pleased with that. I have a proactive and self-taught profile, focused on problem solving and colaboration with interdisciplinary ideas about several aspects of the projects I'm involved. I'm always looking for learning, evolving and excellent results in teamwork of great projects. I don't just try to meet my obligations, I like to collaborate and be involved in depth and think out of the box to innovate and improve results.
+
+I have experience and interest in participating in the entire product's lifecycle, including brainstorming, planning, requirement analysis, information architecture, management of development processes, agile practices, technical leadership, software architecture, testing strategies, implementation and deployment.
+
+At the end of 2008 I've decided to leave <a href="http://www.grafikonstruct.com.br" target="_blank">Grafikonstruct</a> studio to start a challenging time of intensive study for the evolution of my career, working only in a few commercial projects. Since then I've studied several disciplines and technologies, mainly:
+
+* **Software:** engineering, architecture, OO design, development, methodologies and project management (Agile/Scrum).
+* **Web & Standards:** HTML5, CSS3, JavaScript, SEO, etc.
+* **Technologies:** Ruby, Rails, SQL, NoSQL, Web Server, Linux, Ant, Maven, etc.
+
+Nowadays, after four years, I can say that I'm very pleased. There were thousands of hours of study and only a few commercial projects developed as a freelancer. I feel I've built a solid conceptual and pragmatic training in software development and adjacent areas.
+
+Of course I continue studying and I'll always do in that vast technological area. But for now on my studies will be totally guided by real world commercial projects, no more exclusively studying for now. It's time to reap the rewards.
+
+For more technical details about me please see my [resume](/resume) and [services](/services).
+<br>
+Thank you for reading.
+
+<br><br>
+December 2012
+<br>
+Flavio Silva
