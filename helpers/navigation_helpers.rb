@@ -1,5 +1,5 @@
 module NavigationHelpers
-  def get_nav_item_class(page)
+  def get_active_nav_class(page)
     (current_resource.url == page) ? "active" : ""
   end
 end

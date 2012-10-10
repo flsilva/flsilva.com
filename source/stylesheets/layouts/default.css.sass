@@ -45,11 +45,22 @@ a:hover
 /*h6
   font-size: 1.4em
 
-ul
-  padding-left: 18px
+
 
 .row
   width: 800px
+
+dl.tabs
+  margin-bottom: 40px
+  dd.active
+    border-top: none
+    margin-top: 0px
+    a
+      border-top: 1px solid #E6E6E6
+      border-radius: 4px 4px 0px 0px
+      background-color: $backgroundColor
+      &:hover
+        text-decoration: none!important
 
 header.page
   padding: 20px 0px 20px 0px
@@ -131,6 +142,11 @@ section[role=main]
       margin-top: 0px
       text-transform: uppercase
       //text-align: center
+  ul
+  padding-left: 18px
+  +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 20px)
+  li
+    padding-left: 24px
 
 footer.page
   padding: 25px 0px
@@ -182,6 +198,15 @@ footer.page
       margin: 15px 0px 0px
   &:last-child
     border-bottom: none
+
+body.about
+  ul
+    li
+      margin-bottom: 6px
+
+body.services_consulting-coaching
+  a
+    color: inherit
 
 body.contact
   p.text-intro
