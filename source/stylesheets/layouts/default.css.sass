@@ -106,14 +106,11 @@ header.page
   text-decoration: none!important
 
 .main-nav
-  //display: table
-  //margin: 0px auto
   margin: 0px
   background: none
   li
     border: none!important
     margin-left: 14px
-    //padding-top: 6px
     box-shadow: none!important
     background: none!important
     a
@@ -122,7 +119,6 @@ header.page
       font-size: 20px!important
       color: $headerFontColor
       text-transform: uppercase
-      //display: inline-block
       &:hover
         +main-nav-active-item
   li.active
@@ -139,12 +135,12 @@ section[role=main]
     border-bottom: 2px solid #C9C9C9
     margin-bottom: 35px
     h2
+      font-size: 30px
       margin-top: 0px
       text-transform: uppercase
-      //text-align: center
   ul
   padding-left: 18px
-  +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 20px)
+  +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 22px)
   li
     padding-left: 24px
 
@@ -207,6 +203,15 @@ body.about
 body.services_consulting-coaching
   a
     color: inherit
+
+.project
+  margin-top: 40px
+  > p
+    padding-top: 90px
+  &.as3coreaddendum
+    background: url("/images/projects/as3coreaddendum.png") no-repeat
+    background-size: 312px 69px
+
 
 body.contact
   p.text-intro
