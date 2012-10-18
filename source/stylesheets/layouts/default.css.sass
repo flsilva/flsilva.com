@@ -24,6 +24,9 @@ h1, h2, h3, h4, h5, h6
   font-weight: normal
   font-style: normal
 
+h1.inline, h2.inline, h3.inline, h4.inline, h5.inline, h6.inline
+  display: inline
+
 a:hover
   text-decoration: underline!important
 
@@ -45,10 +48,9 @@ a:hover
 /*h6
   font-size: 1.4em
 
-
-
-.row
-  width: 800px
+h5, h6
+  font-family: $bodyFontFamily
+  font-weight: bold
 
 dl.tabs
   margin-bottom: 40px
@@ -139,7 +141,7 @@ section[role=main]
       margin-top: 0px
       text-transform: uppercase
   ul
-  padding-left: 18px
+    padding-left: 18px
   +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 22px)
   li
     padding-left: 24px
@@ -200,7 +202,7 @@ body.about
     li
       margin-bottom: 6px
 
-body.services_consulting-coaching
+body.services_consulting-coaching, body.resume
   a
     color: inherit
 
@@ -212,6 +214,12 @@ body.services_consulting-coaching
     background: url("/images/projects/as3coreaddendum.png") no-repeat
     background-size: 312px 69px
 
+
+body.resume
+  h2
+    margin-top: 28px
+  > h2
+    margin-top: 14px
 
 body.contact
   p.text-intro

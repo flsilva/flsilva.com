@@ -44,6 +44,11 @@ require "zurb-foundation"
 activate :automatic_image_sizes
 activate :directory_indexes
 
+activate :blog do |blog|
+  blog.prefix = "blog"
+  blog.permalink = "blog/:title.html"
+end
+
 # Methods defined in the helpers block are available in templates
 # helpers do
 #   def some_helper
