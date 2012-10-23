@@ -24,6 +24,12 @@ h1, h2, h3, h4, h5, h6
   font-weight: normal
   font-style: normal
 
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+  color: $headerFontColor
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover
+  color: $headerFontColor
+
 h1.inline, h2.inline, h3.inline, h4.inline, h5.inline, h6.inline
   display: inline
 
@@ -119,7 +125,7 @@ header.page
       padding: 2px 0px 0px!important
       font-family: "OpenSans-Regular", "Verdana", Arial, sans-serif
       font-size: 20px!important
-      color: $headerFontColor
+      color: $headerFontColor!important
       text-transform: uppercase
       &:hover
         +main-nav-active-item
@@ -170,9 +176,13 @@ footer.page
   img
     border: 1px solid #5a5a5a
 
+body.index, body.blog
+  .row
+    width: 1000px
+
 .post
-  padding-bottom: 40px
-  margin-bottom: 40px
+  padding-bottom: 30px
+  margin-bottom: 30px
   border-bottom: 2px solid #C9C9C9
   header
     margin-bottom: 8px
@@ -197,6 +207,13 @@ footer.page
   &:last-child
     border-bottom: none
 
+.tag-cloud
+  margin-top: 40px
+  a
+    padding-right: 6px
+    line-height: 18px
+    color: inherit
+
 body.about
   ul
     li
@@ -216,10 +233,11 @@ body.services_consulting-coaching, body.resume
 
 
 body.resume
-  h2
-    margin-top: 28px
-  > h2
-    margin-top: 14px
+  section[role=main]
+    h3
+      margin-top: 28px
+    h3.first-child
+      margin: 14px 0px 20px
 
 body.contact
   p.text-intro

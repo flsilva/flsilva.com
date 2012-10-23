@@ -1,9 +1,8 @@
 ---
 title: About
 ---
-
-header
-  h2 About
+- content_for :main_content_title do
+  == current_page.data.title
 markdown:
   Hi. My name is Flavio Silva, I'm a brazilian full-stack (client/server) web and mobile application developer and Linux administration apprentice with eight years of industry experience. I was born in 1985 in São Paulo, Brazil.
 

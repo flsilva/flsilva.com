@@ -40,13 +40,19 @@ require "zurb-foundation"
 # Helpers
 ###
 
+page "/index.html*", :layout => :blog
+page "/blog/tags/*", :layout => :blog
+
 # Automatic image dimensions on image_tag helper
 activate :automatic_image_sizes
 activate :directory_indexes
 
 activate :blog do |blog|
+  blog.layout = "blog"
   blog.prefix = "blog"
-  blog.permalink = "blog/:title.html"
+  blog.permalink = ":title"
+  blog.taglink = "tags/:tag"
+  blog.tag_template = "tag.html"
 end
 
 # Methods defined in the helpers block are available in templates

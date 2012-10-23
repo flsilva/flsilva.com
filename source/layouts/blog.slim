@@ -6,11 +6,13 @@
 .container
   == partial "partials/header"
   .row
-    .twelve.columns
+    .nine.columns
       section role="main"
         header
           h2 == yield_content :main_content_title
         == yield
+    .three.columns
+      == partial "partials/tag_cloud"
   .push-footer
 == partial "partials/footer"
 == javascript_include_tag  "all"
