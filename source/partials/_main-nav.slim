@@ -1,15 +1,15 @@
 ul.nav-bar.main-nav.right
-  li class==get_active_nav_class("/")
+  li class==get_active_nav_class(/^\/(\z|blog)/)
     a href="/" Blog
-  li class==get_active_nav_class("/portfolio/")
+  li class==get_active_nav_class(/\/portfolio\/\z/)
     a href="/portfolio" Portfolio
-  li class==get_active_nav_class("/about/")
+  li class==get_active_nav_class(/\/about\/\z/)
     a href="/about" About
-  li class==get_active_nav_class("/services/")
+  li class==get_active_nav_class(/\/services\//)
     a href="/services" Services
-  li class==get_active_nav_class("/projects/")
+  li class==get_active_nav_class(/\/projects\/\z/)
     a href="/projects" Projects
-  li class==get_active_nav_class("/resume/")
+  li class==get_active_nav_class(/\/resume\/\z/)
     a href="/resume" Resume
-  li class==get_active_nav_class("/contact/")
+  li class==get_active_nav_class(/\/contact\/\z/)
     a href="/contact" Contact
