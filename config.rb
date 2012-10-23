@@ -41,7 +41,7 @@ require "zurb-foundation"
 ###
 
 page "/index.html*", :layout => :blog
-page "/blog/tags/*", :layout => :blog
+page "/blog/tag/*", :layout => :blog
 
 # Automatic image dimensions on image_tag helper
 activate :automatic_image_sizes
@@ -51,7 +51,7 @@ activate :blog do |blog|
   blog.layout = "blog"
   blog.prefix = "blog"
   blog.permalink = ":title"
-  blog.taglink = "tags/:tag"
+  blog.taglink = "tag/:tag"
   blog.tag_template = "tag.html"
 end
 
