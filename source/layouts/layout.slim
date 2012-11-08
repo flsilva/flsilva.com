@@ -3,6 +3,7 @@
 == partial "partials/head"
 == partial "partials/body_tag"
 == partial "partials/ie6-chrome-frame-conditional-comment"
+== javascript_include_tag  "all"
 .container
   == partial "partials/header"
   .row
@@ -13,4 +14,3 @@
         == yield
   .push-footer
 == partial "partials/footer"
-== javascript_include_tag  "all"

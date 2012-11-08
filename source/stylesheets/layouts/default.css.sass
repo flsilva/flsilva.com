@@ -58,6 +58,12 @@ h5, h6
   font-family: $bodyFontFamily
   font-weight: bold
 
+.float-left
+  float: left
+
+.float-right
+  float: right
+
 dl.tabs
   margin-bottom: 40px
   dd.active
@@ -65,10 +71,20 @@ dl.tabs
     margin-top: 0px
     a
       border-top: 1px solid #E6E6E6
-      border-radius: 4px 4px 0px 0px
+      //border-radius: 4px 4px 0px 0px
       background-color: $backgroundColor
       &:hover
         text-decoration: none!important
+  @media #{$mediaSmall}
+    margin-bottom: 70px
+    //dd
+      a
+        color: inherit!important
+        background-color: $backgroundColor!important
+    dd.active
+      a
+        color: inherit!important
+        //background-color: #000000!important
 
 header.page
   padding: 20px 0px 20px 0px
@@ -79,10 +95,22 @@ header.page
     margin: 0px
     a
       display: block
-      width: 46px
+      width: 35px
       height: 40px
       text-indent: -9999px
       background: url("/images/logo.png") no-repeat
+      @media only screen and (-webkit-min-device-pixel-ratio : 1.1), only screen and (min-device-pixel-ratio : 1.1)
+        background: url("/images/logo@2x.png") no-repeat
+        background-size: 35px 40px
+  .menu-button
+    margin-top: 12px
+    span
+      display: block
+      width: 18px
+      height: 2px
+      margin-bottom: 5px
+      background-color: #FFFFFF
+
 
 .nav-bar.social-media
   height: 32px
@@ -107,6 +135,10 @@ header.page
     background: url("/images/social-media/delicious-icon.png") no-repeat
   .facebook
     background: url("/images/social-media/facebook-icon.png") no-repeat
+  @media #{$mediaSmall}
+    margin: 14px 0px 0px
+    li
+      float: left!important
 
 =main-nav-active-item
   border-top: 2px solid #F9F9F9
@@ -135,6 +167,30 @@ header.page
   li:first-child
     padding-top: 0px
     margin-left: 0px
+  @media #{$mediaSmall}
+    float: none
+    margin-top: 50px
+    height: 0px
+    overflow: hidden
+    +single-transition(height, 0.5s)
+    li
+      margin-left: 0px
+      a
+        text-align: center
+        border-bottom: 1px solid #414141
+        padding: 5px 0px!important
+        &:hover
+          border-top: none!important
+    li:last-child
+      a
+        border-bottom: none
+    li.active
+      a
+        border-top: none
+        border-bottom: 1px solid #F9F9F9
+
+.main-nav.active
+  height: 337px
 
 section[role=main]
   padding-bottom: 40px
@@ -159,6 +215,11 @@ footer.page
     margin: 0px
     padding-top: 4px
     //text-align: center
+  @media #{$mediaSmall}
+    .float-left
+      float: none
+    .float-right
+      float: none
 
 .job
   margin-bottom: 60px
@@ -166,19 +227,34 @@ footer.page
     margin-bottom: 6px
     //text-align: center
     span
-      color: #8F8F8F
+      color: $grayFontColor
+  //.date, .description .smallTitle
+  .date
+    font-family: $headerFontFamily
+    color: $grayFontColor
+    font-size: 16px
   .date
     margin: 5px 0px 20px 0px
-    font-family: "CaviarDreams", "Verdana", sans-serif
-    color: #8F8F8F
-    font-size: 14px
-    //text-align: center
-  img
+  .description
+    margin: 40px 0px 30px
+    .info-title
+      color: $grayFontColor
+    .detail
+      margin-bottom: 6px
+  .button
+    &:hover
+      text-decoration: none!important
+    @media #{$mediaSmall}
+      display: inline-block!important
+  img.border
     border: 1px solid #5a5a5a
 
 body.index, body.blog
   .row
     width: 1000px
+  section[role=main]
+    @media #{$mediaSmall}
+      padding-bottom: 0px
 
 .post
   padding-bottom: 30px
@@ -206,6 +282,9 @@ body.index, body.blog
       margin: 15px 0px 0px
   &:last-child
     border-bottom: none
+  @media #{$mediaSmall}
+    &:last-child
+      border-bottom: 2px solid #C9C9C9!important
 
 .tag-cloud
   margin-top: 40px
@@ -215,6 +294,8 @@ body.index, body.blog
     color: inherit
     &:last-child
       padding-right: 0px
+  @media #{$mediaSmall}
+    margin: 0px 0px 40px 0px
 
 body.about
   ul
@@ -266,3 +347,7 @@ body.contact
     margin-top: 36px
     padding-top: 12px
     border-top: 1px solid #5a5a5a
+  @media #{$mediaSmall}
+    .data
+      h3
+        font-size: 26px

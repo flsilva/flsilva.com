@@ -43,6 +43,7 @@ $headerFontColor: #F9F9F9 !default;
 $bodyFontFamily: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 $bodyFontWeight: normal !default;
 $bodyFontColor: $txtColor !default;
+$grayFontColor: #8F8F8F !default;
 
 // Button Settings
 
@@ -134,7 +135,7 @@ $screenXlarge: 1441px !default;
 // $screenXlarge: 104em !default;
 
 // Saving for Sass 3.2 stable release
-// $mediaSmall: "only screen and (max-width: 767px)" !default;
+$mediaSmall: "only screen and (max-width: 767px)" !default;
 // $mediaMedium: "only screen and (max-width: 1279px) and (min-width: 768px)" !default;
 // $mediaXlarge: "only screen and (min-width: 1441px)" !default;
 // $mediaLandscape: "screen and (orientation: landscape)" !default;
