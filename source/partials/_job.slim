@@ -1,0 +1,10 @@
+article.job
+  h3
+    a href==job_link
+      == job_name
+      span
+        '  / #{job_type}
+  p.date == job_date
+  == partial slide_partial, :locals => { :job_link => job_link }
+  - if defined?(description_partial)
+    == partial description_partial

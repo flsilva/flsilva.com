@@ -4,52 +4,7 @@ title: Portfolio
 
 - content_for :main_content_title do
   | Portfolio
-article.job
-  h3
-    a href="portfolio/bienal2012"
-      | Bienal 2012
-      span
-        '  / CMS
-  p.date September 2012
-  #slide-bienal2012
-    img src="images/portfolio/bienal2012/bienal2012-01.png"
-    img src="images/portfolio/bienal2012/bienal2012-02.png"
-    img src="images/portfolio/bienal2012/bienal2012-03.png"
-    img src="images/portfolio/bienal2012/bienal2012-04.png"
-    img src="images/portfolio/bienal2012/bienal2012-05.png"
-article.job
-  h3
-    | Conspiração Filmes
-    span
-      '  / Web Site
-  p.date Dezember 2008
-  #slide-conspiracao
-    img.border src="images/portfolio/conspiracao/conspiracao-01.png"
-    img.border src="images/portfolio/conspiracao/conspiracao-02.jpg"
-    img.border src="images/portfolio/conspiracao/conspiracao-03.jpg"
-    img.border src="images/portfolio/conspiracao/conspiracao-04.png"
-    img.border src="images/portfolio/conspiracao/conspiracao-05.png"
-article.job
-  h3
-    | Pepsi
-    span
-      '  / Web Site
-  p.date August 2008
-  #slide-pepsi
-    img.border src="images/portfolio/pepsi/pepsi-01.jpg"
-    img.border src="images/portfolio/pepsi/pepsi-02.jpg"
-    img.border src="images/portfolio/pepsi/pepsi-03.jpg"
-    img.border src="images/portfolio/pepsi/pepsi-04.jpg"
-    img.border src="images/portfolio/pepsi/pepsi-05.jpg"
-    img.border src="images/portfolio/pepsi/pepsi-06.jpg"
-article.job
-  h3
-    | Ultraeco
-    span
-      '  / Web Site
-  p.date October 2007
-  #slide-ultraeco
-    img.border src="images/portfolio/ultraeco/ultraeco-01.jpg"
-    img.border src="images/portfolio/ultraeco/ultraeco-02.jpg"
-    img.border src="images/portfolio/ultraeco/ultraeco-03.jpg"
-    img.border src="images/portfolio/ultraeco/ultraeco-04.jpg"
+== partial "partials/job", :locals => { :job_name => "Bienal 2012", :job_type => "Web Site", :job_date => "September 2012", :job_link => "/portfolio/bienal2012", :slide_partial => "portfolio/bienal2012_slide" }
+== partial "partials/job", :locals => { :job_name => "Conspiração Filmes", :job_type => "Web Site", :job_date => "Dezember 2008", :job_link => "/portfolio/conspiracao", :slide_partial => "portfolio/conspiracao_slide" }
+== partial "partials/job", :locals => { :job_name => "Pepsi", :job_type => "Web Site", :job_date => "August 2008", :job_link => "/portfolio/pepsi", :slide_partial => "portfolio/pepsi_slide" }
+== partial "partials/job", :locals => { :job_name => "Ultraeco", :job_type => "Web Site", :job_date => "October 2007", :job_link => "/portfolio/ultraeco", :slide_partial => "portfolio/ultraeco_slide" }

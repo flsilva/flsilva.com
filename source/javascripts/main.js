@@ -16,4 +16,12 @@ function configPortfolioSlideshow()
   $("#slide-conspiracao").orbit(config);
   $("#slide-pepsi").orbit(config);
   $("#slide-ultraeco").orbit(config);
+
+  $(".portfolio_index .job .slide").each(function(index, element)
+  {
+    $(element).css("cursor", "pointer");
+    $(element).click(function(){
+      window.location.href = $(element).attr("data-link");
+    });
+  });
 }
