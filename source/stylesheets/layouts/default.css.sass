@@ -91,6 +91,8 @@ header.page
   margin-bottom: 30px
   background-color: #191919
   border-bottom: 4px solid #C9C9C9
+  @media #{$mediaSmall}
+    padding-bottom: 10px
   h1.logo
     margin: 0px
     a
@@ -99,11 +101,11 @@ header.page
       height: 40px
       text-indent: -9999px
       background: url("/images/logo.png") no-repeat
-      @media only screen and (-webkit-min-device-pixel-ratio : 1.1), only screen and (min-device-pixel-ratio : 1.1)
+      @media #{$mediaGreaterPixelRatio}
         background: url("/images/logo@2x.png") no-repeat
         background-size: 35px 40px
   .menu-button
-    margin-top: 12px
+    margin: 12px 4px 0px 0px
     span
       display: block
       width: 18px
@@ -312,7 +314,19 @@ body.services_consulting-coaching, body.resume
     padding-top: 90px
   &.as3coreaddendum
     background: url("/images/projects/as3coreaddendum.png") no-repeat
-    background-size: 312px 69px
+    background-size: 255px 70px
+    @media #{$mediaGreaterPixelRatio}
+      background: url("/images/projects/as3coreaddendum@2x.png") no-repeat
+  &.as3utils
+    background: url("/images/projects/as3utils.png") no-repeat
+    background-size: 167px 70px
+    @media #{$mediaGreaterPixelRatio}
+      background: url("/images/projects/as3utils@2x.png") no-repeat
+  &.as3collections
+    background: url("/images/projects/as3collections.png") no-repeat
+    background-size: 251px 70px
+    @media #{$mediaGreaterPixelRatio}
+      background: url("/images/projects/as3collections@2x.png") no-repeat
 
 
 body.resume
