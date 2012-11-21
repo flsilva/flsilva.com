@@ -118,6 +118,17 @@ header.page
   height: 32px
   margin: 0px
   background: none
+  @media #{$mediaSmall}
+    li
+      float: left!important
+  &.mobile
+    li
+      margin-left: 16px
+    @media #{$mediaSmallPortrait}
+      display: table
+      margin: 14px auto 0px
+      li
+        margin-left: 16px
   li
     border: none!important
     margin-left: 8px
@@ -127,20 +138,31 @@ header.page
       height: 32px
       padding: 0px
       text-indent: -9999px
+      &.mobile
+        width: 48px
+        height: 48px
   li:first-child
     margin-left: 0px
   .twitter
     background: url("/images/social-media/twitter-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/twitter-icon-mobile.png") no-repeat
+      background-size: 48px 48px
   .linkedin
     background: url("/images/social-media/linkedin-icon.png") no-repeat
-  .delicious
-    background: url("/images/social-media/delicious-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/linkedin-icon-mobile.png") no-repeat
+      background-size: 48px 48px
+  .github
+    background: url("/images/social-media/github-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/github-icon-mobile.png") no-repeat
+      background-size: 48px 48px
   .facebook
     background: url("/images/social-media/facebook-icon.png") no-repeat
-  @media #{$mediaSmall}
-    margin: 14px 0px 0px
-    li
-      float: left!important
+    &.mobile
+      background: url("/images/social-media/facebook-icon-mobile.png") no-repeat
+      background-size: 48px 48px
 
 =main-nav-active-item
   border-top: 2px solid #F9F9F9
@@ -207,21 +229,35 @@ section[role=main]
   ul
     padding-left: 18px
   +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 22px)
+  @media #{$mediaGreaterPixelRatio}
+    +pretty-bullets("/images/check-icon-32px.png", 16px, 16px, 22px)
   li
     padding-left: 24px
+    background-size: 16px 16px
 
 footer.page
   padding: 25px 0px
   background-color: #191919
-  p
-    margin: 0px
-    padding-top: 4px
-    //text-align: center
-  @media #{$mediaSmall}
+  @media #{$mediaSmallPortrait}
     .float-left
       float: none
     .float-right
       float: none
+  &.mobile
+    height: 96px
+    p
+      padding-top: 13px
+    @media #{$mediaSmallPortrait}
+      padding: 15px 0px
+      height: 150px
+      p
+        padding-top: 36px
+  p
+    margin: 0px
+    padding-top: 4px
+    @media #{$mediaSmallPortrait}
+      text-align: center
+      padding-top: 10px
 
 .job
   margin-bottom: 60px
@@ -305,28 +341,47 @@ body.about
       margin-bottom: 6px
 
 body.services_consulting-coaching, body.resume
-  a
-    color: inherit
+  li
+    a
+      color: inherit
 
 .project
   margin-top: 40px
   > p
-    padding-top: 90px
+    padding-top: 20px
   &.as3coreaddendum
-    background: url("/images/projects/as3coreaddendum.png") no-repeat
-    background-size: 255px 70px
-    @media #{$mediaGreaterPixelRatio}
-      background: url("/images/projects/as3coreaddendum@2x.png") no-repeat
+    .logo
+      a
+        display: block
+        width: 255px
+        height: 70px
+        text-indent: -9999px
+        background: url("/images/projects/as3coreaddendum.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/as3coreaddendum@2x.png") no-repeat
+          background-size: 255px 70px
   &.as3utils
-    background: url("/images/projects/as3utils.png") no-repeat
-    background-size: 167px 70px
-    @media #{$mediaGreaterPixelRatio}
-      background: url("/images/projects/as3utils@2x.png") no-repeat
+    .logo
+      a
+        display: block
+        width: 167px
+        height: 70px
+        text-indent: -9999px
+        background: url("/images/projects/as3utils.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/as3utils@2x.png") no-repeat
+          background-size: 167px 70px
   &.as3collections
-    background: url("/images/projects/as3collections.png") no-repeat
-    background-size: 251px 70px
-    @media #{$mediaGreaterPixelRatio}
-      background: url("/images/projects/as3collections@2x.png") no-repeat
+    .logo
+      a
+        display: block
+        width: 251px
+        height: 70px
+        text-indent: -9999px
+        background: url("/images/projects/as3collections.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/as3collections@2x.png") no-repeat
+          background-size: 251px 70px
 
 
 body.resume

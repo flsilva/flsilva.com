@@ -1,6 +1,12 @@
 $(document).ready(function () {
   configPortfolioSlideshow();
 
+  if (Modernizr.touch) {
+    $('footer.page').addClass('mobile');
+    $('.nav-bar.social-media').addClass('mobile');
+    $('.nav-bar.social-media li a').addClass('mobile');
+  }
+
   $('.menu-button').click(function (event) {
     event.preventDefault();
 
