@@ -40,7 +40,12 @@ module BlogHelpers
     tags.sort!
 
     tags.each do |tag|
-      percent = (tag_cloud.fetch(tag) - min_value) / (max_value - min_value) * 100
+      begin
+        percent = (tag_cloud.fetch(tag) - min_value) / (max_value - min_value) * 100
+      rescue
+        percent = 50
+      end
+
       tag_size = get_tag_size_for_cloud(tag, percent)
       tag_links = tag_links + get_tag_link(tag, tag_size) + "  "
     end
