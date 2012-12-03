@@ -55,6 +55,14 @@ activate :blog do |blog|
   blog.tag_template = "tag.html"
 end
 
+activate :deploy do |deploy|
+  deploy.method = :rsync
+  deploy.user = "flsilva"
+  deploy.host = "66.228.57.112"
+  deploy.path = "/var/www/flsilva.com"
+  deploy.clean = true
+end
+
 # Methods defined in the helpers block are available in templates
 # helpers do
 #   def some_helper
