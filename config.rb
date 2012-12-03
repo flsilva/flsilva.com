@@ -45,6 +45,8 @@ page "/blog/tag/*", :layout => :blog
 
 # Automatic image dimensions on image_tag helper
 activate :automatic_image_sizes
+
+# Pretty URLs
 activate :directory_indexes
 
 activate :blog do |blog|
@@ -86,6 +88,9 @@ configure :build do
 
   activate :gzip
   activate :asset_hash
+
+  # Pretty up Slim output
+  set :slim, :pretty => true
 
   # Enable cache buster
   # activate :cache_buster
