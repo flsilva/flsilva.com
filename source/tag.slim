@@ -3,6 +3,6 @@ title: Blog
 ---
 - content_for :main_content_title do
   a href="/" Blog
-  '  - Posts for tag "#{@tag}"
+  '  - Posts tagged "#{@tag}"
 - page_articles.each_with_index do |article, i|
   == partial "partials/post", :locals => { :article => article, :article_content => article.data.summary }

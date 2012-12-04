@@ -52,8 +52,8 @@ activate :directory_indexes
 activate :blog do |blog|
   blog.layout = "blog"
   blog.prefix = "blog"
-  blog.permalink = ":title"
-  blog.taglink = "tag/:tag"
+  blog.permalink = ":title/index.html"
+  blog.taglink = "tag/:tag/index.html"
   blog.tag_template = "tag.html"
 end
 
