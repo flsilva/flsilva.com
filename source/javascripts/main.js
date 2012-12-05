@@ -16,6 +16,14 @@ $(document).ready(function () {
 
 function configPortfolioSlideshow()
 {
+
+  $(".portfolio .job .slide img").each(function(index, element)
+  {
+    var data_src = $(element).attr("data-src");
+    if(data_src === null || data_src == "") return;
+    $(element).attr("src", data_src);
+  });
+
   var config = {advanceSpeed:7000, directionalNav:false}
 
   $("#slide-bienal2012").orbit(config);
