@@ -2,6 +2,7 @@ $(document).ready(function () {
   configPortfolioSlideshow();
 
   if (Modernizr.touch) {
+    $('body').addClass('mobile');
     $('footer.page').addClass('mobile');
     $('.nav-bar.social-media').addClass('mobile');
     $('.nav-bar.social-media li a').addClass('mobile');

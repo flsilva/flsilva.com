@@ -1,16 +1,16 @@
 article.post
   header
-    h3 == link_to article.title, article
+    h3 == link_to article.title, article, :id => get_post_link_id(defined?(post_path), article.title, "title-button")
   footer
     p
       time(datetime=article.date.strftime('%Y-%m-%d') pubdate)
         = article.date.strftime('%B %d, %Y')
       '  by #{article.data.author} -
-      a href="#" 12 comments
+      == link_to "12 comments", article, :id => get_post_link_id(defined?(post_path), article.title, "comments-button")
     p.tags
       | tags:
       - article.tags.each do |tag|
-        a href==tag_path(tag) ==tag
+        a id==get_post_link_id(defined?(post_path), article.title, "tag-button") href==tag_path(tag) ==tag
   .content
     - if defined?(post_path)
       == partial post_path

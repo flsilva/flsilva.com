@@ -1,6 +1,6 @@
 article.job
   h3
-    a href==job_link
+    a href==job_link id==get_job_link_id(defined?(description_partial), job_name, "title-button")
       == job_name
       span
         '  / #{job_type}

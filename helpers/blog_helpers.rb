@@ -1,6 +1,6 @@
 module BlogHelpers
   def get_tag_link(tag, font_size = nil)
-    link = "<a href='#{tag_path(tag)}'"
+    link = "<a href='#{tag_path(tag)}' id='tag-cloud-#{tag}'"
     link = link + " style='font-size:#{font_size}px'" unless font_size.nil?
     link = link + ">"
     link = link + tag
@@ -53,4 +53,10 @@ module BlogHelpers
     tag_links
   end
 
+  def get_post_link_id(is_internal_post_page, post_title, button)
+    prefix = (is_internal_post_page) ? "blog-post-page-" : "blog-index-page-"
+    id = prefix + button + "-" + post_title.downcase.gsub(" - ", "-")
+    id = id.gsub(" ", "-")
+    id = id.gsub(/[^-0-9A-Za-z]/, '')
+  end
 end
