@@ -1,7 +1,10 @@
 ---
 title: Blog
+priority: 1.0
+changefreq: weekly
 ---
 - content_for :main_content_title do
   | Blog
-- page_articles.each_with_index do |article, i|
-  == partial "partials/post", :locals => { :article => article, :article_content => article.data.summary }
+section(itemscope itemtype="http://www.schema.org/Blog")
+  - page_articles.each_with_index do |article, i|
+    == partial "partials/post", :locals => { :article => article, :article_content => article.data.summary }

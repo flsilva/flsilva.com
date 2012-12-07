@@ -43,6 +43,7 @@ require "zurb-foundation"
 page "/index.html*", :layout => :blog
 page "/blog/tag/*", :layout => :blog
 page "google496e6b73c411bbe3.html", :directory_index => false
+page "sitemap.xml", :layout => false
 
 # Automatic image dimensions on image_tag helper
 activate :automatic_image_sizes
