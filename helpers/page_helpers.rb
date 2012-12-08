@@ -1,12 +1,13 @@
 module PageHelpers
   def set_page_title
     url = current_page.url.to_s.downcase
-    title_prefix = "Flavio Silva - "
-    title_prefix += "Blog: " if /blog\/.+/.match(url)
+    title = current_page.data.title
     if /blog\/tag\/.+/.match(url).nil?
-      title_prefix + current_page.data.title
+      title
     else
-      title_prefix + url[url.rindex("tag/") + 4, url.size].chomp("/")
+      title = url[url.rindex("tag/") + 4, url.size].chomp("/")
+      title = title.split(" ").each { |w| w.capitalize! }.join(" ")
+      title << " Articles | flsilva's Blog"
     end
   end
 end

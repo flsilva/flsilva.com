@@ -322,6 +322,9 @@ body.index, body.blog
   .row
     width: 1000px
   section[role=main]
+    > header
+      h2
+        font-size: 34px
     @media #{$mediaSmall}
       padding-bottom: 0px
 
@@ -331,6 +334,8 @@ body.index, body.blog
   border-bottom: 2px solid #C9C9C9
   header
     margin-bottom: 8px
+    h3
+      font-size: 32px
   footer
     padding-bottom: 12px
     border-bottom: 1px solid #5A5A5A
@@ -445,6 +450,8 @@ body.contact
   p.text-intro
     margin-bottom: 36px
   .data
+    &.name
+      display: none
     h3, p
       display: inline-block
     h3
