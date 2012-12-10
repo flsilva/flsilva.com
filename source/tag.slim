@@ -3,7 +3,8 @@ title: Blog
 ---
 - content_for :main_content_title do
   a href="/" Blog
-  span style="margin: 0 28px 0 30px" |
-  | <em>#{@tag}</em> Articles
+  span style="margin: 0 22px" |
+  a class="link-color" href==tag_path(@tag) #{@tag}
+  '  Articles
 - page_articles.each_with_index do |article, i|
   == partial "partials/post", :locals => { :article => article, :article_content => article.data.summary }
