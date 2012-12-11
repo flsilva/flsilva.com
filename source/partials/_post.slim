@@ -18,3 +18,5 @@ article.post(itemscope itemprop="blogPost" itemtype="http://www.schema.org/BlogP
     - else
       p
         == article_content
+  - if defined?(post_path)
+    == partial "partials/social-media-interaction"
