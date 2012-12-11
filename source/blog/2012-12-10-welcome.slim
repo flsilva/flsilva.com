@@ -9,3 +9,4 @@ summary: Welcome to my blog. Usually I'll write about Ruby, Rails, HTML5, JavaSc
 - content_for :main_content_title do
   a id==get_post_link_id(true, current_page.title, "main-blog-title-button") href="/" Blog
 == partial "partials/post", :locals => { :article => current_page, :post_path => "blog/2012-12-10-welcome" }
+== partial "partials/disqus"

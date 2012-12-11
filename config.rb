@@ -41,7 +41,7 @@ require "zurb-foundation"
 ###
 
 page "/index.html*", :layout => :blog
-page "/blog/tag/*", :layout => :blog
+page "/blog/*", :layout => :blog
 page "google496e6b73c411bbe3.html", :directory_index => false
 page "sitemap.xml", :layout => false
 
@@ -55,7 +55,7 @@ activate :blog do |blog|
   blog.layout = "blog"
   blog.prefix = "blog"
   blog.permalink = ":title/index.html"
-  blog.taglink = "tag/:tag/index.html"
+  blog.taglink = ":tag/index.html"
   blog.tag_template = "tag.html"
 end
 

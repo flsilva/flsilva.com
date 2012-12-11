@@ -1,23 +1,32 @@
 module PageHelpers
   def set_page_title
     url = current_page.url.to_s.downcase
-    if /blog\/tag\/.+/.match(url).nil?
-      current_page.data.title
+    title = current_page.data.title
+
+    if /blog\/.+/.match(url).nil?
+      title
     else
-      title = url[url.rindex("tag/") + 4, url.size].chomp("/")
-      title = title.split(" ").each { |w| w.capitalize! }.join(" ")
-      title << " Articles | flsilva's Blog"
+      if title.nil? || title == "Blog"
+        title = url[url.rindex("blog/") + 5, url.size].chomp("/")
+        title = title.split(" ").each { |w| w.capitalize! }.join(" ")
+        title + " Articles | flsilva's Blog"
+      else
+        title + " | flsilva's Blog "
+      end
     end
   end
 
   def set_meta_description
     url = current_page.url.to_s.downcase
+    title = current_page.data.title
     description = current_page.data.description
 
-    unless /blog\/tag\/.+/.match(url).nil?
-      tag_name = url[url.rindex("tag/") + 4, url.size].chomp("/").to_s
-      file_name = tag_name << "_tag"
-      description = data.send(file_name.to_sym).description
+    unless /blog\/.+/.match(url).nil?
+      if (title.nil? || title == "Blog")
+        tag_name = url[url.rindex("blog/") + 5, url.size].chomp("/").to_s
+        file_name = tag_name << "_tag"
+        description = data.send(file_name.to_sym).description
+      end
     end
 
     return "" if description.nil?
