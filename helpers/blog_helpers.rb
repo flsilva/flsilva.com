@@ -59,4 +59,12 @@ module BlogHelpers
     id = id.gsub(" ", "-")
     id = id.gsub(/[^-0-9A-Za-z]/, '')
   end
+
+  def get_tweet_text
+    return current_page.data.tweet_text || current_page.data.title
+  end
+
+  def get_tweet_hashtags
+    return current_page.data.tweet_hashtags || current_page.data.title
+  end
 end
