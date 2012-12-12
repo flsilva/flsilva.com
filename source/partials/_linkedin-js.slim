@@ -1,0 +1,12 @@
+javascript:
+  // Google Analytics LinkedIn Social Tracking
+  function linkedinOnShareSuccess()
+  {
+    _gaq.push(['_trackSocial', 'LinkedIn', 'share', '#{get_clean_url}']);
+  }
+
+  function linkedinOnShareError()
+  {
+    _gaq.push(['_trackSocial', 'LinkedIn', 'share-error', '#{get_clean_url}']);
+  }
+<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>

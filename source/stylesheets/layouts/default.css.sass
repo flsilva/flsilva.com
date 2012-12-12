@@ -331,10 +331,10 @@ body.index, body.blog
     @media #{$mediaSmall}
       padding-bottom: 0px
 
-.blog
+body.blog
   .post
-    padding-bottom: 60px
-    margin-bottom: 60px
+    padding-bottom: 50px
+    margin-bottom: 50px
 
 .post
   padding-bottom: 30px
@@ -350,7 +350,6 @@ body.index, body.blog
     margin-bottom: 15px
     > p
       margin-bottom: 3px
-      //font-size: 12px
       > time
         color: #dddddd
         font-weight: bold
@@ -370,22 +369,28 @@ body.index, body.blog
     &:last-child
       border-bottom: 2px solid #C9C9C9!important
   .social-media-interaction
-    margin-top: 60px
+    display: table
+    margin: 30px auto 0px
+    > div
+      padding-top: 15px
 
 .social-media-interaction
   #facebook-interaction
     display: inline-block
+    width: 149px
   #twitter-interaction
     display: inline-block
-    margin-left: 20px
+    width: 98px
     iframe
       position: absolute
       margin-top: -18px
   #google-plus-interaction
     display: inline-block
-    margin-left: 98px
     > div:first-child
-      padding-top: 4px!important
+      width: 82px!important
+      padding-top: 2px!important
+  #linkedin-interaction
+    display: inline-block
 
 .tag-cloud
   margin-top: 40px
