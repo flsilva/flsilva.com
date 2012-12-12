@@ -6,6 +6,8 @@ changefreq: weekly
 ---
 - content_for :main_content_title do
   | Blog
+- content_for :sub_header do
+  == partial "partials/social-media-interaction"
 section(itemscope itemtype="http://www.schema.org/Blog")
   - page_articles.each_with_index do |article, i|
     == partial "partials/post", :locals => { :article => article, :article_content => article.data.summary }

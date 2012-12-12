@@ -9,8 +9,9 @@
   .row
     .nine.columns
       section role="main"
-        header
+        header.clear-fix
           h2 == yield_content :main_content_title
+          == yield_content :sub_header
         == yield
     .three.columns
       == partial "partials/tag_cloud"

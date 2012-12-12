@@ -67,6 +67,14 @@ h5, h6
 .float-right
   float: right
 
+.clear-fix
+  &::after
+    clear: both
+  &::before, &::after
+    content: ""
+    display: table
+
+
 .orbit-wrapper
   height: auto!important
   .timer
@@ -321,6 +329,15 @@ footer.page
   img.border
     border: 1px solid #5a5a5a
 
+body.index
+  section[role=main]
+    > header
+      h2
+        float: left
+    .social-media-interaction
+      float: right
+      margin-top: 5px
+
 body.index, body.blog
   .row
     width: 1000px
@@ -330,8 +347,26 @@ body.index, body.blog
         font-size: 34px
     @media #{$mediaSmall}
       padding-bottom: 0px
+  header
+    .social-media-interaction
+      margin-bottom: 20px
+      @media #{$mediaSmallPortrait}
+        display: none
 
 body.blog
+  @media #{$mediaSmallPortrait}
+    section[role=main]
+      > header
+        h2
+          a:first-child
+            display: block
+        .tag-name-separator
+          display: none
+  .tag-name-separator
+    margin: 0 22px
+  header
+    .social-media-interaction
+      margin-top: 5px
   .post
     padding-bottom: 50px
     margin-bottom: 50px
@@ -368,13 +403,19 @@ body.blog
   @media #{$mediaSmall}
     &:last-child
       border-bottom: 2px solid #C9C9C9!important
-  .social-media-interaction
-    display: table
-    margin: 30px auto 0px
-    > div
-      padding-top: 15px
+  .bottom
+    .social-media-interaction
+      display: table
+      margin: 45px auto 0px
+  .top
+    .social-media-interaction
+      margin-bottom: 25px
 
 .social-media-interaction
+  text-transform: none
+  @media #{$mediaSmallPortrait}
+    > div
+      padding-top: 15px
   #facebook-interaction
     display: inline-block
     width: 149px
