@@ -39,7 +39,7 @@ module PageHelpers
     clean_url = "http://flsilva.com/"
     clean_url << "blog/" unless /blog\/.+/.match(url).nil?
 
-    blob = current_page.title.downcase.gsub(" - ", "-")
+    blob = current_page.data.title.downcase.gsub(" - ", "-")
     blob = blob.gsub(" ", "-")
     blob = blob.gsub(/[^-\/0-9A-Za-z]/, '')
 
