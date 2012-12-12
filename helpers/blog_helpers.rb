@@ -65,6 +65,6 @@ module BlogHelpers
   end
 
   def get_tweet_hashtags
-    return current_page.data.tweet_hashtags || current_page.data.title
+    return current_page.data.tweet_hashtags || ""
   end
 end
