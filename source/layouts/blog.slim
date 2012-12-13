@@ -1,9 +1,6 @@
 == partial "partials/doctype"
 == partial "partials/ie-conditional-comments"
-
-- og_type = (current_page.path == "/") ? "blog" : "article"
-== partial "partials/head", :locals => { :include_partial => true, :partial_path => "partials/facebook-og-metatags", :type => og_type }
-
+== partial "partials/head", :locals => { :include_partial => true, :partial_path => "partials/facebook-og-metatags" }
 == partial "partials/body_tag"
 == partial "partials/ie6-chrome-frame-conditional-comment"
 #fb-root
@@ -22,6 +19,7 @@
 == partial "partials/footer"
 == javascript_include_tag  "all"
 == partial "partials/google-analytics"
+== partial "partials/disqus-comment-count"
 == partial "partials/facebook-sdk"
 == partial "partials/twitter-js"
 == partial "partials/google-plus-js"

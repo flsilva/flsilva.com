@@ -6,7 +6,7 @@ article.post(itemscope itemprop="blogPost" itemtype="http://www.schema.org/BlogP
       time(datetime=article.date.strftime('%Y-%m-%d') pubdate)
         = article.date.strftime('%B %d, %Y')
       '  by <span itemprop="author">#{article.data.author}</span> -
-      == link_to "12 comments", article, :id => get_post_link_id(defined?(post_path), article.title, "comments-button")
+      == link_to "", article, :class => "comments-link", :id => get_post_link_id(defined?(post_path), article.title, "comments-button")
     - unless article.tags.nil? || article.tags.empty?
       p.tags
         | tags:
