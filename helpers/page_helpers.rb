@@ -34,15 +34,6 @@ module PageHelpers
   end
 
   def get_clean_url
-    url = current_page.url.to_s.downcase
-
-    clean_url = "http://flsilva.com/"
-    clean_url << "blog/" unless /blog\/.+/.match(url).nil?
-
-    blob = current_page.data.title.downcase.gsub(" - ", "-")
-    blob = blob.gsub(" ", "-")
-    blob = blob.gsub(/[^-\/0-9A-Za-z]/, '')
-
-    clean_url << blob
+    url = "http://flsilva.com" << current_page.url.to_s.downcase
   end
 end
