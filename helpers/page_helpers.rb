@@ -1,4 +1,8 @@
 module PageHelpers
+  def get_page_title_suffix
+    " | flsilva's Blog"
+  end
+
   def set_page_title
     url = current_page.url.to_s.downcase
     title = current_page.data.title
@@ -9,9 +13,10 @@ module PageHelpers
       if title.nil? || title == "Blog"
         title = url[url.rindex("blog/") + 5, url.size].chomp("/")
         title = title.split(" ").each { |w| w.capitalize! }.join(" ")
-        title + " Articles | flsilva's Blog"
+        title = title + " Articles"
+        title = title + get_page_title_suffix
       else
-        title + " | flsilva's Blog "
+        title + get_page_title_suffix
       end
     end
   end
@@ -34,6 +39,6 @@ module PageHelpers
   end
 
   def get_clean_url
-    url = "http://flsilva.com" << current_page.url.to_s.downcase
+    url = "http://flsilva.com" << current_page.url
   end
 end

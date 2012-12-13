@@ -1,6 +1,9 @@
 == partial "partials/doctype"
 == partial "partials/ie-conditional-comments"
-== partial "partials/head"
+
+- og_type = (current_page.path == "/") ? "blog" : "article"
+== partial "partials/head", :locals => { :include_partial => true, :partial_path => "partials/facebook-og-metatags", :type => og_type }
+
 == partial "partials/body_tag"
 == partial "partials/ie6-chrome-frame-conditional-comment"
 #fb-root
