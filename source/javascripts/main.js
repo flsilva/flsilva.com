@@ -29,6 +29,7 @@ function configPortfolioSlideshow()
 
   $("#slide-bienal2012").orbit(config);
   $("#slide-schin2010").orbit(config);
+  $("#slide-schin2009").orbit(config);
   $("#slide-conspiracao").orbit(config);
   $("#slide-pepsi").orbit(config);
   $("#slide-ultraeco").orbit(config);
