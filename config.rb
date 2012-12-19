@@ -11,6 +11,9 @@
 #   config.output_style = :compact
 # end
 
+require "slim"
+require "zurb-foundation"
+
 ###
 # Page options, layouts, aliases and proxies
 ###
@@ -37,8 +40,32 @@
 # Helpers
 ###
 
+page "/index.html*", :layout => :blog
+page "/blog/*", :layout => :blog
+page "google496e6b73c411bbe3.html", :directory_index => false
+page "sitemap.xml", :layout => false
+
 # Automatic image dimensions on image_tag helper
-# activate :automatic_image_sizes
+activate :automatic_image_sizes
+
+# Pretty URLs
+activate :directory_indexes
+
+activate :blog do |blog|
+  blog.layout = "blog"
+  blog.prefix = "blog"
+  blog.permalink = ":title/index.html"
+  blog.taglink = ":tag/index.html"
+  blog.tag_template = "tag.html"
+end
+
+activate :deploy do |deploy|
+  deploy.method = :rsync
+  deploy.user = "flsilva"
+  deploy.host = "66.228.57.112"
+  deploy.path = "/var/www/flsilva.com"
+  deploy.clean = true
+end
 
 # Methods defined in the helpers block are available in templates
 # helpers do
@@ -56,10 +83,16 @@ set :images_dir, 'images'
 # Build-specific configuration
 configure :build do
   # For example, change the Compass output style for deployment
-  # activate :minify_css
+  activate :minify_css
 
   # Minify Javascript on build
-  # activate :minify_javascript
+  activate :minify_javascript
+
+  activate :gzip
+  activate :asset_hash
+
+  # Pretty up Slim output
+  set :slim, :pretty => true
 
   # Enable cache buster
   # activate :cache_buster
@@ -69,7 +102,8 @@ configure :build do
 
   # Compress PNGs after build
   # First: gem install middleman-smusher
-  # require "middleman-smusher"
+  require "middleman-smusher"
+  # temporary disabling due to slowness
   # activate :smusher
 
   # Or use a different image path

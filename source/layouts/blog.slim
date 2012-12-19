@@ -1,0 +1,26 @@
+== partial "partials/doctype"
+== partial "partials/ie-conditional-comments"
+== partial "partials/head", :locals => { :include_partial => true, :partial_path => "partials/facebook-og-metatags" }
+== partial "partials/body_tag"
+== partial "partials/ie6-chrome-frame-conditional-comment"
+#fb-root
+.container
+  == partial "partials/header"
+  .row
+    .nine.columns
+      section role="main"
+        header.clear-fix
+          h2 == yield_content :main_content_title
+          == yield_content :sub_header
+        == yield
+    .three.columns
+      == partial "partials/tag_cloud"
+  .push-footer
+== partial "partials/footer"
+== javascript_include_tag  "all"
+== partial "partials/google-analytics"
+== partial "partials/disqus-comment-count"
+== partial "partials/facebook-sdk"
+== partial "partials/twitter-js"
+== partial "partials/google-plus-js"
+== partial "partials/linkedin-js"

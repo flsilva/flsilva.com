@@ -1,0 +1,10 @@
+- title = set_page_title.gsub(get_page_title_suffix, "")
+- type = (current_page.url == "/") ? "blog" : "article"
+
+meta property="og:title" content==title
+meta property="og:description" content==set_meta_description
+meta property="og:type" content==type
+meta property="og:url" content==get_clean_url
+meta property="og:image" content=="http://flsilva.com#{image_path("logo-brand-217x217.png")}"
+meta property="og:site_name" content="flsilva&#039;s Blog"
+meta property="fb:admins" content="100004257433352"

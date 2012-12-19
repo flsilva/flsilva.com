@@ -1,0 +1,13 @@
+---
+title: Web and Mobile App Development Articles | flsilva's Blog
+description: Articles about Ruby, Rails, HTML5, CSS3, JavaScript, iOS, Android, Agile, Design Patterns, TDD, etc. Blog written by Flavio Silva, agile full-stack web and mobile application developer.
+priority: 1.0
+changefreq: weekly
+---
+- content_for :main_content_title do
+  | Blog
+- content_for :sub_header do
+  == partial "partials/social-media-interaction"
+section(itemscope itemtype="http://www.schema.org/Blog")
+  - page_articles.each_with_index do |article, i|
+    == partial "partials/post", :locals => { :article => article, :article_content => article.data.summary }

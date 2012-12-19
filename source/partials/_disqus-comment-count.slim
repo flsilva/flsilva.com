@@ -1,0 +1,22 @@
+javascript:
+  // COMMENT COUNT FUNCTIONALITY
+  function configBlogDisqusCommentCount()
+  {
+    $(".post .comments-link").each(function(index, element)
+    {
+      var href = $(element).attr("href");
+      $(element).attr("href", href + "#disqus_thread");
+    });
+  }
+  configBlogDisqusCommentCount();
+
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'flsilva';
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());

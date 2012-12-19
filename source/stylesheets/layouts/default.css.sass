@@ -1,0 +1,544 @@
+@charset "utf-8"
+
++font-face("CaviarDreams", font-files("CaviarDreams.woff", "CaviarDreams.ttf", "CaviarDreams.svg", "CaviarDreams.eot"))
++font-face("OpenSans-Regular", font-files("OpenSans-Regular.woff", "OpenSans-Regular.ttf", "OpenSans-Regular.svg", "OpenSans-Regular.eot"))
+
++sticky-footer(80px, ".container", ".push-footer", "footer.page")
+
+body
+  background-color: $backgroundColor
+
+/*body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td
+  font-size: inherit
+
+/*p
+  font-size: 1em
+
+p
+  line-height: 1.5!important
+  &.lead
+    line-height: 1.5!important
+
+
+h1, h2, h3, h4, h5, h6
+  font-weight: normal
+  font-style: normal
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+  color: $headerFontColor
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover
+  color: $headerFontColor
+
+h1.inline, h2.inline, h3.inline, h4.inline, h5.inline, h6.inline
+  display: inline
+
+a:hover
+  text-decoration: underline!important
+
+/*h1
+  font-size: 4.4em
+
+/*h2
+  font-size: 3.7em
+
+/*h3
+  font-size: 2.7em
+
+/*h4
+  font-size: 2.3em
+
+/*h5
+  font-size: 1.7em
+
+/*h6
+  font-size: 1.4em
+
+h5, h6
+  font-family: $bodyFontFamily
+  font-weight: bold
+
+.link-color
+  color: $mainColor!important
+
+.float-left
+  float: left
+
+.float-right
+  float: right
+
+.clear-fix
+  &::after
+    clear: both
+  &::before, &::after
+    content: ""
+    display: table
+
+
+.orbit-wrapper
+  height: auto!important
+  .timer
+    display: none
+
+dl.tabs
+  margin-bottom: 40px
+  dd.active
+    border-top: none
+    margin-top: 0px
+    a
+      border-top: 1px solid #E6E6E6
+      //border-radius: 4px 4px 0px 0px
+      background-color: $backgroundColor
+      &:hover
+        text-decoration: none!important
+  @media #{$mediaSmall}
+    margin-bottom: 70px
+    //dd
+      a
+        color: inherit!important
+        background-color: $backgroundColor!important
+    dd.active
+      a
+        color: inherit!important
+        //background-color: #000000!important
+
+
+.license
+  margin-top: 40px!important
+  padding: 20px!important
+  border: 1px solid #5A5A5A!important
+  background-color: #000000
+  &.cc-by-nc-sa
+    a.icon
+      display: block
+      float: left
+      text-indent: -9999px
+      width: 90px
+      height: 32px
+      margin: 0px 8px 4px 0px
+      background: url("/images/creative-commons/by-nc-sa.png") no-repeat
+      @media #{$mediaGreaterPixelRatio}
+        background: url("/images/creative-commons/by-nc-sa@2x.png") no-repeat
+        background-size: 90px 32px
+
+header.page
+  padding: 20px 0px 20px 0px
+  margin-bottom: 30px
+  background-color: #191919
+  border-bottom: 4px solid #C9C9C9
+  @media #{$mediaSmall}
+    padding-bottom: 10px
+  h1.logo
+    margin: 0px
+    a
+      display: block
+      width: 35px
+      height: 40px
+      text-indent: -9999px
+      background: url("/images/logo.png") no-repeat
+      @media #{$mediaGreaterPixelRatio}
+        background: url("/images/logo@2x.png") no-repeat
+        background-size: 35px 40px
+  .menu-button
+    margin: 12px 4px 0px 0px
+    span
+      display: block
+      width: 18px
+      height: 2px
+      margin-bottom: 5px
+      background-color: #FFFFFF
+
+
+.nav-bar.social-media
+  height: 32px
+  margin: 0px
+  background: none
+  @media #{$mediaSmall}
+    li
+      float: left!important
+  &.mobile
+    li
+      margin-left: 16px
+    @media #{$mediaSmallPortrait}
+      display: table
+      margin: 14px auto 0px
+      li
+        margin-left: 16px
+  li
+    border: none!important
+    margin-left: 8px
+    box-shadow: none!important
+    a
+      width: 32px
+      height: 32px
+      padding: 0px
+      text-indent: -9999px
+      &.mobile
+        width: 48px
+        height: 48px
+  li:first-child
+    margin-left: 0px
+  .twitter
+    background: url("/images/social-media/twitter-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/twitter-icon-mobile.png") no-repeat
+      background-size: 48px 48px
+  .linkedin
+    background: url("/images/social-media/linkedin-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/linkedin-icon-mobile.png") no-repeat
+      background-size: 48px 48px
+  .github
+    background: url("/images/social-media/github-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/github-icon-mobile.png") no-repeat
+      background-size: 48px 48px
+  .facebook
+    background: url("/images/social-media/facebook-icon.png") no-repeat
+    &.mobile
+      background: url("/images/social-media/facebook-icon-mobile.png") no-repeat
+      background-size: 48px 48px
+
+=main-nav-active-item
+  border-top: 2px solid #F9F9F9
+  padding-top: 0px!important
+  text-decoration: none!important
+
+.main-nav
+  margin: 0px
+  background: none
+  li
+    border: none!important
+    margin-left: 14px
+    box-shadow: none!important
+    background: none!important
+    a
+      padding: 2px 0px 0px!important
+      font-family: "OpenSans-Regular", "Verdana", Arial, sans-serif
+      font-size: 20px!important
+      color: $headerFontColor!important
+      text-transform: uppercase
+      &:hover
+        +main-nav-active-item
+  li.active
+    a
+      +main-nav-active-item
+  li:first-child
+    padding-top: 0px
+    margin-left: 0px
+  @media only screen and (min-width: 700px) and (max-width: 820px)
+    li
+      a
+        font-size: 18px!important
+  @media #{$mediaSmall}
+    float: none
+    margin-top: 50px
+    height: 0px
+    overflow: hidden
+    +single-transition(height, 0.5s)
+    li
+      margin-left: 0px
+      a
+        text-align: center
+        border-bottom: 1px solid #414141
+        padding: 5px 0px!important
+        &:hover
+          border-top: none!important
+    li:last-child
+      a
+        border-bottom: none
+    li.active
+      a
+        border-top: none
+        border-bottom: 1px solid #F9F9F9
+
+.main-nav.active
+  height: 337px
+
+section[role=main]
+  padding-bottom: 40px
+  > header
+    //border-bottom: 1px solid #5a5a5a
+    border-bottom: 2px solid #C9C9C9
+    margin-bottom: 35px
+    h2
+      font-size: 30px
+      margin-top: 0px
+      text-transform: uppercase
+  ul
+    padding-left: 18px
+  +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 22px)
+  @media #{$mediaGreaterPixelRatio}
+    +pretty-bullets("/images/check-icon-32px.png", 16px, 16px, 22px)
+  li
+    padding-left: 24px
+    background-size: 16px 16px
+
+footer.page
+  padding: 25px 0px
+  background-color: #191919
+  @media #{$mediaSmallPortrait}
+    .float-left
+      float: none
+    .float-right
+      float: none
+  &.mobile
+    height: 96px
+    p
+      padding-top: 13px
+    @media #{$mediaSmallPortrait}
+      padding: 15px 0px
+      height: 150px
+      p
+        padding-top: 36px
+  p
+    margin: 0px
+    padding-top: 4px
+    @media #{$mediaSmallPortrait}
+      text-align: center
+      padding-top: 10px
+
+.job
+  margin-bottom: 60px
+  h3
+    margin-bottom: 6px
+    span
+      color: $grayFontColor
+  .date
+    font-family: $headerFontFamily
+    color: $grayFontColor
+    font-size: 16px
+  .date
+    margin: 5px 0px 20px 0px
+  .slide
+    img
+      display: none
+      &:first-child
+        display: block
+  .description
+    margin: 40px 0px 30px
+    .info-title
+      color: $grayFontColor
+    .detail
+      margin-bottom: 6px
+  .button
+    &:hover
+      text-decoration: none!important
+    @media #{$mediaSmall}
+      display: inline-block!important
+  img.border
+    border: 1px solid #5a5a5a
+
+body.index
+  section[role=main]
+    > header
+      h2
+        float: left
+    .social-media-interaction
+      float: right
+      margin-top: 5px
+
+body.index, body.blog
+  .row
+    width: 1000px
+  section[role=main]
+    > header
+      h2
+        font-size: 34px
+    @media #{$mediaSmall}
+      padding-bottom: 0px
+  header
+    .social-media-interaction
+      margin-bottom: 20px
+      @media #{$mediaSmallPortrait}
+        display: none
+
+body.blog
+  @media #{$mediaSmallPortrait}
+    section[role=main]
+      > header
+        h2
+          a:first-child
+            display: block
+        .tag-name-separator
+          display: none
+  .tag-name-separator
+    margin: 0 22px
+  header
+    .social-media-interaction
+      margin-top: 5px
+  .post
+    padding-bottom: 50px
+    margin-bottom: 50px
+
+.post
+  padding-bottom: 30px
+  margin-bottom: 30px
+  border-bottom: 2px solid #C9C9C9
+  header
+    margin-bottom: 8px
+    h3
+      font-size: 32px
+  footer
+    padding-bottom: 12px
+    border-bottom: 1px solid #5A5A5A
+    margin-bottom: 15px
+    > p
+      margin-bottom: 3px
+      > time
+        color: #dddddd
+        font-weight: bold
+    .tags
+      a
+        padding: 0px 6px
+        &:first-child
+          padding-left: 8px
+  .content
+    h3
+      margin-top: 20px
+    p
+      margin: 15px 0px 0px
+  &:last-child
+    border-bottom: none
+  @media #{$mediaSmall}
+    &:last-child
+      border-bottom: 2px solid #C9C9C9!important
+  .bottom
+    .social-media-interaction
+      display: table
+      margin: 45px auto 0px
+  .top
+    .social-media-interaction
+      margin-bottom: 25px
+
+.social-media-interaction
+  text-transform: none
+  @media #{$mediaSmallPortrait}
+    > div
+      padding-top: 15px
+  #facebook-interaction
+    display: inline-block
+    width: 149px
+  #twitter-interaction
+    display: inline-block
+    width: 98px
+    iframe
+      position: absolute
+      margin-top: -18px
+  #google-plus-interaction
+    display: inline-block
+    > div:first-child
+      width: 82px!important
+      padding-top: 2px!important
+  #linkedin-interaction
+    display: inline-block
+
+.tag-cloud
+  margin-top: 40px
+  a
+    display: inline-block
+    padding: 6px 6px 0px 0px
+    color: inherit
+    &:last-child
+      padding-right: 0px
+  @media #{$mediaSmall}
+    margin: 0px 0px 40px 0px
+
+body.about
+  ul
+    li
+      margin-bottom: 6px
+
+body.services_consulting-coaching, body.resume
+  li
+    a
+      color: inherit
+
+.project
+  margin-top: 40px
+  .logo
+    margin-bottom: 20px
+  &.vostokframework
+    .logo
+      a
+        display: block
+        width: 260px
+        height: 130px
+        text-indent: -9999px
+        background: url("/images/projects/vostokframework.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/vostokframework@2x.png") no-repeat
+          background-size: 260px 130px
+  &.as3coreaddendum
+    .logo
+      a
+        display: block
+        width: 255px
+        height: 70px
+        text-indent: -9999px
+        background: url("/images/projects/as3coreaddendum.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/as3coreaddendum@2x.png") no-repeat
+          background-size: 255px 70px
+  &.as3utils
+    .logo
+      a
+        display: block
+        width: 167px
+        height: 70px
+        text-indent: -9999px
+        background: url("/images/projects/as3utils.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/as3utils@2x.png") no-repeat
+          background-size: 167px 70px
+  &.as3collections
+    .logo
+      a
+        display: block
+        width: 251px
+        height: 70px
+        text-indent: -9999px
+        background: url("/images/projects/as3collections.png") no-repeat
+        @media #{$mediaGreaterPixelRatio}
+          background: url("/images/projects/as3collections@2x.png") no-repeat
+          background-size: 251px 70px
+
+
+body.resume
+  section[role=main]
+    > header
+      h2
+        margin-bottom: 2px
+        font-size: 46px
+        text-transform: none
+      h4
+        margin-top: 2px
+        font-size: 21px
+    h3
+      margin-top: 28px
+
+body.contact
+  p.text-intro
+    margin-bottom: 36px
+  .data
+    &.name
+      display: none
+    h3, p
+      display: inline-block
+    h3
+      padding-right: 6px
+      margin: 0px 0px 6px
+      font-size: 30px
+      color: #A3A3A3
+    p
+      margin: 0px
+      color: #F9F9F9
+      font-size: 16px
+  .location
+    margin-top: 36px
+    padding-top: 12px
+    border-top: 1px solid #5a5a5a
+  @media #{$mediaSmall}
+    .data
+      h3
+        font-size: 26px
