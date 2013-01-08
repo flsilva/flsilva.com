@@ -12,9 +12,9 @@ article.post(itemscope itemprop="blogPost" itemtype="http://www.schema.org/BlogP
         | tags:
         - article.tags.each do |tag|
           a id==get_post_link_id(defined?(post_path), article.title, "tag-button") href==tag_path(tag) itemprop="keywords" ==tag
-  - if defined?(post_path)
-    .top
-      == partial "partials/social-media-interaction"
+    - if defined?(post_path)
+      .top
+        == partial "partials/social-media-interaction"
   .content itemprop="articleBody"
     - if defined?(post_path)
       == partial post_path
