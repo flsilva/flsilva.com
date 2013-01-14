@@ -267,12 +267,15 @@ section[role=main]
       text-transform: uppercase
   ul
     padding-left: 18px
-  +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 22px)
-  @media #{$mediaGreaterPixelRatio}
-    +pretty-bullets("/images/check-icon-32px.png", 16px, 16px, 22px)
-  li
-    padding-left: 24px
-    background-size: 16px 16px
+    +pretty-bullets("/images/check-icon-16px.png", 16px, 16px, 22px)
+    @media #{$mediaGreaterPixelRatio}
+      +pretty-bullets("/images/check-icon-32px.png", 16px, 16px, 22px)
+    li
+      padding-left: 24px
+      background-size: 16px 16px
+  ol
+    li
+      margin-top: 8px
 
 footer.page
   padding: 25px 0px
@@ -396,8 +399,6 @@ body.blog
   .content
     h3
       margin-top: 20px
-    p
-      margin: 15px 0px 0px
   &:last-child
     border-bottom: none
   @media #{$mediaSmall}

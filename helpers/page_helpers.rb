@@ -30,7 +30,7 @@ module PageHelpers
       if (title.nil? || title == "Blog")
         tag_name = url[url.rindex("blog/") + 5, url.size].chomp("/").to_s
         file_name = tag_name << "_tag"
-        description = data.send(file_name.to_sym).description
+        description = data.send(file_name.underscore.to_sym).description
       end
     end
 
