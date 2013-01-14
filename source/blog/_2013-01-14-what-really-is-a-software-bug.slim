@@ -1,0 +1,43 @@
+textile:
+  Sometimes we neglect what really is a _bug_. Of course there are obvious _bugs_ which you don't need to seriously think about it, but sometimes it may be difficult to evaluate if something really is a _bug_ or not. In the software development process several issues may arise, and not all of them are necessarily _bugs_.
+
+  Since _bugs_ are a central piece in software development and testing we need an accurate description about what it is, so when those tricky ones occur we are able to make an accurate judgement about it.
+
+  There are several names for software _bugs_ such as _error_, _problem_, _failure_, _defect_, etc. Just by listing these variations we have a better idea of what it is: some type of error, of course. But this is a very narrow definition because it's impossible to firmly state whether something really is a _bug_ based solely on it. We need solid parameters to be able to decide whether something really is a _bug_ or not. I have found these solid parameters on Patton (6-7):
+
+  # The software doesn't do something that the product specification says it should do.
+	# The software does something that the product specification says it shouldn't do.
+	# The software does something that the product specification doesn't mention.
+	# The software doesn't do something that the product specification doesn't mention but 	should.
+	# The software is difficult to understand, hard to use, slow, or—in the software tester's eyes	—will be viewed by the end user as just plain not right.
+
+  The first two items are quite straightforward, but some doubts may rise about the others.
+
+  On the third item, suppose a developer implementing a nice _extra_ feature. Although it may be a nice feature, it may have side effects. The software tester will have more work to do, it may introduce more _bugs_ or it may be part of a future release of the product (messing up with such plan). If you are a developer and have an idea for a new feature, talk about it to your team first.
+
+  The fourth item conflict with the third item, but it exists because no specification is perfect and will never cover every detail of the product. So here common sense and good communication must prevail. Ideally, the specification should be updated with new issues.
+
+  The fifth item covers any other possible _bug_, such as: a GUI icon is very small, a scrollbar is hard to use, a text is blurred, it's difficult to find a piece of information, etc. As you can see it demands a lot of common sense and real world experience from the person who is testing, since these possible _bugs_ are more subjective.
+
+  You may have noticed that only the fifth item doesn't mention a "product specification":/blog/what-is-a-product-specification. This is due to the fact that it is a key documentation which must exist for any product. For more information about it read the article "What is a Product Specification?":/blog/what-is-a-product-specification.
+
+  Another important issue is the difference between the _bug_ itself from a software's _failure_. While the _bug_ is the error itself, the _root cause_ (e.g. code error, logic mistake), a _failure_ is its consequence, its effect in the running software. Thus, a single _bug_ may trigger multiple _failures_.
+
+  When a _bug_ exists, but no one hit its _failure_, it's called a _latent bug_ (Patton 30).
+
+  Note that the way I'm using the terms _bug_ and _failure_ in this article is not universal. Anyone may use different terms and that's ok. The important thing is that in the context of the discussion, in the context of a team, everyone is on the same page. I've chose _bug_ as the _root cause_ and _failure_ as its consequence because they are very popular terms. When the _bug_ term was coined it refered to the _root cause_ of a _failure_, i.e., when a real life bug triggered a _failure_ in the system.
+
+  I have found it very useful not only to myself as a software developer and tester, but also to the whole team (project coordinators, QA professionals, etc), helping to improve teamwork communication and software's quality.
+
+  h3(#related-posts). Related Posts
+
+  "What is a Product Specification?":/blog/what-is-a-product-specification
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://en.wikipedia.org/wiki/Software_bug" target="_blank">Software bug</a>
+  <a href="http://en.wikipedia.org/wiki/List_of_software_bugs" target="_blank">List of software bugs</a>
+
+  h3(#bibliography). Bibliography
+
+  Patton, Ron. _Software Testing_. 2nd ed. Sams, 2005.
