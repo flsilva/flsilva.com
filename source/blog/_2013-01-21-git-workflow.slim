@@ -1,0 +1,59 @@
+textile:
+
+  If you're new to <a href="http://git-scm.com/" target="_blank">Git</a> or want to know a bit more about its basics and its distributed model, do not hesitate to read the "Introducing Git":/blog/introducing-git article.
+
+  <div class="info-box">
+  <span class="warning icon"></span>
+  
+  If you're very new to Git do not try to run the commands listed in this article, they have missing parameters. This article was written to be a conceptual explanation about the Git workflow. Playing with the commands to better understand the concepts is the subject of the next article that will the published soon.
+  </div>
+
+  h3(#the-three-file-states). The Three File States
+
+  <a href="http://git-scm.com/" target="_blank">Git</a> works with the concept of three file states: "_commited_":/blog/git-workflow/#commited-file-state, "_modified_":/blog/git-workflow/#modified-file-state and "_staged_":/blog/git-workflow/#staged-file-state (Chacon 8). Each state relates to a specific Git section: "_working directory_":/blog/git-workflow/#working-directory, "_staging area_":/blog/git-workflow/#staging-area and "_Git directory_":/blog/git-workflow/#git-directory (repository) (Chacon 8). And any new file that you add to the "_working directory_":/blog/git-workflow/#working-directory is an "_untracked file_":/blog/git-workflow/#untracked-file, which means that the file doesn't exist in the repository.
+
+  When you create a new repository from scratch running <code class="inline">$ git init</code> in an empty directory, your "_working directory_":/blog/git-workflow/#working-directory (the physical directory that the files reside on your local machine) is empty. And if you <code class="inline">$ git clone</code> some remote repository, your "_working directory_":/blog/git-workflow/#working-directory is fully synchronized with the "_Git directory_":/blog/git-workflow/#git-directory (repository). Thereafter, any changes you make on any file automatically puts it in the "_modified_":/blog/git-workflow/#modified-file-state state. And if you add new files, those will be "_untracked_":/blog/git-workflow/#untracked-file. At this time (with modified and/or untracked files), trying to run <code class="inline">$ git commit</code> to send files from the "_working directory_":/blog/git-workflow/#working-directory to the local repository ("_Git directory_":/blog/git-workflow/#git-directory) will have no effect. Git only send files that are in the "_staged_":/blog/git-workflow/#staged-file-state state (which conceptually resides in the "_staging area_":/blog/git-workflow/#staging-area) to the repository. So before you run <code class="inline">$ git commit</code> you must run <code class="inline">$ git add</code> to stage any file, files or whole directories. When you _add_ files, they pass from "_modified_":/blog/git-workflow/#modified-file-state (or "_untracked_":/blog/git-workflow/#untracked-file) to "_staged_":/blog/git-workflow/#staged-file-state ("_staging area_":/blog/git-workflow/#staging-area). After that, running <code class="inline">$ git commit</code> will change the state of the files from "_staged_":/blog/git-workflow/#staged-file-state to "_commited_":/blog/git-workflow/#commited-file-state, leaving the "_staging area_":/blog/git-workflow/#staging-area and going to the "_Git directory_":/blog/git-workflow/#git-directory (repository). Each <code class="inline">$ git commit</code> represents a snapshot of the project.
+
+figure
+  img src="/images/blog/git/git-workflow.png" alt="Git Workflow" width="386" height="355"
+  figcaption (Chacon 8)
+
+textile:
+  <div class="info-box">
+  <span class="warning icon"></span>
+  
+  When you run <code class="inline">$ git add</code>, Git sends a *snapshot* of the file to the "_staging area_":/blog/git-workflow/#staging-area, not a reference of the file itself, which means that if you change that file again (after _add_ and before __commit__) those change is not in the "_staging area_":/blog/git-workflow/#staging-area. In this case you need to run <code class="inline">$ git add</code> again for that same file. This is an important detail and illustrates how Git works with the snapshot concept.
+  </div>
+
+  h3(#summary). Summary
+
+  <span class="small-title" id="working-directory">_Working directory_</span> is your physical local directory, where you make changes to your files.
+
+  <span class="small-title" id="staging-area">_Staging area_</span> is a place where Git keeps a reference of all modifications (snapshots of files) to be sent to the next _commit_.
+
+  <span class="small-title" id="git-directory">_Git directory_</span> is the repository, the Git database that stores all files in a compressed form.
+
+  <span class="small-title" id="untracked-file-state">_Untracked file_</span> resides only in your working directory (i.e. it doesn't exist in the _Git directory_).
+
+  <span class="small-title" id="modified-file-state">_Modified file_</span> resides both in your _working directory_ and your _Git directory_, but have different versions (i.e. the _working directory_ version was changed) and the file was not sent to the _stagging area_ (running <code class="inline">$ git add</code>).
+
+  <span class="small-title" id="stage-file-state">_Staged file_</span> resides in your _working directory_, may or may not reside in the _Git directory_, was changed (if it exists in the _Git directory_) or was an _untracked file_, and was added to the _staging area_ running <code class="inline">$ git add</code>.
+
+  <span class="small-title" id="commited-file-state">_Commited file_</span> resides both in your _working directory_ and _Git directory_ with the exact same version.
+
+  You can run <code class="inline">$ git status</code> at any time to check the state of your files.
+
+  Well, it was a bit complex and much theoretical explanation. Do not worry if things may be a little confusing right now. It'll make much more sense when we start playing with the commands in practice, which is the subject of the next article that will be published soon. Stay tunned.
+
+  h3(#related-posts). Related Posts
+
+  "Introducing Git":/blog/introducing-git/
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://git-scm.com/" target="_blank">Git</a>
+  <a href="http://progit.org/book/" target="_blank">Pro Git Book</a>
+
+  h3(#bibliography). Bibliography
+
+  Chacon, Scott. _Pro Git_. Apress, 2009.

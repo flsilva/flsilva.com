@@ -58,6 +58,19 @@ h5, h6
   font-family: $bodyFontFamily
   font-weight: bold
 
+code
+  font-weight: normal
+  &.inline
+    padding: 2px 4px
+
+figure
+  display: table
+  margin: 40px 0px
+  figcaption
+    font-style: italic
+    text-align: center
+    margin-top: 6px
+
 .link-color
   color: $mainColor!important
 
@@ -66,6 +79,9 @@ h5, h6
 
 .float-right
   float: right
+
+.small-title
+  font-size: 16px
 
 .clear-fix
   &::after
@@ -102,24 +118,35 @@ dl.tabs
         color: inherit!important
         //background-color: #000000!important
 
-
-.license
-  margin-top: 40px!important
+.info-box
+  margin: 40px 0px!important
   padding: 20px!important
   border: 1px solid #5A5A5A!important
   background-color: #000000
-  &.cc-by-nc-sa
-    a.icon
-      display: block
-      float: left
-      text-indent: -9999px
-      width: 90px
-      height: 32px
-      margin: 0px 8px 4px 0px
-      background: url("/images/creative-commons/by-nc-sa.png") no-repeat
-      @media #{$mediaGreaterPixelRatio}
-        background: url("/images/creative-commons/by-nc-sa@2x.png") no-repeat
-        background-size: 90px 32px
+  .icon
+    display: block
+    float: left
+    text-indent: -9999px
+    margin: 0px 8px 4px 0px
+  p:first-child
+    margin-bottom: 4px
+
+.cc-by-nc-sa
+  a.icon
+    width: 90px
+    height: 32px
+    background: url("/images/creative-commons/by-nc-sa.png") no-repeat
+    @media #{$mediaGreaterPixelRatio}
+      background: url("/images/creative-commons/by-nc-sa@2x.png") no-repeat
+      background-size: 90px 32px
+
+.warning.icon
+  display: block
+  width: 75px
+  height: 66px
+  background: url("/images/warning-icon.png") no-repeat
+  background-size: 75px 66px
+  
 
 header.page
   padding: 20px 0px 20px 0px

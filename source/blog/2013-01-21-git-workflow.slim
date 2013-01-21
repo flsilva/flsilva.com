@@ -1,0 +1,15 @@
+---
+title: "Git Workflow"
+description: "Learn about the three file states on Git: modified, staged and commited. And the three corresponding Git sections: working directory, staging area and Git directory."
+priority: 0.6
+changefreq: monthly
+tags: "git"
+author: flsilva
+summary: "Learn about the three file states on Git: modified, staged and commited. And the three corresponding Git sections: working directory, staging area and Git directory."
+tweet_text: "Learn about the three file states on Git: modified , staged and commited."
+tweet_hashtags: "git"
+---
+- content_for :main_content_title do
+  a id==get_post_link_id(true, current_page.title, "main-blog-title-button") href="/" Blog
+== partial "partials/post", :locals => { :article => current_page, :post_path => "blog/2013-01-21-git-workflow" }
+== partial "partials/disqus"
