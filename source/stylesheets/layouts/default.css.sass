@@ -2,6 +2,7 @@
 
 +font-face("CaviarDreams", font-files("CaviarDreams.woff", "CaviarDreams.ttf", "CaviarDreams.svg", "CaviarDreams.eot"))
 +font-face("OpenSans-Regular", font-files("OpenSans-Regular.woff", "OpenSans-Regular.ttf", "OpenSans-Regular.svg", "OpenSans-Regular.eot"))
++font-face("GeneralSetFoundicons", font-files("general_foundicons.woff", "general_foundicons.ttf", "general_foundicons.svg", "general_foundicons.eot"))
 
 +sticky-footer(80px, ".container", ".push-footer", "footer.page")
 
@@ -146,7 +147,7 @@ dl.tabs
   height: 66px
   background: url("/images/warning-icon.png") no-repeat
   background-size: 75px 66px
-  
+
 
 header.page
   padding: 20px 0px 20px 0px
@@ -358,6 +359,20 @@ footer.page
       display: inline-block!important
   img.border
     border: 1px solid #5a5a5a
+  .next-prev-buttons
+    padding-top: 65px
+    a.button.left
+      position: relative
+      [class*="foundicon-"]
+        position: relative
+        top: 3px
+        left: -6px
+    a.button.right
+      position: relative
+      [class*="foundicon-"]
+        position: relative
+        top: 3px
+        left: 6px
 
 body.index
   section[role=main]
