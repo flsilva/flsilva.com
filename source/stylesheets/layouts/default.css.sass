@@ -373,6 +373,17 @@ footer.page
         position: relative
         top: 3px
         left: 6px
+    @media #{$mediaSmall}
+      a.button.left
+        float: left!important
+      a.button.right
+        float: right!important
+    @media #{$mediaSmallPortrait}
+      a.button.left
+        float: none!important
+        margin-bottom: 15px
+      a.button.right
+        float: none!important
 
 body.index
   section[role=main]
