@@ -1,0 +1,15 @@
+---
+title: Introduction to UML Concepts
+description: Get an introduction about what software testing is, who is the software tester and other insights.
+priority: 0.6
+changefreq: monthly
+tags: "uml"
+author: flsilva
+summary: Get an introduction about what software testing is, who is the software tester and other insights.
+tweet_text: "Get an introduction about what software testing is, who is the software tester and other insights."
+tweet_hashtags: "UML"
+---
+- content_for :main_content_title do
+  a id==get_post_link_id(true, current_page.title, "main-blog-title-button") href="/" Blog
+== partial "partials/post", :locals => { :article => current_page, :post_path => "blog/2013-02-27-introduction-to-uml-concepts" }
+== partial "partials/disqus"
