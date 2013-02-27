@@ -4,7 +4,7 @@ textile:
 
   <div class="info-box">
   <span class="warning icon"></span>
-  
+
   If you're very new to Git do not try to run the commands listed in this article, they have missing parameters. This article was written to be a conceptual explanation about the Git workflow. Playing with the commands to better understand the concepts is the subject of the next article that will the published soon.
   </div>
 
@@ -21,7 +21,7 @@ figure
 textile:
   <div class="info-box">
   <span class="warning icon"></span>
-  
+
   When you run <code class="inline">$ git add</code>, Git sends a *snapshot* of the file to the "_staging area_":/blog/git-workflow/#staging-area, not a reference of the file itself, which means that if you change that file again (after _add_ and before __commit__) those change is not in the "_staging area_":/blog/git-workflow/#staging-area. In this case you need to run <code class="inline">$ git add</code> again for that same file. This is an important detail and illustrates how Git works with the snapshot concept.
   </div>
 
