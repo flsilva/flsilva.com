@@ -3,7 +3,7 @@ textile:
 
   h3(#what-is-git). What is Git?
 
-  Popularly, <a href="http://git-scm.com/" target="_blank">Git</a> is known as a <a href="http://en.wikipedia.org/wiki/Revision_control" target="_blank">Version Control System (VCS)</a>, but Git is more than a VCS. Git is a <a href="http://en.wikipedia.org/wiki/Software_configuration_management" target="_blank">Software Configuration Management (SCM)</a> system, because besides files version control, it also has software development process features such as integration team facilities, merge changes on files, tagging, branching, etc.
+  <a href="http://git-scm.com/" target="_blank">Git</a> is popularly known as a <a href="http://en.wikipedia.org/wiki/Revision_control" target="_blank">Version Control System (VCS)</a>, but it's more than that. Git is a <a href="http://en.wikipedia.org/wiki/Software_configuration_management" target="_blank">Software Configuration Management (SCM)</a> system, because besides file version control, it also has software development process features such as integration team facilities, merge changes on files, tagging, branching, and more.
 
   h3(#a-brief-history). A brief history
 
@@ -13,17 +13,17 @@ textile:
 
   Unlike many VCSs (such as <a href="http://subversion.apache.org/" target="_blank">SVN</a>) that are Centralized Version Control Systems (CVCS), Git is a <a href="http://en.wikipedia.org/wiki/Distributed_revision_control" target="_blank">Distributed Version Control System (DVCS)</a>. This is a crucial difference that sets Git apart from most VCSs (that are CVCSs).
 
-  Git's model implies that there's no central repository, so each client is a repository, and not just have a copy of the versioned files. Typically, each client has its own local repository, and in fact all the work can be done by this way (in a single person project). But this is not recommended because any local HD issue might become a huge problem. A better idea would be to have one more repository in another machine, typically a remote repository on the web. For teamwork, that remote repository becomes a shared repository, acting as a facilitator for all team members. What one needs to do to keep everyone up to date is simply send (push) their changes to and receive (pull) others changes from that repository. Thus the shared repository behaves similarly to a central repository, but this is very different from the centralized model, besides the possibility of coexisting multiple shared repositories.
+  Git's model implies that there's no central repository, so each client is a repository, and not only has a copy of the versioned files. Typically, each client has its own local repository, and in fact all the work can be done by this way (in a single person project). But this is not recommended because any local hard disk issue might become a huge problem. A better idea would be to have one more repository in another machine, typically a remote repository on a web server. For teamwork, that remote repository becomes a shared repository, acting as a facilitator for all team members. What one needs to do to keep everyone up to date is simply send (push) their changes to and get (pull) others changes from that repository. Thus the shared repository behaves similarly to a central repository, but this is very different from the centralized model, including the possibility of multiple shared repositories coexist.
 
   h3(#advantages-distributed-model). Advantages of a Distributed Model
 
-  Because each client have a full local repository, nearly every operation is done locally, which means plenty of speed and easiness. While in a centralized model each client has only a copy of the files, so each commit (and other operations, such as consulting a change history) needs to connect to the central repository (often on a remote server), which means low speed and latency.
+  Because each client has a full local repository, nearly every operation is done locally, which means plenty of speed and easiness. Differently, in a centralized model each client has only a copy of the files, so each commit (and other operations, such as consulting the change history) needs to connect to the central repository (often on a remote server), which means latency and low speed.
 
   h3(#git-guts). Git's Guts
 
-  To really understand how Git works and use it effectively it's essential to understand the basic concepts about storage and versioning of files.
+  To really understand how Git works and use it effectively, it's essential to understand its basic concepts about storage and file versioning.
 
-  The way some other VCSs (e.g. <a href="http://subversion.apache.org/" target="_blank">SVN</a>) handle files and versions is storing the base files and then saving the made changes (Chacon 6). So you have the original file and subsequent deltas for each change. Git works differently. For each change in any file (commit) Git stores a snapshot of all files (and has intelligence to not duplicate unchanged files) (Chacon 6). So Git works much more like a mini filesystem.
+  The way some other VCSs (e.g. <a href="http://subversion.apache.org/" target="_blank">SVN</a>) handle files and versions is storing the base files and then saving the changes that were made (Chacon 6). So you have the original file and subsequent deltas for each change. Git works differently. For each change in a file (commit) Git stores a snapshot of all files (and has intelligence to not duplicate unmodified files) (Chacon 6). So Git works much more like a mini filesystem.
 
   That is the key about how Git works, and it's what makes it better and richer than other VCSs.
 
