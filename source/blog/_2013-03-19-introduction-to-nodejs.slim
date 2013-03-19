@@ -1,0 +1,247 @@
+textile:
+
+  Most <a href="http://nodejs.org/" target="_blank">Node.js</a> tutorials on the internet show you how to build a simple HTTP web server. This article, however, attempts to address a prior issue, namely, what Node is, what Evented I/O mean, why Node is different, when we should use it, among other things. So it's not a practical tutorial.
+
+  I've tried hard to cover all major topics in Node, but there's a lot a things happening with it. If you know something important not covered here, please let me know and I'll take a look.
+
+  Node runs on V8, so before talking about what it is, lets get a short introduciton to <a href="https://code.google.com/p/v8/" target="_blank">V8</a>.
+
+  h3(#what-is-v8). What is V8?
+
+  <a href="https://code.google.com/p/v8/" target="_blank">V8</a> is an open source, super fast JavaScript Virtual Machine (VM) written in C++ by Google, and it's used in their Chrome browser. It provides all the data types, operators, objects and functions specified in the ECMA-262 standard, 5th edition. ("Introduction to Chrome V8")
+
+  JavaScript VMs don't typically provide a Document Object Model (DOM) API, and the same is true for V8. That is typically provided by Browsers. ("Introduction to Chrome V8")
+
+  The first version of the V8 engine was released at the same time as the first version of Chrome, September 2, 2008. ("V8 JavaScript engine")
+
+  h3(#what-is-node). What is Node.js?
+
+  Node is a server-side platform for JavaScript written in C++ and JavaScript. It provides a JavaScript VM (V8-backed) and a set of custom APIs intended to “provide an easy way to build scalable network programs.” (“Node.js”). There are APIs to <a href="http://nodejs.org/api/http.html" target="_blank">HTTP</a>, <a href="http://nodejs.org/api/fs.html" target="_blank">File System</a>, <a href="http://nodejs.org/api/os.html" target="_blank">OS</a>, etc. On the other hand, there's no DOM API, because Node's context is not a Browser, but server-side use cases.
+
+  The simplest real-world use case for Node is an HTTP web server receiving and responding to HTTP requests. Such web server may be implemented writing only a few lines of JavaScript code using only one file. Then, using the Node command line tool we execute that file, creating a background process (<a href="http://en.wikipedia.org/wiki/Daemon_(computing)" target="_blank">daemon</a>) listening on a particular port (typically port 80). That means that those JS file becomes a standalone JavaScript program. Nice, uh? You can spread as many Node programs as you like, each one listening on a particular port.
+
+  But Node isn't typically used only as a HTTP web server, it's used as both, an HTTP and application web server, i.e., it can handle HTTP requests (e.g. serves static files) and it also allow developers to write arbitrary application logic, connect to databases, etc, all using only JavaScript. So it _may_ be used for similar use cases as PHP, Ruby, Rails, Python, Django, etc. One clear advantage to Node is that it allows the use of the same language on client-side and server-side, which _may_ be easier and more productive to new and experienced developers, besides the possibility to share code between both sides.
+
+  There are <a href="https://github.com/joyent/node/wiki/Installation" target="_blank">installation instructions</a> in the <a href="https://github.com/joyent/node" target="_blank">official project's repository</a> on GitHub. Also, I've written a simple <a href="/blog/introduction-to-node/#managing-node-installation-with-nvm-on-ubuntu-and-debian" target="_blank">installation instruction using NVM on Ubuntu/Debian</a>.
+
+  Node was created by Ryan Dahl starting in 2009, and its development and maintenance is sponsored by <a href="http://joyent.com/" target="_blank">Joyent</a>, his former employer. ("Node.js - Wikipedia")
+
+  h3(#installing-and-managing-nodejs-versions-with-nvm-on-ubuntu-and-debian). Installing and Managing Node.js Versions with NVM on Ubuntu/Debian
+
+  <a href="https://github.com/creationix/nvm" target="_blank">NVM (Node Version Manager)</a> is one of the best ways to install Node on &#42;nix systems because it will *1)* allow you to install the latest versions *2)* smooth the installation process (only one command to install a desired version) and *3)* allow you to switch between installed versions easily. For those comming from the Ruby ecosystem it's analogue to <a href="https://github.com/sstephenson/rbenv/" target="_blank">rbenv</a> and <a href="https://rvm.io/" target="_blank">RVM</a>.
+
+  h4. Installing NVM
+
+  <pre><code data-language='shell'>
+  // install dependencies (Git is one of them)
+  $ sudo apt-get install build-essential libssl-dev curl git-core
+
+  //using install script from original repo
+  $ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+  $ echo ". ~/.nvm/nvm.sh" >> .bashrc
+
+  // restart your shell
+  exec $SHELL -l
+  </code></pre>
+
+  The installation of NVM is complete, check if it was successful running:
+
+  <code class='inline'>$ nvm ls-remote</code>
+
+  It should list all available Node versions to install. Now you can run <code class='inline'>nvm install</code> with your desired version, for example:
+
+  <code class='inline'>$ nvm install 0.10</code>
+
+  You should see an output like "Now using node v0.10.0". Now it's a good idea to set a default Node version for any new shell you open:
+
+  <code class='inline'>$ nvm alias default 0.10</code>
+
+  To confirm that Node is really working, run:
+
+  <code class='inline'>$ node --version</code>
+
+  You should see the installed version number. Let me know if you have any issues.
+  Visit the <a href="https://github.com/creationix/nvm" target="_blank">official repository</a> for more information.
+
+  h3(#node-is-a-command-line-tool-too). Node is a Command Line Tool too
+
+  Copy and paste the following code into a file named 'helloworld.js':
+
+  <pre><code data-language='javascript'>
+  var sys = require('sys');
+  setTimeout(function(){
+    sys.puts('world');
+  }, 3000);
+  sys.puts('hello');
+  </code></pre>
+
+  Now run <code class="inline">$ node helloworld.js</code>
+  (make sure to point to the files' directory)
+
+  You should see "hello" printed immediately on screen, and "world" three seconds later.
+
+  h4(#repl). REPL
+
+  Node comes with an interactive prompt called REPL (pronounced "repple"), _read-eval-print loop_. While you’re exploring the use of Node and figuring out the code for your custom module or Node application, you don’t have to type JavaScript into a file and run it with Node to test your code. (Powers 21)
+
+  To open REPL you just type "node" without providing any parameter to the command. Try the following as a simple example:
+
+  <pre><code data-language='javascript'>
+  > a = 2;
+  // 2
+  > b = 7;
+  // 7
+  > a * b;
+  // 14
+  </code></pre>
+
+  You can type the same JavaScript into REPL just like you’d type it into a file, including require statements to import modules. (Powers 24)
+
+  Let's try a bit more interesting example. Create a simple 'hello-world-string.txt' text file with a simple "Hello World!" line of text. Then write the following on a REPL session:
+
+  <pre><code data-language='javascript'>
+  > var printData = function(error, data){
+  ... console.log(data);
+  ... }
+  // undefined
+  > fs.readFile('hello-world-string.txt', {encoding:'utf8'}, printData);
+  // Hello World!
+  </code></pre>
+
+  Nice, uh? As said, it's cool to experiment with APIs and syntax. To end the REPL session, either press Ctrl-C twice, or Ctrl-D once.
+
+  h3(#evented-io). Evented I/O
+
+  Node is evented I/O. Evented I/O means non-blocking I/O using event-loops (event-driven) via JavaScript's callback functionality. That's, probably, the main feature of Node, which assumes that I/O is the main bottleneck of most web apps, and implements the non-blocking I/O to solve that problem. Every I/O call that you make using Node needs a callback function.
+
+  To understand what non-blocking I/O is we first need to get an idea about what I/O is.
+
+  h3(#what-is-io). What is I/O?
+
+  Oversimplifying, <a href="http://en.wikipedia.It's built upon it.org/wiki/Input/output" target="_blank">I/O (Input/Output)</a> is the communication (transfer of information) between the brain of a computer (CPU+RAM) and any other device, e.g., a disk drive. In the context of web applications it's a task that will be performed outside the main app thread. This task may be a connection to a database, reading a file on file system, etc.
+
+  h3(#blocking-io). Blocking I/O
+
+  Blocking I/O, or synchronous I/O, is a form ofIt's built upon it. I/O processing that blocks other processing to continue until it's finished.
+
+  Example:
+
+  <pre><code data-language='javascript'>
+  //  synchronous code
+  var result = db.query('select * from my_table');
+  // execution blocked until db.query returns
+  processResult(result); // this method should wait for result
+  unrelatedLogic(); // this one doesn't (but will be forced to)
+  </code></pre>
+
+  h3(#non-blocking-io). Non-blocking I/O
+
+  Non-blocking I/O, or <a href="http://en.wikipedia.org/wiki/Asynchronous_I/O" target="_blank">asynchronous I/O</a>, is a form of I/O processing that doesn't block other processing to continue before the transmission has finished. ("Asynchronous I/O") Or in other words, it means that applications don't have to wait for an input/output process to finish before going on to the next step in the application code. (Powers x)
+
+  Example:
+
+  <pre><code data-language='javascript'>
+  // asynchronous code
+  var result = db.query('select * from my_table', function(result){
+    // this is JS's asynchronous callback functionality waiting for the result here
+    processResult(result);
+  });
+  unrelatedLogic(); // executed before I/O operation has finished (no need to wait it complete)
+  </code></pre>
+
+  When the call to <code class='inline'>db.query()</code> is executed, a callback (event handler) is registered to run when the processing finishes. Right after that _registering_, <code class='inline'>unrelatedLogic()</code> is executed, and any other following code, without <code class='inline'>db.query()</code> has finished. When <code class='inline'>db.query()</code> finishes, the JavaScript's callback function is executed, asynchronously.
+
+  That asynchronous JavaScript's callback functionality is the same used in the client-side. Using jQuery's <a href="http://api.jquery.com/ready/" target="_blank">ready()</a> function, for example, we add an event listener (callback) when the DOM is fully loaded:
+
+  <pre><code data-language='javascript'>
+  $(document).ready(function() {
+    // asynchronous code executed here
+  });
+  </code></pre>
+
+  That is what event-driven means: attach event handlers (callbacks) to events. In this case, jQuery dispatches an event when DOM is fully loaded (ready) and if there are listeners (callbacks) listening that event, jQuery invokes them all.
+
+  <a href="http://www.slideshare.net/simon/evented-io-based-web-servers-explained-using-bunnies" target="_blank">Here</a> and <a href="http://radar.oreilly.com/2011/06/node-javascript-success.html#evented" target="_blank">here</a> are good and simple explanations about non-blocking, evented I/O. And <a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/" target="_blank">here</a> is a very good, more complete explanation.
+
+  h3(#the-single-thread-issue). The Single Thread Issue
+
+  Node is single-threaded, which means there's no possibility to parallel code execution. But what that means? Let's illustrate with a simple example:
+
+  <pre><code data-language='javascript'>
+  console.log('Hello there!');
+  var i = 0;
+  var total = 4000000000; // 4 billion times
+  while(i < total) {
+    i++;
+  }
+  console.log('Goodbye!');
+  console.log('i: ' + i);
+  </code></pre>
+
+  Copy and paste that code into a file and run it. You should notice a short delay (a few seconds) before "Goodbye!" is printed on screen.
+
+  So what's happening here?
+  First of all, there's no I/O processing happening here. Nevertheless, <code class='inline'>console.log('Goodbye!')</code> is only executed after the execution of <code class='inline'>while()</code>. In this example, the <code class='inline'>while()</code> block of code **should be interpreted as a CPU-intensive task**, like resizing an image.
+
+  So while the single thread model of Node is _not_ an issue for I/O processing, because in fact Node will be delegating the processing to another component (on its own thread) and continue its code execution, it _is_ an issue with CPU-intensive code executed _by_ Node. In this case the execution of Node's code is blocked until, e.g., the image processing has finished.
+
+  Although it _is_ an issue, indeed, it has more or less simple workarounds. One is to move CPU-intensive tasks like that to background processes, whith its own threads. The <a href="https://github.com/LearnBoost/kue" target="_blank">kue</a> library is a Node-based solution to solve that problem.
+
+  That kind of issue serves to remind us that there's no silver bullet technology, each one has its own issues and use cases. This show us that Node is great for heavy I/O but low CPU-usage web apps. Nevertheless, any non-trivial web app will have some kind of CPU-intensive task, but it shouldn't be most of the code to be a good use case for Node.
+
+  That single-threaded architecture is the reason why Node scales so well (as well as <a href="http://nginx.org/en/" target="_blank">Nginx</a>), enabling it to handle thousands of concurrent requests with as little RAM as 256MB [1]. The <a href="http://httpd.apache.org/" target="_blank">Apache web server</a>, on the other hand, traditionally spawns a new thread (or process) for each request. <a href="http://wiki.dreamhost.com/Web_Server_Performance_Comparison" target="_blank">In a test made by DreamHost</a>, Apache had a variable memory consumption, using ~7MB of RAM for each process to serve a static 5KB PNG file to 100 concurrent connections (i.e. ~700MB total), and ~1MB for each process to 1500 concurrent connections (i.e. ~1.5GB). In the same test Nginx (which also implements an evented I/O architecture) had a more or less linear memory consumption, using ~100MB to serve the same PNG file to 50, 1500 and 3000 concurrent connections.
+
+  [1] <a href="http://blog.caustik.com/2012/08/19/node-js-w1m-concurrent-connections/" target="_blank">In a test made by Aaron "Caustik" Robinson in late 2012</a>, Node managed to handle 1M active long-poll COMET connections in a single 15GB rackspace cloud server. This is equivalent to ~66k simultaneous connections per 1GB, ~33k/512MB, 16.5k/256MB, and finally, ~64/1MB.
+
+  h3(#modular-architecture-and-npm-basics). Modular Architecture & NPM Basics
+
+  Node has a modular architecture, which means all its API is exposed through packages and modules. Libraries in Node are called packages, and they contain modules. Modules in Node are regular JavaScript files following the <a href="http://www.commonjs.org/" target="_blank">CommonJS module system</a>.
+
+  In your code you only interact with modules, and that is done through the Node's require() function:
+
+  <pre><code data-language='javascript'>
+  var http = require("http");
+  </code></pre>
+
+  The <code class='inline'>require()</code> function takes one parameter, which may be the name of the library or a path to the module file. In this case we're using a Node's core (built-in) module.
+
+  NPM (Node Package Manager) comes bundled with Node. It allow developers to install third-party packages running the following command:
+
+  <code class='inline'>$ npm install package_name</code> // the package should be available in npm registry at npmjs.org
+
+  After installing a third-party package you can start requiring its modules and interacting with its API.
+
+  This is just the basics about NPM, which is a large and key topic of Node, and deserves its own article, which is outside the scope of this article. <a href="http://book.mixu.net/ch8.html" target="_blank">Here</a> is a more detailed introduction to NPM.
+
+  h3(#good-use-cases-for-nodejs). Good Use Cases for Node.js
+
+  Node is particularly good for web apps with high level concurrency and low CPU-usage. If you throw in a real-time feature to the mix, it's surely the perfect scenario for a Node web app. Good examples are chat apps (e.g. GTalk), online games, collaboration tools, etc.
+
+  Besides that well-known use cases, the rise of several MVC-like web app frameworks built upon Node shows a trend where Node may grab a slice of the market for more common web apps. Frameworks like <a href="http://www.meteor.com/" target="_blank">Meteor</a>, <a href="http://locomotivejs.org/" target="_blank">Locomotive</a>, <a href="http://derbyjs.com/" target="_blank">Derby</a> and <a href="http://geddyjs.org/" target="_blank">Geddy</a> have similar features to <a href="http://rubyonrails.org/" target="_blank">Rails</a> and <a href="https://www.djangoproject.com/" target="_blank">Django</a>. As the Node ecosystem keeps growing, several libraries and frameworks reach high quality level and soon I believe we'll have some Rails-like and Django-like mature frameworks available to Node developers. That already happened to simpler frameworks, with <a href="http://expressjs.com/" target="_blank">Express</a> being more or less analog to Ruby <a href="http://www.sinatrarb.com/" target="_blank">Sinatra</a> framework.
+
+  The community visibility and support for those projects shows that they are here to stay, and grow even more. It seems that the Node ecosystem, although already very interesting, is just beginning. Its future is very promising. If you have never worked with back-end before, you may start with Node. If you already implement back-end solutions, you may like to play a bit with Node and keep an eye on it. That's what I'm doing right now, and I'd like to have an opportunity to work with it in a real world project.
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://nodejs.org/" target="_blank">Node.js</a>
+  <a href="https://github.com/joyent/node/" target="_blank">Node's GitHub page</a>
+  <a href="https://npmjs.org/" target="_blank">Node NPM</a>
+  <a href="http://blog.nodejs.org/" target="_blank">Node's Blog</a>
+  <a href="http://book.mixu.net/index.html" target="_blank">Mixu's Node Book</a>
+  <a href="http://www.nodebeginner.org/" target="_blank">The Node Beginner Book</a>
+  <a href="http://docs.nodejitsu.com/" target="_blank">NodeJitsu Docs</a>
+  <a href="http://radar.oreilly.com/2011/06/node-javascript-success.html" target="_blank">The secrets of Node's success</a>
+  <a href="http://blog.mixu.net/2011/02/01/understanding-the-node-js-event-loop/" target="_blank">Understanding the node.js event loop</a>
+  <a href="http://www.devthought.com/2012/02/17/npm-tricks/" target="_blank">NPM tricks</a>
+  <a href="https://github.com/joyent/node/wiki/Projects,-Applications,-and-Companies-Using-Node" target="_blank">Projects, Applications, and Companies Using Node</a>
+
+  h3(#bibliography). Bibliography
+
+  "Asynchronous I/O" _Wikipedia_ , n.d. Web. 13 March 2013 <<a href="http://en.wikipedia.org/wiki/Asynchronous_I/O" target="_blank">http://en.wikipedia.org/wiki/Asynchronous_I/O</a>>
+  "Input/Output" _Wikipedia_ , n.d. Web. 13 March 2013 <<a href="http://en.wikipedia.org/wiki/Input/output" target="_blank">http://en.wikipedia.org/wiki/Input/output</a>>
+  "Introduction to Chrome V8" _Google Developers_ , n.d. Web. 11 March 2013 <<a href="https://developers.google.com/v8/intro" target="_blank">https://developers.google.com/v8/intro</a>>
+  McLaughlin, Brett. _What Is Node?_. O’Reilly Media, Inc, 2011.
+  "Node.js" _Node.js_ , n.d. Web. 11 March 2013 <<a href="http://nodejs.org/about" target="_blank">http://nodejs.org/about</a>>
+  "Node.js - Wikipedia" _Wikipedia_ , n.d. Web. 11 March 2013 <<a href="http://en.wikipedia.org/wiki/Nodejs" target="_blank">http://en.wikipedia.org/wiki/Nodejs</a>>
+  Powers, Shelley. _Learning Node_. O’Reilly Media, Inc, 2012.
+  "V8 JavaScript engine" _Wikipedia_ , n.d. Web. 11 March 2013 <<a href="http://en.wikipedia.org/wiki/V8_(JavaScript_engine)" target="_blank">http://en.wikipedia.org/wiki/V8_(JavaScript_engine)</a>>
