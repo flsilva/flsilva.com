@@ -1,0 +1,210 @@
+textile:
+  The last article about Git ("Git Workflow":/blog/git-workflow) was too much theoretical, but that was intentional. I believe it's necessary to understand some Git's core concepts to make proper use of it, in an easy and intuitive way. If you haven't read it yet, I recommend it before proceeding.
+
+  Now we'll play with Git's basic commands, and hopefully it'll simplify those concepts a lot, and you'll finally have a nice understanding about it.
+
+  h3(#global-settings). Global Settings
+
+  The first thing you should do when you install Git is set your name and e-mail address. This is important because every Git _commit_ uses this information.
+
+  <code class='inline' data-language='shell'>
+  $ git config --global user.name "Your Name"
+  </code>
+  <code class='inline' data-language='shell'>
+  $ git config --global user.email youremail@example.com
+  </code>
+
+  Using __--global__ option makes it globally available for Git (any repo you work). If you want to override that information for a specific repo, just go to that repo's root directory and run the command without the __--global__ option.
+
+  h3(#creating-a-new-repository). Creating a new repository
+
+  There are two ways to create a new Git repo: using _init_ or _clone_ commands. Let's start by _init_.
+
+  Go to the directory that will be the repository and run:
+
+  <code class='inline' data-language='shell'>
+  $ git init
+  </code>
+
+  That started a new repository and created a *local* _master_ branch. Don’t worry about it right now, branching wil be the subject of another article.
+
+  h3(#cloning-an-existing-repository). Cloning an existing repository
+
+  To clone an existing remote repository go to the directory that you want to create the new repository's directory and run a command like <code class='inline' data-language='shell'>$ git clone [url]</code>:
+
+  <code class='inline' data-language='shell'>
+  $ git clone git://github.com/flsilva/as3coreaddendum.git
+  </code>
+
+  That will create an _as3coreaddendum_ directory in your file system.
+
+  h3(#checking-the-status-of-your-files). Checking the status of your files
+
+  After making changes, creating and deleting files, you'll frequently use the _status_ command to check the status of your local repository:
+
+  <code class='inline' data-language='shell'>
+  $ git status
+  </code>
+
+  When you see a message like __nothing to commit, working directory clean__, it means that your "_working directory_":/blog/git-workflow/#working-directory is fully synchronized with your local repository, i.e., there are no changes to be committed.
+
+  When you see a message like __Changes not staged for commit__, it means that you've made changes to tracked files (files already in your local repo) but have not added them to the "_staging area_":/blog/git-workflow/#staging-area, which means they will *not* be committed when you run _commit_ command. Usually you'll also see a message like __Untracked files__, which means there are new files not added to the "_staging area_":/blog/git-workflow/#staging-area.
+
+  h3(#adding-changes-to-the-staging-area). Adding changes to the staging area
+
+  After checking, you'll want to add your changes to the "_staging area_":/blog/git-workflow/#staging-area. There are two main ways to do that, running the _add_ command for individual files or directories:
+
+  <code class='inline' data-language='shell'>
+  $ git add file-name
+  </code>
+
+  Or running _add_ command for all files and directories:
+
+  <code class='inline' data-language='shell'>
+  $ git add -A
+  </code>
+
+  After that you can check the status of your files again:
+
+  <code class='inline' data-language='shell'>
+  $ git status
+  </code>
+
+  Now you should see a message like __Changes to be committed__. That means that you've staged your changes, and they are ready to be committed.
+
+  h3(#committing-changes-to-the-local-repository). Committing changes to the local repository
+
+  Everytime you run _commit_ command Git sends to the local repo the content (files, changes, etc) of the "_staging area_":/blog/git-workflow/#staging-area, not your local file system. So if you run _add_, and before you run _commit_ you make more changes and then run _commit_ (without running _add_ again for those later changes), Git will not commit your later changes. This is a gotcha and shows how Git uses its staging area concept.
+
+  To send your changes to your local repository you run:
+
+  <code class='inline' data-language='shell'>
+  $ git commit -m "your commit message here"
+  </code>
+
+  The commit message is mandatory and you should do it anyway, it's a best practice. Since you should commit often, your messages should be simple but descriptive.
+
+  You can commit how may times you want before sending it to a remote repository.
+
+  h3(#pushing-changes-to-a-remote-repository). Pushing changes to a remote repository
+
+  The time will come when you want to send your precious changes to a safe and warm remote repository, right? I hope you've said yes.
+
+  To send changes to a remote repository you should have one (of course) but you need to have a reference to it in your local repository too. Assuming you already have a remote repository configured somewhere (you can always setup one for free on <a href="http://github.com" target="_blank">GitHub</a>), there are two ways to create a reference to it on your local repo. The first and easier is when you clone some existing repository. In this case Git automatically creates a reference to your cloned repo, naming it _origin_. But if you created your local repo from scratch using _init_ you have to set it up manually running a command like:
+
+  <code class='inline' data-language='shell'>
+  $ git remote add [remote-name] [remote-url]
+  </code>
+
+  _remote-name_ is the name you want to give to that repository, an alias.
+  _remote-url_ is the path to the remote repository, and it depends on the protocol you'll be using (SSH, HTTPS, git://, etc)
+
+  Usually you'll create an _origin_ alias pointing to your canonical remote repository, like this:
+  <code class='inline' data-language='shell'>
+  $ git remote add origin git@github.com:flsilva/as3coreaddendum.git
+  </code>
+
+  That creates a new remote repository *reference* with the _origin_ alias.
+
+  You can always check all your remote references running <code class='inline' data-language='shell'>$ git remote -v</code>
+
+  Now, to send your local changes to a remote repository you run a command like <code class='inline' data-language='shell'>$ git push [remote] [branch]</code>:
+
+  <code class='inline' data-language='shell'>
+  $ git push origin master
+  </code>
+
+  _master_ is the name of the default main branch in Git. Don't worry about it right now, branching wil be the subject of another article.
+
+  Note: You'll need write permission to a remote repository to run _push_ command.
+
+  h3(#pulling-changes-from-a-remote-repository). Pulling changes from a remote repository
+
+  You should always run _pull_ command before running _push_, because if someone else pushed to the remote repository, you'll have to pull it before pushing. Git will enforce it. Also, before pulling you need to commit your changes.
+
+  To _pull_ from a remote repository you run a command like <code class='inline' data-language='shell'>$ git pull [remote]</code>:
+
+  <code class='inline' data-language='shell'>
+  $ git pull origin
+  </code>
+
+  The _pull_ command will fetch all changes and start a merging command. You'll only need to confirm the default merge message (or change it) and you'll be up-to-date to your remote repository, ready to _push_ to it. So the general workflow to push changes is _commit_, _pull_, _push_.
+
+  h3(#deleting-files-and-directories). Deleting files and directories
+
+  One of the things that I love on Git over SVN is that you don't need to do anything special to delete files and directories. Just delete it the way you want, on your OS's GUI tool or command line. Git will find that out and remove them from repository (you just need to run <code class='inline' data-language='shell'>$ git add -A</code> as usual, to prepare changes to go on next commmit).
+
+
+  h3(#renaming-and-moving-files-and-directories). Renaming and moving files and directories
+
+  The same is true for renaming and moving files and directories. Just do that the way you want, you don't have to worry about anything. Lovely, isn't it?
+
+  h3(#viewing-commit-history). Viewing the commit history
+
+  Sometimes you'll wish to see the commit history. The simplest way is running:
+
+  <code class='inline' data-language='shell'>
+  $ git log
+  </code>
+
+  But that prints all commits, so it's very bad. You can limit it:
+
+  <code class='inline' data-language='shell'>
+  $ git log -3
+  </code>
+
+  That prints only the last 3 commits. And if you want to see a bit more info about each commit:
+
+  <code class='inline' data-language='shell'>
+  $ git log -3 --stat
+  </code>
+
+  You can filter commits by time, for example in the last two weeks:
+
+  <code class='inline' data-language='shell'>
+  $ git log --since=2.weeks
+  </code>
+
+  Another useful option is filter commits that has changed a specific directory or file:
+
+  <code class='inline' data-language='shell'>
+  $ git log -- directory/
+  </code>
+
+  <code class='inline' data-language='shell'>
+  $ git log -- file
+  </code>
+
+  Or filtering commits by commiter or author:
+
+  <code class='inline' data-language='shell'>
+  $ git log --committer=Flavio
+  </code>
+
+  <code class='inline' data-language='shell'>
+  $ git log --author=Flavio
+  </code>
+
+  A simple and nice GUI tool is distributed with Git and can also show the commit history. To launches it you just run:
+
+  <code class='inline' data-language='shell'>
+  $ gitk
+  </code>
+
+  Well, that's it. Do you think there's a basic command not listed here? Please let me know.
+
+  h3(#related-posts). Related Posts
+
+  "Git Workflow":/blog/git-workflow/
+  "Introduction to Git":/blog/introducing-git/
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://git-scm.com/" target="_blank">Git</a>
+  <a href="http://progit.org/book/" target="_blank">Pro Git Book</a>
+
+  h3(#bibliography). Bibliography
+
+  Chacon, Scott. _Pro Git_. Apress, 2009.
+
+== partial "partials/creative-commons-by-nc-sa"
