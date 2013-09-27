@@ -41,4 +41,14 @@ module PageHelpers
   def get_clean_url
     url = "http://flsilva.com" << current_page.url
   end
+
+  def get_shortened_url
+    url = get_clean_url
+
+    http = Net::HTTP.new('tinyurl.com', 80)
+    response = http.get("/api-create.php?url=#{CGI.escape(url)}")
+
+    return response.read_body if response.code == '200'
+    return get_clean_url
+  end
 end
