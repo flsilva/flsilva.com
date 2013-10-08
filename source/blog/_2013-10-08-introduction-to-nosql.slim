@@ -5,7 +5,7 @@ textile:
 
   h3(#rdbms). RDBMSs
 
-  On the last three decades, RDBMSs (<a href="http://en.wikipedia.org/wiki/Relational_database_management_system" target="_blank">Relational Database Management Systems</a>) were virtually omnipresent on computer software and web applications. The concern of architects and developers regarding databases was usually _what_ RDBMS to use, but not _if_ they should use that paradigm or a different one. Well, that time is gone now, and the mature architect / developer of today need to know other production-ready alternatives. This is not to say relational databases are gone, or will be some day. They are a powerful tool which will remain in use, but its omnipresence is surely going to fall. And this is very good news, competition is always good. The future is "[...] a world of Polyglot Persistence where enterprises, and even individual applications, use multiple technologies for data management." (Sadalage and Fowler xiii)
+  In the last three decades, RDBMSs (<a href="http://en.wikipedia.org/wiki/Relational_database_management_system" target="_blank">Relational Database Management Systems</a>) were virtually omnipresent in computer software and web applications. The concern of architects and developers regarding databases was usually _what_ RDBMS to use, but not _if_ they should use that paradigm or a different one. Well, that time is gone now, and the mature architect / developer of today need to know other production-ready alternatives. This is not to say relational databases are gone, or will be some day. They are a powerful tool which will remain in use, but its omnipresence is surely going to fall. And this is very good news, competition is always good. The future is "[...] a world of Polyglot Persistence where enterprises, and even individual applications, use multiple technologies for data management." (Sadalage and Fowler xiii)
 
   h3(#what-is-nosql). What is NoSQL?
 
@@ -72,11 +72,11 @@ textile:
 
   The Key-Value model is a kind of <a href="http://en.wikipedia.org/wiki/Hash_table" target="_blank">Hash Table</a>, where keys are mapped to values. To use this model you basically use a unique key (some kind of ID, usually a string) to store an aggregate (value). Aggregates on key-value databases are usually opaques (the database don't know its structure), what means we can store several data types, but can only retrieve it through its key (no elaborated query support). Nonetheless, it's possible to integrate query / search solutions like <a href="http://lucene.apache.org/solr/" target="_blank">Apache Solr</a> to such databases (for some data types like JSON, XML).
 
-  Key-Value databases are the simplest NoSQL solutions. Due to its simplistic nature and usually great performance, they are heavily used not as a primary storage, but rather as some kind of cache for highly accessed data. Other common use cases include job queue (<a href="https://github.com/blog/542-introducing-resque" target="_blank">resque</a>, <a href="https://github.com/learnboost/kue" target="_blank">kue</a> ), real time analysis (data analyzed in short amounts of time and them disposed or archived on disk), etc.
+  Key-Value databases are the simplest NoSQL solutions. Due to its simplistic nature and usually great performance, they are heavily used not as a primary storage, but rather as some kind of cache for highly accessed data. Other common use cases include job queue (<a href="https://github.com/blog/542-introducing-resque" target="_blank">resque</a>, <a href="https://github.com/learnboost/kue" target="_blank">kue</a> ), real time analysis (data analyzed in short amounts of time and them disposed or archived on disk), session management, etc.
 
   Nonetheless, I found <a href="https://moot.it/blog/technology/redis-as-primary-datastore-wtf.html" target="_blank">this post</a> from <a href="https://moot.it" target="_blank">moot.it</a>, where the guys managed to use <a href="http://redis.io/" target="_blank">Redis</a> as their primary data store. Very impressive.
 
-  Example databases: <a href="http://memcached.org/" target="_blank">Memcached</a>, <a href="http://redis.io/" target="_blank">Redis</a>, <a href="http://basho.com/riak/" target="_blank">Riak</a>.
+  Example databases: <a href="http://memcached.org/" target="_blank">Memcached</a>, <a href="http://redis.io/" target="_blank">Redis</a>, <a href="http://basho.com/riak/" target="_blank">Riak</a>, <a href="http://vedis.symisc.net/" target="_blank">Vedis</a>.
 
   h4(#document-model). Document Model
 
@@ -86,7 +86,7 @@ textile:
 
   Document databases have broader use cases than Key-Value ones. They can be used on content management systems and content-based websites, user generated content (e.g. comments), monitoring systems, product catalog, online gaming (player state, level state, etc), social-network apps (reasonable support for relationships), etc.
 
-  Example databases: <a href="http://couchdb.apache.org/" target="_blank">CouchDB</a>, <a href="http://www.mongodb.org/" target="_blank">MongoDB</a>.
+  Example databases: <a href="http://couchdb.apache.org/" target="_blank">CouchDB</a>, <a href="http://www.mongodb.org/" target="_blank">MongoDB</a>, <a href="http://www.rethinkdb.com/" target="_blank">RethinkDB</a>.
 
   h4(#column-family-model). Column-Family Model
 
@@ -138,11 +138,11 @@ textile:
 
   The graph model treats objects as nodes, and relationships as edges, and both can have attributes. The query engine is architected with complex relationships in mind, so it's easy to an application developer to implement, and very fast for such databases to execute.
 
-  Particularly, graph databases seem amazing for me. They match Object-Oriented programming much better than any other model. I'm looking forward to use it on a domain model rich on relationships.
-
   Graph databases usually don't run on clusters, but instead on only one machine, as relational databases. On the other hand, they usually do support ACID.
 
-  Example databases: <a href="http://en.wikipedia.org/wiki/FlockDB" target="_blank">FlockDB</a>, <a href="http://www.neo4j.org/" target="_blank">Neo4J</a>, <a href="http://www.orientdb.org/" target="_blank">OrientDB</a>.
+  Particularly, graph databases seem amazing for me. They match Object-Oriented programming much better than any other model. I'm looking forward to use it in a domain model rich on relationships.
+
+  Example databases: <a href="http://www.sparsity-technologies.com/dex" target="_blank">DEX</a>, <a href="http://en.wikipedia.org/wiki/FlockDB" target="_blank">FlockDB</a>, <a href="http://www.neo4j.org/" target="_blank">Neo4J</a>, <a href="http://www.orientdb.org/" target="_blank">OrientDB</a>.
 
   h3(#schemaless-or-implicit-schema). Schemaless or Implicit Schema?
 
@@ -164,7 +164,7 @@ textile:
 
   h4(#scalability). Scalability
 
-  Relational databases are primarily designed to run on a single machine, but applications on the web can grab huge amounts of data. Processing large amounts of data on a single node is very expensive compared to clusters of smaller and cheaper nodes. Thus, some NoSQL databases are designed explicitly to run on clusters. (<a href="http://www.dnsmadeeasy.com/blog/vertical-and-horizontal-scaling/" target="_blank">Horizontal Scaling vs Vertical Scaling</a>) 
+  Relational databases are primarily designed to run on a single machine, but applications on the web can grab huge amounts of data. Processing large amounts of data in a single node is very expensive compared to clusters of smaller and cheaper nodes (<a href="http://www.dnsmadeeasy.com/blog/vertical-and-horizontal-scaling/" target="_blank">Vertical Scaling vs Horizontal Scaling</a>). Thus, most NoSQL databases are designed explicitly to run on clusters.
 
   h4(#application-development-productivity). Application Development Productivity
 
@@ -179,19 +179,15 @@ textile:
   Hopefully, now you have a better idea about what NoSQL is and why/when you should use it. Keep in mind that everything is still fresh and changing in this topic.
 
 
-
-
-
-
-
-
-
   h3(#interesting-links). Interesting Links
 
   <a href="http://en.wikipedia.org/wiki/NoSQL" target="_blank">NoSQL - Wikipedia</a>
   <a href="http://www.mongodb.com/nosql" target="_blank">What is NoSQL - MongoDB</a>
+  <a href="http://www.infoq.com/vendorcontent/show.action?vcr=2461&utm_source=infoq&utm_medium=microsite&utm_campaign=microsite_NoSQL" target="_blank">Why NoSQL - Three Trends Disrupting the Database Status Quo - InfoQ</a>
+  <a href="http://www.infoq.com/vendorcontent/show.action?vcr=2459&utm_source=infoq&utm_medium=microsite&utm_campaign=microsite_NoSQL" target="_blank">Making the Shift from Relational to NoSQL - InfoQ</a>
   <a href="http://nosql-database.org/" target="_blank">NoSQL Databases</a>
   <a href="http://en.wikipedia.org/wiki/Big_data" target="_blank">Big Data - Wikipedia</a>
+  <a href="http://www.dnsmadeeasy.com/blog/vertical-and-horizontal-scaling/" target="_blank">Vertical and Horizontal Scaling - DNS Made Easy</a>
   <a href="http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch" target="_blank">Object-relational impedance mismatch - Wikipedia</a>
 
   h3(#bibliography). Bibliography
