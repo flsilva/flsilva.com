@@ -1,0 +1,550 @@
+textile:
+  VPSs (Virtual Private Servers) are much more popular nowadays than a decade ago. That's probably due to factors such as evolution of the IT industry and its professionals, looking for optimized solutions, and popularization of new technologies as alternatives to the standard LAMP stack (Apache, MySQL and PHP specifically), very common on shared hosting environments.
+
+  h3(#what-is-vps). What is VPS?
+
+  A VPS (Virtual Private Server) is a private (only you have access) <a href="http://en.wikipedia.org/wiki/Virtual_machine" target="_blank">virtual machine</a> sold as a service by an <a href="http://en.wikipedia.org/wiki/Internet_hosting_service" target="_blank">Internet hosting service</a>. ("Virtual Private Server - Wikipedia")
+
+  A VPS hosting is between <a href="http://en.wikipedia.org/wiki/Shared_web_hosting_service" target="_blank">shared hosting</a> and <a href="http://en.wikipedia.org/wiki/Dedicated_hosting_service" target="_blank">didicated server hosting</a>. It mimics a dedicated server because you have your own OS (Operating System) instance, which allows you to do anything you want in a software level. But at the same time your VPS shares hardware (CPU, RAM, I/O operations, etc) with other VPSs running in the same physical machine. Depending on the hosting service and virtualization technique you have more or less guarantee for dedicated resources. For example, RAM is usually dedicated to you, but I/O operations are shared among VPSs. For that reason, VPSs became much popular nowadays, and probably its only drawback is the effort neccesary to set up all the software you need, starting by your OS, usually a Linux distribution. Hopefully, that's not as difficult as you might think, and this article will help you in this first step. So, let's do it!
+
+  h3(#step-1-choosing-a-hosting-service-and-installing-linux-distro). Step 1. Choosing a Hosting Service and Installing a Linux Distro
+
+  Choosing a hosting service may not be an easy task, but a little research will give you a good idea about some good and cheap companies. Prefer those which bill by hour, so if you don't use much resources you'll pay very little for it. Take a look at the Linux distros and versions they provide. Prefer to use the latest version of the OS you like. Finally, you should be able to install your Linux distro through some control panel webapp provided by the hosting company, which after installing your distro should send you an email with the password for your Linux root user and the IP address of your VPS, so you can connect to it through SSH.
+
+  For this tutorial I'll be using Debian 7, and Mac OSX as my local machine. Since Ubuntu (and Ubuntu Server) are built on top of Debian, both are basically the same for server purposes.
+
+  h3(#step-2-connecting-to-your-VPS-through-ssh). Step 2. Connecting to Your VPS Through SSH
+
+  Mac OSX comes with an SSH client, so you don't need to install one. But if you're running Windows on your local machine, you need to install one. <a href="http://www.putty.org/" target="_blank">PuTTY</a> is the most popular, but feel free to choose whatever you want.
+
+  To connect to your VPS you run a command using the following format:
+
+  <code class='inline' data-language='shell'>
+  $ ssh <Linux username>@<IP address>
+  </code>
+
+  For example:
+
+  <code class='inline' data-language='shell'>
+  $ ssh root@123.456.78.90
+  </code>
+
+  <div class="info-box">
+  <span class="warning icon"></span>
+
+  Do not type the "$" character you see in the commands. It's just an indicator that you should run the commands in your command line tool.
+  </div>
+
+  If you get a question like this:
+
+  "Are you sure you want to continue connecting (yes/no)?"
+
+  Just type "yes" and press __Enter__.
+
+  When it prompts for the password, type the root password you got by email. Now you should be connected into your Linux server. Congrats!
+
+  h3(#step-3-updating-your-linux-distro). Step 3. Updating your Linux Distro
+
+  The first thing you should do after a fresh Linux installation is update the system. You first update the definitions of Linux packages, and then update them all:
+
+  <pre><code data-language='shell'>
+  $ apt-get update
+  $ apt-get upgrade --show-upgraded
+  </code></pre>
+
+  If you get the question:
+
+  "Do you want to continue [Y/n]?"
+
+  Just type "Y" and press __Enter__. You should probably see a bunch of updates. Cool, now you're really fresh! You can, and should, run those two commands from time to time to keep your Linux updated and more secure.
+
+  h3(#step-4-setting-hostname-and-fqdn). Step 4. Setting the Hostname and FQDN
+
+  Now you'll set your system's hostname and <a href="http://en.wikipedia.org/wiki/Fully_qualified_domain_name" target="_blank">FQDN</a> (fully qualified domain name). Dont't worry about this, it's just a name for your Linux machine, and it doesn't need to have any direct relationship to what you're going to host. But make it a unique name (also, do not use the same name for other Linux users).
+
+  <pre><code data-language='shell'>
+  $ echo "flsilva-debian" > /etc/hostname
+  $ hostname -F /etc/hostname
+  </code></pre>
+
+  Just replace __flsilva-debian__ by any simple, lowercase name you want. You can verify it by running:
+
+  <code class='inline' data-language='shell'>
+  $ hostname
+  </code>
+
+  You should see an output with the name you typed.
+
+  Now, if you make a test and run a command, like the following:
+
+  <code class='inline' data-language='shell'>
+  $ sudo
+  </code>
+
+  You should see instructions about how to use the command, but the first line of the output should be something like this:
+
+  "sudo: unable to resolve host flsilva-debian"
+
+  That's beucase we haven't set our FQDN yet. So let's edit __/etc/hosts__ file and add an entry with your FQDN (your system's hostname + your system's domain name). The domain name doesn't have any relationship to what you're going to host either. Just make sure the first two lines of your __/etc/hosts__ file looks the same as the following (replacing __flsilva-debian__ by your hostname, __website.com__ by your new domain name, and __123.456.78.90__ by your VPS' IP address):
+
+  <pre><code data-language='shell'>
+  127.0.0.1       localhost.localdomain localhost
+  123.456.78.90   flsilva-debian.website.com flsilva-debian
+  </code></pre>
+
+  Now if you run <code class='inline' data-language='shell'>$ sudo</code> again you should __not__ see that message again.
+
+  h3(#step-5-setting-timezone). Step 5. Setting the Timezone
+
+  You can change the timezone of your Linux server. If your website / application is local to a city or country, you can set that timezone. If you're dealing with users from several countries or want more flexibility, you can set the timezone to <a href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time" target="_blank">UTC</a>, and when you retrieve or show time-related data to users you can translate time from UTC to user's local timezone.
+
+  You can run <code class='inline' data-language='shell'>$ date</code> to check what's the time in your server. You can use a simple tool to change the timezone running:
+
+  <code class='inline' data-language='shell'>
+  $ dpkg-reconfigure tzdata
+  </code>
+
+  You should see a simple menu to select a geographic area, and then a timezone.
+
+  h3(#step-6-adding-a-new-user). Step 6. Adding a New User
+
+  Now it's time to start securing your server. The first step is to stop using the root user because it's too much powerful. It's best practice to add other users to log in, managing their permissions properly.
+
+  To create a new user run the following command:
+
+  <code class='inline' data-language='shell'>
+  $ adduser deploy
+  </code>
+
+  After running the command you should type a new password for that new user. __deploy__ is a common username for a user that's used to deploy websites / apps. But you can create any number of users with any names.
+
+  Now, if you're going to create a new user to virtually replace the __root__ superuser (recommended), it's useful to add that new user to the __admin__ group, so you can run superuser commands (when needed) by prefacing them with __sudo__ keyword (all commands executed with __sudo__ are logged to __/var/log/auth.log__).
+
+  <code class='inline' data-language='shell'>
+  $ usermod -a -G sudo deploy
+  </code>
+
+  h3(#step-7-adding-a-new-user). Step 7. Stop Using __root__ User
+
+  Now let's log out and in again, but this time using our new user:
+
+  <pre><code data-language='shell'>
+  $ logout
+  $ ssh deploy@123.456.78.90
+  </code></pre>
+
+  After logging in you should see something like this in your command line tool:
+
+  "deploy@flsilva-debian:~$"
+
+  Where __deploy__ is the user you've logged in, and __flsilva-debian__ is your system's hostname. Now your server is a little less exposed.
+
+  h3(#step-8-using-ssh-key-pair-authentication). Step 8. Using SSH Key Pair Authentication
+
+  Now, you should start using SSH key pair authentication, disabling password authentication entirely. That's a more secure way to log in, as it protects you against brute-force password attacks.
+
+  You'll generate a public and private key pair on your local machine running the following command:
+
+  (First log out from your server)
+
+  <code data-language='shell' class='inline'>
+  $ logout
+  </code>
+
+  Then generate the keys __on your local machine__:
+
+  <code data-language='shell' class='inline'>
+  $ ssh-keygen
+  </code>
+
+  Follow the __keygen__ instructions on the screen (you don't need to create a passphrase, it's optional).
+
+  Two files will be created in your ~/.ssh directory. __id_rsa__ is your private key, do not share it with anyone. __id_rsa.pub__ is your public key, and you'll upload it to your server. When you try to authenticate, SSH will try to match the server's public key with your local private key.
+
+  Let's upload your public key to your server using __security copy__ command (scp). For Windows you can use <a href="http://winscp.net/eng/index.php" target="_blank">WinSCP</a>.
+
+  <code data-language='shell' class='inline'>
+  $ scp ~/.ssh/id_rsa.pub deploy@123.456.78.90:
+  </code>
+
+  Now let's log in on your server (using password) and move the file to the appropriated directory:
+
+  <pre><code data-language='shell'>
+  $ ssh deploy@123.456.78.90
+  $ mkdir .ssh
+  $ mv id_rsa.pub .ssh/authorized_keys
+  </code></pre>
+
+  Now let's modify the permissions of the .ssh directory and public key file (replace __deploy__ with your username):
+
+  <pre><code data-language='shell'>
+  $ chown -R deploy:deploy .ssh
+  $ chmod 700 .ssh
+  $ chmod 600 .ssh/authorized_keys
+  </code></pre>
+
+  Now you're ready to test your key pair authentication. Let's log out and in again. You should __not__ be prompted for your password, but if you've specified a passphrase you'll have to enter it.
+
+  <pre><code data-language='shell'>
+  $ logout
+  $ ssh deploy@123.456.78.90
+  </code></pre>
+
+  Congratulations! You now have SSH key pair authentication working! But you still need to disable password authentication to make your server more secure. So let's do that!
+
+  h3(#step-9-disabling-ssh-password-authentication-and-root-login). Step 9. Disabling SSH Password Authentication and __root__ Login
+
+  <div class="info-box">
+  <span class="warning icon"></span>
+
+  If you disable password authentication, and by any reason you can't use your local machine (which has your private key installed), you'll not be able to log in from another machine. So I recommend you to have an external (and secure) backup of your private key file (__id_rsa__). Also, you can install your private key to another machine you own (by copying to __.ssh/__ directory), making it enabled to connect to your server right away. That way, if there's any issue with your primary machine, you can easily log in through another one.
+  </div>
+
+  Open the SSH configuration file:
+
+  <code data-language='shell' class='inline'>
+  $ sudo nano /etc/ssh/sshd_config
+  </code>
+
+  Look for the following two lines, and make sure to change their values to __no__ and remove the "#" character in front of the lines, if there's one (it means that the line is commented out, so not effective):
+
+  <pre><code data-language='shell'>
+  PasswordAuthentication no
+  PermitRootLogin no
+  </code></pre>
+
+  Save the changes by hitting __Control-X__, then __Y__, and then __Enter__.
+
+  Now you need to restart the SSH service to use the new configuration:
+
+  <code data-language='shell' class='inline'>
+  $ sudo service ssh restart
+  </code>
+
+  Now let's test it. Log out and then try to log in as __root__ user:
+
+  <pre><code data-language='shell'>
+  $ logout
+  $ ssh root@123.456.78.90
+  </code></pre>
+
+  You should not be asked for a password, and should get a message like the following:
+
+  __Permission denied (publickey).__
+
+  Congratulations! You have now secured a little more your server.
+
+  h3(#step-10-creating-a-firewall). Step 10. Creating a Firewall
+
+  Another great way to secure your server is by limiting what ports allow traffic, blocking all unecessary ones. Linux provides <a href="http://en.wikipedia.org/wiki/Iptables" target="_blank">iptables</a> (for IPv4 rules) and ip6tables (for IPv6 rules) tools that allow us to define rules that take care of what to do with net packets.
+
+  First, let's check our current rules:
+
+  <code data-language='shell' class='inline'>
+  $ sudo iptables -L
+  </code>
+
+  Since we haven't changed anything yet, you should see an empty __ruleset__:
+
+  <pre><code>
+  Chain INPUT (policy ACCEPT)
+  target     prot opt source               destination
+
+  Chain FORWARD (policy ACCEPT)
+  target     prot opt source               destination
+
+  Chain OUTPUT (policy ACCEPT)
+  target     prot opt source               destination
+  </code></pre>
+
+  The same output should be shown for __ip6tables__ rules:
+
+  <code data-language='shell' class='inline'>
+  $ sudo ip6tables -L
+  </code>
+
+  Now you'll create a new file that will host all your custom rules (for IPv4 and IPv6, in the same file):
+
+  <code data-language='shell' class='inline'>
+  $ sudo nano /etc/iptables.both.rules
+  </code>
+
+  You'll allow traffic only to the following services: HTTP (80), HTTPS (443), SSH (22), and ping. All other ports will be blocked (if you have different needs feel free to make changes to the rules). There's also some other security rules like preventing SSH brute-force attacks, preventing ping flooding, etc. The following rules were copied from <a href="https://gist.github.com/jirutka/3742890" target="_blank">this link</a> (__rules-both.iptables__) on May 06th, 2014, and only modified to uncomment two lines that allow HTTP and HTTPS (on part 2 __HOST SPECIFIC RULES__):
+
+  <pre><code>
+  ###############################################################################
+  # The MIT License
+  #
+  # Copyright 2012-2014 Jakub Jirutka <jakub@jirutka.cz>.
+  #
+  # Permission is hereby granted, free of charge, to any person obtaining a copy
+  # of this software and associated documentation files (the "Software"), to deal
+  # in the Software without restriction, including without limitation the rights
+  # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  # copies of the Software, and to permit persons to whom the Software is
+  # furnished to do so, subject to the following conditions:
+  #
+  # The above copyright notice and this permission notice shall be included in
+  # all copies or substantial portions of the Software.
+  #
+  # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  # THE SOFTWARE.
+  #
+
+  ###############################################################################
+  #
+  #   Basic ip(6)tables (both IPv4 and IPv6) template for an ordinary servers
+  #
+  # This file is in iptables-restore (ip6tables-restore) format. See the man
+  # pages for iptables-restore (ip6tables-restore). Rules that should be loaded
+  # only by iptables (ip6tables) uses the -4 (-6) option.
+  #
+  # The following is a set of firewall rules that should be applicable to Linux 
+  # servers running within departments. It is intended to provide a useful 
+  # starting point from which to devise a comprehensive firewall policy for 
+  # a host.
+  #
+  # Parts 1 and 3 of these rules are the same for each host, whilst part 2 can be 
+  # populated with rules specific to particular hosts. The optional part 4 is
+  # prepared for a NAT rules, e.g. for port forwarding, redirect, masquerade...
+  #
+  # This template is based on http://jdem.cz/v64a3 from University of Leicester
+  #
+  # For the newest version go to https://gist.github.com/jirutka/3742890.
+  #
+  # @author Jakub Jirutka <jakub@jirutka.cz>
+  # @version 1.3.1
+  # @date 2014-01-28
+  #
+
+  ###############################################################################
+  # 1. COMMON HEADER                                                            #
+  #                                                                             #
+  # This section is a generic header that should be suitable for most hosts.    #
+  ###############################################################################
+
+  *filter
+
+  # Base policy
+  :INPUT DROP [0:0]
+  :FORWARD DROP [0:0]
+  :OUTPUT ACCEPT [0:0]
+
+  # Don't attempt to firewall internal traffic on the loopback device.
+  -A INPUT -i lo -j ACCEPT
+
+  # Continue connections that are already established or related to an established 
+  # connection.
+  -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+  # Drop non-conforming packets, such as malformed headers, etc.
+  -A INPUT -m conntrack --ctstate INVALID -j DROP
+
+  # Block remote packets claiming to be from a loopback address.
+  -4 -A INPUT -s 127.0.0.0/8 ! -i lo -j DROP
+  -6 -A INPUT -s ::1/128 ! -i lo -j DROP
+
+  # Drop all packets that are going to broadcast, multicast or anycast address.
+  -4 -A INPUT -m addrtype --dst-type BROADCAST -j DROP
+  -4 -A INPUT -m addrtype --dst-type MULTICAST -j DROP
+  -4 -A INPUT -m addrtype --dst-type ANYCAST -j DROP
+  -4 -A INPUT -d 224.0.0.0/4 -j DROP
+
+  # Chain for preventing SSH brute-force attacks.
+  # Permits 10 new connections within 5 minutes from a single host then drops 
+  # incomming connections from that host. Beyond a burst of 100 connections we 
+  # log at up 1 attempt per second to prevent filling of logs.
+  -N SSHBRUTE
+  -A SSHBRUTE -m recent --name SSH --set
+  -A SSHBRUTE -m recent --name SSH --update --seconds 300 --hitcount 10 -m limit --limit 1/second --limit-burst 100 -j LOG --log-prefix "iptables[SSH-brute]: "
+  -A SSHBRUTE -m recent --name SSH --update --seconds 300 --hitcount 10 -j DROP
+  -A SSHBRUTE -j ACCEPT
+
+  # Chain for preventing ping flooding - up to 6 pings per second from a single 
+  # source, again with log limiting. Also prevents us from ICMP REPLY flooding 
+  # some victim when replying to ICMP ECHO from a spoofed source.
+  -N ICMPFLOOD
+  -A ICMPFLOOD -m recent --set --name ICMP --rsource
+  -A ICMPFLOOD -m recent --update --seconds 1 --hitcount 6 --name ICMP --rsource --rttl -m limit --limit 1/sec --limit-burst 1 -j LOG --log-prefix "iptables[ICMP-flood]: "
+  -A ICMPFLOOD -m recent --update --seconds 1 --hitcount 6 --name ICMP --rsource --rttl -j DROP
+  -A ICMPFLOOD -j ACCEPT
+
+
+  ###############################################################################
+  # 2. HOST SPECIFIC RULES                                                      #
+  #                                                                             #
+  # This section is a good place to enable your host-specific services.         #
+  ###############################################################################
+
+  # Accept HTTP and HTTPS
+  -A INPUT -p tcp -m multiport --dports 80,443 --syn -m conntrack --ctstate NEW -j ACCEPT
+
+  # Accept FTP only for IPv4
+  -4 -A INPUT -p tcp --dport 21 --syn -m conntrack --ctstate NEW -j ACCEPT
+
+
+  ###############################################################################
+  # 3. GENERAL RULES                                                            #
+  #                                                                             #
+  # This section contains general rules that should be suitable for most hosts. #
+  ###############################################################################
+
+  # Accept worldwide access to SSH and use SSHBRUTE chain for preventing 
+  # brute-force attacks.
+  -A INPUT -p tcp --dport 22 --syn -m conntrack --ctstate NEW -j SSHBRUTE
+
+  # Permit useful IMCP packet types for IPv4
+  # Note: RFC 792 states that all hosts MUST respond to ICMP ECHO requests.
+  # Blocking these can make diagnosing of even simple faults much more tricky.
+  # Real security lies in locking down and hardening all services, not by hiding.
+  -4 -A INPUT -p icmp --icmp-type 0  -m conntrack --ctstate NEW -j ACCEPT
+  -4 -A INPUT -p icmp --icmp-type 3  -m conntrack --ctstate NEW -j ACCEPT
+  -4 -A INPUT -p icmp --icmp-type 11 -m conntrack --ctstate NEW -j ACCEPT
+
+  # Permit needed ICMP packet types for IPv6 per RFC 4890.
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 1   -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 2   -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 3   -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 4   -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 133 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 134 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 135 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 136 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 137 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 141 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 142 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 130 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 131 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 132 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 143 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 148 -j ACCEPT
+  -6 -A INPUT              -p ipv6-icmp --icmpv6-type 149 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 151 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 152 -j ACCEPT
+  -6 -A INPUT -s fe80::/10 -p ipv6-icmp --icmpv6-type 153 -j ACCEPT
+
+  # Permit IMCP echo requests (ping) and use ICMPFLOOD chain for preventing ping 
+  # flooding.
+  -4 -A INPUT -p icmp --icmp-type 8  -m conntrack --ctstate NEW -j ICMPFLOOD
+  -6 -A INPUT -p ipv6-icmp --icmpv6-type 128 -j ICMPFLOOD
+
+  # Do not log packets that are going to ports used by SMB
+  # (Samba / Windows Sharing).
+  -A INPUT -p udp -m multiport --dports 135,445 -j DROP
+  -A INPUT -p udp --dport 137:139 -j DROP
+  -A INPUT -p udp --sport 137 --dport 1024:65535 -j DROP
+  -A INPUT -p tcp -m multiport --dports 135,139,445 -j DROP
+
+  # Do not log packets that are going to port used by UPnP protocol.
+  -A INPUT -p udp --dport 1900 -j DROP
+
+  # Do not log late replies from nameservers.
+  -A INPUT -p udp --sport 53 -j DROP
+
+  # Good practise is to explicately reject AUTH traffic so that it fails fast.
+  -A INPUT -p tcp --dport 113 --syn -m conntrack --ctstate NEW -j REJECT --reject-with tcp-reset
+
+  # Prevent DOS by filling log files.
+  -A INPUT -m limit --limit 1/second --limit-burst 100 -j LOG --log-prefix "iptables[DOS]: "
+
+  COMMIT
+
+
+  ###############################################################################
+  # 4. HOST SPECIFIC NAT RULES                                                  #
+  #                                                                             #
+  # Uncomment this section if you want to use NAT table, e.g. for port          #
+  # forwarding, redirect, masquerade... If you want to load this section only   #
+  # for IPv4 and ignore for IPv6, use ip6tables-restore with -T filter.         #
+  ###############################################################################
+
+  #*nat
+
+  # Base policy
+  #:PREROUTING ACCEPT [0:0]
+  #:POSTROUTING ACCEPT [0:0]
+  #:OUTPUT ACCEPT [0:0]
+
+  # Redirect port 21 to local port 2121
+  #-A PREROUTING -i eth0 -p tcp --dport 21 -j REDIRECT --to-port 2121
+
+  # Forward port 8080 to port 80 on host 192.168.1.10
+  #-4 -A PREROUTING -i eth0 -p tcp --dport 8080 -j DNAT --to-destination 192.168.1.10:80
+
+  #COMMIT
+  </code></pre>
+
+  Save the changes by hitting __Control-X__, then __Y__, and then __Enter__.
+
+  Now you'll activate the firewall rules. Run the following commands:
+
+  <pre><code data-language='shell'>
+  $ sudo iptables-restore < /etc/iptables.both.rules
+  $ sudo ip6tables-restore < /etc/iptables.both.rules
+  </code></pre>
+
+  Now if you check your rules again you should see lots of things:
+
+  <pre><code data-language='shell'>
+  $ sudo iptables -L
+  $ sudo ip6tables -L
+  </code></pre>
+
+  Now you'll create a new script that will automatically activate the rules everytime the server is restarted. First create a new file:
+
+  <code data-language='shell' class='inline'>
+  $ sudo nano /etc/network/if-pre-up.d/firewall
+  </code>
+
+  Copy and paste the following lines in to the file:
+
+  <pre><code data-language='shell'>
+  #!/bin/sh
+  /sbin/iptables-restore < /etc/iptables.both.rules
+  /sbin/ip6tables-restore < /etc/iptables.both.rules
+  </code></pre>
+
+  Save the changes by hitting __Control-X__, then __Y__, and then __Enter__.
+
+  Now change the script's permissions:
+
+  <code data-language='shell' class='inline'>
+  $ sudo chmod +x /etc/network/if-pre-up.d/firewall
+  </code>
+
+  Great! Now when you restart your server your rules will be activated!
+
+  h3(#step-11-install-fail2ban). Step 11. Install Fail2ban
+
+  <a href="http://www.fail2ban.org/wiki/index.php/Main_Page" target="_blank">Fail2ban</a> is a tool to protect servers from single source brute force attacks. It bans IPs that show the malicious signs, like too many password failures.
+
+  Install Fail2ban:
+
+  <code data-language='shell' class='inline'>
+  $ sudo apt-get install fail2ban
+  </code>
+
+  That's it! Now Fail2ban is protecting your server. It'll log its activities at __/var/log/fail2ban.log__.
+
+  Awesome! Now you have a basic server running securely! But remember, security is never enough. It's always possible to configure and install additional tools. But for a basic server that's a really nice setup.
+
+  Let me know if you have any issues on this step-by-step tutorial, something may be missing, or even using a different version of Debian or Ubuntu may have a little difference, and I'd like to know about that.
+
+  Happy sysadmin! :)
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://en.wikipedia.org/wiki/Secure_Shell" target="_blank">SSH (Secure Shell)</a>
+  <a href="http://en.wikipedia.org/wiki/Iptables" target="_blank">iptables</a>
+  <a href="http://en.wikipedia.org/wiki/Fail2ban" target="_blank">Fail2ban</a>
+
+  h3(#bibliography). Bibliography
+
+  "Virtual Private Server - Wikipedia" _Wikipedia_ , n.d. Web. 06 May 2014 <<a href="http://en.wikipedia.org/wiki/Virtual_private_server" target="_blank">http://en.wikipedia.org/wiki/Virtual_private_server</a>>
+
+== partial "partials/creative-commons-by-nc-sa"
