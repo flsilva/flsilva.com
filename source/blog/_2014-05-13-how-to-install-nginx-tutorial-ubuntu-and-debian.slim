@@ -1,0 +1,142 @@
+textile:
+  The superfast, opensource <a href="http://en.wikipedia.org/wiki/Nginx" target="_blank">Nginx</a> HTTP webserver is becoming very popular nowadays. Fortunately, it's very simple to install and configure it, as we'll see.
+
+  If you want to know about how to securely set up a Linux VPS (Ubuntu / Debian) "click here":/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/.
+
+  h3(#step-1-updating-your-linux-distro). Step 1. Updating your Linux Distro
+
+  It's always good to be updated, so first update your Linux:
+
+  <pre><code data-language='shell'>
+  $ sudo apt-get update
+  $ sudo apt-get upgrade --show-upgraded
+  </code></pre>
+
+  h3(#step-2-adding-nginx-official-repository). Step 2. Adding Nginx Official Repository
+
+  To have access to the latest versions, you need to add Nginx official repository. First you need to add Nginx repository key, download the file:
+
+  <code class='inline' data-language='shell'>
+  $ wget nginx_signing.key http://nginx.org/keys/nginx_signing.key
+  </code>
+
+  And add it to your Linux:
+
+  <code class='inline' data-language='shell'>
+  $ sudo apt-key add nginx_signing.key
+  </code>
+
+  You should see something like: "OK"
+
+  Now edit the file __/etc/apt/sources.list__:
+
+  <code class='inline' data-language='shell'>
+  $ sudo nano /etc/apt/sources.list
+  </code>
+
+  Add the following two lines to it, replacing __codename__ with your Ubuntu / Debian distribution name:
+
+  A) For Ubuntu:
+
+  <pre><code data-language='shell'>
+  deb http://nginx.org/packages/ubuntu/ codename nginx
+  deb-src http://nginx.org/packages/ubuntu/ codename nginx
+  </code></pre>
+
+  Ubuntu 12.04 codename: precise
+  Ubuntu 12.10 codename: quantal
+  Ubuntu 13.10 codename: saucy
+  Ubuntu 14.04 codename: trusty
+
+  B) For Debian:
+
+  <pre><code data-language='shell'>
+  deb http://nginx.org/packages/debian/ codename nginx
+  deb-src http://nginx.org/packages/debian/ codename nginx
+  </code></pre>
+
+  Debian 6.x codename: squeeze
+  Debian 7.x codename: wheezy
+
+  Save the file by pressing __control X__, then __Y__, and then __Enter__.
+
+  Update package definitions with the new Nginx repository:
+
+  <code class='inline' data-language='shell'>
+  $ sudo apt-get update
+  </code>
+
+  You should see some outputs but no error messages, and the following at the end:
+
+  "Reading package lists... Done"
+
+  Cool, now you can finally install it!
+
+  h3(#step-3-installing-nginx). Step 3. Installing Nginx
+
+  <code class='inline' data-language='shell'>
+  $ sudo apt-get install nginx
+  </code>
+
+  h3(#step-4-checking-installation). Step 4. Checking Installation
+
+  <code class='inline' data-language='shell'>
+  $ /usr/sbin/nginx -v
+  </code>
+
+  You should see something like this:
+
+  "nginx version: nginx/1.6.0"
+
+  You'll be very close to the latest version, if not on it! But if you're not, something may have failed on Step 2. Uninstall Nginx and try again from Step 2:
+
+  <pre><code data-language='shell'>
+  $ sudo apt-get --purge remove nginx
+  $ sudo apt-get autoremove
+  </code></pre>
+
+  h3(#step-5-starting-and-testing-nginx). Step 5. Starting and Testing Nginx
+
+  Now let's start your Nginx:
+
+  <code class='inline' data-language='shell'>
+  $ sudo /etc/init.d/nginx start
+  </code>
+
+  You should see something like this:
+
+  "Starting nginx: nginx."
+
+  If you're setting up a VPS from scratch, you can now try to access its IP on your browser. You should see somthing like this:
+
+  "Welcome to nginx!"
+
+  Congrats! Nginx is installed and listening on port 80 (HTTP). If your server is restarted, you don't have to worry about Nginx, it'll be initialized automatically!
+
+  h3(#updating-nginx). Updating Nginx
+
+  You can update Nginx at any time running:
+
+  <pre><code data-language='shell'>
+  $ sudo apt-get update
+  $ sudo apt-get upgrade --show-upgraded
+  </code></pre>
+
+  If you want to stop it just run:
+
+  <code class='inline' data-language='shell'>
+  $ sudo /etc/init.d/nginx stop
+  </code>
+
+  If you want to know about how to securely set up a Linux VPS (Ubuntu / Debian) "click here":/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/.
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://nginx.org/" target="_blank">Nginx</a>
+  <a href="http://en.wikipedia.org/wiki/Nginx" target="_blank">Nginx - Wikipedia</a>
+
+  h3(#bibliography). Bibliography
+
+  "Virtual Private Server - Wikipedia" _Wikipedia_ , n.d. Web. 06 May 2014 <<a href="http://en.wikipedia.org/wiki/Virtual_private_server" target="_blank">http://en.wikipedia.org/wiki/Virtual_private_server</a>>
+
+== partial "partials/creative-commons-by-nc-sa"
