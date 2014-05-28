@@ -61,9 +61,9 @@ end
 
 activate :deploy do |deploy|
   deploy.method = :rsync
-  deploy.user = "flsilva"
-  deploy.host = "66.228.57.112"
-  deploy.path = "/var/www/flsilva.com"
+  deploy.user = "deploy"
+  deploy.host = "162.243.88.79"
+  deploy.path = "/var/www/flsilva.com/public"
   deploy.clean = true
 end
 
