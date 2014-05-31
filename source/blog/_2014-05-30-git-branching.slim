@@ -1,0 +1,175 @@
+textile:
+
+  If you're new to <a href="http://git-scm.com/" target="_blank">Git</a> or want to know a little more about its basics and its distributed model, do not hesitate to read the "Introduction to Git":/blog/introducing-git/ article.
+
+  Branching is a great feature, but to be really effective its implementation must be optimal, and Git excels here. The way it implements and exposes it for us is very simple, powerful, and fast to use. But the branching concept, and the way it works on Git may look a little complex in the beginning. In this article I'll try to syntethize the way it works and try to give you a good explanation about it, so you can get advantage of its power.
+
+  Ok. Let's start by explaining what is branching.
+
+  h3(#what-is-branching). What is Branching?
+
+  "Branching means you diverge from the main line of development and continue to do work without messing with that main line." (Chacon 47)
+
+  So it means you create a **new** __branch__ to diverge from the **main** __branch__.
+
+  h3(#why-branching). Why Branching?
+
+  Branching has several purposes and it's a very important feature, but you should know how to use it in your development cycle. That's out of the scope of this article, but to give you an example you can think that your project needs a change that can break things up, so you decide to create a new branch to work on that changes. That way you can go back to the main branch (usually __master__) at any time, and do any modifications, even releasing a new version, without worrying about breaking changes isolated in the other branch. Alternatively, you can create a new branch to experiment new things, etc. Sounds good? It really is.
+
+  h3(#the-master-branch-and-head). The Master Branch and HEAD
+
+  When you run <code class="inline">$ git init</code> or <code class="inline">$ git clone</code> commands to create a new repository, Git automatically creates the __master__ branch and points the development to it. Git has a special pointer to know what is the current branch, and it's called __HEAD__. It's different than the concept of __HEAD__ in other VCSs. __HEAD__ in Git means the last snapshot of the current branch.
+
+  h3(#the-current-branch). The Current Branch
+
+  Now, it's important to say that nearly every concept "we've learned so far":/blog/git-workflow is related to the current branch. So, "_modified_":/blog/git-workflow/#modified-file-state and "_staged_":/blog/git-workflow/#staged-file-state files, "_working directory_":/blog/git-workflow/#working-directory, "_staging area_":/blog/git-workflow/#staging-area, etc, are all related to the current branch (one exception is "_Git directory_":/blog/git-workflow/#git-directory, which is the same for all branches of the project). Each branch has those concepts in an isolated way. Another detail is that when you switch between branches, your "_working directory_":/blog/git-workflow/#working-directory changes to reflect the files (and their versions) in the target branch.
+
+  h3(#starting-a-new-repository-from-scratch). Starting a New Repository from Scratch
+
+  (If you don't know the basic commands please read "Git Basic Commands Explained":/blog/git-basic-commands-explained article.)
+
+  To illustrate, let's imagine a scenario: you just started a new repository, have made some changes and three commits in __master__ branch:
+
+figure
+  img src="/images/blog/git/git-branching-01.png" alt="Git Branching - Image 01" width="445" height="224" style="background:white;"
+  figcaption Figure 1. Git repository with only one branch (master) pointing to it (HEAD), and with only three commits ("f30ab" is the last commit). This image was taken from Pro Git book and edited (respecting its Creative Commons License).
+
+textile:
+  So, to Git, what really is a branch? Just a lightweight movable pointer to one of its commits (Chacon 48). Every time you commit, the current branch moves forward automatically to that commit. And every commit has one parent commit (except the first one), represented by the arrows on Figure 1.
+
+  When you create a new branch, it starts pointing to the last commit of the current branch, i.e., the branch you are in at the moment you create the new branch. So, immediately after creating a new branch, it's pointing to the same commit of the branch you were in (which means the working directory of the new branch will be the same as the branch you were in).
+
+  h3(#creating-a-new-branch). Creating a New Branch
+
+  Let's create a new branch (__testing__), change the pointer to it, make some changes and commit.
+
+
+  <div class="info-box">
+  <span class="warning icon"></span>
+
+  To be able to switch between branches you cannot have uncommited changes in your working directory or stagging area.
+  </div>
+
+  To create a new branch you run:
+
+  <code class='inline' data-language='shell'>
+  $ git branch testing
+  </code>
+
+  But that doesn't point to it (__HEAD__ pointer). So you need to run:
+
+  <code class='inline' data-language='shell'>
+  $ git checkout testing
+  </code>
+
+  After that, you __are__ in the __testing__ branch. So, let's imagine you made some changes and commited. This is the repository state:
+
+figure
+  img src="/images/blog/git/git-branching-02.png" alt="Git Branching - Image 02" width="500" height="287" style="background:white;"
+  figcaption Figure 2. Git repository with two branchs (master and testing) pointing to testing (HEAD), and with three commits in master and one in testing. This image was taken from Pro Git book (respecting its Creative Commons License).
+
+textile:
+
+  h3(#fast-forward-merge). Fast Forward Merge
+
+  In that point, if you want to merge both branches, it would be the simplest kind of merge that can exist. Because you didn't make any changes in __master__ branch, running <code class="inline">merge</code> command just moves forward __master__ to point to the last __testing__ commit, which in this case is the next commit, but you could have made __n__ commits. To merge branches you have to go to the branch that you want to merge into (__master__ in this case, which will receive changes from __testing__) and run the <code class="inline">merge</code> command:
+
+  <pre><code data-language='shell'>
+  $ git checkout master
+  $ git merge testing
+  </code></pre>
+
+  You'll notice a "Fast forward" feedback, indicating a simple forward. After that, those two branches point to a common commit again (as right after you created the __testing__ branch). At this point you could delete the __testing__ branch with no problem, by running:
+
+  <code class='inline' data-language='shell'>
+  $ git branch -d testing
+  </code>
+
+  That's the simplest merge and will never arise a conflict. But you want to be prepared for the real world, right? So you can be sure that conflicts will arise at some point! ;-)
+
+  h3(#three-way-merge). Three-Way Merge
+
+  To simulate another possible merge, a more complex one, let's forget the merge above. Let's pretend we didn't merge, ok? Good...
+
+  Let's go back to __master__ branch (<code class="inline">$ git checkout master</code>) (remember: when you switch between branches, your working directory changes too). Let's then make a change and commit. So this is the repository state now:
+
+figure
+  img src="/images/blog/git/git-branching-03.png" alt="Git Branching - Image 03" width="500" height="382" style="background:white;"
+  figcaption Figure 3. The last two commits (one on each branch) are isolated in separate branches. This image was taken from Pro Git book (respecting its Creative Commons License).
+
+textile:
+
+  Now we have isolated commits in both branches. Trying to merge now will give some work to Git. If no conflicts arise (i.e. if there are no changes in the same part of the same files) Git can do everything automatically.
+
+  So, in this scenario, what will Git do after we run merge command?
+
+  Try to merge!
+
+  Git does a simple three-way merge, using the last snapshot (commit) of each branch plus the common ancestor of both ("f30ab" in Figure 3). To do that, Git creates a new snapshot (commit) that is refered to as a __merge commit__, and it's special because it has more than one parent (Chacon 57):
+
+figure
+  img src="/images/blog/git/git-branching-04.png" alt="Git Branching - Image 04" width="670" height="382" style="background:white;"
+  figcaption Figure 4. Git automatically creates a new commit containing merged changes. Note that the new commit ("09b8e") has two parents. This image was taken from the Pro Git book and edited (respecting its Creative Commons License).
+
+textile:
+
+  You'll notice a "Merge made by recursive." feedback, indicating a more complex merging. After that, you can delete the __testing__ branch if you don't plan working on it in the future.
+
+  Maybe you're thinking now: "What about conflicts?".
+
+  h3(#resolving-conflicts). Resolving Conflicts
+
+  Everything is good when things go right. But don't worry, the way Git handles conflicts is also very elegant.
+
+  Let's suppose you've changed the same lines of a text file in both branches and tried to merge. Git gives you a feedback like this:
+
+  <pre><code>
+  Auto-merging file-name
+  CONFLICT (content): Merge conflict in file-name
+  Automatic merge failed; fix conflicts and then commit the result.
+  </code></pre>
+
+  If you run <code class="inline">$ git status</code> now, Git will show you an __Unmerged paths__ section listing files that are in conflict state. And at this time Git doesn't created a new merge commit.
+
+  But this kind of conflict should be simple to fix. If you open the file, you should see something like this:
+
+  <pre><code>
+  <<<<<<< HEAD
+  This section was changed by master branch.
+  =======
+  This section was changed by testing branch.
+  >>>>>>> testing
+  </code></pre>
+
+  Everything that is below <code class="inline"><< HEAD</code> and above <code class="inline">==</code> is the __HEAD__ version of the file (the last snapshot of the current branch when you run __merge__), in this case, __master__ version. And everything above <code class="inline">>> testing</code> and below <code class="inline">==</code> is the version of the file on the other branch (__testing__, in this case).
+
+  To fix the conflict you need to remove those Git markers, manually. Also, if you prefer you can run <code class="inline">$ git mergetool</code> to open a visual merge tool.
+
+  After removing markers, you need to tell Git that the conflict was fixed. You do that running <code class="inline">add</code> command:
+
+  <code class='inline' data-language='shell'>
+  $ git add file-name
+  </code>
+
+  Now you can commit your changes, and the merge is done.
+
+  h3(#conclusion). Conclusion
+
+  In the same way that you've created the __testing__ branch, you can create several other branches, in any direction. The __master__ branch can have any number of __child__ branches, and a __child__ branch (like __testing__ in this example) can also have any number of __child__ branches, and so on... To merge them all, the common approach is to merge a branch into its __parent__ one.
+
+  Ok, that's it. Now you better understand about __local__ branches. In the next article I'll talk about remote branches and tracking branches. Don't worry, now that you understand the basics about branching, it should be simple to understand the rest of the concept.
+
+  h3(#related-posts). Related Posts
+
+  "Git Basic Commands Explained":/blog/git-basic-commands-explained/
+  "Git Workflow":/blog/git-workflow/
+  "Introduction to Git":/blog/introducing-git/
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://git-scm.com/" target="_blank">Git</a>
+  <a href="http://progit.org/book/" target="_blank">Pro Git Book</a>
+
+  h3(#bibliography). Bibliography
+
+  Chacon, Scott. _Pro Git_. Apress, 2009.

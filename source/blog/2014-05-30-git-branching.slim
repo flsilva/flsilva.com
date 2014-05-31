@@ -1,0 +1,15 @@
+---
+title: "Git Branching"
+description: "Learn what Git branching is and how it works."
+priority: 0.6
+changefreq: monthly
+tags: "git"
+author: flsilva
+summary: "Learn what Git branching is and how it works."
+tweet_text: "Learn what Git branching is and how it works."
+tweet_hashtags: "git"
+---
+- content_for :main_content_title do
+  a id==get_post_link_id(true, current_page.title, "main-blog-title-button") href="/" Blog
+== partial "partials/post", :locals => { :article => current_page, :post_path => "blog/2014-05-30-git-branching" }
+== partial "partials/disqus"
