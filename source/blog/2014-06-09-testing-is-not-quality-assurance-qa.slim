@@ -1,0 +1,15 @@
+---
+title: Testing is NOT Quality Assurance (QA)
+description: Learn the difference between Software Testing and Quality Assurance (QA).
+priority: 0.6
+changefreq: monthly
+tags: "software-testing"
+author: flsilva
+summary: Learn the difference between Software Testing and Quality Assurance (QA).
+tweet_text: "Learn the difference between Software Testing and Quality Assurance (QA)."
+tweet_hashtags: "SoftwareTesting"
+---
+- content_for :main_content_title do
+  a id==get_post_link_id(true, current_page.title, "main-blog-title-button") href="/" Blog
+== partial "partials/post", :locals => { :article => current_page, :post_path => "blog/2014-06-09-testing-is-not-quality-assurance-qa" }
+== partial "partials/disqus"
