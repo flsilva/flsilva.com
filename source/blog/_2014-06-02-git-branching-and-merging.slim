@@ -2,7 +2,7 @@ textile:
 
   If you're new to <a href="http://git-scm.com/" target="_blank">Git</a> or want to know a little more about its basics and its distributed model, do not hesitate to read the "Introduction to Git":/blog/introducing-git/ article.
 
-  Branching is a great feature, but to be really effective its implementation must be optimal, and Git excels here. The way it implements and exposes it for us is very simple, powerful, and fast to use. But the branching concept, and the way it works on Git may look a little complex in the beginning. In this article I'll try to syntethize the way it works and try to give you a good explanation about it, so you can get advantage of its power.
+  Branching and merging are great features, but to be really effective their implementations must be optimal, and Git excels here. The way it implements and exposes it for us is very simple, powerful, and fast to use. But the branching concept, and the way it works on Git, may look a little complex in the beginning. In this article I'll try to syntethize the way it works and try to give you a good explanation about it, so you can get advantage of its power.
 
   Ok. Let's start by explaining what is branching.
 
@@ -70,9 +70,13 @@ figure
 
 textile:
 
+  h3(#merging). Merging
+
+  Usually, at some point, you'll want to merge two branches if you was successful in your changes / improvements. So you can get back to the original source of your project (e.g. __master__ branch). The way Git handles merging is very nice too, but it depends on the state of your files. Next you'll see those possibilities.
+
   h3(#fast-forward-merge). Fast Forward Merge
 
-  In that point, if you want to merge both branches, it would be the simplest kind of merge that can exist. Because you didn't make any changes in __master__ branch, running <code class="inline">merge</code> command just moves forward __master__ to point to the last __testing__ commit, which in this case is the next commit, but you could have made __n__ commits. To merge branches you have to go to the branch that you want to merge into (__master__ in this case, which will receive changes from __testing__) and run the <code class="inline">merge</code> command:
+  In the current state of our repository, if you want to merge both branches, it would be the simplest kind of merge that can exist. Because you didn't make any changes in __master__ branch, running <code class="inline">merge</code> command just moves forward __master__ to point to the last __testing__ commit, which in this case is the next commit, but you could have made __n__ commits. To merge branches, you have to go to the branch that you want to merge into (__master__ in this case, which will receive changes from __testing__) and run the <code class="inline">merge</code> command:
 
   <pre><code data-language='shell'>
   $ git checkout master
@@ -155,9 +159,11 @@ textile:
 
   h3(#conclusion). Conclusion
 
-  In the same way that you've created the __testing__ branch, you can create several other branches, in any direction. The __master__ branch can have any number of __child__ branches, and a __child__ branch (like __testing__ in this example) can also have any number of __child__ branches, and so on... To merge them all, the common approach is to merge a branch into its __parent__ one.
+  As we could see, the way Git handles branching and merging is very elegant and fast, you do everything on your local repository.
 
-  Ok, that's it. Now you better understand about __local__ branches. In the next article I'll talk about remote branches and tracking branches. Don't worry, now that you understand the basics about branching, it should be simple to understand the rest of the concept.
+  In the same way you've created the __testing__ branch, you can create several other branches, in any direction. The __master__ branch can have any number of __child__ branches, and a __child__ branch (like __testing__ in this example) can also have any number of __child__ branches, and so on... To merge them all, the common approach is to merge a branch into its __parent__ one.
+
+  So, that's it. Now you better understand about __local__ branches. In the next article I'll talk about remote branches and tracking branches. Don't worry, now that you understand the basics about branching, it should be simple to understand the rest of the concept.
 
   h3(#related-posts). Related Posts
 
