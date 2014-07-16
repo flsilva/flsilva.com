@@ -14,11 +14,12 @@ textile:
 
   h3(#step-2-adding-nginx-official-repository). Step 2. Adding Nginx Official Repository
 
-  To have access to the latest versions, you need to add Nginx official repository. First you need to add Nginx repository key, download the file:
+  To have access to the latest versions, you need to add Nginx official repository. First you need to add Nginx repository key, so download the file:
 
-  <code class='inline' data-language='shell'>
+  <pre><code data-language='shell'>
+  $ cd ~/
   $ wget nginx_signing.key http://nginx.org/keys/nginx_signing.key
-  </code>
+  </code></pre>
 
   And add it to your Linux:
 
@@ -60,7 +61,7 @@ textile:
 
   Save the file by pressing __control X__, then __Y__, and then __Enter__.
 
-  Update package definitions with the new Nginx repository:
+  Now update your Linux package definitions with the new Nginx repository:
 
   <code class='inline' data-language='shell'>
   $ sudo apt-get update
@@ -107,11 +108,11 @@ textile:
 
   "Starting nginx: nginx."
 
-  If you're setting up a VPS from scratch, you can now try to access its IP on your browser. You should see somthing like this:
+  If you're setting up a VPS from scratch, you can now try to access its IP on your browser. You should see something like this:
 
   "Welcome to nginx!"
 
-  Congrats! Nginx is installed and listening on port 80 (HTTP). If your server is restarted, you don't have to worry about Nginx, it'll be initialized automatically!
+  Congrats! Nginx is installed and listening to port 80 (HTTP). If your server is restarted, you don't have to worry about Nginx, it'll be initialized automatically!
 
   h3(#updating-nginx). Updating Nginx
 
@@ -129,6 +130,10 @@ textile:
   </code>
 
   If you want to know about how to securely set up a Linux VPS (Ubuntu / Debian) "click here":/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/.
+
+  h3(#related-posts). Related Posts
+
+  <a href="/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/">How to Securely Set Up a VPS Server - Tutorial (Ubuntu / Debian)</a>
 
   h3(#interesting-links). Interesting Links
 
