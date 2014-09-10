@@ -1,0 +1,15 @@
+---
+title: "How to Configure a Website on Nginx and Linux - Tutorial"
+description: "Learn how to configure a website / webapp using the ultra fast Nginx HTTP Server on Linux."
+priority: 0.6
+changefreq: monthly
+tags: nginx, vps, ubuntu, debian
+author: flsilva
+summary: "Learn how to configure a website / webapp using the ultra fast Nginx HTTP Server on Linux."
+tweet_text: "Learn how to configure a website using the ultra fast Nginx HTTP Server on Linux."
+tweet_hashtags: "nginx, vps, ubuntu, debian"
+---
+- content_for :main_content_title do
+  a id==get_post_link_id(true, current_page.title, "main-blog-title-button") href="/" Blog
+== partial "partials/post", :locals => { :article => current_page, :post_path => "blog/2014-05-26-how-to-configure-a-website-on-nginx-and-linux-tutorial" }
+== partial "partials/disqus"
