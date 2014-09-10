@@ -85,7 +85,13 @@ textile:
 
   "sudo: unable to resolve host flsilva-debian"
 
-  That's beucase we haven't set our FQDN yet. So let's edit __/etc/hosts__ file and add an entry with your FQDN (your system's hostname + your system's domain name). The domain name doesn't have any relationship to what you're going to host either. Just make sure the first two lines of your __/etc/hosts__ file looks the same as the following (replacing __flsilva-debian__ by your hostname, __website.com__ by your new domain name, and __123.456.78.90__ by your VPS' IP address):
+  That's beucase we haven't set our FQDN yet. So let's edit __/etc/hosts__ file and add an entry with your FQDN (your system's hostname + your system's domain name).
+
+  <code data-language='shell' class='inline'>
+  $ sudo nano /etc/hosts
+  </code>
+
+  The domain name doesn't have any relationship to what you're going to host either. Just make sure the first two lines of your __/etc/hosts__ file looks the same as the following (replacing __flsilva-debian__ by your hostname, __website.com__ by your new domain name, and __123.456.78.90__ by your VPS' IP address):
 
   <pre><code data-language='shell'>
   127.0.0.1       localhost.localdomain localhost
