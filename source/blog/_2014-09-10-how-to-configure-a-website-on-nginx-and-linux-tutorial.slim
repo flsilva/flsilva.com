@@ -25,14 +25,13 @@ textile:
 
   If you can see two directories named __sites-available__ and __sites-enabled__ you're ok. Otherwise create them by running:
 
-  <pre><code data-language='shell'>
-  $ sudo mkdir sites-available
-  $ sudo mkdir sites-enabled
-  </code></pre>
+  <code class='inline' data-language='shell'>
+  $ sudo mkdir sites-available && sudo mkdir sites-enabled
+  </code>
 
-  __sites-available__ will contain configuration files for all websites you want to try at any time, preferably one file for each website / webapp. But files on this folder will not be __enabled__, i.e. it'll not be loaded into Nginx, so you can safely create new files here. Then we'll create a symbolic link into __sites-enabled__ directory. That way, it's very easy for you, as a sysadmin, to enable and disable websites without having to duplicate files for backup when disabling websites! Don't worry, that's pretty easy to manage, as we'll see next.
+  __sites-available__ will contain configuration files for all websites you want to try at any time, preferably one file for each website / webapp. But files on this folder will not be __enabled__, i.e. it'll not be loaded into Nginx, so you can safely create new files here. Then we'll create a symbolic link into __sites-enabled__ directory. That way, it's very easy for you, as a sysadmin, to enable and disable websites without having to duplicate files for backup purposes when disabling websites. Don't worry, that's pretty easy to manage, as we'll see next.
 
-  If those directories were already there, you should see a file named __default__ into __sites-available__, and a <a href="http://en.wikipedia.org/wiki/Symbolic_link" target="_blank">symlink</a> (symbolic link) to it into __sites-enabled__. You can take a look at that file if you want, it's a template configuration file, but I'm going to provide you with a fully functional one.
+  If those directories were already there, you should see a file named __default__ into __sites-available__, and a <a href="http://en.wikipedia.org/wiki/Symbolic_link" target="_blank">symlink</a> (symbolic link) to it into __sites-enabled__. You can take a look at that file if you want, it's a template configuration file, anyway I'm going to provide you with a fully functional one.
 
   h3(#step-2-creating-your-website-configuration-file). Step 2. Creating your Website's Configuration File
 
@@ -43,7 +42,7 @@ textile:
   $ sudo nano sites-available/flsilva.com.conf
   </code>
 
-  Now copy and paste the following content to your file:
+  Copy and paste the following content to your file:
 
   <pre><code data-language='shell'>
   server {
@@ -86,7 +85,9 @@ textile:
 
   The first __server__ block is there for SEO purposes. It's a technique called canonical URL. Here we're redirecting all requests coming to "www.flsilva.com" to just "flsilva.com". If we don't take care of that, SEO ranking factors get split between more than one URL showing the same content. Doing that (using the __permanent__ keyword, which translates to HTTP 301 status code - "Moved Permanently") we're essentially communicating to search engines that they should __always__ consider our canonical "flsilva.com" URL, and that's great for SEO.
 
-  But note that you need to configure "www" in your DNS service ("www" is really a subdomain, like any other). You probably want to do that because you don't want your users to see an error page if they type "www.yourdomain.com", right?
+  Note that you need to configure "www" in your DNS service ("www" is really a subdomain, like any other). You probably want to do that because you don't want your users to see an error page if they type "www.yourdomain.com", right?
+
+  But if you're creating a subdomain, you should remove this __server__ block entirely, as your users shouldn't be typing www.yoursubdomain.yourdomain.com, but just yoursubdomain.yourdomain.com
 
   h4(#standard-port-80). Standard Port 80
 
@@ -214,13 +215,23 @@ textile:
   multi_accept on;
   </code>
 
-  h3(#allow-underscores-in-client-request-header). Allow Underscores in Client Request Header
+  h3(#allow-underscores-in-client-request-header). Allow Underscores in Client's Request Header
 
-  Another useful configuration is to allow the use of underscores by clients. That's disabled by default but is very simple to change, and will make it a little more flexible. To do that copy and paste the following line to your Nginx's configuration file (__/etc/nginx/nginx.conf__), inside the __http{}__ block, usually after the <code class='inline' data-language='shell'>default_type    application/octet-stream;</code> line:
+  Another useful configuration is to allow the use of underscores by clients on Request Headers. That's disabled by default but is very simple to change, and will make it a little more flexible. To do that copy and paste the following line to your Nginx's configuration file (__/etc/nginx/nginx.conf__), inside the __http{}__ block, usually after the <code class='inline' data-language='shell'>default_type    application/octet-stream;</code> line:
 
   <code class='inline' data-language='shell'>
   underscores_in_headers   on;
   </code>
+
+  h3(#avoiding-increase-server_names_hash_bucket_size-error”:). Avoiding “increase server_names_hash_bucket_size error”
+
+  To avoid “increase server_names_hash_bucket_size error”, which occurs for long server_name values, add the following line to your Nginx's configuration file (__/etc/nginx/nginx.conf__), inside the __http{}__ block, usually after the <code class='inline' data-language='shell'>underscores_in_headers on;</code> line (if you added it):
+
+  <code class='inline' data-language='shell'>
+  server_names_hash_bucket_size 64;
+  </code>
+
+  Do not forget to reload Nginx's configuration file after doing such changes.
 
   <br>
   That's it. If you have any questions or problems please let me know.
