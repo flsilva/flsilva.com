@@ -87,7 +87,7 @@ textile:
 
   Note that you need to configure "www" in your DNS service ("www" is really a subdomain, like any other). You probably want to do that because you don't want your users to see an error page if they type "www.yourdomain.com", right?
 
-  But if you're creating a subdomain, you should remove this __server__ block entirely, as your users shouldn't be typing www.yoursubdomain.yourdomain.com, but just yoursubdomain.yourdomain.com
+  But if you're creating a subdomain, you should remove this first __server__ block entirely, as your users shouldn't be typing www.yoursubdomain.yourdomain.com, but just yoursubdomain.yourdomain.com
 
   h4(#standard-port-80). Standard Port 80
 
@@ -223,7 +223,7 @@ textile:
   underscores_in_headers   on;
   </code>
 
-  h3(#avoiding-increase-server_names_hash_bucket_size-error”:). Avoiding “increase server_names_hash_bucket_size error”
+  h3(#avoiding-increase-server_names_hash_bucket_size-error). Avoiding “increase server_names_hash_bucket_size error”
 
   To avoid “increase server_names_hash_bucket_size error”, which occurs for long server_name values, add the following line to your Nginx's configuration file (__/etc/nginx/nginx.conf__), inside the __http{}__ block, usually after the <code class='inline' data-language='shell'>underscores_in_headers on;</code> line (if you added it):
 
