@@ -1,0 +1,113 @@
+textile:
+  If you're new to <a href="http://git-scm.com/" target="_blank">Git</a> or want to know a little more about its basics and its distributed model, do not hesitate to read the "Introduction to Git":/blog/introducing-git/ article.
+
+  The easiest way to install Git on Linux is to install it using the <code class='inline' data-language='shell'>apt-get</code> command, but that won't get you the latest version, and usually will be very old (like you get 1.7 while latest is 2.1):
+
+  <code class='inline' data-language='shell'>
+  $ sudo apt-get install git
+  </code>
+  (Don't run this command if you want latest Git version!)
+
+  But if you want to get the latest Git version (recommended) you have to install it from source. Don't worry, that's very easy and fast, even to update it later when a new version is released!
+
+  So, let's do that.
+
+  h3(#step-1-updating-your-linux-distro). Step 1. Updating your Linux Distro
+
+  It's always good to be updated, so first update your Linux:
+
+  <pre><code data-language='shell'>
+  $ sudo apt-get update
+  $ sudo apt-get upgrade --show-upgraded
+  </code></pre>
+
+  h3(#step-2-installing-git-dependencies). Step 2. Installing Git Dependencies
+
+  Now you need to install some Git dependencies before being able to compile it from source:
+
+  <code class='inline' data-language='shell'>
+  $ sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential
+  </code>
+
+  h3(#step-3-downloading-latest-git). Step 3. Downloading Latest Git
+
+  Visit the <a href="https://github.com/git/git/releases" target="_blank">GitHub page listing all Git releases</a>, and copy and paste the __tar.gz__ link of the latest release in the <code class='inline' data-language='shell'>wget</code> command:
+
+  <code class='inline' data-language='shell'>
+  $ wget https://github.com/git/git/archive/v2.1.0.tar.gz
+  </code>
+
+  Now, untar the file and switch into that directory:
+
+  <pre><code data-language='shell'>
+  $ tar -zxf v2.1.0.tar.gz
+  $ cd git-2.1.0
+  </code></pre>
+  (Don't forget to change the name of the file for the one you downloaded.)
+
+  h3(#step-4-installing-latest-git). Step 4. Installing Latest Git
+
+  Now you're ready to compile and install it:
+
+  <pre><code data-language='shell'>
+  $ make prefix=/usr/local all
+  $ sudo make prefix=/usr/local install
+  </code></pre>
+
+  And that's it. Easy, huh?
+  Now let's restart your shell instance to make changes effective.
+
+  h3(#step-5-restarting-your-shell). Step 5. Restarting Your Shell
+
+  To restart your current shell instance just run:
+
+  <code class='inline' data-language='shell'>
+  $ exec $SHELL -l
+  </code>
+
+  Now let's check if everything went good by checking the installed version.
+
+  h3(#step-6-checking-installed-version). Step 6. Checking Installed Version
+
+  To see the installed version just run:
+
+  <code class='inline' data-language='shell'>
+  $ git --version
+  </code>
+
+  You should see your installed version. Congrats, you now have the latest Git version! :)
+
+  h3(#step-7-global-settings). Step 7. Global Settings
+
+  The first thing you should do after you install Git is set your name and e-mail address. This is important because every Git _commit_ uses this information.
+
+  <pre><code data-language='shell'>
+  $ git config --global user.name "Your Name"
+  $ git config --global user.email youremail@example.com
+  </code></pre>
+
+  Using __--global__ option makes it globally available for Git (any repo you work). If you want to override that information for a specific repo, just go to that repo's root directory and run the command without the __--global__ option.
+
+  h3(#updating-git). Updating Git
+
+  To update your Git you just need to do everything again, but of course using a recent version of it!
+
+  If you have any issues please let me know.
+
+  <br>
+  If you want to know how to securely set up a Linux VPS (Ubuntu / Debian) "click here":/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/.
+
+  h3(#related-posts). Related Posts
+
+  "Introduction to Git":/blog/introducing-git/
+  "Git Basic Commands Explained":/blog/git-basic-commands-explained/
+  "Git Branching and Merging":/blog/git-branching-and-merging/
+  <a href="/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/">How to Configure a Website on Nginx and Linux - Tutorial</a>
+  <a href="/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/">How to Securely Set Up a VPS Server - Tutorial (Ubuntu / Debian)</a>
+
+  h3(#interesting-links). Interesting Links
+
+  <a href="http://git-scm.com/" target="_blank">Git</a>
+  <a href="http://progit.org/book/" target="_blank">Pro Git Book</a>
+
+== partial "partials/creative-commons-by-nc-sa"
