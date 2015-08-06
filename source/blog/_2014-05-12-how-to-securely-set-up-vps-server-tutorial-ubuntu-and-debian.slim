@@ -85,12 +85,20 @@ textile:
 
   "sudo: unable to resolve host flsilva-debian"
 
-  That's beucase we haven't set our FQDN yet. So let's edit __/etc/hosts__ file and add an entry with your FQDN (your system's hostname + your system's domain name). The domain name doesn't have any relationship to what you're going to host either. Just make sure the first two lines of your __/etc/hosts__ file looks the same as the following (replacing __flsilva-debian__ by your hostname, __website.com__ by your new domain name, and __123.456.78.90__ by your VPS' IP address):
+  That's beucase we haven't set our FQDN yet. So let's edit __/etc/hosts__ file and add an entry with your FQDN (your system's hostname + your system's domain name).
+
+  <code data-language='shell' class='inline'>
+  $ sudo nano /etc/hosts
+  </code>
+
+  The domain name doesn't have any relationship to what you're going to host either. Just make sure the first two lines of your __/etc/hosts__ file looks the same as the following (replacing __flsilva-debian__ by your hostname, __website.com__ by your new domain name, and __123.456.78.90__ by your VPS' IP address):
 
   <pre><code data-language='shell'>
   127.0.0.1       localhost.localdomain localhost
   123.456.78.90   flsilva-debian.website.com flsilva-debian
   </code></pre>
+
+  Save the changes by hitting __Control-X__, then __Y__, and then __Enter__.
 
   Now if you run <code class='inline' data-language='shell'>$ sudo</code> again you should __not__ see that message again.
 
@@ -166,6 +174,8 @@ textile:
   <code data-language='shell' class='inline'>
   $ scp ~/.ssh/id_rsa.pub deploy@123.456.78.90:
   </code>
+
+  Do not forget the ":" character at the end of the command! ;)
 
   Now let's log in on your server (using password) and move the file to the appropriated directory:
 
@@ -517,7 +527,7 @@ textile:
   $ sudo chmod +x /etc/network/if-pre-up.d/firewall
   </code>
 
-  Great! Now when you restart your server your rules will be activated!
+  Great! Now, when you restart your server your rules will be active!
 
   h3(#step-11-install-fail2ban). Step 11. Install Fail2ban
 
@@ -536,6 +546,12 @@ textile:
   Let me know if you have any issues on this step-by-step tutorial, something may be missing, or even using a different version of Debian or Ubuntu may have a little difference, and I'd like to know about that.
 
   Happy sysadmin! :)
+
+  h3(#related-posts). Related Posts
+
+  <a href="/blog/how-to-install-nginx-tutorial-ubuntu-and-debian/">How to Install Nginx - Tutorial (Ubuntu / Debian)</a>
+  <a href="/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/">How to Configure a Website on Nginx and Linux - Tutorial</a>
+  <a href="/blog/how-to-password-protect-file-directory-nginx/">How to Password Protect a File or Directory on Nginx</a>
 
   h3(#interesting-links). Interesting Links
 
