@@ -55,8 +55,6 @@ capybara-*.html
 Thumbs.db
 
 # Linux
-.*
-!.gitignore
 *~
 
 # KDE
