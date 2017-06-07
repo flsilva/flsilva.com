@@ -29,9 +29,6 @@ capybara-*.html
 .rvmrc
 .rvmrc.*
 
-# rbenv
-.rbenv-version
-
 # Eclipse
 .project
 
