@@ -27,6 +27,7 @@ function configPortfolioSlideshow()
 
   var config = {advanceSpeed:6000, directionalNav:false}
 
+  $("#slide-pearson").orbit(config);
   $("#slide-bienal2012").orbit(config);
   $("#slide-schin2010").orbit(config);
   $("#slide-schin2009").orbit(config);
