@@ -131,7 +131,7 @@ textile:
   $ git push origin master
   </code>
 
-  <code class='inline' data-language='shell'>master</code> is the name of the default main branch in Git. Don't worry about it right now, "branching":/blog/git-branching-and-merging/ is the subject of our next article about Git.
+  <code class='inline' data-language='shell'>master</code> is the name of the default main branch in Git. Don't worry about it right now, branching is the subject of our "next article":/blog/git-branching-and-merging/ about Git.
 
   <div class="info-box">
   <span class="warning icon"></span>
@@ -140,17 +140,49 @@ textile:
 
   </div>
 
-  h3(#pulling-changes-from-a-remote-repository). Pulling changes from a remote repository
+  h3(#fetching-changes-from-a-remote-repository). Fetching changes from a remote repository
 
-  You should always run a <code class='inline' data-language='shell'>pull</code> command before running <code class='inline' data-language='shell'>push</code>, because if someone else has pushed to the remote repository, you'll have to pull it first, before being able to push your changes. Git enforces it. Also, before pulling changes from a remote repo, you should commit your local changes.
+  You should always run a <code class='inline' data-language='shell'>fetch</code> command before running <code class='inline' data-language='shell'>push</code>, because if someone else has pushed to the remote repository, you'll have to fetch it first, then merge it into your local branch, before being able to push your changes. Git enforces it. Also, before fetching changes from a remote repo, you should commit your local ones, if you have any.
 
-  To _pull_ from a remote repository you run a command like <code class='inline' data-language='shell'>$ git pull [remote]</code>, for example:
+  To _fetch_ from a remote repository you run a command like <code class='inline' data-language='shell'>$ git fetch [remote]</code>, for example:
 
   <code class='inline' data-language='shell'>
-  $ git pull origin
+  $ git fetch origin
   </code>
 
-  A <code class='inline' data-language='shell'>pull</code> command fetches all changes from a target remote repo, and starts a <code class='inline' data-language='shell'>merge</code> command. If there are no conflicts to resolve (don't worry about it now), you just have to confirm the default merge message (you can change it if you want). After that you're up-to-date to your remote repo, so ready to <code class='inline' data-language='shell'>push</code> to it. That makes a basic push flow to look like this: <code class='inline' data-language='shell'>commit</code> -> <code class='inline' data-language='shell'>pull</code> -> <code class='inline' data-language='shell'>push</code>.
+  A <code class='inline' data-language='shell'>fetch</code> command fetches all changes from a target remote repo, creating remote branches in your local repo. Don't worry about remote branches for now, that's the subject of "this article":/blog/git-remote-and-tracking-branches/, you can read it moving forward. After that, you'll want to run a <code class='inline' data-language='shell'>merge</code> command to merge remote changes to your local ones. After merging you're up-to-date to your remote repo, so ready to <code class='inline' data-language='shell'>push</code> to it. That makes a basic push flow to look like this:
+  
+  <code class='inline' data-language='shell'>commit</code> -> <code class='inline' data-language='shell'>fetch</code> -> <code class='inline' data-language='shell'>merge</code> -> <code class='inline' data-language='shell'>push</code>
+  
+  But if there are no changes to your remote repo, that could be just:
+  
+  <code class='inline' data-language='shell'>commit</code> -> <code class='inline' data-language='shell'>push</code>
+
+  Now, you should really consider using <code class='inline' data-language='shell'>pull</code> instead of <code class='inline' data-language='shell'>fetch</code>. Let's see why.
+
+  h3(#pulling-changes-from-a-remote-repository). Pulling changes from a remote repository
+
+  A <code class='inline' data-language='shell'>pull</code> command is pretty much like <code class='inline' data-language='shell'>fetch</code>, but with the advantage that it runs <code class='inline' data-language='shell'>merge</code> for us automatically. To do that, you just need to provide a target branch, alongside remote repo. So instead of using <code class='inline' data-language='shell'>fetch</code> like this:
+
+  <code class='inline' data-language='shell'>
+  $ git fetch origin
+  </code>
+
+  You can use <code class='inline' data-language='shell'>pull</code> like this:
+
+  <code class='inline' data-language='shell'>
+  $ git pull origin master
+  </code>
+  
+  That way Git knows you want to merge changes from your remote repo's __master__ branch into your current local branch (that may or may not be pointing to your local __master__ branch).
+
+  If there are no conflicts to resolve (don't worry about it now), you just have to confirm the default merge message (you can change it if you want). After that you're up-to-date to your remote repo, so ready to <code class='inline' data-language='shell'>push</code> to it. That makes a basic push flow to look like this:
+  
+  <code class='inline' data-language='shell'>commit</code> -> <code class='inline' data-language='shell'>pull</code> -> <code class='inline' data-language='shell'>push</code>
+
+  But if there are no changes to your remote repo, that could be just:
+  
+  <code class='inline' data-language='shell'>commit</code> -> <code class='inline' data-language='shell'>push</code>
 
   h3(#deleting-files-and-directories). Deleting files and directories
 
@@ -215,7 +247,7 @@ textile:
 
   And, that's it! You should now have a much better sense about how Git works, and how to easily use it for most basic tasks. Do you think there's a basic command not listed here? Please let me know in the comments.
 
-  Feeling smart and fearless? Head to "Git Branching and Merging":/blog/git-branching-and-merging/ to start leaning some advanced and very useful commands Git provides us.
+  Feeling smart and fearless? Head to "Git Branching and Merging":/blog/git-branching-and-merging/ to start leaning some advanced yet very useful concepts Git provides us. I put a lot of effort to make it easy to understand, but let me know if I failed somehow.
 
   h3(#related-posts). Related Posts
 
