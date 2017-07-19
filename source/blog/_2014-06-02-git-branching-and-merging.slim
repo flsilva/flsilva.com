@@ -16,11 +16,15 @@ textile:
 
   h3(#the-master-branch-and-head). Master Branch and HEAD pointer
 
-  When you run <code class="inline">$ git init</code> or <code class="inline">$ git clone</code> commands to create a new repository, Git automatically creates a __master__ branch, and points the development to it. Git has a special pointer to know what is the current branch, and it's called __HEAD__. It's different than the concept of __HEAD__ in other VCSs. __HEAD__ in Git means the last snapshot (commit) of the current branch.
+  When you run <code class="inline">$ git init</code> or <code class="inline">$ git clone</code> commands to create a new repository, Git automatically creates a __master__ branch for you, and points development to it. Git has a special pointer to know what is the current branch, and it's called __HEAD__. It's different than the concept of __HEAD__ in other VCSs. __HEAD__ in Git means the last snapshot (commit) of the current branch. How do you know what branches you have, and which is the current one? That's easy, you just run <code class="inline">$ git branch</code>. If you run that right after <code class="inline">$ git init</code>, you should see something like:
+
+  <code class="inline">* master</code>
+
+  That means you only have __master__ branch, and it's the current one, indicated by the <code class="inline">*</code> sign.
 
   h3(#the-current-branch). Current Branch
 
-  Now, it's important to say that nearly every concept "we've learned so far":/blog/git-workflow is related to the current branch. So, "_modified_":/blog/git-workflow/#modified-file-state and "_staged_":/blog/git-workflow/#staged-file-state files, "_working directory_":/blog/git-workflow/#working-directory, "_staging area_":/blog/git-workflow/#staging-area, etc, are all related to the current branch ("_Git directory_":/blog/git-workflow/#git-directory is an exception here, as it's the same for all branches in the project). Each branch has those concepts in an isolated way. Another import thing to note is that when you switch between branches, your "_working directory_":/blog/git-workflow/#working-directory changes to reflect files (and their versions) of the target branch.
+  Now, it's important to say that nearly every concept "we've learned so far":/blog/git-workflow is related to the current branch we're pointing to at the moment we run our commands. So, "_modified_":/blog/git-workflow/#modified-file-state and "_staged_":/blog/git-workflow/#staged-file-state files, "_working directory_":/blog/git-workflow/#working-directory, "_staging area_":/blog/git-workflow/#staging-area, etc, are all related to the current branch ("_Git directory_":/blog/git-workflow/#git-directory is an exception here, as it's the same for all branches in the project). Each branch has those concepts in an isolated way. Another import thing to note is that when you switch between branches, your "_working directory_":/blog/git-workflow/#working-directory changes to reflect files (and their versions) of the target branch.
 
   h3(#starting-a-new-repository-from-scratch). Starting a New Repository from Scratch
 
@@ -54,13 +58,27 @@ textile:
   $ git branch testing
   </code>
 
-  But that command doesn't point to it automatically (it doesn't move your __HEAD__ pointer). So you need to run a command like <code class='inline' data-language='shell'>git checkout [branch-name]</code> to switch between branches, for example:
+  But that command doesn't point to it automatically (it doesn't move your __HEAD__ pointer). If you run <code class='inline' data-language='shell'>git branch</code> now, you should see something like:
+
+  <pre><code data-language='shell'>
+  * master
+    testing
+  </code></pre>
+  
+  That pretty much confirms we now have a __testing__ branch, but we're still pointing to __master__. You need to run a command like <code class='inline' data-language='shell'>git checkout [branch-name]</code> to switch between branches, for example:
 
   <code class='inline' data-language='shell'>
   $ git checkout testing
   </code>
 
-  After running that command you'll be pointing to that __testing__ branch. So, let's imagine you made some changes to some files and commited them. The state of your repo would be like so:
+  Now we should be pointing to __testing__. If we run <code class='inline' data-language='shell'>git branch</code> now, we should see something like:
+  
+  <pre><code data-language='shell'>
+    master
+  * testing
+  </code></pre>
+  
+  Cool. So, now let's imagine you made some changes to some files and committed them. The state of your repo would be like so:
 
 figure
   img src="/images/blog/git/git-branching-02.png" alt="Git Branching - Image 02" width="500" height="287" style="background:white;"
