@@ -4,6 +4,13 @@ textile:
 
   Branching and merging are great features, but to be really effective their implementations must be optimal, and Git excels here. The way it implements and exposes it for us is very simple, powerful, and fast to use. But the branching concept, and the way it works on Git, may look a little complex in the beginning. In this article I'll try to explain how it works in an easy and concise way, so you can take full advantage of its power. Let's start by explaining what is branching.
 
+  <div class="info-box">
+  <span class="warning icon"></span>
+
+  Do not type the <code class='inline' data-language='shell'>$</code> sign you see in the command examples. That's just an indicator that you should run the command that follows it in your command line tool.
+
+  </div>
+
   h3(#what-is-branching). What is Branching?
 
   "Branching means you diverge from the main line of development and continue to do work without messing with that main line." (Chacon 47)
@@ -52,13 +59,13 @@ textile:
   Git doesn't allow us to switch between branches if we have uncommited changes in our working directory or stagging area.
   </div>
 
-  To create a new branch you run a command like <code class='inline' data-language='shell'>git branch [branch-name]</code>, for example:
+  To create a new branch, you run a command like <code class='inline' data-language='shell'>git branch [branch-name]</code>, for example:
 
   <code class='inline' data-language='shell'>
   $ git branch testing
   </code>
 
-  But that command doesn't point to it automatically (it doesn't move your __HEAD__ pointer). If you run <code class='inline' data-language='shell'>git branch</code> now, you should see something like:
+  But that command doesn't point to it automatically (it doesn't move your __HEAD__ pointer). If you run <code class='inline' data-language='shell'>$ git branch</code> now, you should see something like:
 
   <pre><code data-language='shell'>
   * master
