@@ -478,23 +478,22 @@ body.blog
 
 .social-media-interaction
   text-transform: none
+  > div
+    float: left
+    margin-left: 5px
+    &:first-child
+      margin-left: 0
   @media #{$mediaSmallPortrait}
     > div
-      padding-top: 15px
+      margin-top: 15px
   #facebook-interaction
-    display: inline-block
-    width: 120px
+    float: left
   #twitter-interaction
-    display: inline-block
-    width: 68px
-    iframe
-      position: absolute
-      margin-top: -18px
+    float: left
   #google-plus-interaction
-    display: inline-block
+    float: left
   #linkedin-interaction
-    display: inline-block
-    margin-right: 5px
+    float: left
 
 .tag-cloud
   margin-top: 40px
