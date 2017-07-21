@@ -21,6 +21,9 @@ p
     line-height: 1.5!important
 
 
+p, a, h1, h2, h3, h4, h5, h6
+  word-break: break-word
+
 h1, h2, h3, h4, h5, h6
   font-weight: normal
   font-style: normal
@@ -67,7 +70,7 @@ li
     font-size: 1em
 
 pre
-  padding-top: 0!important
+  white-space: initial
 
 code
   font-weight: normal
@@ -428,6 +431,7 @@ body.blog
         h2
           a:first-child
             display: block
+            margin-bottom: 12px
         .tag-name-separator
           display: none
   .tag-name-separator
@@ -457,7 +461,12 @@ body.blog
         color: #dddddd
         font-weight: bold
     .tags
+      span
+        display: block
+        float: left
       a
+        display: block
+        float: left
         padding: 0px 6px
         &:first-child
           padding-left: 8px
