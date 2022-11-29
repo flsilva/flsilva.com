@@ -1,3 +1,0 @@
-Source code from flsilva.com website.
-
-This site is built using Middleware 3 and Ruby 1.9.3-p392.
