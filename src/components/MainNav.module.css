@@ -1,0 +1,13 @@
+.main-nav ul {
+  flex-direction: row;
+}
+
+.main-nav ul li {
+  margin-left: 1.5rem;
+}
+
+.main-nav ul li a {
+  color: #050505;
+  font-weight: 700;
+  text-transform: uppercase;
+}

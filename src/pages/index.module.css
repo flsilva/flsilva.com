@@ -1,0 +1,34 @@
+.copyImageContainer {
+  display: block;
+}
+
+.copyImageContainer * div {
+  display: block;
+}
+
+.email {
+  font-size: 0.875rem;
+}
+
+.imageContainer {
+  border: 0.625rem solid #8f8f8f;
+  border-radius: 50%;
+  float: right;
+  shape-outside: circle(50%);
+}
+
+.imageContainer img {
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+}
+
+.hi-there h1 {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.hi-there h1 span {
+  font-size: 3rem;
+  font-weight: 600;
+}

@@ -1,0 +1,18 @@
+.page-outer-container {
+  width: 100%;
+}
+
+.page-inner-container {
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 4rem;
+  width: 100%;
+}
+
+.page-header-and-main-content {
+  width: 1200px;
+}
+
+.page-main-content {
+  flex-direction: column;
+}
