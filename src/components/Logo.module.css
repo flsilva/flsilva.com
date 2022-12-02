@@ -1,4 +1,11 @@
+.logoContainer {
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+}
+
 .logo a {
   color: #050505;
+  margin-left: 0.375rem;
   text-decoration: none;
 }
