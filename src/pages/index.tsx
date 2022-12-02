@@ -32,19 +32,19 @@ const IndexPage: React.FC<PageProps> = () => {
           I'm a Brazilian Full-Stack Software Engineer with 18 years of professional industry experience building full-stack web & mobile applications.
         </p>
         <p>
-          I started my career back in 2004, and I've been working remotely from home since 2009, and exclusively for overseas companies and startups (mostly in the U.S.) since 2013.
+          I started my career back in 2004, and I've been working remotely from home since 2009, and exclusively for overseas companies and startups since 2013 (mostly in the U.S.).
         </p>
         <p>
-          I've been leading front-end teams since 2007. First on site, then remotely.
+          I've been leading front-end teams since 2007. First on site, then remotely, working directly with CEOs, CTOs, managers, and designers.
         </p>
         <p>
-          Since 2018 I have specialized in building cross-platform React apps. I can implement a single, responsive codebase that runs natively on iOS and Android, and on mobile and desktop web browsers. I believe many businesses can benefit from such a technology strategy by drastically reducing costs and time to market.
+          Since 2018 I have specialized in building cross-platform React apps. A single, responsive codebase running natively on iOS and Android, and on mobile and desktop web browsers, in a couple months. I believe many businesses can benefit from this tech strategy by drastically reducing costs and time to market.
         </p>
         <p>
           If you're looking to build cross-platform apps please <a href="mailto:flsilva7@gmail.com">get in touch</a>.
         </p>
         <p>
-          I have experience with advanced software engineering topics such as software architecture, testing, design patterns, CI/CD, and with some of the greatest modern tools such as TypeScript, Jest, Node.js, Next.js, GraphQL, AWS / AppSync, Serverless Functions, Ruby / Rails, PostgreSQL, NoSQL, and more.
+          I have experience with advanced software engineering topics such as software architecture & design, testing, design patterns, CI/CD, and with some of the greatest modern tools such as TypeScript, Jest, Node.js, Next.js, GraphQL, AWS / AppSync, Serverless Functions, Ruby / Rails, PostgreSQL, NoSQL, and more.
         </p>
         <p>
           For more information about my work please take a look at my resume, portfolio, open source projects, and my blog.
