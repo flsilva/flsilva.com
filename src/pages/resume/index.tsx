@@ -16,45 +16,45 @@ const ResumePage: React.FC<PageProps> = () => {
         <h4>Software Engineering Skills</h4>
         <ul>
           <li>
-            <a href="http://en.wikipedia.org/wiki/JavaScript/" target="_blank">JavaScript</a>, <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>, <a href="https://www.ruby-lang.org/en/" target="_blank">Ruby</a>, <a href="https://www.python.org/" target="_blank">Python</a>, <a href="http://en.wikipedia.org/wiki/HTML5" target="_blank">HTML5</a>, <a href="http://www.w3.org/TR/2001/WD-css3-roadmap-20010523/" target="_blank">CSS3</a>
+            <a href="http://en.wikipedia.org/wiki/JavaScript/" target="_blank">JavaScript</a>, <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>, <a href="https://www.ruby-lang.org/en/" target="_blank">Ruby</a>, <a href="https://www.python.org/" target="_blank">Python</a>, <a href="http://en.wikipedia.org/wiki/HTML5" target="_blank">HTML5</a>, <a href="http://www.w3.org/TR/2001/WD-css3-roadmap-20010523/" target="_blank">CSS3</a>.
           </li>
           <li>
-            <a href="https://martinfowler.com/architecture/" target="_blank">Software Architecture</a>, <a href="http://flsilva.com/blog/what-is-software-testing/" target="_blank">Software Testing</a>, <a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/" target="_blank">Design Patterns</a>
+            <a href="https://martinfowler.com/architecture/" target="_blank">Software Architecture</a>, <a href="http://flsilva.com/blog/what-is-software-testing/" target="_blank">Software Testing</a>, <a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/" target="_blank">Design Patterns</a>.
           </li>
           <li>
-            <a href="http://en.wikipedia.org/wiki/Agile_software_development" target="_blank">Agile</a>, <a href="https://martinfowler.com/books/refactoring.html" target="_blank">Refactoring</a>, <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/" target="_blank">Domain-Driven Design</a>, <a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank">CI</a> / <a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank">CD</a>
+            <a href="http://en.wikipedia.org/wiki/Agile_software_development" target="_blank">Agile</a>, <a href="https://martinfowler.com/books/refactoring.html" target="_blank">Refactoring</a>, <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/" target="_blank">Domain-Driven Design</a>, <a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank">CI</a> / <a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank">CD</a>.
           </li>
         </ul>
         <h4>Front-End Skills</h4>
         <ul>
           <li>
-            <a href="https://facebook.github.io/react/" target="_blank">React</a>, <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>, <a href="https://nextjs.org/" target="_blank">Next.js</a>, <a href="https://remix.run/" target="_blank">Remix.run</a>
+            <a href="https://facebook.github.io/react/" target="_blank">React</a>, <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>, <a href="https://nextjs.org/" target="_blank">Next.js</a>, <a href="https://remix.run/" target="_blank">Remix</a>.
           </li>
           <li>
-            <a href="https://www.nngroup.com/articles/design-systems-101/" target="_blank">Design system</a>, <a href="https://material.io/" target="_blank">Material Design</a>
+            <a href="https://www.nngroup.com/articles/design-systems-101/" target="_blank">Design system</a>, <a href="https://material.io/" target="_blank">Material Design</a>.
           </li>
           <li>
-          <a href="https://www.componentdriven.org/" target="_blank">Component Driven UIs</a>, <a href="http://en.wikipedia.org/wiki/Responsive_web_design" target="_blank">Responsive Web Design</a>
+          <a href="https://www.componentdriven.org/" target="_blank">Component Driven UIs</a>, <a href="http://en.wikipedia.org/wiki/Responsive_web_design" target="_blank">Responsive Web Design</a>.
           </li>
         </ul>
         <h4>Back-End Skills</h4>
         <ul>
           <li>
-            <a href="http://nodejs.org/" target="_blank">Node.js</a>, <a href="https://nestjs.com/" target="_blank">Nest</a>, <a href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a>, <a href="https://graphql.org" target="_blank">GraphQL</a>, <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a>
+            <a href="http://nodejs.org/" target="_blank">Node.js</a>, <a href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a>, <a href="https://graphql.org" target="_blank">GraphQL</a>, <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a>.
           </li>
           <li>
-          <a href="https://martinfowler.com/articles/serverless.html" target="_blank">Serverless Architectures</a>, <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a>, <a href="https://aws.amazon.com/appsync/" target="_blank">AWS AppSync</a>
+          <a href="https://martinfowler.com/articles/serverless.html" target="_blank">Serverless Architectures</a>, <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a>, <a href="https://aws.amazon.com/appsync/" target="_blank">AWS AppSync</a>.
           </li>
           <li>
-            <a href="http://en.wikipedia.org/wiki/SQL" target="_blank">SQL</a>, <a href="http://flsilva.com/blog/introduction-to-nosql/" target="_blank">NoSQL</a>, <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a>, <a href="https://redis.io/" target="_blank">Redis</a>, <a href="https://aws.amazon.com/dynamodb/" target="_blank">DynamoDB</a>
+            <a href="http://en.wikipedia.org/wiki/SQL" target="_blank">SQL</a>, <a href="http://flsilva.com/blog/introduction-to-nosql/" target="_blank">NoSQL</a>, <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a>, <a href="https://redis.io/" target="_blank">Redis</a>, <a href="https://aws.amazon.com/dynamodb/" target="_blank">DynamoDB</a>.
           </li>
         </ul>
         <h4>Soft Skills</h4>
         <ul>
-          <li>Experience working with co-founders, managers, and designers throughout the feature spec and design process.</li>
-          <li>Experience leading small teams and architecting complex UIs and API designs.</li>
-          <li>A problem-solving mindset and a passion for keeping up with modern industry best practices.</li>
           <li>Excellent verbal and written English communication skills with tech and non-tech people.</li>
+          <li>Critical thinking, proactivity, and problem-solving mindset.</li>
+          <li>Teamwork and leadership.</li>
+          <li>Project and time management.</li>
         </ul>
         <h4>Experience</h4>
         <ul className={experience}>
@@ -66,7 +66,7 @@ const ResumePage: React.FC<PageProps> = () => {
               I've been working remotely from home since 2009, and since 2013 exclusively for overseas companies and startups, mainly in the U.S.
             </p>
             <p>
-              I help companies and startups to build high-quality products and MVPs, implementing industry best practices and appropriate technologies, including JavaScript, TypeScript, React, React Native, Jest, AWS, Serverless Architectures, Node.js, Ruby, Rails, PostgreSQL, GraphQL, and REST.
+              I help companies and startups to build high-quality products and MVPs, implementing industry best practices and appropriate technologies, including TypeScript, React, React Native, Jest, AWS AppSync, Node.js, Ruby on Rails, PostgreSQL, and GraphQL.
             </p>
           </li>
           <li>
@@ -74,10 +74,10 @@ const ResumePage: React.FC<PageProps> = () => {
             <small>October 2014 - October 2016 (2 years and 1 month)</small>
             <small>Occupation: Senior Front-End Engineer</small>
             <p>
-              I worked full-time remotely for Imprint and had the opportunity to spend two months working in their office in Brooklyn, NYC. It was a wonderful experience to work for such a small startup, collaborating directly with co-founders and seeing my work's massive impact on the product we were building.
+              I worked remotely full-time for Imprint and had the opportunity to spend two months working in their office in Brooklyn, NYC. It was a wonderful experience to work for such a small startup, collaborating with every team member and seeing my work's massive impact on the product we were building.
             </p>
             <p>
-              Aside from working on the desktop web app, I had the chance to rebuild the product landing page in a responsive way to support mobile devices and build the product's mobile web app from scratch.
+              Aside from working on the desktop web app, I had the chance to onboard new team members, rebuild the product landing page in a responsive way to support mobile devices, and lead the development of the product's mobile web app from scratch.
             </p>
             <p>
               Some technologies used: JavaScript, Angular, CSS3, Ruby on Rails, PostgreSQL, and GitHub.
@@ -87,7 +87,7 @@ const ResumePage: React.FC<PageProps> = () => {
             <h6><a href="https://www.linkedin.com/company/grafikonstruct/" target="_blank">Grafikonstruct</a></h6>
             <small>April 2007 – December 2008 (1 year and 9 months)</small>
             <small>Occupation: Lead Flash Developer</small>
-            <p>I learned a lot at Grafikonstruct by building highly interactive Adobe Flash ActionScript 3.0 apps. In addition, I led small teams and provided technical leadership while working for world-class clients, including Nokia, Pepsi, and Del Valle.</p>
+            <p>I learned a lot at Grafikonstruct by building highly interactive Adobe Flash ActionScript 3.0 apps. In addition, I led front-end teams and provided technical leadership and mentoring while working for world-class clients, including Nokia, Pepsi, and Del Valle.</p>
           </li>
           <li>
             <h6><a href="https://www.linkedin.com/company/datamidiafcbi/" target="_blank">Datamidia, FCBi</a></h6>
@@ -98,7 +98,7 @@ const ResumePage: React.FC<PageProps> = () => {
           <li>
             <h6><a href="http://www.ogilvy.com.br" target="_blank">Ogilvy Interactive Brasil</a></h6>
             <small>June 2004 – September 2006 (2 years and 4 months)</small>
-            <small>Occupation: Web Developer</small>
+            <small>Occupation: Intern Web Developer, Junior Web Developer</small>
             <p>I started my career at Ogilvy Interactive in 2004, learning the foundations and best practices of web development from experienced software engineers, designers, and managers. Some of the technologies I learned include HTML, CSS, JavaScript, Adobe Flash with ActionScript 2.0, ASP, and MS SQL Server while working for world-class clients such as American Express, Motorola, and Unilever.</p>
           </li>
         </ul>
