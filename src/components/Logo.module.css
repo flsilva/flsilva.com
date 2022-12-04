@@ -1,11 +1,16 @@
 .logoContainer {
   align-items: center;
   flex-direction: row;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.logo {
+  display: flex;
+  margin: 0.25rem 0 0 0.375rem;
 }
 
 .logo a {
   color: #050505;
-  margin-left: 0.375rem;
+  font-size: 1.25rem;
   text-decoration: none;
 }

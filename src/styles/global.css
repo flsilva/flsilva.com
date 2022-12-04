@@ -13,14 +13,14 @@ article, aside, details, div, figcaption, figure, footer, header, main, mark, na
   flex-direction: column;
 }
 
-p, span, a, h1, h2, h3, h4, h5, h6 {
+p, span, small, a, li, h1, h2, h3, h4, h5, h6 {
   color: #050505;
   font-family: "Open Sans";
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
 }
 
-p, span, a {
+p, span, a, li {
   font-size: 1.25rem;
   line-height: 2.25rem;
 }
@@ -31,10 +31,72 @@ p {
 }
 
 a {
-  color: #5050ff;
+  color: #1717ff;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+small, small a {
+  font-size: 0.875rem;
+}
+
+h1 {
+  margin-block-end: 3rem;
+}
+
+h1, h1 a {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+h2 {
+  margin-block-end: 2rem
+}
+
+h2, h2 a {
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+h3 {
+  margin-block-end: 2rem
+}
+
+h3, h3 a {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+h4 {
+  margin-block-end: 1rem
+}
+
+h4, h4 a {
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+h5 {
+  margin-block-end: 1rem
+}
+
+h5, h5 a {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+h6 {
+  margin-block-end: 1rem
+}
+
+h6, h6 a {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+ul {
+  padding-left: 2rem;
 }

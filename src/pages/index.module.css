@@ -23,12 +23,11 @@
   height: 400px;
 }
 
-.hi-there h1 {
-  font-size: 5rem;
-  font-weight: 700;
+.header {
+  align-items: baseline;
+  flex-direction: row;
 }
 
-.hi-there h1 span {
-  font-size: 3rem;
-  font-weight: 600;
+.header h3 {
+  margin-left: 1rem;
 }

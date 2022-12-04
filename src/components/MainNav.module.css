@@ -1,3 +1,7 @@
+.main-nav {
+  margin-bottom: 0.4375rem;
+}
+
 .main-nav ul {
   flex-direction: row;
 }

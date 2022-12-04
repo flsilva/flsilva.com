@@ -3,7 +3,7 @@ import { StaticImage } from 'gatsby-plugin-image'
 import type { HeadFC, PageProps } from "gatsby"
 import { Layout } from '../layouts/Layout'
 import { SEO } from '../components/SEO'
-import { copyImageContainer, email, imageContainer, hiThere } from './index.module.css'
+import { copyImageContainer, email, header, imageContainer } from './index.module.css'
 /*
 type DataProps = {
   site: {
@@ -16,9 +16,9 @@ type DataProps = {
 const IndexPage: React.FC<PageProps> = () => {
   return (
     <Layout>
-      <section className={hiThere}>
-        <h1>Hi there, <span>I am Flavio Silva 👋</span></h1>
-      </section>
+      <header className={header}>
+        <h1>Hi there,</h1> <h3>I am Flavio Silva 👋</h3>
+      </header>
       <div className={copyImageContainer}>
         <div className={imageContainer}>
           <StaticImage
@@ -44,7 +44,7 @@ const IndexPage: React.FC<PageProps> = () => {
           If you're looking to build cross-platform apps please <a href="mailto:flsilva7@gmail.com">get in touch</a>.
         </p>
         <p>
-          I have experience with advanced software engineering topics such as software architecture & design, testing, design patterns, CI/CD, and with some of the greatest modern tools such as TypeScript, Jest, Node.js, Next.js, GraphQL, AWS / AppSync, Serverless Functions, Ruby / Rails, PostgreSQL, NoSQL, and more.
+          I have experience with advanced software engineering topics such as software architecture & design, testing, design patterns, CI/CD, and with some of the greatest modern tools such as TypeScript, Jest, Node.js, Next.js, Remix.run, GraphQL, AWS / AppSync, Serverless Functions, Ruby / Rails, PostgreSQL, NoSQL, and more.
         </p>
         <p>
           For more information about my work please take a look at my resume, portfolio, open source projects, and my blog.
