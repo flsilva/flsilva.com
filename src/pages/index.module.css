@@ -11,7 +11,7 @@
 }
 
 .imageContainer {
-  border: 0.625rem solid #8f8f8f;
+  border: 0.625rem solid var(--secondary-text-color);
   border-radius: 50%;
   float: right;
   shape-outside: circle(50%);

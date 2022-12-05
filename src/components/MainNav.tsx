@@ -1,5 +1,8 @@
 import * as React from 'react'
-import { mainNav } from './MainNav.module.css'
+import { Link } from "gatsby"
+import { changeThemeButton, mainNav } from './MainNav.module.css'
+import { MoonIconDarkSvg } from '../components/svg/MoonIconDarkSvg'
+import { SunIconLightSvg } from '../components/svg/SunIconLightSvg'
 
 export const MainNav: React.FC = () => {
   return (
@@ -15,7 +18,13 @@ export const MainNav: React.FC = () => {
           <a href="/opensource/" id="main-nav-opensource-button">Open Source</a>
         </li>
         <li>
-          <a href="/resume/" id="main-nav-resume-button">Resume</a>
+          <Link to="/resume/">Resume</Link>
+        </li>
+        <li>
+          <button id="change-theme-button" className={changeThemeButton} type="button">
+            <MoonIconDarkSvg />
+            <SunIconLightSvg />
+          </button>
         </li>
       </ul>
     </nav>

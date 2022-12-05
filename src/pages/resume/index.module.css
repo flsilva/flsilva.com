@@ -12,27 +12,41 @@
   margin-block-start: -0.5rem;
 }
 
+.resume-page .summarySkillset {
+  margin-block-start: -1.75rem;
+  margin-block-end: 0.25rem;
+}
+
 .resume-page ul li {
-  background-image: url(../../images/circle.svg);
-  background-position: 0 0.77rem;
-  background-size: 0.75rem 0.75rem;
-  background-repeat: no-repeat;
   display: list-item;
   list-style-type: none;
   padding-left: 1.5rem;
+  position: relative;
+}
+
+.resume-page ul li::before {
+  background-color: var(--primary-text-color);
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 0.75rem;
+  width: 0.75rem;
+  left: -0.25rem;
+  position: absolute;
+  top: 0.78rem;
 }
 
 .resume-page ul li a {
-  color: #050505;
+  color: var(--primary-text-color);
 }
 
 .resume-page ul li a:hover {
-  color: #1717ff;
+  color: var(--primary-link-color);
 }
 
 .resume-page .experience li {
   background-position: 0 0.82rem;
-  margin-block-end: 3rem;
+  margin-block-end: 1rem;
 }
 
 .resume-page .experience h6 {

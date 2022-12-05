@@ -1,13 +1,14 @@
 import * as React from "react"
 import { SVGProps } from './SVGProps'
 
-export const GitHubLogoSvg = (props: SVGProps) => (
+export const GitHubLogoLightSvg = (props: SVGProps) => (
   <svg
     width="3rem"
     height="3rem"
     viewBox="0 0 1024 1024"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="svgLight"
     {...props}
   >
     <path

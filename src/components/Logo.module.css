@@ -10,7 +10,7 @@
 }
 
 .logo a {
-  color: #050505;
+  color: var(--primary-text-color);
   font-size: 1.25rem;
   text-decoration: none;
 }

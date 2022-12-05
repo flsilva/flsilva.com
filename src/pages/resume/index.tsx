@@ -2,7 +2,7 @@ import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import { Layout } from '../../layouts/Layout'
 import { SEO } from '../../components/SEO'
-import { experience, header, resumePage } from './index.module.css'
+import { experience, header, resumePage, summarySkillset } from './index.module.css'
 
 const ResumePage: React.FC<PageProps> = () => {
   return (
@@ -12,7 +12,7 @@ const ResumePage: React.FC<PageProps> = () => {
         <h3>Full-Stack Software Engineer</h3>
       </header>
       <div className={resumePage}>
-        <small>A summary of my skill set.</small>
+        <small className={summarySkillset}>A summary of my skill set.</small>
         <h4>Software Engineering Skills</h4>
         <ul>
           <li>

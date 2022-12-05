@@ -1,12 +1,13 @@
 import * as React from "react"
 import { SVGProps } from './SVGProps'
 
-export const LinkedInLogoSvg = (props: SVGProps) => (
+export const LinkedInLogoLightSvg = (props: SVGProps) => (
   <svg
     viewBox="0 0 72 72"
     width="3rem"
     height="3rem"
     xmlns="http://www.w3.org/2000/svg"
+    className="svgLight"
     {...props}
   >
     <g fill="none" fillRule="evenodd">

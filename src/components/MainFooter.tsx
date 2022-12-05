@@ -1,23 +1,11 @@
 import * as React from 'react'
 import { mainFooter, mainFooterContent, footerNav } from './MainFooter.module.css'
-import { GitHubLogoSvg } from './GitHubLogoSvg'
-import { LinkedInLogoSvg } from './LinkedInLogoSvg'
-import { TwitterLogoSvg } from './TwitterLogoSvg'
-/*
-import { MainHeader } from './MainHeader'
-
-export const MainFooter: React.FC = () => {
-  return (
-    <footer className={mainFooter}>
-      <div className={footerInner}>
-        <nav>
-          <MainHeader />
-          </nav>
-        </div>
-    </footer>
-  )
-}
-*/
+import { GitHubLogoDarkSvg } from './svg/GitHubLogoDarkSvg'
+import { GitHubLogoLightSvg } from './svg/GitHubLogoLightSvg'
+import { LinkedInLogoDarkSvg } from './svg/LinkedInLogoDarkSvg'
+import { LinkedInLogoLightSvg } from './svg/LinkedInLogoLightSvg'
+import { TwitterLogoDarkSvg } from './svg/TwitterLogoDarkSvg'
+import { TwitterLogoLightSvg } from './svg/TwitterLogoLightSvg'
 
 export const MainFooter: React.FC = () => {
   return (
@@ -28,17 +16,20 @@ export const MainFooter: React.FC = () => {
           <ul>
             <li>
               <a href="http://www.github.com/flsilva" target="_blank">
-                <GitHubLogoSvg width="3rem" height="3rem" />
+                <GitHubLogoDarkSvg />
+                <GitHubLogoLightSvg />
               </a>
             </li>
             <li>
               <a href="http://www.twitter.com/flsilva7" target="_blank">
-                <TwitterLogoSvg />
+                <TwitterLogoDarkSvg />
+                <TwitterLogoLightSvg />
               </a>
             </li>
             <li>
               <a href="http://www.linkedin.com/in/flsilva" target="_blank">
-                <LinkedInLogoSvg />
+                <LinkedInLogoDarkSvg />
+                <LinkedInLogoLightSvg />
               </a>
             </li>
           </ul>

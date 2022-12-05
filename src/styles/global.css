@@ -1,3 +1,25 @@
+/* ## Color variables ## */
+
+:root {
+  color-scheme: light dark;
+}
+
+:root.theme-light {
+  --primary-text-color: #050505;
+  --secondary-text-color: #8f8f8f;
+  --primary-link-color: #0090ff;
+  --primary-bg-color: #f5f5f5;
+}
+
+:root.theme-dark {
+  --primary-text-color: #f5f5f5;
+  --secondary-text-color: #8f8f8f;
+  --primary-link-color: #2aa2ff;
+  --primary-bg-color: #050505;
+}
+
+/* ##                 ## */
+
 #gatsby-focus-wrapper {
   display: flex;
   flex-direction: row;
@@ -5,22 +27,22 @@
 }
 
 html {
-  background-color: #f5f5f5;
+  background-color: var(--primary-bg-color);
 }
 
-article, aside, details, div, figcaption, figure, footer, header, main, mark, nav, section, summary, time, ul, li {
+article, aside, details, div, figcaption, figure, footer, header, main, mark, nav, section, summary, time, ul, li, button {
   display: flex;
   flex-direction: column;
 }
 
-p, span, small, a, li, h1, h2, h3, h4, h5, h6 {
-  color: #050505;
+p, span, button, small, a, li, h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-text-color);
   font-family: "Open Sans";
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
 }
 
-p, span, a, li {
+p, span, a, li, button {
   font-size: 1.25rem;
   line-height: 2.25rem;
 }
@@ -31,7 +53,7 @@ p {
 }
 
 a {
-  color: #1717ff;
+  color: var(--primary-link-color);
   text-decoration: none;
 }
 
@@ -45,6 +67,7 @@ small, small a {
 
 h1 {
   margin-block-end: 3rem;
+  margin-block-start: 3rem;
 }
 
 h1, h1 a {
@@ -53,7 +76,8 @@ h1, h1 a {
 }
 
 h2 {
-  margin-block-end: 2rem
+  margin-block-end: 2rem;
+  margin-block-start: 2rem;
 }
 
 h2, h2 a {
@@ -62,7 +86,8 @@ h2, h2 a {
 }
 
 h3 {
-  margin-block-end: 2rem
+  margin-block-end: 1.5rem;
+  margin-block-start: 1.5rem;
 }
 
 h3, h3 a {
@@ -71,7 +96,8 @@ h3, h3 a {
 }
 
 h4 {
-  margin-block-end: 1rem
+  margin-block-end: 1rem;
+  margin-block-start: 1rem;
 }
 
 h4, h4 a {
@@ -80,7 +106,8 @@ h4, h4 a {
 }
 
 h5 {
-  margin-block-end: 1rem
+  margin-block-end: 0.75rem;
+  margin-block-start: 0.75rem;
 }
 
 h5, h5 a {
@@ -89,7 +116,8 @@ h5, h5 a {
 }
 
 h6 {
-  margin-block-end: 1rem
+  margin-block-end: 0.5rem;
+  margin-block-start: 0.5rem;
 }
 
 h6, h6 a {
@@ -98,5 +126,34 @@ h6, h6 a {
 }
 
 ul {
+  margin-block-start: 0.25rem;
   padding-left: 2rem;
+}
+
+button {
+  align-items: center;
+  background-color: transparent;
+  border-color: transparent;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  flex-direction: row;
+  padding: 0 0.5rem;
+}
+
+button:hover {
+  border-color: var(--primary-text-color);
+  color: var(--primary-bg-color);
+  cursor: pointer;
+}
+
+svg {
+  display: flex;
+}
+
+html.theme-dark .svgLight {
+  display: none;
+}
+
+html.theme-light .svgDark {
+  display: none;
 }
