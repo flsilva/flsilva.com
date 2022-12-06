@@ -2,7 +2,7 @@ import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import { Layout } from '../../layouts/Layout'
 import { SEO } from '../../components/SEO'
-import { experience, header, resumePage, summarySkillset } from './index.module.css'
+import { experience, header, resumePage, summarySkillset, technicalReading } from './index.module.css'
 
 const ResumePage: React.FC<PageProps> = () => {
   return (
@@ -111,12 +111,12 @@ const ResumePage: React.FC<PageProps> = () => {
         </ul>
         <h4>Languages</h4>
         <ul>
-          <li>Portuguse: Native</li>
-          <li>English: Proficient</li>
+          <li>Portuguese: Native.</li>
+          <li>English: Proficient.</li>
         </ul>
         <h4>Technical Reading</h4>
         <small>Some of the greatest technical books I've read.</small>
-        <ul>
+        <ul className={technicalReading}>
           <li>
             <a href="http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/ref=sr_1_1?ie=UTF8&qid=1350367067&sr=8-1&keywords=Design+Patterns%3A+Elements+of+Reusable+Object-Oriented+Software" target="_blank">Design Patterns: Elements of Reusable Object-Oriented Software (by Erich Gamma, et. al.)</a>
           </li>

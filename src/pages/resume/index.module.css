@@ -3,7 +3,7 @@
 }
 
 .header h3 {
-  margin-block-start: 0;
+  margin-block-start: -0.5rem;
   margin-block-end: 3rem;
 }
 
@@ -14,7 +14,7 @@
 
 .resume-page .summarySkillset {
   margin-block-start: -1.75rem;
-  margin-block-end: 0.25rem;
+  margin-block-end: 0;
 }
 
 .resume-page ul li {
@@ -51,4 +51,8 @@
 
 .resume-page .experience h6 {
   display: inline;
+}
+
+.resume-page .technicalReading {
+  margin-block-start: 1.75rem;
 }
