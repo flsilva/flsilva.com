@@ -7,7 +7,9 @@
 }
 
 .email {
+  display: block;
   font-size: 0.875rem;
+  margin-top: -0.75rem;
 }
 
 .imageContainer {

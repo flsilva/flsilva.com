@@ -38,7 +38,7 @@ const IndexPage: React.FC<PageProps> = () => {
           I've been leading front-end teams since 2007. First on-site, then remotely, working with CEOs, CTOs, managers, and designers.
         </p>
         <p>
-          Since 2018 I have specialized in building cross-platform React apps by implementing a single, responsive codebase. Then, we build it as native iOS and Android apps and as web apps for mobile and desktop browsers. Many businesses can benefit from such a tech strategy by drastically reducing costs and time to market.
+          Since 2018 I have specialized in building cross-platform React apps by implementing a single, responsive codebase, sharing about 90% of the codebase with all platforms and only about 10% of platform-specific code. Then, we build it as native iOS and Android apps and as web apps for mobile and desktop browsers. Many businesses can benefit from such a tech strategy by drastically reducing costs and time to market.
         </p>
         <p>
           I have experience with advanced software engineering practices, including Software Architecture, Testing, CI/CD, Agile, and modern technology such as TypeScript, React, React Native, Design Systems, Jest, Node.js, Next.js, Remix, AWS AppSync, Ruby on Rails, PostgreSQL, and GraphQL.
@@ -53,12 +53,15 @@ const IndexPage: React.FC<PageProps> = () => {
           Thank you for reading.
         </p>
         <p>
+          <br />
           <a href="https://www.google.com/maps/place/Florian%C3%B3polis,+SC/@7.7500839,-57.3472604,3z/data=!4m5!3m4!1s0x9527394eb2c632d7:0x81bc550b6a04c746!8m2!3d-27.5948036!4d-48.5569286" target="_blank">
             Florianópolis
           </a>
           , December 2022.
           <br />
-          Flavio Silva <a href="mailto:flsilva7@gmail.com" className={email}>(flsilva7@gmail.com)</a>
+          Flavio Silva
+          <br />
+          <a href="mailto:flsilva7@gmail.com" className={email}>flsilva7@gmail.com</a>
         </p>
       </div>
     </Layout>
