@@ -19,7 +19,8 @@ const config: GatsbyConfig = {
         name: `blog`,
         path: `${__dirname}/src/blog`,
       }
-    }
+    },
+    "gatsby-plugin-postcss"
   ],
 }
 

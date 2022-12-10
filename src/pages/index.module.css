@@ -1,3 +1,5 @@
+@import "../styles/vars.css";
+
 .copyImageContainer {
   display: block;
 }
@@ -15,21 +17,50 @@
 .imageContainer {
   border: 0.625rem solid var(--secondary-text-color);
   border-radius: 50%;
-  float: right;
-  shape-outside: circle(50%);
+  @media $mediaMaxSmall {
+    width: 240px;
+    height: 240px;
+  }
+  @media $mediaMinMid {
+    float: right;
+    shape-outside: circle(50%);
+    width: 300px;
+    height: 300px;
+  }
+  @media $mediaMinLarge {
+    width: 400px;
+    height: 400px;
+  }
 }
 
 .imageContainer img {
   border-radius: 50%;
-  width: 400px;
-  height: 400px;
+  @media $mediaMaxSmall {
+    width: 240px;
+    height: 240px;
+  }
+  @media $mediaMinMid {
+    width: 300px;
+    height: 300px;
+  }
+  @media $mediaMinLarge {
+    width: 400px;
+    height: 400px;
+  }
 }
 
-.header {
-  align-items: baseline;
-  flex-direction: row;
-}
+.header h1 {
+  flex-grow: 1;
+  text-align: center;
 
-.header h3 {
-  margin-left: 1rem;
+  @media $mediaMaxSmall {
+    font-size: 1.75rem;
+  }
+  @media $mediaMaxXSmall {
+    font-size: 1.5rem;
+  }
+  @media $mediaMinMid {
+    font-size: 4rem;
+    text-align: left;
+  }
 }

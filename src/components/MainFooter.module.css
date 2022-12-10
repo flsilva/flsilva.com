@@ -1,3 +1,5 @@
+@import "../styles/vars.css";
+
 .main-footer {
   background-color: var(--primary-text-color);
   flex-direction: row;
@@ -9,7 +11,19 @@
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  width: 1200px;
+  padding: 2rem;
+  @media $mediaMaxSmall {
+    flex-direction: column-reverse;
+  }
+  @media $mediaMinMid {
+    width: calc($mediaMidMinWidth - 4rem);
+  }
+  @media $mediaMinLarge {
+    width: calc($mediaLargeMinWidth - 4rem);
+  }
+  @media $mediaMinXLarge {
+    width: calc($mediaXLargeMinWidth - 4rem);
+  }
 }
 
 .mainFooterContent p {

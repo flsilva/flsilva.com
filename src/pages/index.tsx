@@ -17,7 +17,7 @@ const IndexPage: React.FC<PageProps> = () => {
   return (
     <Layout>
       <header className={header}>
-        <h1>Hi there,</h1> <h3>I am Flavio Silva 👋</h3>
+        <h1>Hi, I'm Flavio Silva 👋</h1>
       </header>
       <div className={copyImageContainer}>
         <div className={imageContainer}>
