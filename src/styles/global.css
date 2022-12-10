@@ -1,24 +1,4 @@
-/* ## Color variables ## */
-
-:root {
-  color-scheme: light dark;
-}
-
-:root.theme-light {
-  --primary-text-color: #050505;
-  --secondary-text-color: #8f8f8f;
-  --primary-link-color: #0090ff;
-  --primary-bg-color: #f5f5f5;
-}
-
-:root.theme-dark {
-  --primary-text-color: #f5f5f5;
-  --secondary-text-color: #8f8f8f;
-  --primary-link-color: #2aa2ff;
-  --primary-bg-color: #050505;
-}
-
-/* ##                 ## */
+@import "./vars.css";
 
 #gatsby-focus-wrapper {
   display: flex;
@@ -30,19 +10,50 @@ html {
   background-color: var(--primary-bg-color);
 }
 
-article, aside, details, div, figcaption, figure, footer, header, main, mark, nav, section, summary, time, ul, li, button {
+article,
+aside,
+details,
+div,
+figcaption,
+figure,
+footer,
+header,
+main,
+mark,
+nav,
+section,
+summary,
+time,
+ul,
+li,
+button {
   display: flex;
   flex-direction: column;
 }
 
-p, span, button, small, a, li, h1, h2, h3, h4, h5, h6 {
+p,
+span,
+button,
+small,
+a,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--primary-text-color);
   font-family: "Open Sans";
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
 }
 
-p, span, a, li, button {
+p,
+span,
+a,
+li,
+button {
   font-size: 1.25rem;
   line-height: 2.25rem;
 }
@@ -61,7 +72,8 @@ a:hover {
   text-decoration: underline;
 }
 
-small, small a {
+small,
+small a {
   font-size: 0.875rem;
 }
 
@@ -70,7 +82,8 @@ h1 {
   margin-block-start: 2rem;
 }
 
-h1, h1 a {
+h1,
+h1 a {
   font-size: 5rem;
   font-weight: 700;
 }
@@ -80,7 +93,8 @@ h2 {
   margin-block-start: 1.75rem;
 }
 
-h2, h2 a {
+h2,
+h2 a {
   font-size: 4rem;
   font-weight: 700;
 }
@@ -90,7 +104,8 @@ h3 {
   margin-block-start: 1.5rem;
 }
 
-h3, h3 a {
+h3,
+h3 a {
   font-size: 3rem;
   font-weight: 600;
 }
@@ -100,7 +115,8 @@ h4 {
   margin-block-start: 1.25rem;
 }
 
-h4, h4 a {
+h4,
+h4 a {
   font-size: 2.5rem;
   font-weight: 400;
 }
@@ -110,7 +126,8 @@ h5 {
   margin-block-start: 1rem;
 }
 
-h5, h5 a {
+h5,
+h5 a {
   font-size: 2rem;
   font-weight: 500;
 }
@@ -120,7 +137,8 @@ h6 {
   margin-block-start: 0.75rem;
 }
 
-h6, h6 a {
+h6,
+h6 a {
   font-size: 1.5rem;
   font-weight: 500;
 }
@@ -142,7 +160,6 @@ button {
 }
 
 button:hover {
-  border-color: var(--primary-text-color);
   color: var(--primary-bg-color);
   cursor: pointer;
 }
@@ -157,4 +174,8 @@ html.theme-dark .svgLight {
 
 html.theme-light .svgDark {
   display: none;
+}
+
+#main-nav.active {
+  height: 370px;
 }

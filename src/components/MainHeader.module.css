@@ -1,5 +1,29 @@
+@import "../styles/vars.css";
+
 .main-header {
   align-items: center;
   flex-direction: row;
-  margin-top: 1rem;;
+  margin-top: 1rem;
+  @media $mediaMaxSmall {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.logo-and-hamburger-menu-button {
+  align-items: center;
+  flex-direction: row;
+
+  @media $mediaMaxSmall {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.hamburger-menu-button {
+  display: none;
+  @media $mediaMaxSmall {
+    display: flex;
+    margin-bottom: 0.625rem;
+  }
 }

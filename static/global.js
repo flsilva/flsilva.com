@@ -1,3 +1,7 @@
+/* ###################################################################### */
+/* ############################## Theming ############################### */
+/* ###################################################################### */
+
 const THEME_NAME = 'theme';
 const THEME_DARK_NAME = 'dark';
 const THEME_LIGHT_NAME = 'light';
@@ -14,7 +18,7 @@ const changeTheme = (colorTheme) => {
 
   currentTheme = colorTheme;
 
-  try{
+  try {
     localStorage.setItem(THEME_NAME, currentTheme);
   } catch (error) {
     // do nothing. user's device is probably full.
@@ -31,14 +35,37 @@ prefersDarkTheme.addEventListener('change', function (event) {
   changeTheme(colorTheme)
 });
 
-window.addEventListener('load', function(event) {
+const setupTheming = () => {
   document.getElementById('change-theme-button').addEventListener('click', function(event) {
     toggleTheme();
   });
-});
+}
 
 if (currentTheme === undefined || currentTheme === null) {
   currentTheme = prefersDarkTheme.matches ? THEME_DARK_NAME : THEME_LIGHT_NAME;
 }
 
 changeTheme(currentTheme);
+
+/* ###################################################################### */
+/* ############################# Menu Nav ############################### */
+/* ###################################################################### */
+
+const setupNavMenu = () => {
+  console.log('setupNavMenu() - document.getElementById("hamburger-menu-button"): ', document.getElementById('hamburger-menu-button'));
+  document.getElementById('hamburger-menu-button').addEventListener('click', function(event) {
+    document.getElementById('main-nav').classList.toggle('active');
+  });
+
+}
+
+/* ###################################################################### */
+/* ############################## Global ################################ */
+/* ###################################################################### */
+
+window.addEventListener('load', function(event) {
+  setTimeout(() => {
+    setupTheming();
+    setupNavMenu();
+  }, 1000);
+});

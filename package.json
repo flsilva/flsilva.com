@@ -14,8 +14,8 @@
     "website"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0",
+    "start": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
@@ -23,12 +23,18 @@
   },
   "dependencies": {
     "@fontsource/open-sans": "4.5.13",
+    "autoprefixer": "10.4.13",
     "gatsby": "5.2.0",
     "gatsby-plugin-image": "3.2.0",
+    "gatsby-plugin-postcss": "6.2.0",
     "gatsby-plugin-sharp": "5.2.0",
     "gatsby-source-filesystem": "5.2.0",
     "gatsby-transformer-sharp": "5.2.0",
     "normalize.css": "8.0.1",
+    "postcss": "8.4.19",
+    "postcss-import": "15.1.0",
+    "postcss-nested": "6.0.0",
+    "postcss-simple-vars": "7.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

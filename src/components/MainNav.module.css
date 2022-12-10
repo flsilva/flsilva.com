@@ -1,24 +1,60 @@
+@import "../styles/vars.css";
+
 .main-nav {
   margin-bottom: 0.4375rem;
+  transition: height 0.5s;
+  width: 100%;
+
+  @media $mediaMaxSmall {
+    height: 0;
+    overflow: hidden;
+  }
 }
 
 .main-nav ul {
   flex-direction: row;
+  margin-left: 0.75rem;
+  @media $mediaMaxSmall {
+    align-items: center;
+    flex-direction: column;
+    margin-left: 0;
+  }
+  @media $mediaMaxMid {
+    margin-left: -1.25rem;
+  }
 }
 
 .main-nav ul li {
-  margin-left: 1.5rem;
+  margin-left: 1.75rem;
+  @media $mediaMaxSmall {
+    border-bottom: 1px solid var(--primary-text-color);
+    margin-left: 0;
+    padding: 1rem 0;
+    width: 100%;
+  }
 }
 
 .main-nav ul li a {
   color: var(--primary-text-color);
   font-weight: 700;
-  /*text-transform: uppercase;*/
+  @media $mediaMaxSmall {
+    text-align: center;
+  }
 }
 
-.change-theme-button {
-  border-color: var(--primary-text-color);
-  border-radius: 50%;
-  margin: -0.25rem 0 0 3rem;
-  padding: 0.75rem;
+.change-theme-button-container {
+  align-items: center;
+  & > button {
+    border-color: var(--primary-text-color);
+    border-radius: 50%;
+    margin: -0.25rem 0 0 3rem;
+    padding: 0.75rem;
+    width: fit-content;
+    @media $mediaMaxSmall {
+      margin-left: 0;
+    }
+    @media $mediaMinMid {
+      margin-left: 1rem;
+    }
+  }
 }

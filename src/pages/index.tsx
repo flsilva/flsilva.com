@@ -17,7 +17,7 @@ const IndexPage: React.FC<PageProps> = () => {
   return (
     <Layout>
       <header className={header}>
-        <h1>Hi there,</h1> <h3>I am Flavio Silva 👋</h3>
+        <h1>Hi, I'm Flavio 👋</h1>
       </header>
       <div className={copyImageContainer}>
         <div className={imageContainer}>
@@ -29,19 +29,13 @@ const IndexPage: React.FC<PageProps> = () => {
           />
         </div>
         <p>
-          I'm a Brazilian Full-Stack Software Engineer with 18 years of professional industry experience building full-stack web & mobile applications.
+        I'm a Brazilian Full-Stack Software Engineer with 18 years of professional industry experience. I've been leading front-end teams since 2007, and since 2009 I've been working remotely from home.
         </p>
         <p>
-          I started my professional career in 2004, and I've been working remotely from home since 2009 and exclusively for overseas companies and startups since 2013, mainly in the U.S.
+          Since 2018 I've specialized in building cross-platform React apps by implementing a single, responsive codebase, sharing about 90% of the codebase with all platforms and only about 10% of platform-specific code. That enables it to be built as native iOS and Android apps and as a web app for mobile and desktop browsers. Many businesses can benefit from such a tech strategy by drastically reducing costs and time to market.
         </p>
         <p>
-          I've been leading front-end teams since 2007. First on-site, then remotely, working with CEOs, CTOs, managers, and designers.
-        </p>
-        <p>
-          Since 2018 I have specialized in building cross-platform React apps by implementing a single, responsive codebase, sharing about 90% of the codebase with all platforms and only about 10% of platform-specific code. Then, we build it as native iOS and Android apps and as web apps for mobile and desktop browsers. Many businesses can benefit from such a tech strategy by drastically reducing costs and time to market.
-        </p>
-        <p>
-          I have experience with advanced software engineering practices, including Software Architecture, Testing, CI/CD, Agile, and modern technology such as TypeScript, React, React Native, Design Systems, Jest, Node.js, Next.js, Remix, AWS AppSync, Ruby on Rails, PostgreSQL, and GraphQL.
+          I have also experience building back-end systems using modern tools like Node.js, AWS AppSync, and GraphQL and applying advanced software engineering practices, including Software Architecture, Software Testing, and CI/CD.
         </p>
         <p>
           Please <a href="mailto:flsilva7@gmail.com">get in touch</a> if you're looking to build full-stack cross-platform apps.
