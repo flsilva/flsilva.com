@@ -34,9 +34,14 @@ $mediaMaxXXSmall: only screen and
     max-width: $mediaXXSmallMaxWidth
   );
 
-$mediaMaxXSmall: only screen and
+$mediaMaxXXSmall: only screen and
   (
     max-width: $mediaXXSmallMaxWidth
+  );
+
+$mediaMaxXSmall: only screen and
+  (
+    max-width: $mediaXSmallMaxWidth
   );
 
 $mediaMaxSmall: only screen and
@@ -62,5 +67,47 @@ $mediaMinLarge: only screen and
 $mediaMinXLarge: only screen and
   (
     min-width: $mediaXLargeMinWidth
+  );
+
+$xxsmallScreenWidth: 320px; /* small phones on portrait */
+$xsmallScreenWidth: 375px; /* mid phones on portrait */
+$smallScreenWidth: 414; /* large phones on portrait */
+$midScreenWidth: 768px; /* phones on landscape and portrait tablets */
+$largeScreenWidth: 1024px; /* small notebooks and landscape tablets */
+$xlargeScreenWidth: 1200px; /* notebooks and large tablets */
+
+$xxsmallScreenMedia: only screen and
+  (
+    min-width: $xxsmallScreenWidth
+  );
+
+$xsmallScreenMedia: only screen and
+  (
+    min-width: $xsmallScreenWidth
+  );
+
+$xsmallScreenMedia: only screen and
+  (
+    min-width: $xsmallScreenWidth
+  );
+
+$smallScreenMedia: only screen and
+  (
+    min-width: $smallScreenWidth
+  );
+
+$midScreenMedia: only screen and
+  (
+    min-width: $midScreenWidth
+  );
+
+$largeScreenMedia: only screen and
+  (
+    min-width: $largeScreenWidth
+  );
+
+$xlargeScreenMedia: only screen and
+  (
+    min-width: $xlargeScreenWidth
   );
 /* ##                       ## */

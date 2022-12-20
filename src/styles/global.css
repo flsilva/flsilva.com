@@ -179,3 +179,12 @@ html.theme-light .svgDark {
 #main-nav.active {
   height: 370px;
 }
+
+#recommendations,
+#recommendations-buttons {
+  display: none;
+}
+
+.recommendation-indicator.active {
+  opacity: 1;
+}

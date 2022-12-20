@@ -3,7 +3,25 @@ import { StaticImage } from 'gatsby-plugin-image'
 import type { HeadFC, PageProps } from "gatsby"
 import { Layout } from '../layouts/Layout'
 import { SEO } from '../components/SEO'
-import { copyImageContainer, email, header, imageContainer } from './index.module.css'
+import { LeftArrowIconSvg } from '../components/svg/LeftArrowIconSvg'
+import { RightArrowIconSvg } from '../components/svg/RightArrowIconSvg'
+import { OpenQuoteIconSvg } from '../components/svg/OpenQuoteIconSvg'
+import {
+  copyImageContainer,
+  header,
+  imageContainer,
+  recommendations,
+  recommendationsContainer,
+  recommendationContainer,
+  recommendedByContainer,
+  recommendedBySignature,
+  recommendationsText,
+  recommendationContent,
+  recommendationIndicator,
+  recommendationsButtons,
+  prevButton,
+  nextButton,
+} from './index.module.css'
 /*
 type DataProps = {
   site: {
@@ -40,23 +58,76 @@ const IndexPage: React.FC<PageProps> = () => {
         <p>
           Please <a href="mailto:flsilva7@gmail.com">get in touch</a> if you're looking to build full-stack cross-platform apps.
         </p>
-        <p>
-          And while you're here, look at my resume, portfolio, open-source projects, and blog for more information about my work.
-        </p>
-        <p>
-          Thank you for reading.
-        </p>
-        <p>
-          <br />
-          <a href="https://www.google.com/maps/place/Florian%C3%B3polis,+SC/@7.7500839,-57.3472604,3z/data=!4m5!3m4!1s0x9527394eb2c632d7:0x81bc550b6a04c746!8m2!3d-27.5948036!4d-48.5569286" target="_blank">
-            Florianópolis
-          </a>
-          , December 2022.
-          <br />
-          Flavio Silva
-          <br />
-          <a href="mailto:flsilva7@gmail.com" className={email}>flsilva7@gmail.com</a>
-        </p>
+        <h3 className={recommendationsText}>Recommendations</h3>
+        <div className={recommendationsContainer}>
+          <div id="recommendations" className={recommendations}>
+            <div className={recommendationContainer}>
+              <OpenQuoteIconSvg />
+              <div className={recommendationContent}>
+                <p>
+                  Flavio is both fast and thorough. But I was particularly struck by the deep thoughtfulness and helpfulness he brought to the team, and by the smile and positive spirit he shared, every day.
+                </p>
+                <div className={recommendedByContainer}>
+                  <StaticImage
+                    alt="Kate Frucher"
+                    src="./kate-frucher.jpg"
+                  />
+                  <div className={recommendedBySignature}>
+                    <small>Kate Frucher</small>
+                    <small>Managing Director | Co–Founder</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={recommendationContainer}>
+              <OpenQuoteIconSvg />
+              <div className={recommendationContent}>
+                <p>
+                  Flavio not only has superb communication skills, but he's also a proactive problem solver. He will go above and beyond what is asked of him to make sure the team and the project will succeed. Our team loves working with Flavio and we would work with Flavio again in a heartbeat.
+                </p>
+                <div className={recommendedByContainer}>
+                  <StaticImage
+                    alt="Kate Frucher"
+                    src="./seyi-moon.jpg"
+                  />
+                  <div className={recommendedBySignature}>
+                    <small>Seyi Moon</small>
+                    <small>Manager</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={recommendationContainer}>
+              <OpenQuoteIconSvg />
+              <div className={recommendationContent}>
+                <p>
+                  Flavio came in a freelance developer to help us develop a large platform MVP for a client. He proved himself beyond valuable in ideas and execution. I would recommend him for any project challenge, as he will rise to the occasion.
+                </p>
+                <div className={recommendedByContainer}>
+                  <StaticImage
+                    alt="Kate Frucher"
+                    src="./richard-broo.jpg"
+                  />
+                  <div className={recommendedBySignature}>
+                    <small>Richard Broo</small>
+                    <small>Co-Founder</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="recommendations-buttons" className={recommendationsButtons}>
+          <div id="prev-button" className={prevButton}>
+            <LeftArrowIconSvg />
+          </div>
+          <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')}></div>
+          <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')}></div>
+          <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')}></div>
+          <div id="next-button" className={nextButton}>
+            <RightArrowIconSvg />
+          </div>
+        </div>
       </div>
     </Layout>
   )
