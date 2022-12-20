@@ -1,14 +1,14 @@
 import * as React from "react"
 import { SVGProps } from './SVGProps'
 
-export const SunIconLightSvg = (props: SVGProps) => (
+export const SunIconSvg = (props: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 207.628 207.628"
     xmlSpace="preserve"
     width="1em"
     height="1em"
-    fill="#f5f5f5"
+    fill="var(--primary-text-color)"
     className="svgDark"
     {...props}
   >

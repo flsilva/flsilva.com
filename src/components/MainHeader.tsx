@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { MainNav } from './MainNav'
 import { Logo } from './logo/Logo'
-import { HamburgerMenuDarkSvg } from './svg/HamburgerMenuDarkSvg'
-import { HamburgerMenuLightSvg } from './svg/HamburgerMenuLightSvg'
+import { HamburgerMenuSvg } from './svg/HamburgerMenuSvg'
 import { mainHeader, logoAndHamburgerMenuButton, hamburgerMenuButton } from './MainHeader.module.css'
 
 export const MainHeader: React.FC = () => {
@@ -11,8 +10,7 @@ export const MainHeader: React.FC = () => {
       <div className={logoAndHamburgerMenuButton}>
         <Logo />
         <button id="hamburger-menu-button" className={hamburgerMenuButton} type="button">
-          <HamburgerMenuDarkSvg />
-          <HamburgerMenuLightSvg />
+          <HamburgerMenuSvg />
           </button>
       </div>
       <MainNav />

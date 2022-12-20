@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Link } from "gatsby"
 import { changeThemeButtonContainer, mainNav } from './MainNav.module.css'
-import { MoonIconDarkSvg } from '../components/svg/MoonIconDarkSvg'
-import { SunIconLightSvg } from '../components/svg/SunIconLightSvg'
+import { MoonIconSvg } from '../components/svg/MoonIconSvg'
+import { SunIconSvg } from '../components/svg/SunIconSvg'
 
 export const MainNav: React.FC = () => {
   return (
@@ -22,8 +22,8 @@ export const MainNav: React.FC = () => {
         </li>
         <li className={changeThemeButtonContainer}>
           <button id="change-theme-button" type="button">
-            <MoonIconDarkSvg />
-            <SunIconLightSvg />
+            <MoonIconSvg />
+            <SunIconSvg />
           </button>
         </li>
       </ul>

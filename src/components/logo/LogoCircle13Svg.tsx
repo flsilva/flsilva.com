@@ -1,12 +1,12 @@
 import * as React from "react"
 import { SVGProps } from '../svg/SVGProps'
 
-export const LogoCircle13LightSvg = (props: SVGProps) => (
+export const LogoCircle13Svg = (props: SVGProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="2.5rem"
     height="2.5rem"
-    className="svgLight"
+    fill="var(--primary-text-color)"
     viewBox="0 0 136.935 136.935"
     xmlSpace="preserve"
     {...props}
