@@ -2,7 +2,7 @@ import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import { Layout } from '../../layouts/Layout'
 import { SEO } from '../../components/SEO'
-import { experience, header, resumePage, summarySkillset, technicalReading } from './index.module.css'
+import { experience, header, resumePage, technicalReading } from './index.module.css'
 
 const ResumePage: React.FC<PageProps> = () => {
   return (
@@ -12,8 +12,7 @@ const ResumePage: React.FC<PageProps> = () => {
         <h3>Full-Stack Software Engineer</h3>
       </header>
       <div className={resumePage}>
-        <small className={summarySkillset}>A summary of my skill set.</small>
-        <h4>Software Engineering Skills</h4>
+        <h5>Software Engineering Skills</h5>
         <ul>
           <li>
             <a href="http://en.wikipedia.org/wiki/JavaScript/" target="_blank">JavaScript</a>, <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>, <a href="https://www.ruby-lang.org/en/" target="_blank">Ruby</a>, <a href="https://www.python.org/" target="_blank">Python</a>, <a href="http://en.wikipedia.org/wiki/HTML5" target="_blank">HTML5</a>, <a href="http://www.w3.org/TR/2001/WD-css3-roadmap-20010523/" target="_blank">CSS3</a>.
@@ -25,19 +24,19 @@ const ResumePage: React.FC<PageProps> = () => {
             <a href="http://en.wikipedia.org/wiki/Agile_software_development" target="_blank">Agile</a>, <a href="https://martinfowler.com/books/refactoring.html" target="_blank">Refactoring</a>, <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/" target="_blank">Domain-Driven Design</a>, <a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank">CI</a> / <a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank">CD</a>.
           </li>
         </ul>
-        <h4>Front-End Skills</h4>
+        <h5>Front-End Skills</h5>
         <ul>
           <li>
             <a href="https://facebook.github.io/react/" target="_blank">React</a>, <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>, <a href="https://nextjs.org/" target="_blank">Next.js</a>, <a href="https://remix.run/" target="_blank">Remix</a>.
           </li>
           <li>
-            <a href="https://www.nngroup.com/articles/design-systems-101/" target="_blank">Design system</a>, <a href="https://material.io/" target="_blank">Material Design</a>.
+            <a href="https://www.nngroup.com/articles/design-systems-101/" target="_blank">Design systems</a>, <a href="https://material.io/" target="_blank">Material Design</a>.
           </li>
           <li>
           <a href="https://www.componentdriven.org/" target="_blank">Component Driven UIs</a>, <a href="http://en.wikipedia.org/wiki/Responsive_web_design" target="_blank">Responsive Web Design</a>.
           </li>
         </ul>
-        <h4>Back-End Skills</h4>
+        <h5>Back-End Skills</h5>
         <ul>
           <li>
             <a href="http://nodejs.org/" target="_blank">Node.js</a>, <a href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a>, <a href="https://graphql.org" target="_blank">GraphQL</a>, <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a>.
@@ -49,14 +48,14 @@ const ResumePage: React.FC<PageProps> = () => {
             <a href="http://en.wikipedia.org/wiki/SQL" target="_blank">SQL</a>, <a href="http://flsilva.com/blog/introduction-to-nosql/" target="_blank">NoSQL</a>, <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a>, <a href="https://redis.io/" target="_blank">Redis</a>, <a href="https://aws.amazon.com/dynamodb/" target="_blank">DynamoDB</a>.
           </li>
         </ul>
-        <h4>Soft Skills</h4>
+        <h5>Soft Skills</h5>
         <ul>
           <li>Excellent verbal and written English communication skills with tech and non-tech people.</li>
           <li>Critical thinking, proactivity, and problem-solving mindset.</li>
           <li>Teamwork and leadership.</li>
           <li>Project and time management.</li>
         </ul>
-        <h4>Experience</h4>
+        <h5>Work Experience</h5>
         <ul className={experience}>
           <li>
             <h6><a href="http://flsilva.com">Self-Employed</a></h6>
@@ -102,19 +101,19 @@ const ResumePage: React.FC<PageProps> = () => {
             <p>I started my career at Ogilvy Interactive in 2004, learning the foundations and best practices of web development from experienced software engineers, designers, and managers. Some of the technologies I learned include HTML, CSS, JavaScript, Adobe Flash with ActionScript 2.0, ASP, and MS SQL Server while working for world-class clients such as American Express, Motorola, and Unilever.</p>
           </li>
         </ul>
-        <h4>Education</h4>
+        <h5>Education</h5>
         <ul>
           <li>
               Bachelor's Degree in Technology and Digital Media (2004-2007)
               <small><a href="http://www.pucsp.br/" target="_blank">Pontifical Catholic University of São Paulo (PUC-SP)</a></small>
           </li>
         </ul>
-        <h4>Languages</h4>
+        <h5>Languages</h5>
         <ul>
           <li>Portuguese: Native.</li>
           <li>English: Proficient.</li>
         </ul>
-        <h4>Technical Reading</h4>
+        <h5>Technical Reading</h5>
         <small>Some of the greatest technical books I've read.</small>
         <ul className={technicalReading}>
           <li>
