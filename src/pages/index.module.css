@@ -1,27 +1,35 @@
 @import "../styles/vars.css";
 
 .copyImageContainer {
-  @media $mediaMinMid {
+  @media $midScreenMedia {
     display: block;
   }
 }
 
 .imageContainer {
+  align-self: center;
   border: 0.625rem solid var(--secondary-text-color);
   border-radius: 50%;
-  @media $mediaMaxSmall {
-    align-self: center;
+  @media $xxsmallScreenMedia {
     width: 200px;
     height: 200px;
   }
-  @media $mediaMinMid {
+  @media $xsmallScreenMedia {
+    width: 250px;
+    height: 250px;
+  }
+  @media $smallScreenMedia {
+    width: 275px;
+    height: 275px;
+  }
+  @media $midScreenMedia {
+    align-self: auto;
     display: block;
     float: right;
-    shape-outside: circle(50%);
     width: 300px;
     height: 300px;
   }
-  @media $mediaMinLarge {
+  @media $largeScreenMedia {
     width: 400px;
     height: 400px;
   }
@@ -29,15 +37,23 @@
 
 .imageContainer img {
   border-radius: 50%;
-  @media $mediaMaxSmall {
+  @media $xxsmallScreenMedia {
     width: 200px;
     height: 200px;
   }
-  @media $mediaMinMid {
+  @media $xsmallScreenMedia {
+    width: 250px;
+    height: 250px;
+  }
+  @media $smallScreenMedia {
+    width: 275px;
+    height: 275px;
+  }
+  @media $midScreenMedia {
     width: 300px;
     height: 300px;
   }
-  @media $mediaMinLarge {
+  @media $largeScreenMedia {
     width: 400px;
     height: 400px;
   }
@@ -47,13 +63,16 @@
   flex-grow: 1;
   text-align: center;
 
-  @media $mediaMaxSmall {
+  @media $xxsmallScreenMedia {
+    font-size: 2rem;
+  }
+  @media $xsmallScreenMedia {
+    font-size: 2.25rem;
+  }
+  @media $smallScreenMedia {
     font-size: 2.5rem;
   }
-  @media $mediaMaxXSmall {
-    font-size: 1.875rem;
-  }
-  @media $mediaMinMid {
+  @media $midScreenMedia {
     font-size: 4rem;
     text-align: left;
   }
@@ -62,12 +81,24 @@
 .recommendationsText {
   margin-top: 3rem;
   text-align: center;
-  @media $mediaMaxSmall {
+  @media $xxsmallScreenMedia {
+    font-size: 1.75rem;
+  }
+  @media $xsmallScreenMedia {
+    font-size: 2rem;
+  }
+  @media $smallScreenMedia {
+    font-size: 2.5rem;
+  }
+  @media $midScreenMedia {
     font-size: 3rem;
   }
-  @media $mediaMaxXSmall {
-    font-size: 1.5rem;
-  }
+}
+
+.recommendationsTextTapToSee {
+  display: block;
+  margin: -1.25rem 0 2rem;
+  text-align: center;
 }
 
 .recommendationsContainer {
@@ -104,9 +135,6 @@
 }
 
 .recommendation-container {
-  /*width: 100%;
-  max-width: 800px;
-  height: 200px;*/
   position: absolute;
   transition: all 0.5s;
 }

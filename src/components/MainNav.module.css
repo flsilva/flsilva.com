@@ -1,44 +1,58 @@
 @import "../styles/vars.css";
 
 .main-nav {
-  margin-bottom: 0.4375rem;
+  height: 0;
   transition: height 0.5s;
+  overflow: hidden;
   width: 100%;
 
-  @media $mediaMaxSmall {
-    height: 0;
-    overflow: hidden;
+  @media $midScreenMedia {
+    height: auto;
+    margin-bottom: 0.4375rem;
+    overflow: auto;
+    transition-property: none;
+    width: auto;
   }
 }
 
 .main-nav ul {
-  flex-direction: row;
-  margin-left: 0.75rem;
-  @media $mediaMaxSmall {
-    align-items: center;
-    flex-direction: column;
-    margin-left: 0;
-  }
-  @media $mediaMaxMid {
-    margin-left: -1.25rem;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+
+  @media $midScreenMedia {
+    align-items: flex-start;
+    flex-direction: row;
+    margin: 0.375rem 0 0 2rem;
   }
 }
 
 .main-nav ul li {
-  margin-left: 1.75rem;
-  @media $mediaMaxSmall {
-    border-bottom: 1px solid var(--primary-text-color);
-    margin-left: 0;
-    padding: 1rem 0;
-    width: 100%;
+  border-bottom: 1px solid var(--primary-text-color);
+  margin-left: 0;
+  padding: 1rem 0;
+  width: 100%;
+
+  @media $midScreenMedia {
+    border-bottom: none;
+    margin-left: 2rem;
+    padding: 0;
+    width: auto;
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 }
 
 .main-nav ul li a {
   color: var(--primary-text-color);
   font-weight: 700;
-  @media $mediaMaxSmall {
-    text-align: center;
+  text-align: center;
+
+  @media $midScreenMedia {
+    text-align: left;
   }
 }
 
@@ -47,14 +61,8 @@
   & > button {
     border-color: var(--primary-text-color);
     border-radius: 50%;
-    margin: -0.25rem 0 0 3rem;
+    margin: -0.25rem 0 0 0rem;
     padding: 0.75rem;
     width: fit-content;
-    @media $mediaMaxSmall {
-      margin-left: 0;
-    }
-    @media $mediaMinMid {
-      margin-left: 1rem;
-    }
   }
 }

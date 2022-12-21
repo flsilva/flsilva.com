@@ -22,53 +22,6 @@
 
 /* ## Media Query variables ## */
 
-$mediaXXSmallMaxWidth: 320px; /* portrait small phones */
-$mediaXSmallMaxWidth: 550px; /* portrait large phones */
-$mediaSmallMaxWidth: 767px; /* landscape phones */
-$mediaMidMinWidth: 768px;
-$mediaLargeMinWidth: 1024px;
-$mediaXLargeMinWidth: 1200px;
-
-$mediaMaxXXSmall: only screen and
-  (
-    max-width: $mediaXXSmallMaxWidth
-  );
-
-$mediaMaxXXSmall: only screen and
-  (
-    max-width: $mediaXXSmallMaxWidth
-  );
-
-$mediaMaxXSmall: only screen and
-  (
-    max-width: $mediaXSmallMaxWidth
-  );
-
-$mediaMaxSmall: only screen and
-  (
-    max-width: $mediaSmallMaxWidth
-  );
-
-$mediaMaxMid: only screen and
-  (
-    max-width: $mediaMidMinWidth
-  );
-
-$mediaMinMid: only screen and
-  (
-    min-width: $mediaMidMinWidth
-  );
-
-$mediaMinLarge: only screen and
-  (
-    min-width: $mediaLargeMinWidth
-  );
-
-$mediaMinXLarge: only screen and
-  (
-    min-width: $mediaXLargeMinWidth
-  );
-
 $xxsmallScreenWidth: 320px; /* small phones on portrait */
 $xsmallScreenWidth: 375px; /* mid phones on portrait */
 $smallScreenWidth: 414; /* large phones on portrait */
@@ -110,4 +63,5 @@ $xlargeScreenMedia: only screen and
   (
     min-width: $xlargeScreenWidth
   );
+
 /* ##                       ## */

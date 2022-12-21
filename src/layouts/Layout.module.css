@@ -15,13 +15,11 @@
   box-sizing: border-box;
   padding: 0 2rem;
   width: 100%;
-  @media $mediaMinLarge {
-    /*width: calc($mediaLargeMinWidth - 4rem);*/
-    width: $mediaLargeMinWidth;
+  @media $largeScreenMedia {
+    width: $largeScreenWidth;
   }
-  @media $mediaMinXLarge {
-    /*width: calc($mediaXLargeMinWidth - 4rem);*/
-    width: $mediaXLargeMinWidth;
+  @media $xlargeScreenMedia {
+    width: $xlargeScreenWidth;
   }
 }
 

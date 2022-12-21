@@ -16,6 +16,7 @@ import {
   recommendedByContainer,
   recommendedBySignature,
   recommendationsText,
+  recommendationsTextTapToSee,
   recommendationContent,
   recommendationIndicator,
   recommendationsButtons,
@@ -59,6 +60,7 @@ const IndexPage: React.FC<PageProps> = () => {
           Please <a href="mailto:flsilva7@gmail.com">get in touch</a> if you're looking to build full-stack cross-platform apps.
         </p>
         <h3 className={recommendationsText}>Recommendations</h3>
+        <small className={recommendationsTextTapToSee}>Tap to see on LinkedIn</small>
         <div className={recommendationsContainer}>
           <div id="recommendations" className={recommendations}>
             <div className={recommendationContainer}>
