@@ -15,7 +15,7 @@ export const MainNav: React.FC = () => {
           <a href="/portfolio/" id="main-nav-portfolio-button">Portfolio</a>
         </li>
         <li>
-          <a href="/opensource/" id="main-nav-opensource-button">Open Source</a>
+          <a href="/open-source/" id="main-nav-opensource-button">Open Source</a>
         </li>
         <li>
           <Link to="/resume/">Resume</Link>
