@@ -12,12 +12,20 @@ const config: GatsbyConfig = {
   plugins: [
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
+    "gatsby-transformer-json",
     "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
       options: {
         name: `blog`,
         path: `${__dirname}/src/blog`,
+      }
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
       }
     },
     "gatsby-plugin-postcss"

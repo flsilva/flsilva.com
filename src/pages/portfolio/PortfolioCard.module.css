@@ -1,0 +1,26 @@
+@import "../../styles/vars.css";
+
+.project {
+  margin-top: 2rem;
+
+  &:first-child {
+    margin-top: -1rem;
+  }
+}
+
+.project h4 {
+  @media $xxsmallScreenMedia {
+    font-size: 2rem;
+  }
+  @media $midScreenMedia {
+    font-size: 2.5rem;
+  }
+}
+
+.project > small {
+  margin: -0.75rem 0 2rem;
+}
+
+.project-image {
+  max-width: 50rem;
+}
