@@ -12,13 +12,13 @@ const PortfolioPage: React.FC<PageProps> = ({ data }) => {
       <PageContentHeader title="Portfolio" />
       <div>
         {
-          data.allPortfolioProjectsJson.nodes.map(node => (
+          data.allMdx.nodes.map(node => (
             <PortfolioCard
-              image={node.heroImage}
+              image={node.frontmatter.heroImage}
               key={node.id}
-              name={node.name}
-              shortInfo={node.shortInfo}
-              slug={node.slug}
+              name={node.frontmatter.name}
+              shortInfo={node.frontmatter.shortInfo}
+              slug={node.frontmatter.slug}
             />
           ))
         }
@@ -29,17 +29,19 @@ const PortfolioPage: React.FC<PageProps> = ({ data }) => {
 
 export const query = graphql`
   query PortfolioProjects {
-    allPortfolioProjectsJson {
+    allMdx(sort: { frontmatter: { date: DESC }}) {
       nodes {
         id
-        heroImage {
-          childImageSharp {
-            gatsbyImageData
+        frontmatter {
+          heroImage {
+            childImageSharp {
+              gatsbyImageData
+            }
           }
+          name
+          shortInfo
+          slug
         }
-        name
-        shortInfo
-        slug
       }
     }
   }

@@ -11,8 +11,9 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     "gatsby-plugin-image",
+    "gatsby-plugin-mdx",
+    "gatsby-plugin-postcss",
     "gatsby-plugin-sharp",
-    "gatsby-transformer-json",
     "gatsby-transformer-sharp",
     {
       resolve: "gatsby-source-filesystem",
@@ -27,8 +28,7 @@ const config: GatsbyConfig = {
         name: `data`,
         path: `${__dirname}/src/data/`,
       }
-    },
-    "gatsby-plugin-postcss"
+    }
   ],
 }
 
