@@ -8,7 +8,7 @@ export const MainFooter: React.FC = () => {
   return (
     <footer className={mainFooter}>
       <div className={mainFooterContent}>
-        <p>© 2012-2022 Flavio Silva</p>
+        <p>© 2012-2023 Flavio Silva</p>
         <nav className={footerNav}>
           <ul>
             <li>
