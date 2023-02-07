@@ -79,7 +79,7 @@ const ResumePage: React.FC<PageProps> = () => {
               Aside from working on the desktop web app, I had the chance to onboard new team members, rebuild the product landing page in a responsive way to support mobile devices, and lead the development of the product's mobile web app from scratch.
             </p>
             <p>
-              Some technologies used: JavaScript, Angular, CSS3, Ruby on Rails, PostgreSQL, and GitHub.
+              Some technologies used: JavaScript, Angular, CSS3, Ruby on Rails, and PostgreSQL.
             </p>
           </li>
           <li>
