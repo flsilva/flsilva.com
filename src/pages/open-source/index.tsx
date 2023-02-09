@@ -55,4 +55,4 @@ const OpenSourcePage: React.FC<PageProps> = () => {
 
 export default OpenSourcePage
 
-export const Head: HeadFC = () => <SEO title="Open Source" />
+export const Head: HeadFC = () => <SEO title="Open Source Projects by" />

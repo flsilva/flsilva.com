@@ -1,0 +1,14 @@
+@import "../../styles/vars.css";
+
+.link-button {
+  align-self: flex-start;
+  background-color: var(--primary-text-color);
+  border-radius: 0.5rem;
+  color: var(--primary-bg-color);
+  display: flex;
+  padding: 0.5rem 1rem;
+}
+
+.link-button[align-self="flex-end"] {
+  align-self: flex-end;
+}

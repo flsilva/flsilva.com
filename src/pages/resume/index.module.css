@@ -20,33 +20,6 @@
   }
 }
 
-.resume-page ul li {
-  display: list-item;
-  list-style-type: none;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.resume-page ul li::before {
-  background-color: var(--primary-text-color);
-  border-radius: 50%;
-  content: "";
-  display: block;
-  height: 0.75rem;
-  width: 0.75rem;
-  left: -0.25rem;
-  position: absolute;
-  top: 0.78rem;
-}
-
-.resume-page ul li a {
-  color: var(--primary-text-color);
-}
-
-.resume-page ul li a:hover {
-  color: var(--primary-link-color);
-}
-
 .resume-page .experience li {
   background-position: 0 0.82rem;
   margin-block-end: 1rem;

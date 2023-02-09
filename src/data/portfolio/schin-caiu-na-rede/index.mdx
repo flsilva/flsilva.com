@@ -6,4 +6,60 @@ shortInfo: "Adobe Flash web app (April 2010 - August 2010)"
 slug: "schin-caiu-na-rede"
 ---
 
-Schin Caiu na Rede full page content.
+import { FlexBoxRowSpaceBetween } from "../../../components/FlexBoxRowSpaceBetween";
+import { LinkButtonLeftArrowIcon } from "../../../components/button/LinkButtonLeftArrowIcon";
+import { LinkButtonRightArrowIcon } from "../../../components/button/LinkButtonRightArrowIcon";
+
+Schin Caiu na Rede was a successful national scoped promotion hired by soft drinks company <a href="https://web.archive.org/web/20121209070623/http://www.brasilkirin.com.br/" target="_blank">Schincariol</a> (acquired by Kirin Japanese company in 2012).
+
+The <a href="http://www.agenciamood.com.br" target="_blank">Mood</a> agency (acquired by TBWA\Lew Lara) was in charge of the project and <a href="https://www.linkedin.com/company/grafikonstruct/" target="_blank">Grafikonstruct</a> developed the interative web app.
+
+The web app had hundreds of thousands of registered participants and more than a million registered codes on the web app. That was the largest investment of the brand in 2010 and increased sales by 9.4% &#8211; 13 million liters.
+
+The promotion was based on an interactive web app with social media network dynamics, where participants had to register themselves through a code found in physical products of the brand (Schin soft drinks). The mechanics around the promotion was based on those codes, which allowed participants to access features such as inviting friends to their social network, create events and invite their friends (e.g. a party in your virtual house), etc. These features increased the chances of the participant to win the lottery through a better score.
+
+The interactive web app was a small social media network app where participants had to register themselves through a code found in physical products of the brand (Schin soft drinks), which allowed them to access features such as inviting friends to their social network, creating events and inviting their friends for parties in their virtual houses. These interactions increased their chances of winning the lottery through a better score.
+
+In the end, the promotion awarded 2.627 people. The winner, randomly selected by lottery, won a real house and a car, his friends (1st degree) won a 42-inch TV each, friends of friends (2nd degree) won a R$400 voucher each, and friends of friends of friends (3rd degree) won a subscription to a magazine each.
+
+{""}<a href="https://www.linkedin.com/company/grafikonstruct/" target="_blank">Grafikonstruct</a> hired me to lead the front-end development team and to co-lead the whole technology project alongside Bruno Soares (Lead Back-End developer). It was a complex, large, and mission-critical project, the largest ever done by Grafikonstruct at the time.
+
+I led the implementation of some Domain-Driven Design techniques throughout the project's development to manage complexity. In addition, we designed the front-end and back-end integration based on the <a href="https://martinfowler.com/eaaCatalog/serviceLayer.html" target="_blank">Service Layer</a> and <a href="https://en.wikipedia.org/wiki/Data_transfer_object" target="_blank">DTO Layer</a> patterns and the <a href="https://en.wikipedia.org/wiki/BlazeDS" target="_blank">Adobe BlazeDS</a> technology.
+
+We modeled a domain model and a requirements model in UML diagrams. The requirements diagrams had more than 50 business rules. To illustrate a bit about those diagrams, here are some business rules modeled:
+
+- For each registered code, the participant can invite one friend (or accept one friendship invitation) to their social network.
+- Each participant can have up to twenty friends.
+- A participant cannot undo a friendship.
+- For every four registered codes, the participant can create an event.
+- A participant may be invited to events only by their friends.
+- After creating an event, the system automatically finishes it after 72 hours.
+
+I led a team of five Grafikonstruct developers to build the Adobe Flash ActionScript 3.0 client-side application. I architected the whole client-side solution based on an ActionScript 3.0 application framework I was building at the time (v2). It featured a modular architecture mainly based on the <a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">MVC</a> (<a href="http://puremvc.org" target="_blank">pureMVC</a>) and <a href="http://en.wikipedia.org/wiki/Inversion_of_control" target="_blank">IoC</a> (<a href="https://web.archive.org/web/20120111035944/http://www.springactionscript.org/" target="_blank">Spring ActionScript</a>) patterns. It depended on seven other .swc libraries I developed myself, including <a href="http://as3coreaddendum.org" target="_blank">AS3CoreAddendum</a>, <a href="http://as3utils.org" target="_blank">AS3Utils</a>, <a href="http://as3collections.org" target="_blank">AS3Collections</a> and the previous version of <a href="http://vostokframework.org" target="_blank">VostokFramework</a>.
+
+The application architecture was modular and contained more than ten modules compiled through an automated build & deploy environment set up by myself using <a href="http://ant.apache.org" target="_blank">Apache Ant</a>. I implemented the Model, Controller, and Services layers of the app and mentored the implementation of the View layer by Grafikonstruct's team. I implemented about 65% of all application-specific code.
+
+Unfortunately, due to the project's complexity, there's no portfolio version, but the prints speak for themselves. Just picture lots of cool animation happening there.
+
+Here are two nationwide TV ads:
+
+{""}<a href="http://www.youtube.com/watch?v=ZPRnws3msyI" target="_blank">http://www.youtube.com/watch?v=ZPRnws3msyI</a>
+{""}<a href="http://www.youtube.com/watch?feature=player_embedded&v=meWydco5RSI" target="_blank">http://www.youtube.com/watch?feature=player_embedded&amp;v=meWydco5RSI</a>
+
+Some technologies used: Adobe Flash, ActionScript 3.0, Java, MySQL, and BlazeDS
+
+<br />
+<br />
+
+<FlexBoxRowSpaceBetween>
+  <LinkButtonLeftArrowIcon
+    align-self="flex-start"
+    text="Bienal 2012"
+    to="/portfolio/bienal2012/"
+  />
+  <LinkButtonRightArrowIcon
+    align-self="flex-end"
+    text="Schin Casa com Tudo"
+    to="/portfolio/schin-casa-com-tudo/"
+  />
+</FlexBoxRowSpaceBetween>

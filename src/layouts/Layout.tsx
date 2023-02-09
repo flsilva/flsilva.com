@@ -1,13 +1,10 @@
 import * as React from 'react'
 import { MainHeader } from '../components/MainHeader'
 import { MainFooter } from '../components/MainFooter'
+import { ChildrenProps } from '../components/ChildrenProps'
 import { pageOuterContainer, pageInnerContainer, pageHeaderAndMainContent } from './Layout.module.css'
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <div className={pageOuterContainer}>
       <div className={pageInnerContainer}>

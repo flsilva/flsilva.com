@@ -147,4 +147,4 @@ export const query = graphql`
 */
 export default IndexPage
 
-export const Head: HeadFC = () => <SEO title="Home" />
+export const Head: HeadFC = () => <SEO title="About" />

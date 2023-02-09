@@ -6,8 +6,8 @@ export const RightArrowIconSvg = (props: SVGProps) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 330 330"
     xmlSpace="preserve"
-    width="1em"
-    height="1em"
+    width="1rem"
+    height="1rem"
     fill="var(--primary-text-color)"
     {...props}
   >

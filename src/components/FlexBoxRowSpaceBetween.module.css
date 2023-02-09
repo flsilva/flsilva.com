@@ -1,0 +1,6 @@
+@import "../styles/vars.css";
+
+.container {
+  flex-direction: row;
+  justify-content: space-between;
+}

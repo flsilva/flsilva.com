@@ -46,6 +46,10 @@
   }
 }
 
+.main-nav ul li::before {
+  display: none;
+}
+
 .main-nav ul li a {
   color: var(--primary-text-color);
   font-weight: 700;
