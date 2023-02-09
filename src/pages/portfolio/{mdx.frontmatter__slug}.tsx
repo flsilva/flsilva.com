@@ -12,7 +12,9 @@ const PortfolioProjectPage: React.FC<PageProps> = ({ children, data }) => {
       <PageContentHeader title="Portfolio" />
       <div>
         <PortfolioCard
+          id="portfolio-project-carousel-container"
           image={data.mdx.frontmatter.heroImage}
+          images={data.mdx.frontmatter.images}
           key={data.mdx.id}
           name={data.mdx.frontmatter.name}
           shortInfo={data.mdx.frontmatter.shortInfo}
@@ -28,6 +30,11 @@ export const query = graphql`
   query ($id: String) {
     mdx(id: {eq: $id}) {
       frontmatter {
+        images {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
         heroImage {
           childImageSharp {
             gatsbyImageData

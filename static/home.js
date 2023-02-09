@@ -37,7 +37,7 @@ const _setupRecommendationCarousel = () => {
     recommendation.style.transform = `translateX(${index * 100}%)`;
   });
 
-  getRecommendationsContainerElement().style.display = 'flex';
+  recommendationsContainer.style.display = 'flex';
   getRecommendationsButtonsElement().style.display = 'flex';
 }
 

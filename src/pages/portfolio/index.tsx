@@ -14,6 +14,7 @@ const PortfolioPage: React.FC<PageProps> = ({ data }) => {
         {
           data.allMdx.nodes.map(node => (
             <PortfolioCard
+              id="portfolio-project-image-container"
               image={node.frontmatter.heroImage}
               key={node.id}
               name={node.frontmatter.name}

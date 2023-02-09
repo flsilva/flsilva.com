@@ -18,7 +18,7 @@
     width: calc($midScreenWidth - 4rem);
   }
   @media $largeScreenMedia {
-    width: calc($xlargeScreenWidth - 4rem);
+    width: calc($largeScreenWidth - 4rem);
   }
 }
 
