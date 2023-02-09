@@ -1,80 +1,26 @@
-/* ###################################################################### */
-/* ############################## Theming ############################### */
-/* ###################################################################### */
-
-const THEME_NAME = 'theme';
-const THEME_DARK_NAME = 'dark';
-const THEME_LIGHT_NAME = 'light';
-
-const prefersDarkTheme = window.matchMedia(`(prefers-color-scheme: ${THEME_DARK_NAME})`);
-let currentTheme = localStorage.getItem(THEME_NAME);
-
-const changeTheme = (colorTheme) => {
-  if (colorTheme === THEME_DARK_NAME) {
-    document.getElementsByTagName('html')[0].className = `${THEME_NAME}-${THEME_DARK_NAME}`;
-  } else {
-    document.getElementsByTagName('html')[0].className = `${THEME_NAME}-${THEME_LIGHT_NAME}`;
-  }
-
-  currentTheme = colorTheme;
-
-  try {
-    localStorage.setItem(THEME_NAME, currentTheme);
-  } catch (error) {
-    // do nothing. user's device is probably full.
-  }
-}
-
-const toggleTheme = () => {
-  currentTheme === THEME_DARK_NAME ? changeTheme(THEME_LIGHT_NAME) : changeTheme(THEME_DARK_NAME);
-}
-
-prefersDarkTheme.addEventListener('change', function (event) {
-  const colorTheme = event.matches ? THEME_DARK_NAME : THEME_LIGHT_NAME;
-
-  changeTheme(colorTheme)
-});
-
-const setupTheming = () => {
-  const changeThemeButton = document.getElementById('change-theme-button');
-  if (changeThemeButton === null || changeThemeButton === undefined) return;
-
-  changeThemeButton.addEventListener('click', function(event) {
-    toggleTheme();
-  });
-}
-
-if (currentTheme === undefined || currentTheme === null) {
-  currentTheme = prefersDarkTheme.matches ? THEME_DARK_NAME : THEME_LIGHT_NAME;
-}
-
-changeTheme(currentTheme);
-
-/* ###################################################################### */
-/* ############################# Menu Nav ############################### */
-/* ###################################################################### */
-
-const setupNavMenu = () => {
-  const hamburgerMenuButton = document.getElementById('hamburger-menu-button');
-  if (hamburgerMenuButton === null || hamburgerMenuButton === undefined) return;
-
-  hamburgerMenuButton.addEventListener('click', function(event) {
-    document.getElementById('main-nav').classList.toggle('active');
-  });
-
-}
-
-/* ###################################################################### */
-/* ################# Home's Recommendations Carousel #################### */
-/* ###################################################################### */
-
 const setupHome = () => {
   setupRecommendationCarousel();
   setupRecommendationButtons();
   setupRecommendationsGestures();
 }
 
+let totalTimesTrySetupRecommendationCarousel = 20;
+let currentTrySetupRecommendationCarousel = 0;
+let setupRecommendationCarouselInterval;
+
 const setupRecommendationCarousel = () => {
+  setupRecommendationCarouselInterval = setInterval(() => {
+    _setupRecommendationCarousel();
+  }, 200);
+}
+
+const _setupRecommendationCarousel = () => {
+  if (currentTrySetupRecommendationCarousel === totalTimesTrySetupRecommendationCarousel) {
+    clearInterval(setupRecommendationCarouselInterval);
+    return;
+  }
+  currentTrySetupRecommendationCarousel++;
+
   const recommendationsContainer = getRecommendationsContainerElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
@@ -85,14 +31,14 @@ const setupRecommendationCarousel = () => {
   const recommendations = getRecommendationsElement(recommendationsContainer);
   if (recommendations === undefined || recommendations === null) return;
 
+  currentTrySetupRecommendationCarousel = totalTimesTrySetupRecommendationCarousel;
+
   recommendations.forEach((recommendation, index) => {
     recommendation.style.transform = `translateX(${index * 100}%)`;
   });
 
-  setTimeout(() => {
-    getRecommendationsContainerElement().style.display = 'flex';
-    getRecommendationsButtonsElement().style.display = 'flex';
-  }, 100);
+  getRecommendationsContainerElement().style.display = 'flex';
+  getRecommendationsButtonsElement().style.display = 'flex';
 }
 
 const moveToNextRecommendation = () => {
@@ -131,13 +77,31 @@ const moveToPrevRecommendation = () => {
   changeRecommendation(currentRecommendation);
 }
 
+let totalTimesTrySetupRecommendationCarouselButtons = 20;
+let currentTrySetupRecommendationCarouselButtons = 0;
+let setupRecommendationCarouselButtonsInterval;
+
 let currentRecommendation = 0;
 
 const setupRecommendationButtons = () => {
+  setupRecommendationCarouselButtonsInterval = setInterval(() => {
+    _setupRecommendationButtons();
+  }, 200);
+}
+
+const _setupRecommendationButtons = () => {
+  if (currentTrySetupRecommendationCarouselButtons === totalTimesTrySetupRecommendationCarouselButtons) {
+    clearInterval(setupRecommendationCarouselButtonsInterval);
+    return;
+  }
+  currentTrySetupRecommendationCarouselButtons++;
+
   const nextButton = document.getElementById("next-button");
   const prevButton = document.getElementById("prev-button");
 
   if (nextButton === undefined || nextButton === null || prevButton === undefined || prevButton === null) return;
+
+  currentTrySetupRecommendationCarouselButtons = totalTimesTrySetupRecommendationCarouselButtons;
 
   nextButton.addEventListener("click", function () {
     moveToNextRecommendation();
@@ -150,9 +114,27 @@ const setupRecommendationButtons = () => {
   changeRecommendation(currentRecommendation);
 }
 
+let totalTimesTrySetupRecommendationCarouselGestures = 20;
+let currentTrySetupRecommendationCarouselGestures = 0;
+let setupRecommendationCarouselGesturesInterval;
+
 const setupRecommendationsGestures = () => {
+  setupRecommendationCarouselGesturesInterval = setInterval(() => {
+    _setupRecommendationsGestures();
+  }, 200);
+}
+
+const _setupRecommendationsGestures = () => {
+  if (currentTrySetupRecommendationCarouselGestures === totalTimesTrySetupRecommendationCarouselGestures) {
+    clearInterval(setupRecommendationCarouselGesturesInterval);
+    return;
+  }
+  currentTrySetupRecommendationCarouselGestures++;
+
   const recommendationsContainer = getRecommendationsContainerElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
+
+  currentTrySetupRecommendationCarouselGestures = totalTimesTrySetupRecommendationCarouselGestures;
 
   let touchClientXStart = null;
   let touchClientYStart = null;
@@ -231,14 +213,8 @@ const changeRecommendation = (currentRecommendation) => {
   });
 }
 
-/* ###################################################################### */
-/* ############################## Global ################################ */
-/* ###################################################################### */
-
-window.addEventListener('load', function(event) {
+window.addEventListener('load', function() {
   setTimeout(() => {
-    setupTheming();
-    setupNavMenu();
     setupHome();
-  }, 1000);
+  }, 100);
 });
