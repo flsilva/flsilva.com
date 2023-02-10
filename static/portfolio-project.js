@@ -1,5 +1,4 @@
 const setupPortfolioProject = () => {
-  // console.log('setupPortfolioProject()');
   setupPortfolioProjectCarousel();
 }
 
@@ -8,14 +7,12 @@ let currentTrySetupPortfolioProjectCarousel = 0;
 let setupPortfolioProjectCarouselInterval;
 
 const setupPortfolioProjectCarousel = () => {
-  // console.log('setupPortfolioProjectCarousel()');
   setupPortfolioProjectCarouselInterval = setInterval(() => {
     _setupPortfolioProjectCarousel();
   }, 200);
 }
 
 const _setupPortfolioProjectCarousel = () => {
-  // console.log('_setupPortfolioProjectCarousel()');
   if (currentTrySetupPortfolioProjectCarousel === totalTimesTrySetupPortfolioProjectCarousel) {
     clearInterval(setupPortfolioProjectCarouselInterval);
     return;
@@ -42,7 +39,6 @@ const _setupPortfolioProjectCarousel = () => {
     });
 
     setInterval(moveToNextImage, 3000);
-    // console.log('setInterval(() => moveToNextImage, 3000)');
   }, 100);
 }
 
@@ -50,7 +46,6 @@ let currentImage = 0;
 
 const moveToNextImage = () => {
   const imagesContainer = getImagesContainerElement();
-  // console.log('moveToNextImage() - imagesContainer: ', imagesContainer);
   if (imagesContainer === undefined || imagesContainer === null) return;
 
   const images = getImages(imagesContainer);
@@ -91,7 +86,6 @@ const getImages = (imagesContainer) => imagesContainer.querySelectorAll('[class*
 
 const changeImage = (currentImage) => {
   const imagesContainer = getImagesContainerElement();
-  // console.log('changeImage() - imagesContainer: ', imagesContainer);
   if (imagesContainer === undefined || imagesContainer === null) return;
 
   const images = getImages(imagesContainer);

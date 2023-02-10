@@ -24,37 +24,10 @@
 .project-image-container {
   cursor: pointer;
   position: relative;
-  /*opacity: 0;*/
   overflow: hidden;
-
-  /*max-width: 50rem;*/
-
-  /*
-  @media $xxsmallScreenMedia {
-    width: 17rem;
-    height: 13.5rem;
-  }
-  @media $xsmallScreenMedia {
-    width: 20rem;
-    height: 16rem;
-  }
-  @media $smallScreenMedia {
-    width: 23rem;
-    height: 18.5rem;
-  }
-  @media $midScreenMedia {
-    width: 40rem;
-    height: 32rem;
-  }
-  @media $largeScreenMedia {
-    width: 50rem;
-    height: 40rem;
-  }
-  */
 }
 
 .gatsby-image-wrapper {
   position: absolute;
-  /*transition: all 0.5s;*/
   transition: none; /* set in javascript */
 }
