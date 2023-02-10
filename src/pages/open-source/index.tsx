@@ -9,7 +9,7 @@ import { ossProject, vostokFramework, as3Collections, as3Utils, as3CoreAddendum 
 const OpenSourcePage: React.FC<PageProps> = () => {
   return (
     <Layout>
-      <PageContentHeader title="Open Source" />
+      <PageContentHeader linkTo="/open-source/" title="Open Source" />
       <p>
         Here you can find open-source software projects I've built throughout my career. I invite anyone interested in analyzing my software engineering skills to look at these projects.
       </p>

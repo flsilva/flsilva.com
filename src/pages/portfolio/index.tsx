@@ -9,7 +9,7 @@ import { PortfolioCard } from './PortfolioCard'
 const PortfolioPage: React.FC<PageProps> = ({ data }) => {
   return (
     <Layout>
-      <PageContentHeader title="Portfolio" />
+      <PageContentHeader linkTo="/portfolio/" title="Portfolio" />
       <div>
         {
           data.allMdx.nodes.map(node => (

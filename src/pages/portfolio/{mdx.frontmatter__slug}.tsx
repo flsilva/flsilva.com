@@ -9,7 +9,7 @@ import { PortfolioCard } from './PortfolioCard'
 const PortfolioProjectPage: React.FC<PageProps> = ({ children, data }) => {
   return (
     <Layout>
-      <PageContentHeader title="Portfolio" />
+      <PageContentHeader linkTo="/portfolio/" title="Portfolio" />
       <div>
         <PortfolioCard
           id="portfolio-project-carousel-container"
