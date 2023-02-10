@@ -9,13 +9,13 @@ export const MainNav: React.FC = () => {
     <nav id="main-nav" className={mainNav}>
       <ul>
         <li>
-          <a href="/" id="main-nav-blog-button">Blog</a>
+          <Link to="/blog/">Blog</Link>
         </li>
         <li>
-          <a href="/portfolio/" id="main-nav-portfolio-button">Portfolio</a>
+          <Link to="/portfolio/">Portfolio</Link>
         </li>
         <li>
-          <a href="/open-source/" id="main-nav-opensource-button">Open Source</a>
+          <Link to="/open-source/">Open Source</Link>
         </li>
         <li>
           <Link to="/resume/">Resume</Link>
