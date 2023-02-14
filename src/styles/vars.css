@@ -39,11 +39,6 @@ $xsmallScreenMedia: only screen and
     min-width: $xsmallScreenWidth
   );
 
-$xsmallScreenMedia: only screen and
-  (
-    min-width: $xsmallScreenWidth
-  );
-
 $smallScreenMedia: only screen and
   (
     min-width: $smallScreenWidth
