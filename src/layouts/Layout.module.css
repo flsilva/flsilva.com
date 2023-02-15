@@ -13,8 +13,24 @@
 
 .page-header-and-main-content {
   box-sizing: border-box;
-  padding: 0 2rem;
   width: 100%;
+
+  @media $xxsmallScreenMedia {
+    padding: 0 1rem;
+  }
+
+  @media $xsmallScreenMedia {
+    padding: 0 1.25rem;
+  }
+
+  @media $smallScreenMedia {
+    padding: 0 1.5rem;
+  }
+
+  @media $midScreenMedia {
+    padding: 0 2rem;
+  }
+
   @media $largeScreenMedia {
     width: $largeScreenWidth;
   }

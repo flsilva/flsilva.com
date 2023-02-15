@@ -7,14 +7,14 @@
   width: 100%;
 }
 
-.mainFooterContent {
+.main-footer-content {
   align-items: center;
   flex-direction: column-reverse;
   justify-content: space-between;
-  padding: 2rem;
 
   @media $midScreenMedia {
     flex-direction: row;
+    padding: 2rem;
     width: calc($midScreenWidth - 4rem);
   }
   @media $largeScreenMedia {
@@ -22,7 +22,7 @@
   }
 }
 
-.mainFooterContent p {
+.main-footer-content p {
   color: var(--primary-bg-color);
   font-size: 1rem;
 }
@@ -44,6 +44,11 @@
 
 .footer-nav ul li {
   margin-left: 2rem;
+  padding-left: 0;
+}
+
+.footer-nav ul li::before {
+  display: none;
 }
 
 .footer-nav ul li:first-child {
