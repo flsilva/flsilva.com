@@ -21,7 +21,7 @@ const _setupRecommendationCarousel = () => {
   }
   currentTrySetupRecommendationCarousel++;
 
-  const recommendationsContainer = getRecommendationsContainerElement();
+  const recommendationsContainer = getRecommendationsListElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
   recommendationsContainer.addEventListener("click", function () {
@@ -37,12 +37,18 @@ const _setupRecommendationCarousel = () => {
     recommendation.style.transform = `translateX(${index * 100}%)`;
   });
 
-  recommendationsContainer.style.display = 'flex';
-  getRecommendationsButtonsElement().style.display = 'flex';
+  setTimeout(() => {
+    recommendationsContainer.style.opacity = 1;
+    getRecommendationsButtonsElement().style.display = 'flex';
+
+    recommendations.forEach((recommendation) => {
+      recommendation.style.transition = 'all 0.5s ease 0s';
+    });
+  }, 100);
 }
 
 const moveToNextRecommendation = () => {
-  const recommendationsContainer = getRecommendationsContainerElement();
+  const recommendationsContainer = getRecommendationsListElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
   const recommendations = getRecommendationsElement(recommendationsContainer);
@@ -60,7 +66,7 @@ const moveToNextRecommendation = () => {
 }
 
 const moveToPrevRecommendation = () => {
-  const recommendationsContainer = getRecommendationsContainerElement();
+  const recommendationsContainer = getRecommendationsListElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
   const recommendations = getRecommendationsElement(recommendationsContainer);
@@ -131,7 +137,7 @@ const _setupRecommendationsGestures = () => {
   }
   currentTrySetupRecommendationCarouselGestures++;
 
-  const recommendationsContainer = getRecommendationsContainerElement();
+  const recommendationsContainer = getRecommendationsListElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
   currentTrySetupRecommendationCarouselGestures = totalTimesTrySetupRecommendationCarouselGestures;
@@ -186,14 +192,14 @@ const _setupRecommendationsGestures = () => {
   recommendationsContainer.addEventListener('touchend', handleTouchEnd, false);
 }
 
-const getRecommendationsContainerElement = () => document.getElementById('recommendations');
+const getRecommendationsListElement = () => document.getElementById('recommendations-list');
 
 const getRecommendationsElement = (recommendationsContainer) => recommendationsContainer.querySelectorAll('[class*="recommendation-container"]');
 
 const getRecommendationsButtonsElement = () => document.getElementById('recommendations-buttons');
 
 const changeRecommendation = (currentRecommendation) => {
-  const recommendationsContainer = getRecommendationsContainerElement();
+  const recommendationsContainer = getRecommendationsListElement();
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
   const recommendations = getRecommendationsElement(recommendationsContainer);
@@ -203,7 +209,7 @@ const changeRecommendation = (currentRecommendation) => {
     recommendation.style.transform = `translateX(${100 * (index - currentRecommendation)}%)`;
   });
 
-  const recommendationsButtons = document.getElementById('recommendations-buttons');
+  const recommendationsButtons = getRecommendationsButtonsElement();
   if (recommendationsButtons === undefined || recommendationsButtons === null) return;
 
   const indicators = recommendationsButtons.querySelectorAll('[class*="recommendation-indicator"]');

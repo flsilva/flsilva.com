@@ -1,0 +1,80 @@
+@import "../../styles/vars.css";
+
+.title {
+  margin-top: 3rem;
+  text-align: center;
+  @media $xxsmallScreenMedia {
+    font-size: 1.75rem;
+  }
+  @media $xsmallScreenMedia {
+    font-size: 2rem;
+  }
+  @media $smallScreenMedia {
+    font-size: 2.5rem;
+  }
+  @media $midScreenMedia {
+    font-size: 3rem;
+  }
+}
+
+.textTapToSee {
+  display: block;
+  margin: -1.25rem 0 2rem;
+  text-align: center;
+}
+
+.recommendations-list-container {
+  align-items: center;
+}
+
+.recommendations-list {
+  cursor: pointer;
+  position: relative;
+  opacity: 0; /* set in javascript */
+  overflow: hidden;
+
+  @media $xxsmallScreenMedia {
+    width: 17rem;
+    height: 34rem;
+  }
+  @media $xsmallScreenMedia {
+    width: 20rem;
+    height: 32rem;
+  }
+  @media $smallScreenMedia {
+    width: 23rem;
+    height: 30rem;
+  }
+  @media $midScreenMedia {
+    width: 40rem;
+    height: 22rem;
+  }
+  @media $largeScreenMedia {
+    width: 54rem;
+    height: 18rem;
+  }
+}
+
+.recommendations-buttons {
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.prev-button,
+.next-button {
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.recommendation-indicator {
+  background-color: var(--primary-text-color);
+  border-radius: 50%;
+  margin: 0 0.125rem 0;
+  opacity: 0.4;
+  width: 0.5rem;
+  height: 0.5rem;
+}
