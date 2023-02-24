@@ -34,7 +34,7 @@ const IndexPage: React.FC<PageProps> = () => {
           Since 2018 I've specialized in building cross-platform React apps by implementing a single, responsive codebase, sharing about 90% of the front-end codebase with all platforms. That enables the codebase to be built as native iOS and Android apps and as a web app for mobile and desktop browsers. Many businesses can benefit from such a tech strategy by drastically reducing costs and time to market.
         </p>
         <p>
-          I have also experience building back-end systems using modern tools like Node.js, AWS AppSync, and GraphQL and applying advanced software engineering practices, including Software Architecture, Software Testing, and CI/CD.
+          I also have experience building back-end systems using tools like Node.js, Ruby on Rails, AWS AppSync, and GraphQL and applying advanced software engineering practices, including software architecture, testing, and CI/CD.
         </p>
         <p>
           Please <a href="mailto:flsilva7@gmail.com">get in touch</a> if you're looking to build full-stack cross-platform apps.

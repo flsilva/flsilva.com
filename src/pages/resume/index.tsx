@@ -15,37 +15,37 @@ const ResumePage: React.FC<PageProps> = () => {
         <h5>Software Engineering Skills</h5>
         <ul>
           <li>
-            <a href="http://en.wikipedia.org/wiki/JavaScript/" target="_blank">JavaScript</a>, <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a>, <a href="https://www.ruby-lang.org/en/" target="_blank">Ruby</a>, <a href="https://www.python.org/" target="_blank">Python</a>, <a href="http://en.wikipedia.org/wiki/HTML5" target="_blank">HTML5</a>, <a href="http://www.w3.org/TR/2001/WD-css3-roadmap-20010523/" target="_blank">CSS3</a>.
+            <a href="http://en.wikipedia.org/wiki/JavaScript/">JavaScript</a>, <a href="https://www.typescriptlang.org/">TypeScript</a>, <a href="https://www.ruby-lang.org/en/">Ruby</a>, <a href="https://www.python.org/">Python</a>, <a href="http://en.wikipedia.org/wiki/HTML5">HTML5</a>, <a href="http://www.w3.org/TR/2001/WD-css3-roadmap-20010523/">CSS3</a>.
           </li>
           <li>
-            <a href="https://martinfowler.com/architecture/" target="_blank">Software Architecture</a>, <a href="http://flsilva.com/blog/what-is-software-testing/" target="_blank">Software Testing</a>, <a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/" target="_blank">Design Patterns</a>.
+            <a href="https://martinfowler.com/architecture/">Software Architecture</a>, <a href="http://flsilva.com/blog/what-is-software-testing/">Software Testing</a>, <a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/">Design Patterns</a>.
           </li>
           <li>
-            <a href="http://en.wikipedia.org/wiki/Agile_software_development" target="_blank">Agile</a>, <a href="https://martinfowler.com/books/refactoring.html" target="_blank">Refactoring</a>, <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/" target="_blank">Domain-Driven Design</a>, <a href="https://en.wikipedia.org/wiki/Continuous_integration" target="_blank">CI</a> / <a href="https://en.wikipedia.org/wiki/Continuous_delivery" target="_blank">CD</a>.
+            <a href="http://en.wikipedia.org/wiki/Agile_software_development">Agile</a>, <a href="https://martinfowler.com/books/refactoring.html">Refactoring</a>, <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/">Domain-Driven Design</a>, <a href="https://en.wikipedia.org/wiki/Continuous_integration">CI</a> / <a href="https://en.wikipedia.org/wiki/Continuous_delivery">CD</a>.
           </li>
         </ul>
         <h5>Front-End Skills</h5>
         <ul>
           <li>
-            <a href="https://facebook.github.io/react/" target="_blank">React</a>, <a href="https://facebook.github.io/react-native/" target="_blank">React Native</a>, <a href="https://nextjs.org/" target="_blank">Next.js</a>, <a href="https://remix.run/" target="_blank">Remix</a>.
+            <a href="https://facebook.github.io/react/">React</a>, <a href="https://facebook.github.io/react-native/">React Native</a>, <a href="https://nextjs.org/">Next.js</a>, <a href="https://remix.run/">Remix</a>.
           </li>
           <li>
-            <a href="https://www.nngroup.com/articles/design-systems-101/" target="_blank">Design systems</a>, <a href="https://material.io/" target="_blank">Material Design</a>.
+            <a href="https://www.nngroup.com/articles/design-systems-101/">Design systems</a>, <a href="https://material.io/">Material Design</a>.
           </li>
           <li>
-          <a href="https://www.componentdriven.org/" target="_blank">Component Driven UIs</a>, <a href="http://en.wikipedia.org/wiki/Responsive_web_design" target="_blank">Responsive Web Design</a>.
+          <a href="https://www.componentdriven.org/">Component Driven UIs</a>, <a href="http://en.wikipedia.org/wiki/Responsive_web_design">Responsive Web Design</a>.
           </li>
         </ul>
         <h5>Back-End Skills</h5>
         <ul>
           <li>
-            <a href="http://nodejs.org/" target="_blank">Node.js</a>, <a href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a>, <a href="https://graphql.org" target="_blank">GraphQL</a>, <a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a>.
+            <a href="http://nodejs.org/">Node.js</a>, <a href="http://rubyonrails.org/">Ruby on Rails</a>, <a href="https://graphql.org">GraphQL</a>, <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>.
           </li>
           <li>
-          <a href="https://martinfowler.com/articles/serverless.html" target="_blank">Serverless Architectures</a>, <a href="https://aws.amazon.com/lambda/" target="_blank">AWS Lambda</a>, <a href="https://aws.amazon.com/appsync/" target="_blank">AWS AppSync</a>.
+          <a href="https://martinfowler.com/articles/serverless.html">Serverless Architectures</a>, <a href="https://aws.amazon.com/lambda/">AWS Lambda</a>, <a href="https://aws.amazon.com/appsync/">AWS AppSync</a>.
           </li>
           <li>
-            <a href="http://en.wikipedia.org/wiki/SQL" target="_blank">SQL</a>, <a href="http://flsilva.com/blog/introduction-to-nosql/" target="_blank">NoSQL</a>, <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a>, <a href="https://redis.io/" target="_blank">Redis</a>, <a href="https://aws.amazon.com/dynamodb/" target="_blank">DynamoDB</a>.
+            <a href="http://en.wikipedia.org/wiki/SQL">SQL</a>, <a href="http://flsilva.com/blog/introduction-to-nosql/">NoSQL</a>, <a href="http://www.postgresql.org/">PostgreSQL</a>, <a href="https://redis.io/">Redis</a>, <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.
           </li>
         </ul>
         <h5>Soft Skills</h5>
@@ -69,7 +69,7 @@ const ResumePage: React.FC<PageProps> = () => {
             </p>
           </li>
           <li>
-            <h6><a href="https://www.linkedin.com/company/imprint-gift/" target="_blank">Imprint Partners Inc.</a></h6>
+            <h6><a href="https://www.linkedin.com/company/imprint-gift/">Imprint Partners Inc.</a></h6>
             <small>October 2014 - October 2016 (2 years and 1 month)</small>
             <small>Occupation: Senior Front-End Engineer</small>
             <p>
@@ -83,19 +83,19 @@ const ResumePage: React.FC<PageProps> = () => {
             </p>
           </li>
           <li>
-            <h6><a href="https://www.linkedin.com/company/grafikonstruct/" target="_blank">Grafikonstruct</a></h6>
+            <h6><a href="https://www.linkedin.com/company/grafikonstruct/">Grafikonstruct</a></h6>
             <small>April 2007 – December 2008 (1 year and 9 months)</small>
             <small>Occupation: Lead Flash Developer</small>
             <p>I learned a lot at Grafikonstruct by building highly interactive Adobe Flash ActionScript 3.0 apps. In addition, I led front-end teams and provided technical leadership and mentoring while working for world-class clients, including Nokia, Pepsi, and Del Valle.</p>
           </li>
           <li>
-            <h6><a href="https://www.linkedin.com/company/datamidiafcbi/" target="_blank">Datamidia, FCBi</a></h6>
+            <h6><a href="https://www.linkedin.com/company/datamidiafcbi/">Datamidia, FCBi</a></h6>
             <small>October 2006 – March 2007 (6 months)</small>
             <small>Occupation: Senior Flash Developer</small>
             <p>I developed cool projects using Adobe Flash with ActionScript 2.0, HTML, CSS, and JavaScript while working for world-class clients such as Motorola and Sky. When the agency's demand for web development was low, I decided to look for new challenges to keep improving myself.</p>
           </li>
           <li>
-            <h6><a href="http://www.ogilvy.com.br" target="_blank">Ogilvy Interactive Brasil</a></h6>
+            <h6><a href="http://www.ogilvy.com.br">Ogilvy Interactive Brasil</a></h6>
             <small>June 2004 – September 2006 (2 years and 4 months)</small>
             <small>Occupation: Intern Web Developer, Junior Web Developer</small>
             <p>I started my career at Ogilvy Interactive in 2004, learning the foundations and best practices of web development from experienced software engineers, designers, and managers. Some of the technologies I learned include HTML, CSS, JavaScript, Adobe Flash with ActionScript 2.0, ASP, and MS SQL Server while working for world-class clients such as American Express, Motorola, and Unilever.</p>
@@ -105,7 +105,7 @@ const ResumePage: React.FC<PageProps> = () => {
         <ul>
           <li>
               Bachelor's Degree in Technology and Digital Media (2004-2007)
-              <small><a href="http://www.pucsp.br/" target="_blank">Pontifical Catholic University of São Paulo (PUC-SP)</a></small>
+              <small><a href="http://www.pucsp.br/">Pontifical Catholic University of São Paulo (PUC-SP)</a></small>
           </li>
         </ul>
         <h5>Languages</h5>
@@ -117,28 +117,28 @@ const ResumePage: React.FC<PageProps> = () => {
         <small>Some of the greatest technical books I've read.</small>
         <ul className={technicalReading}>
           <li>
-            <a href="http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/ref=sr_1_1?ie=UTF8&qid=1350367067&sr=8-1&keywords=Design+Patterns%3A+Elements+of+Reusable+Object-Oriented+Software" target="_blank">Design Patterns: Elements of Reusable Object-Oriented Software (by Erich Gamma, et. al.)</a>
+            <a href="http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/ref=sr_1_1?ie=UTF8&qid=1350367067&sr=8-1&keywords=Design+Patterns%3A+Elements+of+Reusable+Object-Oriented+Software">Design Patterns: Elements of Reusable Object-Oriented Software (by Erich Gamma, et. al.)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/ref=sr_1_1?s=books&ie=UTF8&qid=1350367369&sr=1-1&keywords=Domain-Driven+Design" target="_blank">Domain-Driven Design: Tackling Complexity in the Heart of Software (by Eric Evans)</a>
+            <a href="http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/ref=sr_1_1?s=books&ie=UTF8&qid=1350367369&sr=1-1&keywords=Domain-Driven+Design">Domain-Driven Design: Tackling Complexity in the Heart of Software (by Eric Evans)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/ref=sr_1_1?s=books&ie=UTF8&qid=1350367469&sr=1-1&keywords=Test+Driven+Development" target="_blank">Test Driven Development: By Example (by Kent Beck)</a>
+            <a href="http://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/ref=sr_1_1?s=books&ie=UTF8&qid=1350367469&sr=1-1&keywords=Test+Driven+Development">Test Driven Development: By Example (by Kent Beck)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/Software-Testing-2nd-Ron-Patton/dp/0672327988/ref=sr_1_1?s=books&ie=UTF8&qid=1350367510&sr=1-1&keywords=Software+Testing" target="_blank">Software Testing (by Ron Patton)</a>
+            <a href="http://www.amazon.com/Software-Testing-2nd-Ron-Patton/dp/0672327988/ref=sr_1_1?s=books&ie=UTF8&qid=1350367510&sr=1-1&keywords=Software+Testing">Software Testing (by Ron Patton)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/Agile-Project-Management-Microsoft-Professional/dp/073561993X/ref=sr_1_1?s=books&ie=UTF8&qid=1350368265&sr=1-1&keywords=Agile+Project+Management+with+Scrum" target="_blank">Agile Project Management with Scrum (by Ken Schwaber)</a>
+            <a href="http://www.amazon.com/Agile-Project-Management-Microsoft-Professional/dp/073561993X/ref=sr_1_1?s=books&ie=UTF8&qid=1350368265&sr=1-1&keywords=Agile+Project+Management+with+Scrum">Agile Project Management with Scrum (by Ken Schwaber)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/NoSQL-Distilled-Emerging-Polyglot-Persistence/dp/0321826620/ref=sr_1_1?ie=UTF8&qid=1380126326&sr=8-1&keywords=NoSQL+Distilled" target="_blank">NoSQL Distilled (by Pramod J. Sadalage and Martin Fowler)</a>
+            <a href="http://www.amazon.com/NoSQL-Distilled-Emerging-Polyglot-Persistence/dp/0321826620/ref=sr_1_1?ie=UTF8&qid=1380126326&sr=8-1&keywords=NoSQL+Distilled">NoSQL Distilled (by Pramod J. Sadalage and Martin Fowler)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613/ref=sr_1_1?s=books&ie=UTF8&qid=1350367531&sr=1-1&keywords=Framework+Design+Guidelines%3A+Conventions%2C+Idioms%2C+and+Patterns+for+Reusable+.NET+Libraries%2C+Second+Edition+-+Addison-Wesley+Professional+-+Krzysztof+Cwalina%3B+Brad+Abrams" target="_blank">Framework Design Guidelines (Krzysztof Cwalina and Brad Abrams)</a>
+            <a href="http://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613/ref=sr_1_1?s=books&ie=UTF8&qid=1350367531&sr=1-1&keywords=Framework+Design+Guidelines%3A+Conventions%2C+Idioms%2C+and+Patterns+for+Reusable+.NET+Libraries%2C+Second+Edition+-+Addison-Wesley+Professional+-+Krzysztof+Cwalina%3B+Brad+Abrams">Framework Design Guidelines (Krzysztof Cwalina and Brad Abrams)</a>
           </li>
           <li>
-            <a href="http://www.amazon.com/Responsive-Web-Design-Ethan-Marcotte/dp/B005SYWGXW/ref=sr_1_1?s=books&ie=UTF8&qid=1350367771&sr=1-1&keywords=Responsive+Web+Design" target="_blank">Responsive Web Design (by Ethan Marcotte)</a>
+            <a href="http://www.amazon.com/Responsive-Web-Design-Ethan-Marcotte/dp/B005SYWGXW/ref=sr_1_1?s=books&ie=UTF8&qid=1350367771&sr=1-1&keywords=Responsive+Web+Design">Responsive Web Design (by Ethan Marcotte)</a>
           </li>
         </ul>
       </div>

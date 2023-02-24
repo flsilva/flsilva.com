@@ -25,7 +25,7 @@ const _setupRecommendationCarousel = () => {
   if (recommendationsContainer === undefined || recommendationsContainer === null) return;
 
   recommendationsContainer.addEventListener("click", function () {
-    window.open('https://www.linkedin.com/in/flsilva/details/recommendations/?detailScreenTabIndex=0', '_blank');
+    window.open('https://www.linkedin.com/in/flsilva/details/recommendations/?detailScreenTabIndex=0', '_self');
   });
 
   const recommendations = getRecommendationsElement(recommendationsContainer);

@@ -12,17 +12,17 @@ export const MainFooter: React.FC = () => {
         <nav className={footerNav}>
           <ul>
             <li>
-              <a href="http://www.github.com/flsilva" target="_blank">
+              <a href="http://www.github.com/flsilva">
                 <GitHubLogoSvg />
               </a>
             </li>
             <li>
-              <a href="http://www.twitter.com/flsilva7" target="_blank">
+              <a href="http://www.twitter.com/flsilva7">
                 <TwitterLogoSvg />
               </a>
             </li>
             <li>
-              <a href="http://www.linkedin.com/in/flsilva" target="_blank">
+              <a href="http://www.linkedin.com/in/flsilva">
                 <LinkedInLogoSvg />
               </a>
             </li>
