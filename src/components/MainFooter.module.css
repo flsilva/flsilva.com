@@ -1,13 +1,13 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
-.main-footer {
+.container {
   background-color: var(--primary-text-color);
   flex-direction: row;
   justify-content: center;
   width: 100%;
 }
 
-.main-footer-content {
+.container-content {
   align-items: center;
   flex-direction: column-reverse;
   justify-content: space-between;
@@ -22,16 +22,16 @@
   }
 }
 
-.main-footer-content p {
+.container-content p {
   color: var(--primary-bg-color);
   font-size: 1rem;
 }
 
-.footer-nav {
+.nav {
   justify-content: space-between;
 }
 
-.footer-nav ul {
+.nav ul {
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
@@ -42,15 +42,15 @@
   padding-inline-start: 0;
 }
 
-.footer-nav ul li {
+.nav ul li {
   margin-left: 2rem;
   padding-left: 0;
 }
 
-.footer-nav ul li::before {
+.nav ul li::before {
   display: none;
 }
 
-.footer-nav ul li:first-child {
+.nav ul li:first-child {
   margin-left: 0;
 }

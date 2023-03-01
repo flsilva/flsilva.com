@@ -8,7 +8,7 @@ import { project, projectImageContainer, gatsbyImageWrapper } from './PortfolioC
 interface PortfolioCardProps {
   id: string;
   image?: IGatsbyImageData;
-  images?: Array;
+  images?: Array<IGatsbyImageData>;
   name: string;
   shortInfo: string;
   slug: string;
@@ -20,7 +20,7 @@ const resizePreservingAspectRatio = (srcWidth: number, srcHeight: number, maxWid
   return { width: srcWidth*ratio, height: srcHeight*ratio };
 }
 
-const renderImages = (image, images, name, newImageSize) => {
+const renderImages = (image, images, name: string, newImageSize) => {
   if (images && images.length > 0) {
     return (<>
       {images.map((image, index) => (

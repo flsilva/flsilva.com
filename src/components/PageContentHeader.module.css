@@ -1,6 +1,6 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
-.header > h3 {
+.container > h3 {
   @media $xxsmallScreenMedia {
     font-size: 2rem;
   }

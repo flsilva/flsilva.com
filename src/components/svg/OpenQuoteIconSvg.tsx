@@ -1,7 +1,6 @@
 import * as React from "react"
-import { SVGProps } from './SVGProps'
 
-export const OpenQuoteIconSvg = (props: SVGProps) => (
+export const OpenQuoteIconSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 48 48"
     width="1rem"

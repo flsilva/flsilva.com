@@ -1,6 +1,6 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
-.main-header {
+.container {
   align-items: flex-start;
   flex-direction: column;
   margin-top: 1rem;
@@ -11,7 +11,7 @@
   }
 }
 
-.logo-and-hamburger-menu-button {
+.logo-and-hamburger-menu-button-container {
   align-items: center;
   flex-direction: row;
   justify-content: space-between;

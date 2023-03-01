@@ -30,6 +30,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fontsource/open-sans", "npm:4.5.14"],\
             ["@mdx-js/react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:2.2.1"],\
+            ["@types/css-modules", "npm:1.0.2"],\
             ["@types/node", "npm:18.13.0"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-dom", "npm:18.0.10"],\
@@ -5065,6 +5066,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/css-modules", [\
+        ["npm:1.0.2", {\
+          "packageLocation": "./.yarn/cache/@types-css-modules-npm-1.0.2-20d7044488-6366bc7639.zip/node_modules/@types/css-modules/",\
+          "packageDependencies": [\
+            ["@types/css-modules", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/debug", [\
         ["npm:0.0.30", {\
           "packageLocation": "./.yarn/cache/@types-debug-npm-0.0.30-0fa4eb1306-61365bfd31.zip/node_modules/@types/debug/",\
@@ -10086,6 +10096,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["flsilva.com", "workspace:."],\
             ["@fontsource/open-sans", "npm:4.5.14"],\
             ["@mdx-js/react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:2.2.1"],\
+            ["@types/css-modules", "npm:1.0.2"],\
             ["@types/node", "npm:18.13.0"],\
             ["@types/react", "npm:18.0.27"],\
             ["@types/react-dom", "npm:18.0.10"],\

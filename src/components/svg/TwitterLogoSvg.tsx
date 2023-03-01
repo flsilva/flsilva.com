@@ -1,7 +1,6 @@
 import * as React from "react"
-import { SVGProps } from './SVGProps'
 
-export const TwitterLogoSvg = (props: SVGProps) => (
+export const TwitterLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"

@@ -1,7 +1,4 @@
 import * as React from 'react'
-import { Link } from "gatsby"
-import { StaticImage } from 'gatsby-plugin-image'
-
 import { LeftArrowIconSvg } from '../svg/LeftArrowIconSvg';
 import { RightArrowIconSvg } from '../svg/RightArrowIconSvg';
 import { ChildrenProps } from '../ChildrenProps';

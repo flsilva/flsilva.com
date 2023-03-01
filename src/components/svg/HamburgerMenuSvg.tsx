@@ -1,7 +1,6 @@
 import * as React from "react"
-import { SVGProps } from './SVGProps'
 
-export const HamburgerMenuSvg = (props: SVGProps) => (
+export const HamburgerMenuSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 100 80"
     width="25"

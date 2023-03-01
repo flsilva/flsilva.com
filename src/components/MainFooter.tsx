@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { mainFooter, mainFooterContent, footerNav } from './MainFooter.module.css'
+import { container, containerContent, nav } from './MainFooter.module.css'
 import { GitHubLogoSvg } from './svg/GitHubLogoSvg'
 import { LinkedInLogoSvg } from './svg/LinkedInLogoSvg'
 import { TwitterLogoSvg } from './svg/TwitterLogoSvg'
 
 export const MainFooter: React.FC = () => {
   return (
-    <footer className={mainFooter}>
-      <div className={mainFooterContent}>
+    <footer className={container}>
+      <div className={containerContent}>
         <p>© 2012-2023 Flavio Silva</p>
-        <nav className={footerNav}>
+        <nav className={nav}>
           <ul>
             <li>
               <a href="http://www.github.com/flsilva">

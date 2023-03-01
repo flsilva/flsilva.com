@@ -1,7 +1,6 @@
 import * as React from "react"
-import { SVGProps } from '../svg/SVGProps'
 
-export const LogoCircle6Svg = (props: SVGProps) => (
+export const LogoCircle6Svg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="2rem"
     height="2rem"

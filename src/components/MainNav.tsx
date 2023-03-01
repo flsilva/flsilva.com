@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Link } from "gatsby"
-import { changeThemeButtonContainer, mainNav } from './MainNav.module.css'
+import { changeThemeButtonContainer, container } from './MainNav.module.css'
 import { MoonIconSvg } from '../components/svg/MoonIconSvg'
 import { SunIconSvg } from '../components/svg/SunIconSvg'
 
 export const MainNav: React.FC = () => {
   return (
-    <nav id="main-nav" className={mainNav}>
+    <nav id="main-nav" className={container}>
       <ul>
         <li>
           <Link to="/blog/">Blog</Link>

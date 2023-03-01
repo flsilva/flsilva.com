@@ -1,6 +1,6 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
-.main-nav {
+.container {
   height: 0;
   transition: height 0.5s;
   overflow: hidden;
@@ -15,7 +15,7 @@
   }
 }
 
-.main-nav ul {
+.container ul {
   align-items: center;
   flex-direction: column;
   margin: 0;
@@ -28,7 +28,7 @@
   }
 }
 
-.main-nav ul li {
+.container ul li {
   border-bottom: 1px solid var(--primary-text-color);
   margin-left: 0;
   padding: 1rem 0;
@@ -46,11 +46,11 @@
   }
 }
 
-.main-nav ul li::before {
+.container ul li::before {
   display: none;
 }
 
-.main-nav ul li a {
+.container ul li a {
   color: var(--primary-text-color);
   font-weight: 700;
   text-align: center;

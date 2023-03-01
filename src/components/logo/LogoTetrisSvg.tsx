@@ -1,7 +1,6 @@
 import * as React from "react"
-import { SVGProps } from '../svg/SVGProps'
 
-export const LogoTetrisLightSvg = (props: SVGProps) => (
+export const LogoTetrisLightSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 100 90"
     width="2rem"

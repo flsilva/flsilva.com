@@ -4,11 +4,10 @@ import { Link } from "gatsby"
 import { ChildrenProps } from '../ChildrenProps'
 import { linkButton } from './LinkButton.module.css'
 
-interface LinkButtonProps extends ChildrenProps {
+export interface LinkButtonProps extends ChildrenProps {
   alignSelf?: 'flex-start' | 'flex-end';
   external?: boolean;
   target?: string;
-  text: string;
   to: string;
 }
 
