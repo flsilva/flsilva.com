@@ -15,17 +15,24 @@ const config: GatsbyConfig = {
     "gatsby-plugin-postcss",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
+     {
+       resolve: "gatsby-source-filesystem",
+       options: {
+         name: "pages",
+         path: `${__dirname}/src/pages`,
+       },
+     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: `blog`,
+        name: "blog",
         path: `${__dirname}/src/blog`,
       }
     },
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: `data`,
+        name: "data",
         path: `${__dirname}/src/data/`,
       }
     }
