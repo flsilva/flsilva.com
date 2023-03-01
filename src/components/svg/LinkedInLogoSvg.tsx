@@ -1,7 +1,6 @@
 import * as React from "react"
-import { SVGProps } from './SVGProps'
 
-export const LinkedInLogoSvg = (props: SVGProps) => (
+export const LinkedInLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 72 72"
     width="3rem"

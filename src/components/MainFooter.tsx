@@ -2,6 +2,7 @@ import * as React from 'react'
 import { container, containerContent, nav } from './MainFooter.module.css'
 import { GitHubLogoSvg } from './svg/GitHubLogoSvg'
 import { LinkedInLogoSvg } from './svg/LinkedInLogoSvg'
+import { MailIconSvg } from './svg/MailIconSvg'
 import { TwitterLogoSvg } from './svg/TwitterLogoSvg'
 
 export const MainFooter: React.FC = () => {
@@ -24,6 +25,11 @@ export const MainFooter: React.FC = () => {
             <li>
               <a href="http://www.linkedin.com/in/flsilva">
                 <LinkedInLogoSvg />
+              </a>
+            </li>
+            <li>
+              <a href="mailto:flsilva7@gmail.com">
+                <MailIconSvg />
               </a>
             </li>
           </ul>
