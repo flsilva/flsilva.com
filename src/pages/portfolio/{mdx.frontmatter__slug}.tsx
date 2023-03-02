@@ -4,7 +4,7 @@ import { graphql } from "gatsby"
 import { Layout } from '../../layouts/Layout'
 import { SEO } from '../../components/SEO'
 import { PageContentHeader } from '../../components/PageContentHeader'
-import { PortfolioCard } from './PortfolioCard'
+import { PortfolioCard } from '../../components/portfolio/PortfolioCard'
 
 const PortfolioProjectPage: React.FC<PageProps> = ({ children, data }) => {
   return (
