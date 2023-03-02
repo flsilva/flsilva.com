@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Link } from "gatsby"
 
 import { LogoBox2Svg } from './LogoBox2Svg'
 // import { LogoCircle1Svg } from './LogoCircle1Svg'
@@ -12,7 +11,7 @@ export const Logo: React.FC = () => {
       <div>
         <LogoBox2Svg />
       </div>
-      <h1 className={logo}><Link to="/">flsilva</Link></h1>
+      <h1 className={logo}><a href="/">flsilva</a></h1>
     </div>
   )
 }

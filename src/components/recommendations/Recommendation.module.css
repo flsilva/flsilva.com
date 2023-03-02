@@ -1,4 +1,4 @@
-@import "../../styles/vars.css";
+@import '../../styles/vars.css';
 
 .recommendation-container {
   position: absolute;
@@ -20,8 +20,8 @@
 
 .recommended-by-container img {
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: 3rem !important; /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  height: 3rem !important; /* we need !important here because gatsby-image-wrapper overrides it but only on build */
 }
 
 .recommendation-content {

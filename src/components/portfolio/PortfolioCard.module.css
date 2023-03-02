@@ -1,4 +1,4 @@
-@import "../../styles/vars.css";
+@import '../../styles/vars.css';
 
 .project {
   margin-top: 2rem;
@@ -31,6 +31,6 @@
 }
 
 .gatsby-image-wrapper {
-  position: absolute;
+  position: absolute !important; /* we need !important here because gatsby-image-wrapper overrides it but only on build */
   transition: none; /* set in javascript */
 }

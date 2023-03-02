@@ -10,9 +10,8 @@ const PortfolioProjectPage: React.FC<PageProps> = ({ children, data }) => {
   return (
     <Layout>
       <PageContentHeader linkTo="/portfolio/" title="Portfolio" />
-      <div>
+      <div id="portfolio-project-page">
         <PortfolioCard
-          id="portfolio-project-carousel-container"
           image={data.mdx.frontmatter.heroImage}
           images={data.mdx.frontmatter.images}
           key={data.mdx.id}

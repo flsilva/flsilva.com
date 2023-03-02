@@ -1,11 +1,11 @@
 @import '../styles/vars.css';
 
-.container > h3 {
+.container h3 {
   @media $xxsmallScreenMedia {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
   @media $xsmallScreenMedia {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
   }
 
   @media $midScreenMedia {

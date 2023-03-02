@@ -10,11 +10,10 @@ const PortfolioPage: React.FC<PageProps> = ({ data }) => {
   return (
     <Layout>
       <PageContentHeader linkTo="/portfolio/" title="Portfolio" />
-      <div>
+      <div id="portfolio-page">
         {
           data.allMdx.nodes.map(node => (
             <PortfolioCard
-              id="portfolio-project-image-container"
               image={node.frontmatter.heroImage}
               key={node.id}
               name={node.frontmatter.name}

@@ -1,23 +1,15 @@
 import * as React from 'react'
-import { Link } from "gatsby"
 import type { IGatsbyImageData } from "gatsby-plugin-image"
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 import { project, projectImageContainer, gatsbyImageWrapper } from './PortfolioCard.module.css'
 
 interface PortfolioCardProps {
-  id: string;
   image?: IGatsbyImageData;
   images?: Array<IGatsbyImageData>;
   name: string;
   shortInfo: string;
   slug: string;
-}
-
-const resizePreservingAspectRatio = (srcWidth: number, srcHeight: number, maxWidth: number, maxHeight: number) => {
-  var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-
-  return { width: srcWidth*ratio, height: srcHeight*ratio };
 }
 
 const renderImages = (image, images, name: string, newImageSize) => {
@@ -29,7 +21,7 @@ const renderImages = (image, images, name: string, newImageSize) => {
           image={getImage(image)}
           alt={name}
           key={index}
-          style={newImageSize}
+          style={{ ...newImageSize, maxWidth: '100%' }}
         />
       ))}
     </>)
@@ -48,9 +40,9 @@ const renderImages = (image, images, name: string, newImageSize) => {
   return <div />;
 }
 
-export const PortfolioCard: React.FC<PortfolioCardProps> = ({ id, image, images, name, shortInfo, slug }) => {
+export const PortfolioCard: React.FC<PortfolioCardProps> = ({ image, images, name, shortInfo, slug }) => {
   let projectImageContainerStyle = {};
-  let newImageSize = { width: 0, height: 0 };
+  const newImageSize = { width: 0, height: 0 };
   let imageObjectTarget;
 
   if (images && images.length > 0) {
@@ -63,28 +55,20 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({ id, image, images,
     imageObjectTarget = image;
   }
 
-  let imgWidth = imageObjectTarget.childImageSharp.gatsbyImageData.width;
-  const imgHeight = imageObjectTarget.childImageSharp.gatsbyImageData.height;
-  let maxWidth = 0;
-  const htmlElement = document.querySelector('html');
-  if (htmlElement) maxWidth = htmlElement.clientWidth - 70;
-  if (maxWidth > 960) maxWidth = 960;
-  newImageSize = resizePreservingAspectRatio(imgWidth, imgHeight, maxWidth, 960);
-
   projectImageContainerStyle = {
     ...projectImageContainerStyle,
-    width: newImageSize.width,
-    height: newImageSize.height,
+    width: imageObjectTarget.childImageSharp.gatsbyImageData.width,
+    height: imageObjectTarget.childImageSharp.gatsbyImageData.height,
   };
 
   return (
     <div className={project}>
-      <Link to={`/portfolio/${slug}/`}><h4>{name}</h4></Link>
+      <a href={`/portfolio/${slug}/`}><h4>{name}</h4></a>
       <small>{shortInfo}</small>
-      <div id={id} className={projectImageContainer} style={ projectImageContainerStyle }>
-        <Link to={`/portfolio/${slug}/`}>
+      <div id="portfolio-project-images-container" className={[projectImageContainer, 'card-img-container'].join(' ')} style={ projectImageContainerStyle }>
+        <a href={`/portfolio/${slug}/`}>
           {renderImages(image, images, name, newImageSize)}
-        </Link>
+        </a>
       </div>
     </div>
   )

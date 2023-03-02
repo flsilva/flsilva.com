@@ -1,3 +1,9 @@
+const resizePreservingAspectRatio = (srcWidth, srcHeight, maxWidth, maxHeight) => {
+  var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+  return { width: srcWidth*ratio, height: srcHeight*ratio };
+}
+
 const setupPortfolioProject = () => {
   setupPortfolioProjectCarousel();
 }
@@ -19,18 +25,71 @@ const _setupPortfolioProjectCarousel = () => {
   }
   currentTrySetupPortfolioProjectCarousel++;
 
-  const imagesContainer = getImagesContainerElement();
+  let imagesContainer = getImagesContainerElement();
   if (imagesContainer === undefined || imagesContainer === null) return;
 
-  const images = getImages(imagesContainer);
-  if (images === undefined || images === null) return;
+  const isPortfolioIndexPage = document.getElementById('portfolio-page') ? true : false;
+  let images;
 
-  currentTrySetupPortfolioProjectCarousel = totalTimesTrySetupPortfolioProjectCarousel;
+  if (isPortfolioIndexPage) {
+    imagesContainer = document.querySelectorAll('[class*="card-img-container"]');
 
-  images.forEach((image, index) => {
-    image.style.transform = `translateX(${index * 100}%)`;
-  });
+    imagesContainer.forEach((imagesContainer, index) => {
+      const images = getImages(imagesContainer);
+      if (images === undefined || images === null) return;
 
+      currentTrySetupPortfolioProjectCarousel = totalTimesTrySetupPortfolioProjectCarousel;
+
+      let imgWidth = parseInt(imagesContainer.style.width, 10);
+      const imgHeight = parseInt(imagesContainer.style.height, 10);
+      let maxWidth = 0;
+      const htmlElement = document.querySelector('html');
+      if (htmlElement) maxWidth = htmlElement.clientWidth - 70;
+      if (maxWidth > 960) maxWidth = 960;
+      const newImageSize = resizePreservingAspectRatio(imgWidth, imgHeight, maxWidth, 960);
+
+      imagesContainer.style.width = `${newImageSize.width}px`;
+      imagesContainer.style.height = `${newImageSize.height}px`;
+
+      images.forEach((image, index) => {
+        image.style.width = `${newImageSize.width}px`;
+        image.style.height = `${newImageSize.height}px`;
+        image.style.transform = `translateX(${index * 100}%)`;
+      });
+    });
+  } else {
+    images = getImages(imagesContainer);
+    if (images === undefined || images === null) return;
+
+    currentTrySetupPortfolioProjectCarousel = totalTimesTrySetupPortfolioProjectCarousel;
+
+    images.forEach((image, index) => {
+      let imgWidth = parseInt(imagesContainer.style.width, 10);
+      const imgHeight = parseInt(imagesContainer.style.height, 10);
+      let maxWidth = 0;
+      const htmlElement = document.querySelector('html');
+      if (htmlElement) maxWidth = htmlElement.clientWidth - 70;
+      if (maxWidth > 960) maxWidth = 960;
+      const newImageSize = resizePreservingAspectRatio(imgWidth, imgHeight, maxWidth, 960);
+
+      imagesContainer.style.width = `${newImageSize.width}px`;
+      imagesContainer.style.height = `${newImageSize.height}px`;
+
+      image.style.width = `${newImageSize.width}px`;
+      image.style.height = `${newImageSize.height}px`;
+      image.style.transform = `translateX(${index * 100}%)`;
+    });
+  }
+
+
+
+
+  // If this is the Portfolio page (index with all images)
+  // there's n carousel, just resiing images.
+  if (isPortfolioIndexPage) return;
+
+  // If it's a Portfolop project page then we proceed
+  // with the logic that implements a single carousel of images.
   setTimeout(() => {
     imagesContainer.style.opacity = 1;
 
@@ -80,7 +139,7 @@ const moveToPrevImage = () => {
   changeImage(currentImage);
 }
 
-const getImagesContainerElement = () => document.getElementById('portfolio-project-carousel-container');
+const getImagesContainerElement = () => document.getElementById('portfolio-project-images-container');
 
 const getImages = (imagesContainer) => imagesContainer.querySelectorAll('[class*="gatsby-image-wrapper"]');
 
