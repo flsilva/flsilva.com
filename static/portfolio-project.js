@@ -81,9 +81,6 @@ const _setupPortfolioProjectCarousel = () => {
     });
   }
 
-
-
-
   // If this is the Portfolio page (index with all images)
   // there's n carousel, just resiing images.
   if (isPortfolioIndexPage) return;
