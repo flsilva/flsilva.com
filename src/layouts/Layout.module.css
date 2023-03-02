@@ -1,4 +1,4 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
 .page-outer-container {
   width: 100%;
@@ -37,5 +37,7 @@
 }
 
 .page-main-content {
-  flex-direction: column;
+  @media $midScreenMedia {
+    margin-top: 2rem;
+  }
 }

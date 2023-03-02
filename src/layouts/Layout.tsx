@@ -2,7 +2,7 @@ import * as React from 'react'
 import { MainHeader } from '../components/MainHeader'
 import { MainFooter } from '../components/MainFooter'
 import { ChildrenProps } from '../components/ChildrenProps'
-import { pageOuterContainer, pageInnerContainer, pageHeaderAndMainContent } from './Layout.module.css'
+import { pageMainContent, pageOuterContainer, pageInnerContainer, pageHeaderAndMainContent } from './Layout.module.css'
 
 export const Layout: React.FC<ChildrenProps> = ({ children }) => {
   return (
@@ -10,7 +10,7 @@ export const Layout: React.FC<ChildrenProps> = ({ children }) => {
       <div className={pageInnerContainer}>
         <div className={pageHeaderAndMainContent}>
           <MainHeader />
-          <main>
+          <main className={pageMainContent}>
             <article>
               {children}
           </article>
