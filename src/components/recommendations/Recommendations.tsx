@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import { LeftArrowIconSvg } from '../svg/LeftArrowIconSvg';
 import { RightArrowIconSvg } from '../svg/RightArrowIconSvg';
 import { ChildrenProps } from '../ChildrenProps';
@@ -11,7 +11,7 @@ import {
   recommendationsButtons,
   nextButton,
   prevButton,
-} from './Recommendations.module.css'
+} from './Recommendations.module.css';
 
 export const Recommendations: React.FC<ChildrenProps> = ({ children }) => (
   <>
@@ -19,19 +19,19 @@ export const Recommendations: React.FC<ChildrenProps> = ({ children }) => (
     <small className={textTapToSee}>Tap to see on LinkedIn</small>
     <div className={recommendationsListContainer}>
       <div id="recommendations-list" className={recommendationsList}>
-        { children }
+        {children}
       </div>
     </div>
     <div id="recommendations-buttons" className={recommendationsButtons}>
       <div id="prev-button" className={prevButton}>
         <LeftArrowIconSvg />
       </div>
-      <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')}></div>
-      <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')}></div>
-      <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')}></div>
+      <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')} />
+      <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')} />
+      <div className={[recommendationIndicator, 'recommendation-indicator'].join(' ')} />
       <div id="next-button" className={nextButton}>
         <RightArrowIconSvg />
       </div>
     </div>
   </>
-)
+);

@@ -1,6 +1,6 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
-.copyImageContainer {
+.copyImageContainerxx {
   @media $midScreenMedia {
     display: block;
   }
@@ -10,6 +10,7 @@
   align-self: center;
   border: 0.625rem solid var(--secondary-text-color);
   border-radius: 50%;
+
   @media $xxsmallScreenMedia {
     width: 200px;
     height: 200px;
@@ -37,6 +38,7 @@
 
 .imageContainer img {
   border-radius: 50%;
+
   @media $xxsmallScreenMedia {
     width: 200px;
     height: 200px;

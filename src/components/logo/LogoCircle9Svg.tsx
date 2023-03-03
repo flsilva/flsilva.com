@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 
 export const LogoCircle9Svg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -13,10 +13,10 @@ export const LogoCircle9Svg = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M27 22.14V17a2 2 0 0 0-2-2H7v-5h3V2H2v8h3v5a2 2 0 0 0 2 2h18v5.14a4 4 0 1 0 2 0ZM4 4h4v4H4Zm22 24a2 2 0 1 1 2-2 2 2 0 0 1-2 2Z" />
     <path
       style={{
-        fill: "none",
+        fill: 'none',
       }}
       d="M0 0h32v32H0z"
       data-name="&lt;Transparent Rectangle&gt;"
     />
   </svg>
-)
+);

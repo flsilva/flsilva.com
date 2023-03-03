@@ -20,8 +20,9 @@
 
 .recommended-by-container img {
   border-radius: 50%;
-  width: 3rem !important; /* we need !important here because gatsby-image-wrapper overrides it but only on build */
-  height: 3rem !important; /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  width: 3rem !important;
+  height: 3rem !important;
 }
 
 .recommendation-content {

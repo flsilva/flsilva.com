@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 
 export const LogoCircle10LightSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -15,4 +15,4 @@ export const LogoCircle10LightSvg = (props: React.SVGProps<SVGSVGElement>) => (
       className="graph-svgrepo-com-2_svg__ci-primary"
     />
   </svg>
-)
+);

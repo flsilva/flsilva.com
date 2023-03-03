@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 
 export const GitHubLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -16,4 +16,4 @@ export const GitHubLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
       fill="var(--primary-bg-color)"
     />
   </svg>
-)
+);

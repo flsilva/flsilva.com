@@ -31,6 +31,7 @@
 }
 
 .gatsby-image-wrapper {
-  position: absolute !important; /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  position: absolute !important;
   transition: none; /* set in javascript */
 }

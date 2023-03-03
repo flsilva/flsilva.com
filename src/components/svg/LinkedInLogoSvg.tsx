@@ -1,13 +1,7 @@
-import * as React from "react"
+import * as React from 'react';
 
 export const LinkedInLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    viewBox="0 0 72 72"
-    width="3rem"
-    height="3rem"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+  <svg viewBox="0 0 72 72" width="3rem" height="3rem" xmlns="http://www.w3.org/2000/svg" {...props}>
     <g fill="none" fillRule="evenodd">
       <path
         d="M8 72h56a8 8 0 0 0 8-8V8a8 8 0 0 0-8-8H8a8 8 0 0 0-8 8v56a8 8 0 0 0 8 8Z"
@@ -19,4 +13,4 @@ export const LinkedInLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
       />
     </g>
   </svg>
-)
+);

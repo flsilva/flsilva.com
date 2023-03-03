@@ -1,4 +1,4 @@
-@import "../../styles/vars.css";
+@import '../../styles/vars.css';
 
 .link-button {
   /* default styles for $xxsmallScreenMedia */
@@ -26,6 +26,6 @@
   }
 }
 
-.link-button[align-self="flex-end"] {
+.link-button[data-align-self='flex-end'] {
   align-self: flex-end;
 }

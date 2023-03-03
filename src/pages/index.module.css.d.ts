@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly copyImageContainer: string;
+  readonly copyImageContainerxx: string;
   readonly header: string;
   readonly imageContainer: string;
 };
