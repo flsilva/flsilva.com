@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { MainHeader } from '../components/MainHeader';
-import { MainFooter } from '../components/MainFooter';
-import { ChildrenProps } from '../components/ChildrenProps';
+import { MainHeader } from '../MainHeader';
+import { MainFooter } from '../MainFooter';
+import { ChildrenProps } from '../ChildrenProps';
 import {
   pageMainContent,
   pageOuterContainer,

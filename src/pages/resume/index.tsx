@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
-import { Layout } from '../../layouts/Layout';
+import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
 import { experience, header, resumePage, technicalReading } from './index.module.css';
 

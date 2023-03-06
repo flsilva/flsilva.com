@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 
-import { Layout } from '../layouts/Layout';
+import { Layout } from '../components/layouts/Layout';
 import { SEO } from '../components/SEO';
 import { Recommendation } from '../components/recommendations/Recommendation';
 import { Recommendations } from '../components/recommendations/Recommendations';

@@ -10,6 +10,10 @@
   font-size: 0.75rem;
   padding: 0.125rem 0.5rem;
 
+  &[data-align-self='flex-end'] {
+    align-self: flex-end;
+  }
+
   @media $xsmallScreenMedia {
     font-size: 0.875rem;
     padding: 0.125rem 0.5rem;
@@ -24,8 +28,4 @@
     font-size: 1.25rem;
     padding: 0.5rem 1rem;
   }
-}
-
-.link-button[data-align-self='flex-end'] {
-  align-self: flex-end;
 }

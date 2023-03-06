@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
-import { Layout } from '../../layouts/Layout';
+import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
 import { PageContentHeader } from '../../components/PageContentHeader';
 import { PortfolioCard } from '../../components/portfolio/PortfolioCard';
