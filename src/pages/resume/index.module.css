@@ -2,24 +2,12 @@
 
 .header h1 {
   margin-block-end: 1rem;
-
-  @media $xxsmallScreenMedia {
-    font-size: 3rem;
-  }
-  @media $xsmallScreenMedia {
-    font-size: 3.5rem;
-  }
-  @media $smallScreenMedia {
-    font-size: 4rem;
-  }
-  @media $midScreenMedia {
-    font-size: 5rem;
-  }
 }
 
 .header h3 {
   margin-block-start: -0.5rem;
   margin-block-end: 3rem;
+  font-weight: 600;
 
   @media $xxsmallScreenMedia {
     font-size: 1.125rem;
@@ -45,19 +33,6 @@
 
   &:first-child {
     margin-block-start: 1rem;
-  }
-
-  @media $xxsmallScreenMedia {
-    font-size: 1.25rem;
-  }
-  @media $xsmallScreenMedia {
-    font-size: 1.5rem;
-  }
-  @media $smallScreenMedia {
-    font-size: 1.5rem;
-  }
-  @media $midScreenMedia {
-    font-size: 2rem;
   }
 }
 

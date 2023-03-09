@@ -3,21 +3,9 @@
 .title {
   margin-top: 3rem;
   text-align: center;
-  @media $xxsmallScreenMedia {
-    font-size: 1.75rem;
-  }
-  @media $xsmallScreenMedia {
-    font-size: 2rem;
-  }
-  @media $smallScreenMedia {
-    font-size: 2.5rem;
-  }
-  @media $midScreenMedia {
-    font-size: 3rem;
-  }
 }
 
-.textTapToSee {
+.text-tap-to-see {
   display: block;
   margin: -1.25rem 0 2rem;
   text-align: center;
@@ -35,19 +23,19 @@
 
   @media $xxsmallScreenMedia {
     width: 17rem;
-    height: 34rem;
+    height: 30rem;
   }
   @media $xsmallScreenMedia {
     width: 20rem;
-    height: 32rem;
+    height: 26rem;
   }
   @media $smallScreenMedia {
     width: 23rem;
-    height: 30rem;
+    height: 28rem;
   }
   @media $midScreenMedia {
     width: 40rem;
-    height: 22rem;
+    height: 19rem;
   }
   @media $largeScreenMedia {
     width: 54rem;

@@ -1,0 +1,17 @@
+@import '../../styles/vars.css';
+
+.tag {
+  small {
+    border: 1px solid var(--primary-text-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:hover small {
+    border-color: var(--primary-link-color);
+  }
+}

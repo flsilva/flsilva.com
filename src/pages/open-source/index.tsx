@@ -3,7 +3,6 @@ import type { HeadFC, PageProps } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
-import { PageContentHeader } from '../../components/PageContentHeader';
 import {
   ossProject,
   vostokFramework,
@@ -14,7 +13,6 @@ import {
 
 const OpenSourcePage: React.FC<PageProps> = () => (
   <Layout>
-    <PageContentHeader linkTo="/open-source/" title="Open Source" />
     <p>
       Here you can find open-source software projects I&#39;ve been building throughout my career. I
       invite anyone interested in analyzing my software engineering skills to look at these
@@ -96,4 +94,4 @@ const OpenSourcePage: React.FC<PageProps> = () => (
 
 export default OpenSourcePage;
 
-export const Head: HeadFC = () => <SEO title="Open Source Projects by" />;
+export const Head: HeadFC = () => <SEO title="Open Source software by " />;

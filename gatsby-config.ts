@@ -1,5 +1,16 @@
 import type { GatsbyConfig } from 'gatsby';
 
+/*
+const wrapESMPlugin = (name) =>
+  function wrapESM(opts) {
+    return async (...args) => {
+      const mod = await import(name);
+      const plugin = mod.default(opts);
+      return plugin(...args);
+    };
+  };
+*/
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: 'Flavio Silva: Full-Stack Software Engineer',
@@ -12,22 +23,61 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-image',
-    'gatsby-plugin-mdx',
+    // 'gatsby-plugin-mdx',
     'gatsby-plugin-postcss',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
+    /*
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: 'gatsby-plugin-mdx',
       options: {
-        name: 'pages',
-        path: `${__dirname}/src/pages`,
+        mdxOptions: {
+          remarkPlugins: [
+            // Add GitHub Flavored Markdown (GFM) support
+            require('remark-gfm'),
+          ],
+          rehypePlugins: [
+            wrapESMPlugin('rehype-slug'),
+            [wrapESMPlugin('rehype-autolink-headings'), { behavior: 'wrap' }],
+          ],
+        },
+      },
+    },
+    */
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        mdxOptions: {
+          /*
+           * Update rehype-slug and remark-gfm dependencies to latest versions once Gatsby adds
+           * support to ESM packages.
+           */
+          rehypePlugins: [
+            require('remark-gfm'),
+            require('rehype-slug'),
+            // require('rehype-autolink-headings'),
+          ],
+        },
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              offsetY: '100',
+              className: 'autolink-header-anchor',
+              maintainCase: false,
+              removeAccents: true,
+              // isIconAfterHeader: true,
+              // elements: [`h1`, `h4`],
+            },
+          },
+        ],
       },
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'blog',
-        path: `${__dirname}/src/blog`,
+        name: 'pages',
+        path: `${__dirname}/src/pages`,
       },
     },
     {

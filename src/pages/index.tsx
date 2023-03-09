@@ -6,14 +6,14 @@ import { Layout } from '../components/layouts/Layout';
 import { SEO } from '../components/SEO';
 import { Recommendation } from '../components/recommendations/Recommendation';
 import { Recommendations } from '../components/recommendations/Recommendations';
-import { copyImageContainerxx, header, imageContainer } from './index.module.css';
+import { copyImageContainer, header, imageContainer } from './index.module.css';
 
 const IndexPage: React.FC<PageProps> = () => (
   <Layout>
     <header className={header}>
       <h1>Hi, I&#39;m Flavio 👋</h1>
     </header>
-    <div className={copyImageContainerxx}>
+    <div className={copyImageContainer}>
       <div className={imageContainer}>
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
@@ -75,4 +75,4 @@ const IndexPage: React.FC<PageProps> = () => (
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <SEO title="About" />;
+export const Head: HeadFC = () => <SEO title="About " />;

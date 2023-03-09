@@ -12,11 +12,16 @@
   flex-direction: column-reverse;
   justify-content: space-between;
 
+  @media $xxsmallScreenMedia {
+    padding: 0 0 1.75rem;
+  }
+
   @media $midScreenMedia {
     flex-direction: row;
     padding: 2rem;
     width: calc($midScreenWidth - 4rem);
   }
+
   @media $largeScreenMedia {
     width: calc($largeScreenWidth - 4rem);
   }

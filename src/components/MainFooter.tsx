@@ -8,7 +8,7 @@ import { TwitterLogoSvg } from './svg/TwitterLogoSvg';
 export const MainFooter: React.FC = () => (
   <footer className={container}>
     <div className={containerContent}>
-      <p>© 2012-2023 Flavio Silva</p>
+      <p>© 2023 Flavio Silva</p>
       <nav className={nav}>
         <ul>
           <li>

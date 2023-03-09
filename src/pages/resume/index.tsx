@@ -227,4 +227,4 @@ const ResumePage: React.FC<PageProps> = () => (
 
 export default ResumePage;
 
-export const Head: HeadFC = () => <SEO title="Resume of" />;
+export const Head: HeadFC = () => <SEO title="Resume of " />;

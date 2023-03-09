@@ -1,12 +1,12 @@
 @import '../styles/vars.css';
 
-.copyImageContainerxx {
+.copy-image-container {
   @media $midScreenMedia {
     display: block;
   }
 }
 
-.imageContainer {
+.image-container {
   align-self: center;
   border: 0.625rem solid var(--secondary-text-color);
   border-radius: 50%;
@@ -36,7 +36,7 @@
   }
 }
 
-.imageContainer img {
+.image-container img {
   border-radius: 50%;
 
   @media $xxsmallScreenMedia {
@@ -65,17 +65,7 @@
   flex-grow: 1;
   text-align: center;
 
-  @media $xxsmallScreenMedia {
-    font-size: 2rem;
-  }
-  @media $xsmallScreenMedia {
-    font-size: 2.25rem;
-  }
-  @media $smallScreenMedia {
-    font-size: 2.5rem;
-  }
   @media $midScreenMedia {
-    font-size: 4rem;
     text-align: left;
   }
 }

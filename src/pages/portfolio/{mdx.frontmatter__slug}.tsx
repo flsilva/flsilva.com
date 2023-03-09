@@ -3,16 +3,15 @@ import type { HeadFC, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
-import { PageContentHeader } from '../../components/PageContentHeader';
 import { PortfolioCard } from '../../components/portfolio/PortfolioCard';
+import { page } from './index.module.css';
 
 const PortfolioProjectPage: React.FC<PageProps<Queries.PortfolioProjectPageQuery>> = ({
   children,
   data,
 }) => (
   <Layout>
-    <PageContentHeader linkTo="/portfolio/" title="Portfolio" />
-    <div id="portfolio-project-page">
+    <div id="portfolio-project-page" className={page}>
       <PortfolioCard
         image={data.mdx.frontmatter.heroImage}
         images={data.mdx.frontmatter.images}
@@ -51,5 +50,5 @@ export const query = graphql`
 export default PortfolioProjectPage;
 
 export const Head: HeadFC = ({ data }) => (
-  <SEO title={`Portfolio Project: ${data.mdx.frontmatter.name}`} />
+  <SEO title={`${data.mdx.frontmatter.name} project by `} />
 );

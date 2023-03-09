@@ -1,0 +1,32 @@
+.summary {
+  margin: 0;
+}
+
+.tags {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1em 0;
+  row-gap: 1rem;
+}
+
+.tags > * {
+  margin-right: 0.5rem;
+}
+
+.author {
+  align-items: center;
+  flex-direction: row;
+  margin: 1rem 0;
+}
+
+.author-image img {
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+.hero-image {
+  margin: 1rem 0;
+}
