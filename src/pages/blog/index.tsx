@@ -5,10 +5,11 @@ import { graphql } from 'gatsby';
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
 import { BlogPostCard } from '../../components/blog/BlogPostCard';
+import { list } from './index.module.css';
 
 const BlogPage: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data }) => (
   <Layout>
-    <div>
+    <div className={list}>
       {data.allMdx.nodes.map((node) => (
         <BlogPostCard
           key={node.id}

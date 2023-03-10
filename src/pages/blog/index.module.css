@@ -1,1 +1,5 @@
-@import "../../styles/vars.css";
+@import '../../styles/vars.css';
+
+.list {
+  row-gap: 3rem;
+}

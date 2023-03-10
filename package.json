@@ -26,6 +26,7 @@
     "@mdx-js/react": "2.2.1",
     "autoprefixer": "10.4.13",
     "date-fns": "2.29.3",
+    "disqus-react": "1.1.5",
     "gatsby": "5.6.0",
     "gatsby-plugin-image": "3.6.0",
     "gatsby-plugin-mdx": "5.5.0",

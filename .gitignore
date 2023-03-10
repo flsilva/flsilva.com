@@ -29,3 +29,4 @@ src/gatsby-types.d.ts
 
 .DS_Store
 *.code-workspace
+.env

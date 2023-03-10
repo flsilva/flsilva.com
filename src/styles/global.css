@@ -357,3 +357,16 @@ h3 .autolink-header-anchor.before {
 .recommendation-indicator.active {
   opacity: 1;
 }
+
+#disqus_thread {
+  margin-top: 4rem;
+}
+
+/* That's the only way I could change disqus' background color, only for the light theme.
+ * It seems there's no support for both light and dark, and when I tried only "dark" it didn't work
+ * at all, i.e., it applied disqus' default styling (white background-color, etc).
+ */
+iframe {
+  color-scheme: light;
+}
+/**/

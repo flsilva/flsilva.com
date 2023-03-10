@@ -6028,6 +6028,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"disqus-react@npm:1.1.5":
+  version: 1.1.5
+  resolution: "disqus-react@npm:1.1.5"
+  peerDependencies:
+    react: ^15.6.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.6.1 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: c95024c4a235d38f05ad1134f4e34a4ece4617ab01ba288da1c7a8476d94929ccd47b72abc482e017d70f55c32740e0470081c7e05e6d82192b22dd954417d21
+  languageName: node
+  linkType: hard
+
 "doctrine@npm:^2.1.0":
   version: 2.1.0
   resolution: "doctrine@npm:2.1.0"
@@ -7402,6 +7412,7 @@ __metadata:
     "@typescript-eslint/parser": 5.54.0
     autoprefixer: 10.4.13
     date-fns: 2.29.3
+    disqus-react: 1.1.5
     eslint: 8.35.0
     eslint-config-airbnb: 19.0.4
     eslint-config-airbnb-typescript: 17.0.0
