@@ -6,9 +6,9 @@ import { DiscussionEmbed } from 'disqus-react';
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
 import { BlogPostCard } from '../../components/blog/BlogPostCard';
+import { CreativeCommonsBy } from '../../components/creative-commons/CreativeCommonsBy';
+import { SocialMediaShareButtons } from '../../components/social-media-share/SocialMediaShareButtons';
 import { post as postStyle } from './BlogPostPage.module.css';
-
-const getBlogPostUrl = (baseUrl: string, slug: string) => `${baseUrl}/blog/${slug}`;
 
 const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, data }) => (
   <Layout>
@@ -23,17 +23,29 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
         heroImageCreditUrl={data.mdx.frontmatter.heroImageCreditUrl}
         shouldRenderSocialMediaShare
         slug={data.mdx.frontmatter.slug}
-        socialMediaShareData={{
-          tweetText: data.mdx.frontmatter.tweetText,
-          tweetVia: data.mdx.frontmatter.tweetVia,
-          url: `${data.site?.siteMetadata?.url}/blog/${data.mdx.frontmatter.slug}`,
-        }}
         description={data.mdx.frontmatter.description}
         tags={data.mdx.frontmatter.tags}
         tagsLocation="below-hero"
         title={data.mdx.frontmatter.title}
       />
+      <SocialMediaShareButtons
+        hashtags={data.mdx.frontmatter.tags}
+        tweetText={data.mdx.frontmatter.tweetText}
+        tweetVia={data.mdx.frontmatter.tweetVia}
+        url={`${data.site?.siteMetadata?.url}/blog/${data.mdx.frontmatter.slug}`}
+      />
       <article className={postStyle}>{children}</article>
+      <SocialMediaShareButtons
+        hashtags={data.mdx.frontmatter.tags}
+        tweetText={data.mdx.frontmatter.tweetText}
+        tweetVia={data.mdx.frontmatter.tweetVia}
+        url={`${data.site?.siteMetadata?.url}/blog/${data.mdx.frontmatter.slug}`}
+      />
+      <CreativeCommonsBy
+        authorName={data.mdx.frontmatter.author}
+        authorUrl={data.mdx.frontmatter.authorUrl}
+        workTitle={data.mdx.frontmatter.title}
+      />
       <DiscussionEmbed
         config={{
           identifier: `/blog/${data.mdx.frontmatter.slug}`,
@@ -62,6 +74,7 @@ export const query = graphql`
           }
         }
         author
+        authorUrl
         date
         description
         heroImage {

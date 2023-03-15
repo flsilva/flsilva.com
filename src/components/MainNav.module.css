@@ -30,6 +30,7 @@
 
 .container ul li {
   border-bottom: 1px solid var(--primary-text-color);
+  display: flex;
   margin: 0.25rem 0 0;
   padding: 1rem 0;
   width: 100%;

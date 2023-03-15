@@ -48,6 +48,7 @@
 }
 
 .nav ul li {
+  display: flex;
   margin-left: 2rem;
   padding-left: 0;
 }

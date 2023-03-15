@@ -3,7 +3,6 @@ import { format } from 'date-fns';
 import type { IGatsbyImageData } from 'gatsby-plugin-image';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
-import { SocialMediaShareButtons } from '../social-media-share/SocialMediaShareButtons';
 import { Tag } from '../tags/Tag';
 import {
   author as authorStyle,
@@ -14,12 +13,6 @@ import {
   tags as tagsStyle,
 } from './BlogPostCard.module.css';
 
-interface SocialMediaShareData {
-  tweetText: string;
-  tweetVia: string;
-  url: string;
-}
-
 interface BlogPostCardProps {
   author?: string;
   authorImage?: IGatsbyImageData;
@@ -28,9 +21,7 @@ interface BlogPostCardProps {
   heroImage?: IGatsbyImageData;
   heroImageCreditText?: string;
   heroImageCreditUrl?: string;
-  shouldRenderSocialMediaShare: boolean;
   slug: string;
-  socialMediaShareData?: SocialMediaShareData;
   tags?: Array<string>;
   tagsLocation?: 'above-hero' | 'below-hero';
   title: string;
@@ -57,9 +48,7 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
   heroImage,
   heroImageCreditText,
   heroImageCreditUrl,
-  shouldRenderSocialMediaShare,
   slug,
-  socialMediaShareData,
   tags,
   tagsLocation = 'above-hero',
   title,
@@ -96,14 +85,6 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
         </a>
       )}
       {tagsLocation === 'below-hero' && renderTags(tags)}
-      {shouldRenderSocialMediaShare && socialMediaShareData && (
-        <SocialMediaShareButtons
-          hashtags={tags}
-          tweetText={socialMediaShareData.tweetText}
-          tweetVia={socialMediaShareData.tweetVia}
-          url={socialMediaShareData.url}
-        />
-      )}
     </footer>
   </article>
 );

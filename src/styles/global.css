@@ -25,7 +25,6 @@ section,
 summary,
 time,
 ul,
-li,
 button {
   display: flex;
   flex-direction: column;
