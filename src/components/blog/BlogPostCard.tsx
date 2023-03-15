@@ -3,34 +3,65 @@ import { format } from 'date-fns';
 import type { IGatsbyImageData } from 'gatsby-plugin-image';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
+import { SocialMediaShareButtons } from '../social-media-share/SocialMediaShareButtons';
 import { Tag } from '../tags/Tag';
 import {
   author as authorStyle,
   authorImage as authorImageStyle,
   heroImage as heroImageStyle,
-  summary as summaryStyle,
+  heroImageLink,
+  description as descriptionStyle,
   tags as tagsStyle,
 } from './BlogPostCard.module.css';
+
+interface SocialMediaShareData {
+  tweetText: string;
+  tweetVia: string;
+  url: string;
+}
 
 interface BlogPostCardProps {
   author?: string;
   authorImage?: IGatsbyImageData;
   date: string;
+  description?: string;
   heroImage?: IGatsbyImageData;
+  heroImageCreditText?: string;
+  heroImageCreditUrl?: string;
+  shouldRenderSocialMediaShare: boolean;
   slug: string;
-  summary?: string;
+  socialMediaShareData?: SocialMediaShareData;
   tags?: Array<string>;
+  tagsLocation?: 'above-hero' | 'below-hero';
   title: string;
 }
+
+const renderTags = (tags: Array<string> | undefined) => {
+  if (tags && tags.length > 0) {
+    return (
+      <div className={tagsStyle}>
+        {tags.map((tag) => (
+          <Tag key={tag}>{tag}</Tag>
+        ))}
+      </div>
+    );
+  }
+  return undefined;
+};
 
 export const BlogPostCard: React.FC<BlogPostCardProps> = ({
   author,
   authorImage,
   date,
+  description,
   heroImage,
+  heroImageCreditText,
+  heroImageCreditUrl,
+  shouldRenderSocialMediaShare,
   slug,
-  summary,
+  socialMediaShareData,
   tags,
+  tagsLocation = 'above-hero',
   title,
 }) => (
   <article>
@@ -40,18 +71,12 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
       </a>
     </header>
     <footer>
-      {summary && (
+      {description && (
         <a href={`/blog/${slug}`}>
-          <p className={summaryStyle}>{summary}</p>
+          <p className={descriptionStyle}>{description}</p>
         </a>
       )}
-      {tags && tags.length > 0 && (
-        <div className={tagsStyle}>
-          {tags.map((tag) => (
-            <Tag key={tag}>{tag}</Tag>
-          ))}
-        </div>
-      )}
+      {tagsLocation === 'above-hero' && renderTags(tags)}
       {author && (
         <div className={authorStyle}>
           {authorImage && (
@@ -65,6 +90,20 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
       <a href={`/blog/${slug}`}>
         <GatsbyImage className={heroImageStyle} image={getImage(heroImage)} alt={title} />
       </a>
+      {heroImageCreditText && heroImageCreditUrl && (
+        <a href={heroImageCreditUrl} className={heroImageLink}>
+          {heroImageCreditText}
+        </a>
+      )}
+      {tagsLocation === 'below-hero' && renderTags(tags)}
+      {shouldRenderSocialMediaShare && socialMediaShareData && (
+        <SocialMediaShareButtons
+          hashtags={tags}
+          tweetText={socialMediaShareData.tweetText}
+          tweetVia={socialMediaShareData.tweetVia}
+          url={socialMediaShareData.url}
+        />
+      )}
     </footer>
   </article>
 );

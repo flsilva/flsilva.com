@@ -18,7 +18,7 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a Brazilian Full-Stack Software Engineer with 18 years of professional industry
+        I&#39;m a Brazilian Full-Stack Software Engineer with 19 years of professional industry
         experience. I&#39;ve been leading front-end teams since 2007, and since 2009 I&#39;ve been
         working remotely from home.
       </p>
@@ -75,4 +75,10 @@ const IndexPage: React.FC<PageProps> = () => (
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <SEO title="About " />;
+export const Head: HeadFC = () => (
+  <SEO
+    description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my website to learn more about me and my work."
+    pagePath=""
+    title="About Flavio Silva, a full-stack software engineer"
+  />
+);

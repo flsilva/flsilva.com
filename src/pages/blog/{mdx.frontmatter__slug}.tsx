@@ -6,6 +6,9 @@ import { DiscussionEmbed } from 'disqus-react';
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
 import { BlogPostCard } from '../../components/blog/BlogPostCard';
+import { post as postStyle } from './BlogPostPage.module.css';
+
+const getBlogPostUrl = (baseUrl: string, slug: string) => `${baseUrl}/blog/${slug}`;
 
 const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, data }) => (
   <Layout>
@@ -16,17 +19,21 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
         authorImage={data.mdx.frontmatter.authorImage}
         date={data.mdx.frontmatter.date}
         heroImage={data.mdx.frontmatter.heroImage}
+        heroImageCreditText={data.mdx.frontmatter.heroImageCreditText}
+        heroImageCreditUrl={data.mdx.frontmatter.heroImageCreditUrl}
+        shouldRenderSocialMediaShare
         slug={data.mdx.frontmatter.slug}
-        summary={data.mdx.frontmatter.summary}
+        socialMediaShareData={{
+          tweetText: data.mdx.frontmatter.tweetText,
+          tweetVia: data.mdx.frontmatter.tweetVia,
+          url: `${data.site?.siteMetadata?.url}/blog/${data.mdx.frontmatter.slug}`,
+        }}
+        description={data.mdx.frontmatter.description}
         tags={data.mdx.frontmatter.tags}
+        tagsLocation="below-hero"
         title={data.mdx.frontmatter.title}
       />
-      <article>
-        <p>identifier: {`/blog/${data.mdx.frontmatter.slug}`}</p>
-        <p>title: {data.mdx.frontmatter.title}</p>
-        <p>shortname: {process.env.GATSBY_DISQUS_NAME}</p>
-        {children}
-      </article>
+      <article className={postStyle}>{children}</article>
       <DiscussionEmbed
         config={{
           identifier: `/blog/${data.mdx.frontmatter.slug}`,
@@ -40,6 +47,12 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
 
 export const query = graphql`
   query BlogPost($id: String) {
+    site {
+      siteMetadata {
+        url
+      }
+    }
+
     mdx(id: { eq: $id }) {
       id
       frontmatter {
@@ -50,14 +63,18 @@ export const query = graphql`
         }
         author
         date
+        description
         heroImage {
           childImageSharp {
             gatsbyImageData
           }
         }
+        heroImageCreditText
+        heroImageCreditUrl
         slug
-        summary
         tags
+        tweetText
+        tweetVia
         title
       }
     }
@@ -67,5 +84,10 @@ export const query = graphql`
 export default BlogPostPage;
 
 export const Head: HeadFC<PageProps<Queries.BlogPostQuery>> = ({ data }) => (
-  <SEO title={`${data.mdx.frontmatter.title} by `} />
+  <SEO
+    description={data.mdx.frontmatter.description}
+    title={data.mdx?.frontmatter.title}
+    pagePath={`/blog/${data.mdx.frontmatter.slug}`}
+    title={`${data.mdx.frontmatter.title}`}
+  />
 );

@@ -227,4 +227,10 @@ const ResumePage: React.FC<PageProps> = () => (
 
 export default ResumePage;
 
-export const Head: HeadFC = () => <SEO title="Resume of " />;
+export const Head: HeadFC = () => (
+  <SEO
+    description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my resume to learn more about me and my work."
+    pagePath="/resume"
+    title="Resume of Flavio Silva, a full-stack software engineer"
+  />
+);

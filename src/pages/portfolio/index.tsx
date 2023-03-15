@@ -47,4 +47,10 @@ export const query = graphql`
 
 export default PortfolioPage;
 
-export const Head: HeadFC = () => <SEO title="Portfolio from " />;
+export const Head: HeadFC = () => (
+  <SEO
+    description="Check out some of the commercial projects I've worked on and played a key role."
+    pagePath="/portfolio"
+    title="Portfolio of Flavio Silva, a full stack software engineer"
+  />
+);

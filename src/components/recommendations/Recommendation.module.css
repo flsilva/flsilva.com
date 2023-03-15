@@ -20,7 +20,10 @@
 
 .recommended-by-container img {
   border-radius: 50%;
-  /* we need !important here because gatsby-image-wrapper overrides it but only on build */
+  /*
+   * we need !important here because gatsby-image-wrapper overrides it when we build it
+   * for production (dev works).
+   */
   width: 3rem !important;
   height: 3rem !important;
 }

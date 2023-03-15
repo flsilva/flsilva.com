@@ -94,4 +94,10 @@ const OpenSourcePage: React.FC<PageProps> = () => (
 
 export default OpenSourcePage;
 
-export const Head: HeadFC = () => <SEO title="Open Source software by " />;
+export const Head: HeadFC = () => (
+  <SEO
+    description="Check out the open source software projects I've created."
+    pagePath="/open-source"
+    title="Open Source software by Flavio Silva, a full-stack software engineer"
+  />
+);

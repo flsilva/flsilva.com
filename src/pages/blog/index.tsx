@@ -14,10 +14,13 @@ const BlogPage: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data })
         <BlogPostCard
           key={node.id}
           date={node.frontmatter.date}
+          description={node.frontmatter.description}
           heroImage={node.frontmatter.heroImage}
+          heroImageCreditText={node.frontmatter.heroImageCreditText}
+          heroImageCreditUrl={node.frontmatter.heroImageCreditUrl}
           slug={node.frontmatter.slug}
-          summary={node.frontmatter.summary}
           tags={node.frontmatter.tags}
+          tagsLocation="above-hero"
           title={node.frontmatter.title}
         />
       ))}
@@ -35,13 +38,15 @@ export const query = graphql`
         id
         frontmatter {
           date
+          description
           heroImage {
             childImageSharp {
               gatsbyImageData
             }
           }
+          heroImageCreditText
+          heroImageCreditUrl
           slug
-          summary
           tags
           title
         }
@@ -52,4 +57,10 @@ export const query = graphql`
 
 export default BlogPage;
 
-export const Head: HeadFC = () => <SEO title="Blog from " />;
+export const Head: HeadFC = () => (
+  <SEO
+    description="Check out my blog and the articles I've been writing."
+    pagePath="/blog"
+    title="Blog by Flavio Silva: Full-Stack Software Engineer"
+  />
+);

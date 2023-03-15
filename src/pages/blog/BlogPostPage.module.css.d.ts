@@ -1,4 +1,4 @@
 declare const styles: {
-  readonly postContent: string;
+  readonly post: string;
 };
 export = styles;

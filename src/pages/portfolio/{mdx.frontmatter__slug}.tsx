@@ -29,6 +29,7 @@ export const query = graphql`
   query PortfolioProjectPage($id: String) {
     mdx(id: { eq: $id }) {
       frontmatter {
+        description
         images {
           childImageSharp {
             gatsbyImageData
@@ -50,5 +51,9 @@ export const query = graphql`
 export default PortfolioProjectPage;
 
 export const Head: HeadFC = ({ data }) => (
-  <SEO title={`${data.mdx.frontmatter.name} project by `} />
+  <SEO
+    description={data.mdx.frontmatter.description}
+    pagePath={`/portfolio/${data.mdx.frontmatter.slug}`}
+    title={`${data.mdx.frontmatter.name}`}
+  />
 );
