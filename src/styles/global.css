@@ -38,6 +38,7 @@ button {
 p,
 button,
 small,
+figure,
 a,
 li,
 h1,
@@ -281,6 +282,7 @@ ul {
 ul li {
   display: list-item;
   list-style-type: none;
+  margin: 0.5rem 0;
   position: relative;
 
   @media $xxsmallScreenMedia {
