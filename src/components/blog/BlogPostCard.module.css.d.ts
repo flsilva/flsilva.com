@@ -3,7 +3,6 @@ declare const styles: {
   readonly authorImage: string;
   readonly description: string;
   readonly heroImage: string;
-  readonly heroImageLink: string;
   readonly footer: string;
   readonly tags: string;
 };

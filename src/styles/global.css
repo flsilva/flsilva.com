@@ -6,6 +6,11 @@
   width: 100%;
 }
 
+.gatsby-resp-image-wrapper {
+  /* !important is required here because Gatsby sets it as inline styles ¯\_(ツ)_/¯ */
+  margin: 0 !important;
+}
+
 html {
   background-color: var(--primary-bg-color);
 }
@@ -31,7 +36,6 @@ button {
 }
 
 p,
-span,
 button,
 small,
 a,
@@ -49,7 +53,6 @@ h6 {
 }
 
 p,
-span,
 a,
 li,
 button {
@@ -60,6 +63,19 @@ button {
     font-size: 1.25rem;
     line-height: 2rem;
   }
+}
+
+figure {
+  margin: 0;
+}
+
+figure figcaption,
+figure figcaption a {
+  align-self: center;
+  color: $secondaryTextColorLight;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 0.25rem;
 }
 
 p {
@@ -179,20 +195,20 @@ h4 a {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
-    font-size: 1.5rem;
-    line-height: 2rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
   @media $xsmallScreenMedia {
-    font-size: 1.875rem;
-    line-height: 2.375rem;
+    font-size: 1.625rem;
+    line-height: 2.125rem;
   }
   @media $smallScreenMedia {
-    font-size: 2.25rem;
-    line-height: 2.75rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
   }
   @media $midScreenMedia {
-    font-size: 2.5rem;
-    line-height: 3rem;
+    font-size: 2.25rem;
+    line-height: 2.75rem;
   }
 }
 
@@ -206,20 +222,20 @@ h5 a {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
+    font-size: 1.125rem;
+    line-height: 1.625rem;
+  }
+  @media $xsmallScreenMedia {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
-  @media $xsmallScreenMedia {
+  @media $smallScreenMedia {
     font-size: 1.5rem;
     line-height: 2rem;
   }
-  @media $smallScreenMedia {
+  @media $midScreenMedia {
     font-size: 1.75rem;
     line-height: 2.25rem;
-  }
-  @media $midScreenMedia {
-    font-size: 2rem;
-    line-height: 2.5rem;
   }
 }
 
@@ -234,19 +250,19 @@ h6 a {
 
   @media $xxsmallScreenMedia {
     font-size: 1rem;
-    line-height: 1.675rem;
+    line-height: 1.5rem;
   }
   @media $xsmallScreenMedia {
-    font-size: 1.25rem;
-    line-height: 1.875rem;
+    font-size: 1.125rem;
+    line-height: 1.625rem;
   }
   @media $smallScreenMedia {
-    font-size: 1.5rem;
-    line-height: 2.125rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
   @media $midScreenMedia {
-    font-size: 1.75rem;
-    line-height: 2.375rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
 
@@ -333,6 +349,28 @@ html.theme-dark .svgLight {
 
 html.theme-light .svgDark {
   display: none;
+}
+
+code {
+  border-radius: 0.25rem;
+}
+
+:not(pre) > code {
+  padding: 0.125rem 0.25rem;
+}
+
+html.theme-light :not(pre) > code {
+  background-color: #0d1117;
+  color: $primaryTextColorDark;
+}
+
+html.theme-dark :not(pre) > code {
+  background-color: $primaryBgColorLight;
+  color: $primaryTextColorLight;
+}
+
+html.theme-dark .hljs {
+  background: $primaryBgColorLight;
 }
 
 #main-nav.active {

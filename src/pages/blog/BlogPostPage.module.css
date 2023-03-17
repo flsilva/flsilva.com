@@ -3,3 +3,10 @@
 .post {
   margin: 2rem 0;
 }
+
+.post {
+  figure figcaption,
+  figure figcaption a {
+    align-self: flex-start;
+  }
+}

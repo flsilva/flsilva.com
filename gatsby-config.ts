@@ -1,16 +1,5 @@
 import type { GatsbyConfig } from 'gatsby';
 
-/*
-const wrapESMPlugin = (name) =>
-  function wrapESM(opts) {
-    return async (...args) => {
-      const mod = await import(name);
-      const plugin = mod.default(opts);
-      return plugin(...args);
-    };
-  };
-*/
-
 const config: GatsbyConfig = {
   siteMetadata: {
     imagePath: '/logo-share.jpg',
@@ -24,27 +13,9 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-image',
-    // 'gatsby-plugin-mdx',
     'gatsby-plugin-postcss',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    /*
-    {
-      resolve: 'gatsby-plugin-mdx',
-      options: {
-        mdxOptions: {
-          remarkPlugins: [
-            // Add GitHub Flavored Markdown (GFM) support
-            require('remark-gfm'),
-          ],
-          rehypePlugins: [
-            wrapESMPlugin('rehype-slug'),
-            [wrapESMPlugin('rehype-autolink-headings'), { behavior: 'wrap' }],
-          ],
-        },
-      },
-    },
-    */
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
@@ -56,10 +27,17 @@ const config: GatsbyConfig = {
           rehypePlugins: [
             require('remark-gfm'),
             require('rehype-slug'),
+            require('rehype-highlight'),
             // require('rehype-autolink-headings'),
           ],
         },
         gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 1200,
+            },
+          },
           {
             resolve: 'gatsby-remark-autolink-headers',
             options: {

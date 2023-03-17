@@ -35,9 +35,3 @@
 .hero-image {
   margin: 1rem 0 0;
 }
-
-.hero-image-link {
-  align-self: center;
-  color: $secondaryTextColorLight;
-  font-size: 0.875rem;
-}

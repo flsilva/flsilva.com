@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 
 interface SEOProps {
   readonly description: string;
-  readonly imagePath: string;
+  readonly imagePath?: string;
   readonly pagePath: string;
   readonly title: string;
 }

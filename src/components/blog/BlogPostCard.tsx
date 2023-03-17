@@ -8,7 +8,6 @@ import {
   author as authorStyle,
   authorImage as authorImageStyle,
   heroImage as heroImageStyle,
-  heroImageLink,
   description as descriptionStyle,
   tags as tagsStyle,
 } from './BlogPostCard.module.css';
@@ -60,11 +59,7 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
       </a>
     </header>
     <footer>
-      {description && (
-        <a href={`/blog/${slug}`}>
-          <p className={descriptionStyle}>{description}</p>
-        </a>
-      )}
+      {description && <p className={descriptionStyle}>{description}</p>}
       {tagsLocation === 'above-hero' && renderTags(tags)}
       {author && (
         <div className={authorStyle}>
@@ -76,14 +71,14 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
           </small>
         </div>
       )}
-      <a href={`/blog/${slug}`}>
+      <figure>
         <GatsbyImage className={heroImageStyle} image={getImage(heroImage)} alt={title} />
-      </a>
-      {heroImageCreditText && heroImageCreditUrl && (
-        <a href={heroImageCreditUrl} className={heroImageLink}>
-          {heroImageCreditText}
-        </a>
-      )}
+        {heroImageCreditText && heroImageCreditUrl && (
+          <figcaption>
+            <a href={heroImageCreditUrl}>{heroImageCreditText}</a>
+          </figcaption>
+        )}
+      </figure>
       {tagsLocation === 'below-hero' && renderTags(tags)}
     </footer>
   </article>
