@@ -195,12 +195,12 @@ h4 a {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
   @media $xsmallScreenMedia {
-    font-size: 1.625rem;
-    line-height: 2.125rem;
+    font-size: 1.875rem;
+    line-height: 2.375rem;
   }
   @media $smallScreenMedia {
     font-size: 2rem;
@@ -222,12 +222,12 @@ h5 a {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
-    font-size: 1.125rem;
-    line-height: 1.625rem;
+    font-size: 1.375rem;
+    line-height: 1.875rem;
   }
   @media $xsmallScreenMedia {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    font-size: 1.375rem;
+    line-height: 1.875rem;
   }
   @media $smallScreenMedia {
     font-size: 1.5rem;
@@ -249,16 +249,16 @@ h6 a {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-  @media $xsmallScreenMedia {
-    font-size: 1.125rem;
-    line-height: 1.625rem;
-  }
-  @media $smallScreenMedia {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+  @media $xsmallScreenMedia {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  @media $smallScreenMedia {
+    font-size: 1.375rem;
+    line-height: 1.875rem;
   }
   @media $midScreenMedia {
     font-size: 1.5rem;
