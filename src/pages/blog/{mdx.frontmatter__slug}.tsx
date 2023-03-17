@@ -48,7 +48,7 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
       />
       <DiscussionEmbed
         config={{
-          identifier: `/blog/${data.mdx.frontmatter.slug}`,
+          identifier: `/blog/${data.mdx.frontmatter.slug}/`,
           title: data.mdx.frontmatter.title,
         }}
         shortname={process.env.GATSBY_DISQUS_NAME || ''}
