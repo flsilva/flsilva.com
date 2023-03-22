@@ -1,0 +1,109 @@
+---
+author: Flavio Silva
+authorImage: '../../../pages/flavio-thumb.jpg'
+authorUrl: 'http://flsilva.com'
+changefreq: monthly
+contentType: 'blog-post'
+date: '2014-10-21T00:00:00'
+description: Learn what Git tagging is and how to use it to tag your software releases.
+heroImage: './hero.jpg'
+heroImageCreditText: 'Image by Freepik'
+heroImageCreditUrl: 'https://www.freepik.com/free-photo/christmas-composition-with-tags_1449877.htm#&position=5&from_view=undefined'
+priority: 0.6
+slug: 'git-tagging'
+tags: ['git']
+title: Tagging with Git
+tweetText: 'Learn how Git tagging works and how to use it to tag your software releases'
+tweetVia: 'flsilva7'
+---
+
+import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+
+If you're new to [Git](http://git-scm.com/) or want to know a little more about its basics and its distributed model, do not hesitate to read the [Introduction to Git](/blog/introducing-git/) article.
+
+Tagging is another great feature Git provides.
+A tag acts as a pointer to an specific commit, easing its identification.
+Usually it's used to mark release points on codebases (e.g. v0.1.0, v1.0, etc).
+
+<WarningBoxNoRunDollarSign />
+
+#### Lightweight and annotated tags
+
+Git provides two types of tags: lightweight and annotated.
+"A lightweight tag is very much like a branch that doesn't change — it's just a pointer to a specific commit." (Chacon 39)
+
+To create a lightweight tag you run:
+
+```shell
+$ git tag tag-name
+```
+
+After that you can go to an specific tag by running:
+
+```shell
+$ git checkout tag-name
+```
+
+That's much easier than checking out an specific commit by its hash ID right?
+
+But usually it's recommended that you create annotated tags.
+Annotated tags contain the tagger's name and email, the date and a message, and they can be signed and verified with [GNU Privacy Guard](https://www.gnupg.org/) (GPG).
+
+To create an annotated tag you run:
+
+```shell
+$ git tag -a tag-name -m "tag message"
+```
+
+#### Listing your tags
+
+To list all your tags you run:
+
+```shell
+$ git tag
+```
+
+And to see more information about any specific (annotated) tag:
+
+```shell
+$ git show tag-name
+```
+
+#### Sending your tags to tour remote repository
+
+By default, the `$ git push` command doesn't send tags to remote repositories.
+To send them you have to do the same thing as with branches:
+
+```shell
+$ git push remote-name tag-name
+```
+
+If you have several tags and want to send them all at once:
+
+```shell
+$ git push remote-name --tags
+```
+
+#### Conclusion
+
+That's it.
+Git makes it super easy and fast to tag your codebase.
+Tagging is a best-practice on not trivial projects, as it makes it very simple to find release points on your codebase.
+Every time you're going to make a release, deploying code to a server, consider tagging your codebase before doing so.
+
+#### Related Posts
+
+[Branching and merging with Git](/blog/git-branching-and-merging/)<br />
+[Remote and tracking branches with Git](/blog/git-remote-and-tracking-branches/)<br />
+[Basic Git commands explained](/blog/git-basic-commands-explained/)<br />
+[Git workflow](/blog/git-workflow/)<br />
+[Introduction to Git](/blog/introducing-git/)
+
+#### Interesting Links
+
+[Git](http://git-scm.com/)<br />
+[Pro Git Book](https://git-scm.com/book/en/v2)
+
+#### Bibliography
+
+Chacon, Scott. _Pro Git_. Apress, 2009.
