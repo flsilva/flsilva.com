@@ -26,6 +26,7 @@ export const SEO: React.FC<SEOProps> = ({ description, imagePath, pagePath, titl
   return (
     <>
       <title>{`${title}${data.site?.siteMetadata?.title}`}</title>
+      <meta name="og:site_name" content="flsilva.com" />
       <meta name="og:title" content={`${title}${data.site?.siteMetadata?.title}`} />
       <meta name="description" content={description} />
       <meta name="og:description" content={description} />
