@@ -17,6 +17,27 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'flsilva.com',
+        short_name: 'flsilva.com',
+        start_url: '/',
+        background_color: '#f5f5f5',
+        theme_color: '#f5f5f5',
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: 'standalone',
+        icon: 'src/images/icon.svg', // This path is relative to the root of the site.
+        cache_busting_mode: 'none',
+        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
+        // An optional attribute which provides support for CORS check.
+        // If you do not provide a crossOrigin option, it will skip CORS for manifest.
+        // Any invalid keyword or empty string defaults to `anonymous`
+        crossOrigin: 'use-credentials',
+      },
+    },
+    'gatsby-plugin-offline',
+    {
       resolve: 'gatsby-plugin-mdx',
       options: {
         mdxOptions: {
