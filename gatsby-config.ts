@@ -2,7 +2,7 @@ import type { GatsbyConfig } from 'gatsby';
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    imagePath: '/logo-share.jpg',
+    imagePath: '/logo-share.png',
     title: ' | flsilva.com',
     url: 'https://flsilva.com',
   },
