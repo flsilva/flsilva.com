@@ -23,10 +23,10 @@ const OpenSourcePage: React.FC<PageProps> = () => (
         <StaticImage alt="VostokFramework" src="./vostokframework.png" />
       </div>
       <p>
-        I implemented <a href="http://vostokframework.org">VostokFramework</a> between 2011-2012 as
-        a robust Adobe Flash AS3 framework for loading, managing, and storing external assets (XML,
-        SWF, JPG, etc.). It includes advanced features such as built-in localization, loading
-        queues, cache control, and more.
+        I implemented <a href="http://vostokframework.flsilva.com/">VostokFramework</a> between
+        2011-2012 as a robust Adobe Flash AS3 framework for loading, managing, and storing external
+        assets (XML, SWF, JPG, etc.). It includes advanced features such as built-in localization,
+        loading queues, cache control, and more.
       </p>
       <p>
         VostokFramework was a great case study for me as it allowed me to study and apply several
@@ -49,7 +49,7 @@ const OpenSourcePage: React.FC<PageProps> = () => (
         </a>
         . The result was a beautiful, carefully crafted Object-Oriented design based on best
         practices and patterns. The codebase is{' '}
-        <a href="http://vostokframework.org/docs/coverage-report/">77% covered by tests</a>.
+        <a href="http://vostokframework.flsilva.com/docs/coverage-report/">77% covered by tests</a>.
       </p>
     </div>
     <div className={[ossProject, as3Collections].join(' ')}>
@@ -57,15 +57,15 @@ const OpenSourcePage: React.FC<PageProps> = () => (
         <StaticImage alt="AS3Collections" src="./as3collections.png" />
       </div>
       <p>
-        I implemented <a href="http://as3collections.org">AS3Collections</a> between 2010-2011 as a
-        project based on the{' '}
+        I implemented <a href="http://as3collections.flsilva.com/">AS3Collections</a> between
+        2010-2011 as a project based on the{' '}
         <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/collections/overview.html">
           Java Collections Framework
         </a>
         , aiming to be a standard solution for more elaborated data structures nonexistent in the
         AS3 language (e.g., Lists, Maps, Queues) for any Adobe Flash/Flex/AIR AS3 application or
         framework. The codebase is{' '}
-        <a href="http://as3collections.org/docs/coverage-report">95% covered by tests</a>.
+        <a href="http://as3collections.flsilva.com/docs/coverage-report/">95% covered by tests</a>.
       </p>
     </div>
     <div className={[ossProject, as3Utils].join(' ')}>
@@ -73,9 +73,9 @@ const OpenSourcePage: React.FC<PageProps> = () => (
         <StaticImage alt="AS3Utils" src="./as3utils.png" />
       </div>
       <p>
-        I implemented <a href="http://as3utils.org">AS3Utils</a> between 2010-2011 as a utility
-        library composed of small solutions for daily, recurrent work, aiming to be a base utility
-        library for any Adobe Flash/Flex/AIR AS3 application or framework.
+        I implemented <a href="http://as3utils.flsilva.com/">AS3Utils</a> between 2010-2011 as a
+        utility library composed of small solutions for daily, recurrent work, aiming to be a base
+        utility library for any Adobe Flash/Flex/AIR AS3 application or framework.
       </p>
     </div>
     <div className={[ossProject, as3CoreAddendum].join(' ')}>
@@ -83,10 +83,10 @@ const OpenSourcePage: React.FC<PageProps> = () => (
         <StaticImage alt="AS3CoreAddendum" src="./as3coreaddendum.png" />
       </div>
       <p>
-        I implemented <a href="http://as3coreaddendum.org">AS3CoreAddendum</a> between 2010-2011 as
-        an architectural addendum to the core of the Adobe Actionscript 3.0 language. It was based
-        on standards and patterns found in the Java and C# languages, aiming to be a base standard
-        library for any AS3 application or framework.
+        I implemented <a href="http://as3coreaddendum.flsilva.com/">AS3CoreAddendum</a> between
+        2010-2011 as an architectural addendum to the core of the Adobe Actionscript 3.0 language.
+        It was based on standards and patterns found in the Java and C# languages, aiming to be a
+        base standard library for any AS3 application or framework.
       </p>
     </div>
   </Layout>
