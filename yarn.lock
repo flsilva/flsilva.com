@@ -7657,6 +7657,7 @@ __metadata:
     eslint-plugin-react: 7.32.2
     eslint-plugin-react-hooks: 4.6.0
     gatsby: 5.8.0
+    gatsby-plugin-google-gtag: 5.8.0
     gatsby-plugin-image: 3.8.0
     gatsby-plugin-manifest: 5.8.0
     gatsby-plugin-mdx: 5.8.0
@@ -8045,6 +8046,20 @@ __metadata:
   peerDependencies:
     "@parcel/core": ^2.0.0
   checksum: 860d909359a5a377d4f6872a5a18cd5c6dac3702e400a1c8fa9ac277e8f56f66f1e8320a51b4d4982f1d8c0ca57a165b3ea154b5dba57e4dbedd458087a9ebb7
+  languageName: node
+  linkType: hard
+
+"gatsby-plugin-google-gtag@npm:5.8.0":
+  version: 5.8.0
+  resolution: "gatsby-plugin-google-gtag@npm:5.8.0"
+  dependencies:
+    "@babel/runtime": ^7.20.13
+    minimatch: ^3.1.2
+  peerDependencies:
+    gatsby: ^5.0.0-next
+    react: ^18.0.0 || ^0.0.0
+    react-dom: ^18.0.0 || ^0.0.0
+  checksum: c650ec88e9e285d2dcf33ff9e252024b18470e177ee26a90bcd30746ff021e05bce8fc8ca9540ef6dfc447fb5a01a6a5763c8099f5c9be96307cb37eeb1ab1e1
   languageName: node
   linkType: hard
 

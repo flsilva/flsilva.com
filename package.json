@@ -28,6 +28,7 @@
     "date-fns": "2.29.3",
     "disqus-react": "1.1.5",
     "gatsby": "5.8.0",
+    "gatsby-plugin-google-gtag": "5.8.0",
     "gatsby-plugin-image": "3.8.0",
     "gatsby-plugin-manifest": "5.8.0",
     "gatsby-plugin-mdx": "5.8.0",
