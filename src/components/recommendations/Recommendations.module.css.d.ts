@@ -3,9 +3,5 @@ declare const styles: {
   readonly recommendationsListContainer: string;
   readonly title: string;
   readonly textTapToSee: string;
-  readonly recommendationIndicator: string;
-  readonly recommendationsButtons: string;
-  readonly nextButton: string;
-  readonly prevButton: string;
 };
 export = styles;

@@ -24,7 +24,7 @@ export const Recommendation: React.FC<RecommendationProps> = ({
   <div className={recommendationContainer}>
     <OpenQuoteIconSvg />
     <div className={recommendationContent}>
-      <p>{children}</p>
+      <small>{children}</small>
       <div className={recommendedByContainer}>
         {imgComponent}
         <div className={recommendedBySignature}>

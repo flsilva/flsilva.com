@@ -388,15 +388,6 @@ h3 .autolink-header-anchor.before {
   }
 }
 
-#recommendations,
-#recommendations-buttons {
-  display: none;
-}
-
-.recommendation-indicator.active {
-  opacity: 1;
-}
-
 #disqus_thread {
   margin-top: 4rem;
 }

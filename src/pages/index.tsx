@@ -56,8 +56,7 @@ const IndexPage: React.FC<PageProps> = () => (
         >
           Flavio not only has superb communication skills, but he&#39;s also a proactive problem
           solver. He will go above and beyond what is asked of him to make sure the team and the
-          project will succeed. Our team loves working with Flavio and we would work with Flavio
-          again in a heartbeat.
+          project will succeed.
         </Recommendation>
         <Recommendation
           imgComponent={<StaticImage alt="Richard Broo" src="./richard-broo.jpg" />}
