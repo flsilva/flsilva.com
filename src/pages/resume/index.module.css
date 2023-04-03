@@ -25,6 +25,9 @@
 
 .resume-page small {
   display: block;
+}
+
+.resume-page small:first-child {
   margin-block-start: -0.5rem;
 }
 

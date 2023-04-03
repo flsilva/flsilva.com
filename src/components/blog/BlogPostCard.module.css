@@ -1,5 +1,17 @@
 @import '../../styles/vars.css';
 
+.title-link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+
+    h1 {
+      color: var(--primary-link-color);
+    }
+  }
+}
+
 .description {
   margin: 0;
 }

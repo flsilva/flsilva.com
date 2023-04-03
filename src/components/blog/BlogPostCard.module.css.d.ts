@@ -5,5 +5,6 @@ declare const styles: {
   readonly heroImage: string;
   readonly footer: string;
   readonly tags: string;
+  readonly titleLink: string;
 };
 export = styles;

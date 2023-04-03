@@ -10,6 +10,7 @@ import {
   heroImage as heroImageStyle,
   description as descriptionStyle,
   tags as tagsStyle,
+  titleLink,
 } from './BlogPostCard.module.css';
 
 interface BlogPostCardProps {
@@ -54,7 +55,7 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
 }) => (
   <article>
     <header>
-      <a href={`/blog/${slug}`}>
+      <a href={`/blog/${slug}`} className={titleLink}>
         <h1>{title}</h1>
       </a>
     </header>
