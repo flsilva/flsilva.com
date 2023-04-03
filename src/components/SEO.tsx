@@ -14,7 +14,7 @@ export const SEO: React.FC<SEOProps> = ({ description, imagePath, pagePath, titl
       site {
         siteMetadata {
           imagePath
-          url
+          siteUrl
           title
         }
       }
@@ -31,8 +31,8 @@ export const SEO: React.FC<SEOProps> = ({ description, imagePath, pagePath, titl
       <meta name="description" content={description} />
       <meta name="og:description" content={description} />
       <meta name="og:type" content="article" />
-      <meta name="og:url" content={`${data.site?.siteMetadata?.url}${pagePath}`} />
-      <meta property="og:image" content={`${data.site?.siteMetadata?.url}${imgPath}`} />
+      <meta name="og:url" content={`${data.site?.siteMetadata?.siteUrl}${pagePath}`} />
+      <meta property="og:image" content={`${data.site?.siteMetadata?.siteUrl}${imgPath}`} />
     </>
   );
 };

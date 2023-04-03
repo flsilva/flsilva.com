@@ -3,7 +3,7 @@ import type { HeadFC, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
 
 import { SEO } from '../../../components/SEO';
-import { PostsByTag } from '../PostsByTag';
+import { PostsByTag } from '../../../components/blog/PostsByTag';
 
 const SysAdminPosts: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data }) => (
   <PostsByTag

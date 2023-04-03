@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { IGatsbyImageData } from 'gatsby-plugin-image';
 
-import { Layout } from '../../components/layouts/Layout';
-import { BlogPostCard } from '../../components/blog/BlogPostCard';
-import { list } from './index.module.css';
+import { Layout } from '../layouts/Layout';
+import { BlogPostCard } from './BlogPostCard';
+import { list } from '../../pages/blog/index.module.css';
 
 interface PostsByTagProps {
   readonly nodes: readonly {

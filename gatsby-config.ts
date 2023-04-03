@@ -4,7 +4,7 @@ const config: GatsbyConfig = {
   siteMetadata: {
     imagePath: '/logo-share.png',
     title: ' | flsilva.com',
-    url: 'https://flsilva.com',
+    siteUrl: 'https://flsilva.com',
   },
   // More easily incorporate content into your pages through automatic
   // TypeScript type generation and better GraphQL IntelliSense.
@@ -36,7 +36,15 @@ const config: GatsbyConfig = {
         crossOrigin: 'use-credentials',
       },
     },
-    'gatsby-plugin-offline',
+    // 'gatsby-plugin-offline',
+    {
+      resolve: 'gatsby-plugin-offline',
+      options: {
+        workboxConfig: {
+          skipWaiting: true,
+        },
+      },
+    },
     {
       resolve: 'gatsby-plugin-mdx',
       options: {

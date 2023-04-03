@@ -32,14 +32,14 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
         hashtags={data.mdx.frontmatter.tags}
         tweetText={data.mdx.frontmatter.tweetText}
         tweetVia={data.mdx.frontmatter.tweetVia}
-        url={`${data.site?.siteMetadata?.url}/blog/${data.mdx.frontmatter.slug}`}
+        url={`${data.site?.siteMetadata?.siteUrl}/blog/${data.mdx.frontmatter.slug}`}
       />
       <article className={postStyle}>{children}</article>
       <SocialMediaShareButtons
         hashtags={data.mdx.frontmatter.tags}
         tweetText={data.mdx.frontmatter.tweetText}
         tweetVia={data.mdx.frontmatter.tweetVia}
-        url={`${data.site?.siteMetadata?.url}/blog/${data.mdx.frontmatter.slug}`}
+        url={`${data.site?.siteMetadata?.siteUrl}/blog/${data.mdx.frontmatter.slug}`}
       />
       <CreativeCommonsBy
         authorName={data.mdx.frontmatter.author}
@@ -61,7 +61,7 @@ export const query = graphql`
   query BlogPost($id: String) {
     site {
       siteMetadata {
-        url
+        siteUrl
       }
     }
 
