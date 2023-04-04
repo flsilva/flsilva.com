@@ -41,6 +41,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-offline',
       options: {
         workboxConfig: {
+          // needed to fix a bug when running yarn build.
           skipWaiting: true,
         },
       },
