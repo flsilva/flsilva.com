@@ -122,6 +122,12 @@ const config: GatsbyConfig = {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-zopfli',
+      options: {
+        extensions: ['html', 'css', 'js', 'json', 'svg'],
+      },
+    },
     'gatsby-plugin-sitemap',
   ],
 };

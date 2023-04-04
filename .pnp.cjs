@@ -55,6 +55,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-plugin-postcss", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:6.8.0"],\
             ["gatsby-plugin-sharp", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.8.0"],\
             ["gatsby-plugin-sitemap", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:6.8.0"],\
+            ["gatsby-plugin-zopfli", "npm:2.0.0"],\
             ["gatsby-remark-autolink-headers", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:6.8.0"],\
             ["gatsby-remark-images", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:7.8.0"],\
             ["gatsby-source-filesystem", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.8.0"],\
@@ -3357,6 +3358,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ansi-html-community", "npm:0.0.8"],\
             ["html-entities", "npm:2.3.3"],\
             ["strip-ansi", "npm:6.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@gfx/zopfli", [\
+        ["npm:1.0.15", {\
+          "packageLocation": "./.yarn/cache/@gfx-zopfli-npm-1.0.15-2b8afd2349-4d7156a861.zip/node_modules/@gfx/zopfli/",\
+          "packageDependencies": [\
+            ["@gfx/zopfli", "npm:1.0.15"],\
+            ["base64-js", "npm:1.5.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10567,6 +10578,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["eventemitter-asyncresource", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/eventemitter-asyncresource-npm-1.0.0-de223b5f00-3cfbbc3490.zip/node_modules/eventemitter-asyncresource/",\
+          "packageDependencies": [\
+            ["eventemitter-asyncresource", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["events", [\
         ["npm:3.3.0", {\
           "packageLocation": "./.yarn/cache/events-npm-3.3.0-c280bc7e48-f6f487ad21.zip/node_modules/events/",\
@@ -11036,6 +11056,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-plugin-postcss", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:6.8.0"],\
             ["gatsby-plugin-sharp", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.8.0"],\
             ["gatsby-plugin-sitemap", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:6.8.0"],\
+            ["gatsby-plugin-zopfli", "npm:2.0.0"],\
             ["gatsby-remark-autolink-headers", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:6.8.0"],\
             ["gatsby-remark-images", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:7.8.0"],\
             ["gatsby-source-filesystem", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.8.0"],\
@@ -12120,6 +12141,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["gatsby-plugin-zopfli", [\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/gatsby-plugin-zopfli-npm-2.0.0-5494957614-0aa2b82e14.zip/node_modules/gatsby-plugin-zopfli/",\
+          "packageDependencies": [\
+            ["gatsby-plugin-zopfli", "npm:2.0.0"],\
+            ["@gfx/zopfli", "npm:1.0.15"],\
+            ["glob", "npm:7.2.3"],\
+            ["mkdirp", "npm:1.0.4"],\
+            ["piscina", "npm:1.6.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["gatsby-react-router-scroll", [\
         ["npm:6.8.0", {\
           "packageLocation": "./.yarn/cache/gatsby-react-router-scroll-npm-6.8.0-c26e910c11-8a0c9b58af.zip/node_modules/gatsby-react-router-scroll/",\
@@ -13091,6 +13125,27 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/hast-util-whitespace-npm-2.0.1-0cb2b36fdf-431be6b2f3.zip/node_modules/hast-util-whitespace/",\
           "packageDependencies": [\
             ["hast-util-whitespace", "npm:2.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hdr-histogram-js", [\
+        ["npm:1.2.0", {\
+          "packageLocation": "./.yarn/cache/hdr-histogram-js-npm-1.2.0-dedc114db1-2d871a2d78.zip/node_modules/hdr-histogram-js/",\
+          "packageDependencies": [\
+            ["hdr-histogram-js", "npm:1.2.0"],\
+            ["base64-js", "npm:1.5.1"],\
+            ["pako", "npm:1.0.11"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["hdr-histogram-percentiles-obj", [\
+        ["npm:2.0.1", {\
+          "packageLocation": "./.yarn/cache/hdr-histogram-percentiles-obj-npm-2.0.1-e0f0112e7e-80f4304764.zip/node_modules/hdr-histogram-percentiles-obj/",\
+          "packageDependencies": [\
+            ["hdr-histogram-percentiles-obj", "npm:2.0.1"],\
+            ["hdr-histogram-js", "npm:1.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16152,6 +16207,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["nice-napi", [\
+        ["npm:1.0.2", {\
+          "packageLocation": "./.yarn/unplugged/nice-napi-npm-1.0.2-693b1680c9/node_modules/nice-napi/",\
+          "packageDependencies": [\
+            ["nice-napi", "npm:1.0.2"],\
+            ["node-addon-api", "npm:3.2.1"],\
+            ["node-gyp", "npm:9.3.0"],\
+            ["node-gyp-build", "npm:4.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["nice-try", [\
         ["npm:1.0.5", {\
           "packageLocation": "./.yarn/cache/nice-try-npm-1.0.5-963856b16f-0b4af3b5bb.zip/node_modules/nice-try/",\
@@ -16276,6 +16343,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/node-gyp-build-npm-4.5.0-2538da6152-d888bae0fb.zip/node_modules/node-gyp-build/",\
           "packageDependencies": [\
             ["node-gyp-build", "npm:4.5.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:4.6.0", {\
+          "packageLocation": "./.yarn/cache/node-gyp-build-npm-4.6.0-5434aac3e5-25d78c5ef1.zip/node_modules/node-gyp-build/",\
+          "packageDependencies": [\
+            ["node-gyp-build", "npm:4.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16804,6 +16878,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["pako", [\
+        ["npm:1.0.11", {\
+          "packageLocation": "./.yarn/cache/pako-npm-1.0.11-b8f1b69d3e-1be2bfa1f8.zip/node_modules/pako/",\
+          "packageDependencies": [\
+            ["pako", "npm:1.0.11"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["param-case", [\
         ["npm:3.0.4", {\
           "packageLocation": "./.yarn/cache/param-case-npm-3.0.4-cfb242ad97-b34227fd0f.zip/node_modules/param-case/",\
@@ -17103,6 +17186,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/pify-npm-2.3.0-8b63310934-9503aaeaf4.zip/node_modules/pify/",\
           "packageDependencies": [\
             ["pify", "npm:2.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["piscina", [\
+        ["npm:1.6.3", {\
+          "packageLocation": "./.yarn/cache/piscina-npm-1.6.3-29134faa16-0bc9ae3cbd.zip/node_modules/piscina/",\
+          "packageDependencies": [\
+            ["piscina", "npm:1.6.3"],\
+            ["eventemitter-asyncresource", "npm:1.0.0"],\
+            ["hdr-histogram-js", "npm:1.2.0"],\
+            ["hdr-histogram-percentiles-obj", "npm:2.0.1"],\
+            ["nice-napi", "npm:1.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
