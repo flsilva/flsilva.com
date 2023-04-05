@@ -5,7 +5,8 @@ authorUrl: 'http://flsilva.com'
 changefreq: monthly
 contentType: 'blog-post'
 date: '2014-05-12T00:00:00'
-description: 'Learn how to securely set up a Linux (Ubuntu & Debian) VPS (Virtual Private Server) from scratch.'
+dateLatestUpdated: '2023-04-05T00:00:00'
+description: 'Learn to securely set up a Ubuntu or Debian VPS (Virtual Private Server) from scratch in 11 steps.'
 heroImage: './hero.jpg'
 heroImageCreditText: 'Image by DCStudio on Freepik'
 heroImageCreditUrl: 'https://www.freepik.com/free-photo/data-center-with-server-racks-corridor-room-3d-render-digital-data-cloud-technology_20668653.htm#&position=21&from_view=undefined'
@@ -21,37 +22,39 @@ import { WarningBox } from '../../../components/boxes/WarningBox';
 import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 VPSs (Virtual Private Servers) are much more popular nowadays than a decade ago.
-That's probably due to factors such as evolution of the IT industry and its professionals, looking for optimized solutions, and popularization of new technologies as alternatives to the standard LAMP stack (Apache, MySQL and PHP specifically), very common on shared hosting environments.
+That's probably due to factors such as the evolution of the IT industry and its professionals, the search for optimized and cheaper solutions, and the popularization of new technologies as alternatives to the standard LAMP stack (specifically Apache, MySQL, and PHP), ubiquitous on shared hosting environments.
 
 #### What is a VPS?
 
 A VPS (Virtual Private Server) is a private (only you have access) [virtual machine](http://en.wikipedia.org/wiki/Virtual_machine) sold as a service by an [Internet hosting service](http://en.wikipedia.org/wiki/Internet_hosting_service). ("Virtual Private Server - Wikipedia")
 
-A VPS hosting is between [shared hosting](http://en.wikipedia.org/wiki/Shared_web_hosting_service) and [didicated server hosting](http://en.wikipedia.org/wiki/Dedicated_hosting_service).
-It mimics a dedicated server because you have your own OS (Operating System) instance, which allows you to do anything you want in a software level.
-But at the same time your VPS shares hardware (CPU, RAM, I/O operations, etc) with other VPSs running in the same physical machine.
-Depending on the hosting service and virtualization technique you have more or less guarantee for dedicated resources.
-For example, RAM is usually dedicated to you, but I/O operations are shared among VPSs.
-For that reason, VPSs became much popular nowadays, and probably its only drawback is the effort neccesary to set up all the software you need, starting by your OS, usually a Linux distribution.
-Hopefully, that's not as difficult as you might think, and this article will help you in this first step. So, let's do it!
+A VPS hosting service is a hosting service sitting between a [shared](http://en.wikipedia.org/wiki/Shared_web_hosting_service) and a [didicated](http://en.wikipedia.org/wiki/Dedicated_hosting_service) server hosting.
+It mimics a dedicated server because you have your own OS (Operating System) instance, which allows you to do anything you want at a software level.
+But simultaneously, your VPS shares hardware (CPU, RAM, I/O operations, etc.) with other VPSs running in the same physical machine.
+Depending on the hosting service and virtualization technique, you have more or less a guarantee for dedicated resources.
+For example, RAM is usually dedicated to you, but I/O operations are shared among VPSs. Because of that, VPSs have become much more popular nowadays.
+Its only drawback is the effort necessary to set up all the software you need, starting with your OS, Linux distribution usually, and the subsequent maintenance that it requires, e.g., Linux distro updates are not mandatory but good practice, alongside upgrading other software packages like web servers that the system will be running.
+Hopefully, that's easier than you might think, and this article will help you in this first step.So, let's do it!
 
 #### Step 1. Choosing a hosting service and installing a Linux distro
 
-Choosing a hosting service may not be an easy task, but a little research will give you a good idea about some good and cheap companies.
-Prefer those which bill by hour, so if you don't use much resources you'll pay very little for it.
-Take a look at the Linux distros and versions they provide.
-Prefer to use the latest version of the OS you like.
-Finally, you should be able to install your Linux distro through some control panel webapp provided by the hosting company, which after installing your distro should send you an email with the password for your Linux root user and the IP address of your VPS, so you can connect to it through SSH.
+Choosing a hosting service may be challenging, but a little research will give you a good idea about some good and cheap companies.
+You should prefer those that bill hourly, so you'll pay very little if you use few resources.
+Next, find out what Linux distros and versions they provide.
+Always use the latest version of the OS you choose.
+Finally, you should be able to install your Linux distro through some control panel web app provided by the hosting company, which after installing your distro, should send you an email with the password for your Linux root user and the IP address of your VPS so that you can connect to it through SSH.
 
-For this tutorial I'll be using Debian 7, and Mac OSX as my local machine.
-Since Ubuntu (and Ubuntu Server) are built on top of Debian, both are basically the same for server purposes.
+I'll use Debian 11 and a macOS as my local machine for this tutorial.
+Since Ubuntu (and Ubuntu Server) are built on top of Debian, both are virtually the same for server purposes.
 
 #### Step 2. Connecting to your VPS through SSH
 
-macOS comes with an SSH client, so you don't need to install one.
-But if you're running Windows on your local machine, you need to install one. [PuTTY](http://www.putty.org/) is the most popular, but feel free to choose whatever you want.
+<WarningBoxNoRunDollarSign />
 
-To connect to your VPS you run a command using the following format:
+macOS comes with an SSH client by default, so you don't need to install one yourself.
+But if you're running Windows on your local machine, you must install one. [PuTTY](http://www.putty.org/) is the most popular, but choose whatever you want.
+
+To connect to your VPS, you run a command using the following format:
 
 ```shell
 $ ssh <Linux username>@<IP address>
@@ -62,8 +65,6 @@ For example:
 ```shell
 $ ssh root@123.456.78.90
 ```
-
-<WarningBoxNoRunDollarSign />
 
 If you get a question like this:
 
@@ -77,8 +78,9 @@ Congrats!
 
 #### Step 3. Updating your Linux distro
 
-The first thing you should do after a fresh Linux installation is update the system.
-You first update the definitions of the Linux packages, and then update them all:
+The first thing you should do after a fresh Linux install is to update the system itself and its core packages.
+Some packages might need to be updated.
+To do that, you first update the definitions of your Linux distro packages and then upgrade them all:
 
 ```shell
 $ apt-get update
@@ -91,12 +93,14 @@ _"Do you want to continue [Y/n]?"_
 
 Just type "Y" and press **Enter**.
 You should probably see a bunch of updates.
-Cool, now you're really fresh!
-You can, and should, run those two commands from time to time to keep your Linux updated and more secure.
+Cool, now you're fresh!
+You can and should run those two commands occasionally to keep your Linux distro updated and more secure.
 
 #### Step 4. Setting the Hostname and FQDN
 
-Now you'll set your system's hostname and [FQDN](http://en.wikipedia.org/wiki/Fully_qualified_domain_name) (fully qualified domain name). Dont't worry about this, it's just a name for your Linux machine, and it doesn't need to have any direct relationship to what you're going to host. But make it a unique name (also, do not use the same name for other Linux users).
+Now you'll set your system's hostname and [FQDN](http://en.wikipedia.org/wiki/Fully_qualified_domain_name) (fully qualified domain name).
+Don't worry about this, it's just a name for your Linux machine, and it doesn't directly relate to what you'll host.
+But make it a unique name (also, do not use the same name for other Linux users).
 
 ```shell
 $ echo "flsilva-debian" > /etc/hostname
@@ -111,7 +115,7 @@ $ hostname
 
 You should see an output with the name you typed.
 
-Now, if you make a test and run a command, like the following:
+Now, if you run a command like the following:
 
 ```shell
 $ sudo
@@ -119,7 +123,7 @@ $ sudo
 
 You should see instructions about how to use the command, but the first line of the output should be something like this:
 
-_sudo: unable to resolve host flsilva-debian_
+_sudo: unable to resolve host flsilva-debian: Name or service not known_
 
 That's beucase we haven't set our FQDN yet.
 So let's edit `/etc/hosts` file and add an entry with your FQDN (your system's hostname + your system's domain name).
@@ -138,13 +142,14 @@ Just make sure the first two lines of your `/etc/hosts` file looks the same as t
 
 Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
 
-Now if you run `$ sudo` again you should **not** see that message again.
+Now, if you run `$ sudo` again you **shouldn't** see that message again.
 
-#### Step 5. Setting the timezone
+#### Step 5. Setting up the timezone
 
 You can change the timezone of your Linux server.
-If your website and / or application is local to a city or country, you can set that timezone.
-If you're dealing with users from several countries or want more flexibility, you can set the timezone to [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time), and when you retrieve or show time-related data to users you can translate time from UTC to your users' local timezone.
+You can set the timezone if your website or application is local to a city or country.
+If you're dealing with users from several countries or want more flexibility, you can set the timezone to [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time).
+Then, when you retrieve or show time-related data to your users, you can translate time from UTC to your users' local timezone.
 
 You can run `$ date` to check what's the time in your server.
 You can use a simple tool to change the timezone running:
@@ -155,146 +160,12 @@ $ dpkg-reconfigure tzdata
 
 You should see a simple menu to select a geographic area, and then a timezone.
 
-#### Step 6. Adding a new user
+Tip: UTC is inside the `Etc` option.
+
+#### Step 6. Creating a firewall
 
 Now it's time to start securing your server.
-The first step is to stop using the root user because it's too much powerful.
-It's best practice to add other users to log in, managing their permissions properly.
-
-To create a new user run the following command:
-
-```shell
-$ adduser deploy
-```
-
-After running the command you should type a new password for that new user. **deploy** is a common username for a user that's used to deploy websites and apps.
-But you can create any number of users with any names.
-
-Now, if you're going to create a new user to virtually replace the **root** superuser (recommended), it's useful to add that new user to the **admin** group, so you can run superuser commands (when needed) by prefacing them with **sudo** keyword (all commands executed with **sudo** are logged to **/var/log/auth.log**).
-
-```shell
-$ usermod -a -G sudo deploy
-```
-
-#### Step 7. Stop using _root_ user
-
-Now, let's log out and in again, but this time using our new user:
-
-```shell
-$ logout
-$ ssh deploy@123.456.78.90
-```
-
-After logging in you should see something like this in your command line tool:
-
-_deploy@flsilva-debian:~$_
-
-Where **deploy** is the user you've logged in, and **flsilva-debian** is your system's hostname.
-Now your server is a little less exposed.
-
-#### Step 8. Using SSH key pair authentication
-
-Now, you should start using SSH key pair authentication, disabling password authentication entirely.
-That's a more secure way to log in, as it protects you against brute-force password attacks.
-
-You'll generate a public and private key pair on your local machine running the following command:
-
-First, log out from your server:
-
-```shell
-$ logout
-```
-
-Then generate the keys **on your local machine**:
-
-```shell
-$ ssh-keygen
-```
-
-Follow the **keygen** instructions on the screen. You don't need to create a passphrase, it's optional.
-
-Two files will be created in your `~/.ssh` directory. `id_rsa` is your private key, do not share it with anyone. `id_rsa.pub` is your public key, and you'll upload it to your server.
-When you try to authenticate, SSH will try to match the server's public key with your local private key.
-
-Let's upload your public key to your server using _security copy_ command (`$ scp`).
-For Windows you can use [WinSCP](http://winscp.net/eng/index.php)
-
-```shell
-$ scp ~/.ssh/id_rsa.pub deploy@123.456.78.90:
-```
-
-Do not forget the ":" character at the end of the command! 😉
-
-Now let's log in on your server (using password) and move the file to the appropriated directory:
-
-```shell
-$ ssh deploy@123.456.78.90 $ mkdir .ssh $ mv id_rsa.pub .ssh/authorized_keys
-```
-
-Now let's modify the permissions of the .ssh directory and public key file (replace _deploy_ with your username):
-
-```shell
-$ chown -R deploy:deploy .ssh $ chmod 700 .ssh $ chmod 600 .ssh/authorized_keys
-```
-
-Now you're ready to test your key pair authentication. Let's log out and in again. You should _not_ be prompted for your password, but if you've specified a passphrase you'll have to enter it.
-
-```shell
-$ logout $ ssh deploy@123.456.78.90
-```
-
-Congratulations!
-You now have SSH key pair authentication working!
-But you still need to disable password authentication to make your server more secure.
-So let's do that!
-
-#### Step 9. Disabling SSH password authentication and _root_ login
-
-<WarningBox>
-  If you disable password authentication, and by any reason you can't use your local machine (which
-  has your private key installed), you'll not be able to log in from another machine. So I recommend
-  you to have an external (and secure) backup of your private key file (`id_rsa`). Also, you can
-  install your private key to another machine you own by copying to `.ssh/` directory, making it
-  enabled to connect to your server right away. That way, if there's any issue with your primary
-  machine, you can easily log in through another one.
-</WarningBox>
-
-Open the SSH configuration file:
-
-```shell
-$ sudo nano /etc/ssh/sshd_config
-```
-
-Look for the following two lines, and make sure to change their values to _no_ and remove the "#" character in front of the lines, if there's one (it means that the line is commented out, so not effective):
-
-```shell
-PasswordAuthentication no PermitRootLogin no
-```
-
-Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
-
-Now you need to restart the SSH service to use the new configuration:
-
-```shell
-$ sudo service ssh restart
-```
-
-Now let's test it. Log out and then try to log in as _root_ user:
-
-```shell
-$ logout $ ssh root@123.456.78.90
-```
-
-You should not be asked for a password, and should get a message like the following:
-
-_Permission denied (publickey)._
-
-Congratulations!
-You have now secured a little more your server.
-
-#### Step 10. Creating a firewall
-
-Another great way to secure your server is by limiting what ports allow traffic, blocking all unecessary ones.
+A basic firewall will limit what ports your server allow traffic, blocking all unecessary ones.
 Linux provides [iptables](http://en.wikipedia.org/wiki/Iptables) (for IPv4 rules) and ip6tables (for IPv6 rules) tools that allow us to define rules that take care of what to do with net packets.
 
 First, let's check our current rules:
@@ -306,9 +177,14 @@ $ sudo iptables -L
 Since we haven't changed anything yet, you should see an empty _ruleset_:
 
 ```shell
-Chain INPUT (policy ACCEPT) target prot opt source destination Chain FORWARD (policy ACCEPT)
-target prot opt source destination Chain OUTPUT (policy ACCEPT) target prot opt source
-destination
+Chain INPUT (policy ACCEPT)
+target prot opt source destination
+
+Chain FORWARD (policy ACCEPT)
+target prot opt source destination
+
+Chain OUTPUT (policy ACCEPT)
+target prot opt source destination
 ```
 
 The same output should be shown for _ip6tables_ rules:
@@ -324,9 +200,12 @@ $ sudo nano /etc/iptables.both.rules
 ```
 
 You'll allow traffic only to the following services: HTTP (80), HTTPS (443), SSH (22), and ping.
-All other ports will be blocked (if you have different needs feel free to make changes to the rules).
-There's also some other security rules like preventing SSH brute-force attacks, preventing ping flooding, etc.
+All other ports will be blocked.
+If you have different needs, feel free to change the rules.
+There are also some other security rules, like preventing SSH brute-force attacks, preventing ping flooding, etc., that you should look at.
 The following rules were copied from [this GitHub Gist](https://gist.github.com/jirutka/3742890) (`rules-both.iptables`) on May 06th, 2014, and only modified to uncomment two lines that allow HTTP and HTTPS (on part 2 _HOST SPECIFIC RULES_):
+
+Paste the exact content below to your `rules-both.iptables` file:
 
 ```bash
 ###############################################################################
@@ -548,7 +427,8 @@ $ sudo ip6tables-restore < /etc/iptables.both.rules
 Now if you check your rules again you should see lots of things:
 
 ```shell
-$ sudo iptables -L $ sudo ip6tables -L</code>
+$ sudo iptables -L
+$ sudo ip6tables -L
 ```
 
 Now you'll create a new script that will automatically activate the rules everytime the server is restarted.
@@ -576,10 +456,10 @@ $ sudo chmod +x /etc/network/if-pre-up.d/firewall
 
 Great! Now, when you restart your server your rules will be active!
 
-#### Step 11. Install Fail2ban
+#### Step 7. Install Fail2ban
 
 [Fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page) is a tool to protect servers from single source brute force attacks.
-It bans IPs that show the malicious signs, like too many password failures.
+It bans IPs that show malicious signs, like too many password failures.
 
 Install Fail2ban:
 
@@ -589,13 +469,154 @@ $ sudo apt-get install fail2ban
 
 That's it! Now Fail2ban is protecting your server. It'll log its activities at `/var/log/fail2ban.log`.
 
-Awesome!
-Now you have a basic server running securely!
-But remember, security is never enough.
-It's always possible to configure and install additional tools.
-But for a basic server that's a really nice setup.
+#### Step 8. Adding a new user
 
-Let me know if you have any issues on this step-by-step tutorial, something may be missing, or even using a different version of Debian or Ubuntu may have a little difference, and I'd like to know about that.
+Another great way to secure your server is by stopping using the root user because it's too powerful.
+It's best practice to create different users with only the necessary permissions for specific tasks. For example, a deploy user used to deploy websites.
+
+To create a new user run the following command:
+
+```shell
+$ adduser deploy
+```
+
+After running the command above, you should type a new password for that new user. `deploy` is a common username for a user that deploys websites and apps.
+But you can create any number of users with any names you want.
+
+Now, if you're going to create a new user to virtually replace the `root` superuser, which is recommended, it's useful to add that new user to the `admin` group, so you can run superuser commands when needed by prefacing them with the `sudo` keyword (all commands executed with `sudo` are logged to `/var/log/auth.log`).
+
+```shell
+$ usermod -a -G sudo deploy
+```
+
+#### Step 9. Stop using the `root` user
+
+Now, let's log out and in again, but this time using our new user:
+
+```shell
+$ logout
+$ ssh deploy@123.456.78.90
+```
+
+After logging in you should see something like this in your command line tool:
+
+`deploy@flsilva-debian:~$`
+
+Where `deploy` is the user you've logged in, and `flsilva-debian` is your system's hostname.
+Now your server is a little less exposed.
+
+#### Step 10. Using SSH key pair authentication
+
+Now, you should start using SSH key pair authentication, disabling password authentication entirely.
+That's a more secure way to log in, as it protects you against brute-force password attacks.
+
+You'll generate a public and private key pair **on your local machine** by running the following command:
+
+First, log out from your server:
+
+```shell
+$ logout
+```
+
+Then generate the keys **on your local machine**:
+
+```shell
+$ ssh-keygen
+```
+
+Follow the **keygen** instructions on the screen. You don't need to create a passphrase, it's optional.
+
+The command will create two files in your `~/.ssh` directory. `id_rsa` is your private key, do not share it with anyone. `id_rsa.pub` is your public key, and you'll upload it to your server.
+When you try to authenticate, SSH will match the server's public key with your local private key.
+
+Let's upload your public key to your server using the _security copy_ command (`$ scp`).
+For Windows you can use [WinSCP](http://winscp.net/eng/index.php)
+
+```shell
+$ scp ~/.ssh/id_rsa.pub deploy@123.456.78.90:
+```
+
+Do not forget the ":" character at the end of the command! 😉
+
+Now let's log into your server (still using a password) and move the file to the appropriate directory:
+
+```shell
+$ ssh deploy@123.456.78.90
+$ mkdir .ssh
+$ mv id_rsa.pub .ssh/authorized_keys
+```
+
+Now let's modify the permissions of the `.ssh` directory and public key file (replace `deploy` with your username):
+
+```shell
+$ chown -R deploy:deploy .ssh
+$ chmod 700 .ssh
+$ chmod 600 .ssh/authorized_keys
+```
+
+Now you're ready to test your key pair authentication. Let's log out and in again. You should _not_ be prompted for your password, but if you've specified a passphrase you'll have to enter it.
+
+```shell
+$ logout
+$ ssh deploy@123.456.78.90
+```
+
+Congratulations!
+You now have SSH key pair authentication working!
+But you still need to disable password authentication to make your server more secure.
+So let's do that!
+
+#### Step 11. Disabling SSH password authentication and `root` login
+
+<WarningBox>
+  If you disable password authentication, and by any reason you can't use your local machine (which
+  has your private key installed), you'll not be able to log in from another machine. So I recommend
+  you to have an external (and secure) backup of your private key file (`id_rsa`). Also, you can
+  install your private key to another machine you own by copying to `.ssh/` directory, making it
+  enabled to connect to your server right away. That way, if there's any issue with your primary
+  machine, you can easily log in through another one.
+</WarningBox>
+
+Open the SSH configuration file:
+
+```shell
+$ sudo nano /etc/ssh/sshd_config
+```
+
+Look for the following two lines, and make sure to change their values to _no_ and remove the "#" character in front of the lines, if there's one (it means that the line is commented out, so not effective):
+
+```shell
+PasswordAuthentication no PermitRootLogin no
+```
+
+Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
+
+Now you need to restart the SSH service to use the new configuration:
+
+```shell
+$ sudo service ssh restart
+```
+
+Now let's test it. Log out and then try to log in as _root_ user:
+
+```shell
+$ logout $ ssh root@123.456.78.90
+```
+
+You should not be asked for a password, and should get a message like the following:
+
+_Permission denied (publickey)._
+
+Awesome!
+You have now secured a little more your server.
+
+Now you have a basic server up and running securely! How cool is that?
+But remember, security is never enough.
+It's always possible to set up and install additional tools.
+But for a basic server, that's a nice setup.
+
+Let me know if you need any help with this step-by-step tutorial.
+Something may be missing, or even using different versions of Debian, Ubuntu, or other packages.
 
 Happy sysadmin! 🙃
 
