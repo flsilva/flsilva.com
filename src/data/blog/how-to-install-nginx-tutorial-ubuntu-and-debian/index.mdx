@@ -5,7 +5,7 @@ authorUrl: 'http://flsilva.com'
 changefreq: monthly
 contentType: 'blog-post'
 date: '2014-07-16T00:00:00'
-description: 'Learn how to install Nginx on Linux (Ubuntu / Debian).'
+description: 'Learn how to install Nginx on Linux (Ubuntu / Debian) in 4 steps.'
 heroImage: './hero.jpg'
 heroImageCreditText: 'Image by fullvector on Freepik'
 heroImageCreditUrl: 'https://www.freepik.com/free-vector/big-data-processing-concept-server-room-blockchain-technology-token-access_3629651.htm#&position=11&from_view=undefined'
@@ -28,83 +28,22 @@ If you want to know about how to securely set up a Linux VPS (Ubuntu & Debian) [
 
 #### Step 1. Updating your Linux distro
 
-It's always a good practice to start with everything up to date, so first update your Linux:
+It's always a good practice to start with everything up to date, so after connecting to your server via SSH, update your Linux distro:
 
 ```shell
 $ sudo apt-get update
 $ sudo apt-get upgrade --show-upgraded
 ```
 
-#### Step 2. Adding the Nginx official repository
+#### Step 2. Installing Nginx
 
-To have access to the latest versions, you need to add Nginx official repository.
-First you need to add Nginx repository key, so download the file:
-
-```shell
-$ wget -O ~/nginx_signing.key http://nginx.org/keys/nginx_signing.key
-```
-
-And add it to your Linux:
+To install Nginc run the following command:
 
 ```shell
-$ sudo apt-key add ~/nginx_signing.key
+$ sudo apt install nginx
 ```
 
-You should see something like: _"OK"_
-
-Now edit the file `/etc/apt/sources.list`:
-
-```shell
-$ sudo nano /etc/apt/sources.list
-```
-
-Add the following two lines to it, replacing _codename_ by your Ubuntu / Debian distribution name:
-
-A) For Ubuntu:
-
-```bash
-deb http://nginx.org/packages/ubuntu/ codename nginx
-deb-src http://nginx.org/packages/ubuntu/ codename nginx
-```
-
-Ubuntu 12.04 codename: precise<br />
-Ubuntu 12.10 codename: quantal<br />
-Ubuntu 13.10 codename: saucy<br />
-Ubuntu 14.04 codename: trusty
-
-B) For Debian:
-
-```bash
-deb http://nginx.org/packages/debian/ codename nginx
-deb-src http://nginx.org/packages/debian/ codename nginx
-```
-
-Debian 6.x codename: squeeze<br />
-Debian 7.x codename: wheezy
-
-Save the file by pressing **control X**, then **Y**, and then **Enter**.
-
-Now update your Linux package definitions with the new Nginx repository:
-
-```shell
-$ sudo apt-get update
-```
-
-You should see some outputs but no error messages, and the following text at the end:
-
-_"Reading package lists... Done"_
-
-Cool, now you can finally install it!
-
-#### Step 3. Installing Nginx
-
-To install Nginx just run the following command:
-
-```shell
-$ sudo apt-get install nginx
-```
-
-#### Step 4. Checking your installation
+#### Step 3. Checking your installation
 
 Now let's make sure it's installed, and which version.
 
@@ -114,17 +53,11 @@ $ /usr/sbin/nginx -v
 
 You should see something like this:
 
-_"nginx version: nginx/1.6.0"_
+_"nginx version: nginx/1.18.0"_
 
-You'll be very close to the latest version, if not on it! But if you're not, something may have failed on Step 2.
-Uninstall Nginx and try again from Step 2:
+You'll be very close to the latest version!
 
-```shell
-$ sudo apt-get --purge remove nginx
-$ sudo apt-get autoremove
-```
-
-#### Step 5. Starting and testing Nginx
+#### Step 4. Starting and testing Nginx
 
 Nginx is probably running by now, but if it's not just start it:
 
