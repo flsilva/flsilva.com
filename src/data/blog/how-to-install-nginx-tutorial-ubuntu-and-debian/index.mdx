@@ -6,7 +6,7 @@ changefreq: monthly
 contentType: 'blog-post'
 date: '2014-07-16T00:00:00'
 dateLatestUpdated: '2023-04-05T00:00:00'
-description: 'Learn how to install Nginx on Linux (Ubuntu / Debian) in 4 steps.'
+description: 'Learn how to install Nginx on Linux (Ubuntu / Debian) in 5 steps.'
 heroImage: './hero.jpg'
 heroImageCreditText: 'Image by fullvector on Freepik'
 heroImageCreditUrl: 'https://www.freepik.com/free-vector/big-data-processing-concept-server-room-blockchain-technology-token-access_3629651.htm#&position=11&from_view=undefined'
@@ -38,7 +38,7 @@ $ sudo apt-get upgrade --show-upgraded
 
 #### Step 2. Installing Nginx
 
-To install Nginc run the following command:
+To install Nginx run the following command:
 
 ```shell
 $ sudo apt install nginx
@@ -49,26 +49,30 @@ $ sudo apt install nginx
 Now let's make sure it's installed, and which version.
 
 ```shell
-$ /usr/sbin/nginx -v
+$ sudo nginx -v
 ```
 
 You should see something like this:
 
 _"nginx version: nginx/1.18.0"_
 
-You'll be very close to the latest version!
+That should be very close to the latest version!
 
-#### Step 4. Starting and testing Nginx
+#### Step 4. Checking the status of Nginx
 
-Nginx is probably running by now, but if it's not just start it:
+At any time you want, you can check the status of Nginx, for example, wether it's running.
+
+Let's do that now to see if Nginx is already running. It should be as it's Debian's default behavior, but let's make sure by running the following command:
 
 ```shell
-$ sudo /etc/init.d/nginx start
+$ sudo systemctl status nginx
 ```
 
-You should see something like this:
+You should see a bunch of useful information, including something like this:
 
-_"Starting nginx: nginx."_
+_Active: active (running)_
+
+That means Nginx is up and running! 😎
 
 If you're setting up a VPS from scratch, you can now try to access its IP on your browser.
 You should see something like this:
@@ -79,26 +83,46 @@ Congrats!
 Nginx is up and listening to port 80 (HTTP).
 If your server is restarted, you don't have to worry about Nginx, it'll be initialized automatically!
 
+#### Step 5. Managing the Nginx process
+
+You'll probably have to manage Nginx using a few commands throughout your sysadmin activities.
+
+For example, every time you change a website configuration file, or even Nginx's configuration file, you need to reload Nginx so it can take those changes into account.
+To do that, you run the following command:
+
+```shell
+$ sudo systemctl reload nginx
+```
+
+You'll get an error message if there's an error in any configuration file.
+Otherwise, you won't get any feedback.
+
+There is also the `start`, `stop` and `restart` commands that you might need at some point:
+
+```shell
+$ sudo systemctl stop nginx
+```
+
+```shell
+$ sudo systemctl start nginx
+```
+
+```shell
+$ sudo systemctl restart nginx
+```
+
+The `restart` command will `stop` and `start` it again.
+
 #### Updating Nginx
 
 You can update Nginx at any time by running:
 
 ```shell
 $ sudo apt-get update
-$ sudo apt-get upgrade --show-upgraded
+$ sudo apt-get upgrade nginx
 ```
 
-#### Stopping Nginx
-
-If you want to stop it just run:
-
-```shell
-$ sudo /etc/init.d/nginx stop
-```
-
-If you want to know how to set up a website on Nginx and Linux (Ubuntu & Debian) [click here](/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/) to read my article.
-
-If you want to know how to securely set up a Linux VPS (Ubuntu & Debian) [click here](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/) to read my article.
+And that's it. You can find more posts related to Nginx and sysadmin in the Related posts section below.
 
 #### Related Posts
 
