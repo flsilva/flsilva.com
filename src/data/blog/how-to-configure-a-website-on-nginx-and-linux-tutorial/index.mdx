@@ -246,14 +246,11 @@ Every time you make a change to some website configuration file or even add or r
 To do that run the following command:
 
 ```shell
-$ sudo /etc/init.d/nginx reload
+$ sudo systemctl reload nginx
 ```
 
-You should see an output like this:
-
-_Reloading nginx configuration (via systemctl): nginx.service._
-
-If there's an error in any configuration file, you'll get an error message.
+You'll get an error message if there's an error in any configuration file.
+Otherwise, you won't get any feedback.
 
 And that's it.
 
