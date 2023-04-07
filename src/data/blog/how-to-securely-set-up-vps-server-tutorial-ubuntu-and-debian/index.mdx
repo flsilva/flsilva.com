@@ -563,7 +563,24 @@ $ ssh deploy@123.456.78.90
 
 Congratulations!
 You now have SSH key pair authentication working!
-But you still need to disable password authentication to make your server more secure.
+
+If you're on a macOS machine, you must run the following command whenever you restart your computer:
+
+```shell
+$ ssh-add --apple-use-keychain
+```
+
+You should see a message like the following:
+
+_Identity added:_
+
+And the path to your `id_rsa` private key file.
+
+Otherwise, you'll be asked to type a passphrase or a password.
+That happens because your keys are stored in your drive, but to be used, they need to be stored in Apple's Keychain software, and that's what that command does.
+Hopefully, you only need to do that when you restart your computer. 😅
+
+Now, you still need to disable password authentication to make your server even more secure.
 So let's do that!
 
 #### Step 11. Disabling SSH password authentication and `root` login
