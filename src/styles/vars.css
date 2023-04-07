@@ -46,7 +46,7 @@ $primaryWarningFgColorDark: $primaryWarningFgColorLight;
 
 $xxsmallScreenWidth: 320px; /* small phones on portrait */
 $xsmallScreenWidth: 375px; /* mid phones on portrait */
-$smallScreenWidth: 414; /* large phones on portrait */
+$smallScreenWidth: 412; /* large phones on portrait. value extract from Google Analytics (96% of mobile users of my website has devices with a resolution of 412x823) */
 $midScreenWidth: 768px; /* phones on landscape and portrait tablets */
 $largeScreenWidth: 1024px; /* small notebooks and landscape tablets */
 $xlargeScreenWidth: 1200px; /* notebooks and large tablets */
