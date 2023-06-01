@@ -40,8 +40,8 @@
    * we need !important here because gatsby-image-wrapper overrides it when we build it
    * for production (dev works).
    */
-  width: 2rem !important;
-  height: 2rem !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
 }
 
 .hero-image {

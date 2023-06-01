@@ -17,6 +17,7 @@ interface BlogPostCardProps {
   author?: string;
   authorImage?: IGatsbyImageData;
   date: string;
+  dateUpdated: string;
   description?: string;
   heroImage?: IGatsbyImageData;
   heroImageCreditText?: string;
@@ -44,6 +45,7 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
   author,
   authorImage,
   date,
+  dateUpdated,
   description,
   heroImage,
   heroImageCreditText,
@@ -67,9 +69,18 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
           {authorImage && (
             <GatsbyImage image={getImage(authorImage)} alt={author} className={authorImageStyle} />
           )}
-          <small>
-            <em>by</em> {author} <em>on</em> {format(new Date(date), 'MMM d, y')}
-          </small>
+          <div>
+            <div>
+              <small>
+                {author} &#8226; {format(new Date(date), 'MMMM d, y')}
+              </small>
+            </div>
+            {dateUpdated && (
+              <small>
+                Updated on {format(new Date(dateUpdated), 'MMMM d, y')}
+              </small>
+            )}
+          </div>
         </div>
       )}
       <figure>

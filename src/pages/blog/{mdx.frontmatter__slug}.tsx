@@ -18,6 +18,7 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
         author={data.mdx.frontmatter.author}
         authorImage={data.mdx.frontmatter.authorImage}
         date={data.mdx.frontmatter.date}
+        dateUpdated={data.mdx.frontmatter.dateUpdated}
         heroImage={data.mdx.frontmatter.heroImage}
         heroImageCreditText={data.mdx.frontmatter.heroImageCreditText}
         heroImageCreditUrl={data.mdx.frontmatter.heroImageCreditUrl}
@@ -76,6 +77,7 @@ export const query = graphql`
         author
         authorUrl
         date
+        dateUpdated
         description
         heroImage {
           childImageSharp {
