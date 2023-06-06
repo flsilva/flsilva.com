@@ -1,7 +1,7 @@
 @import '../styles/vars.css';
 
 .container {
-  background-color: var(--primary-text-color);
+  background-color: $primaryTextColorLight;
   flex-direction: row;
   justify-content: center;
   width: 100%;
@@ -28,7 +28,7 @@
 }
 
 .container-content p {
-  color: var(--primary-bg-color);
+  color: $primaryBgColorLight;
   font-size: 1rem;
 }
 

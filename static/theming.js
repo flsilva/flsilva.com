@@ -3,7 +3,19 @@ const THEME_DARK_NAME = 'dark';
 const THEME_LIGHT_NAME = 'light';
 
 const prefersDarkTheme = window.matchMedia(`(prefers-color-scheme: ${THEME_DARK_NAME})`);
-let currentTheme = localStorage.getItem(THEME_NAME);
+
+/*
+ * Disabling theming for now.
+ * There's an issue with Dark / Light theming.
+ * The following was tested on macOS Ventura.
+ * If the OS's theme is dark and you set the website to be light,
+ * the website's background flashes black first then updates to white.
+ * It's weird and annoying.
+
+*/
+// let currentTheme = localStorage.getItem(THEME_NAME);
+let currentTheme = THEME_LIGHT_NAME;
+/* */
 
 let head;
 let githubLightSyntaxHighlighterLinkStyle;

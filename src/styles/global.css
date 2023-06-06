@@ -12,7 +12,7 @@
 }
 
 html {
-  background-color: var(--primary-bg-color);
+  background-color: $primaryBgColorLight;
 }
 
 article,
@@ -47,7 +47,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--primary-text-color);
+  color: $primaryTextColorLight;
   font-family: 'Open Sans';
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
@@ -91,7 +91,7 @@ p {
 }
 
 a {
-  color: var(--primary-link-color);
+  color: $primaryLinkColorLight;
   text-decoration: none;
 }
 
@@ -269,7 +269,7 @@ h6 a {
 
 .autolink-header-anchor.before {
   svg {
-    fill: var(--primary-text-color);
+    fill: $primaryTextColorLight;
   }
 }
 
@@ -403,7 +403,7 @@ ul li {
 }
 
 ul li::before {
-  background-color: var(--primary-text-color);
+  background-color: $primaryTextColorLight;
   border-radius: 50%;
   content: '';
   display: block;
@@ -428,11 +428,11 @@ img {
 }
 
 resume-page ul li a {
-  color: var(--primary-text-color);
+  color: $primaryTextColorLight;
 }
 
 .resume-page ul li a:hover {
-  color: var(--primary-link-color);
+  color: $primaryLinkColorLight;
 }
 
 button {
@@ -446,7 +446,7 @@ button {
 }
 
 button:hover {
-  color: var(--primary-bg-color);
+  color: $primaryBgColorLight;
   cursor: pointer;
 }
 
@@ -485,7 +485,7 @@ html.theme-dark .hljs {
 }
 
 #main-nav.active {
-  height: 370px;
+  height: 300px;
 }
 
 #disqus_thread {

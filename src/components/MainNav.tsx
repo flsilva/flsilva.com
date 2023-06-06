@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { changeThemeButtonContainer, container } from './MainNav.module.css';
-import { MoonIconSvg } from './svg/MoonIconSvg';
-import { SunIconSvg } from './svg/SunIconSvg';
+import { container } from './MainNav.module.css';
 
 export const MainNav: React.FC = () => (
   <nav id="main-nav" className={container}>
@@ -17,12 +15,6 @@ export const MainNav: React.FC = () => (
       </li>
       <li>
         <a href="/resume/">Resume</a>
-      </li>
-      <li className={changeThemeButtonContainer}>
-        <button id="change-theme-button" type="button">
-          <MoonIconSvg />
-          <SunIconSvg />
-        </button>
       </li>
     </ul>
   </nav>

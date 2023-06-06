@@ -3,9 +3,9 @@
 .link-button {
   /* default styles for $xxsmallScreenMedia */
   align-self: flex-start;
-  background-color: var(--primary-text-color);
+  background-color: $primaryTextColorLight;
   border-radius: 0.5rem;
-  color: var(--primary-bg-color);
+  color: $primaryBgColorLight;
   display: flex;
   font-size: 0.75rem;
   padding: 0.125rem 0.5rem;

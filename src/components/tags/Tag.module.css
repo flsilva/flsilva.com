@@ -2,7 +2,7 @@
 
 .tag {
   small {
-    border: 1px solid var(--primary-text-color);
+    border: 1px solid $primaryTextColorLight;
     border-radius: 0.5rem;
     padding: 0.5rem;
   }
@@ -12,6 +12,6 @@
   }
 
   &:hover small {
-    border-color: var(--primary-link-color);
+    border-color: $primaryLinkColorLight;
   }
 }

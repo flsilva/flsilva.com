@@ -2,7 +2,7 @@
 
 .container {
   align-items: center;
-  border: 1px solid var(--primary-text-color);
+  border: 1px solid $primaryTextColorLight;
   flex-direction: column;
   margin: 3rem 0;
   padding: 1rem 1.75rem;
