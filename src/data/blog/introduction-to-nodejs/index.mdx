@@ -84,27 +84,35 @@ $ echo ". ~/.nvm/nvm.sh" >> .bashrc
 
 And finally, restart your shell:
 
-```bash
-exec $SHELL -l
+```shell
+$ exec $SHELL -l
 ```
 
 The installation of NVM is complete, check if it was successful running:
 
-`$ nvm ls-remote`
+```shell
+$ nvm ls-remote
+```
 
 It should list all available Node versions to install.
 Now you can run `$ nvm install` with your desired version, for example:
 
-`$ nvm install 0.10`
+```shell
+$ nvm install 0.10
+```
 
 You should see an output like "Now using node v0.10.0".
 Now it's a good idea to set a default Node version for any new shell you open:
 
-`$ nvm alias default 0.10`
+```shell
+$ nvm alias default 0.10
+```
 
 To confirm that Node is really working, run:
 
-`$ node --version`
+```shell
+$ node --version
+```
 
 You should see the installed version number. Let me know if you have any issues.
 Visit the [official repository](https://github.com/creationix/nvm) for more information.

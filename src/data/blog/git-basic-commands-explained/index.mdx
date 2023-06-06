@@ -44,12 +44,14 @@ If you want to override that information for a specific repo, just go to that re
 
 #### Creating a new repository
 
-There are two ways to create a new Git repo: using `init` or `clone` commands.
-Let's start by `init`.
+There are two ways to create a new Git repo: using the `git init` or `git clone` commands.
+Let's start with `git init`.
 
 Go to the directory that will be your repository and run:
 
-`$ git init`
+```shell
+$ git init
+```
 
 That starts a new repository and creates a _local_ _master_ branch.
 Don't worry about it right now, [branching](/blog/git-branching-and-merging/) is the subject of our next article about Git.
@@ -66,19 +68,21 @@ That will create an `as3coreaddendum` directory in your file system.
 
 #### Checking the status of your files
 
-After making changes, adding, and deleting files, you'll frequently use the `status` command to check the status of your local repository:
+After making changes, adding, and deleting files, you'll frequently run `git status` to check the status of your local repository:
 
-`$ git status`
+```shell
+$ git status
+```
 
-When you see a message like **nothing to commit, working directory clean**, it means that your [_working directory_](/blog/git-workflow/#working-directory) is fully synchronized with your local repository, i.e., there are no changes to be committed.
+When you see a message like `nothing to commit, working directory clean`, it means that your [_working directory_](/blog/git-workflow/#working-directory) is fully synchronized with your local repository, i.e., there are no changes to be committed.
 
-When you see a message like **Changes not staged for commit**, it means that you've made changes to tracked files (files already in your local repo) but have not added them to the [_staging area_](/blog/git-workflow/#staging-area), which means they will _not_ be committed when you run `commit` command.
-Usually, you'll also see a message like **Untracked files**, which means there are new files not added to the [_staging area_](/blog/git-workflow/#staging-area).
+When you see a message like `Changes not staged for commit`, it means that you've made changes to tracked files (files already in your local repo) but have not added them to the [_staging area_](/blog/git-workflow/#staging-area), which means they will _not_ be committed when you run `git commit`.
+Usually, you'll also see a message like `Untracked files`, which means there are new files not added to the [_staging area_](/blog/git-workflow/#staging-area).
 
 #### Adding changes to the staging area
 
 After making some changes to your files and checking their status, you'll want to add your changes to the [_staging area_](/blog/git-workflow/#staging-area).
-There are two main ways to do that, running the `add` command for individual files (or directories):
+There are two main ways to do that, running `git add` for individual files (or directories):
 
 ```shell
 $ git add file-name
@@ -90,7 +94,7 @@ Or:
 $ git add directory-name
 ```
 
-Or running `add` for all your files and directories:
+Or running `git add` for all your files and directories:
 
 ```shell
 $ git add -A
@@ -108,15 +112,15 @@ After that you can check the status of your files again:
 $ git status
 ```
 
-Now you should see a message like **Changes to be committed**.
+Now you should see a message like `Changes to be committed`.
 That means that you've staged your changes, and they are ready to be committed.
 
 #### Committing changes to your local repository
 
-Every time you run `commit` command, Git sends the content of your [_staging area_](/blog/git-workflow/#staging-area) (new files, modified files, etc) to your local repo, so not the content of your file system at the moment you run it.
+Every time you run `git commit`, Git sends the content of your [_staging area_](/blog/git-workflow/#staging-area) (new files, modified files, etc) to your local repo, so not the content of your file system at the moment you run it.
 Most of the times they will be the same, but there's a situation where they may differ.
-That's the case if you run `add` for some modified file, but before you run `commit` you make more changes to that same modified file, and then run `commit` _without_ running `add` again for that later change.
-In such case, Git will not commit your later changes, only the ones that were added to the staging area using `add` command.
+That's the case if you run `git add` for some modified file, but before you run `git commit` you make more changes to that same modified file, and then run `git commit` _without_ running `git add` again for that later changes.
+In such case, Git will not commit your later changes, only the ones that were added to the staging area using `git add`.
 This is a gotcha using Git, and illustrates how it uses its concept of staging area.
 
 To send your changes to your local repository you run:
@@ -139,7 +143,7 @@ To send changes to a remote repository you should have one, obviously, but you a
 Assuming you already have a remote repository configured somewhere (you can always setup one for free on [GitHub](http://github.com) or [Bitbucket](https://bitbucket.org)), there are two ways to create a reference to it in your local repo.
 The first, and easier one, is cloning an existing repo.
 In that case, Git automatically creates a reference to your cloned repo, naming it _origin_.
-But if you created your local repo from scratch using `init`, and time has come for you to send your local repo to a remote repo for the first time, you have to set up a reference to it manually by running a command like:
+But if you created your local repo from scratch using `git init`, and time has come for you to send your local repo to a remote repo for the first time, you have to set up a reference to it manually by running a command like:
 
 ```shell
 $ git remote add [remote-name] [remote-url]
@@ -172,19 +176,19 @@ Don't worry about it right now, branching is the subject of our next article: [G
 
 #### Fetching changes from a remote repository
 
-You should always run a `fetch` command before running `push`, because if someone else has pushed to the remote repository, you'll have to fetch it first, then merge it into your local branch, before being able to push your changes.
+You should always run `git fetch` before running `git push`, because if someone else has pushed to the remote repository, you'll have to fetch it first, then merge it into your local branch, before being able to push your changes.
 Git enforces it. Also, before fetching changes from a remote repo, you should commit your local ones, if you have any.
 
-To _fetch_ from a remote repository you run a command like `$ git fetch [remote]`, for example:
+To fetch from a remote repository you run a command like `$ git fetch [remote]`, for example:
 
 ```shell
 $ git fetch origin
 ```
 
-A `fetch` command fetches all changes from a target remote repo, creating remote branches in your local repo.
+The `git fetch` command fetches all changes from a target remote repo, creating remote branches in your local repo.
 Don't worry about remote branches for now, that's the subject of another article: [Git remote and tracking branches](/blog/git-remote-and-tracking-branches/).
-After that, you'll want to run a `merge` command to merge remote changes to your local ones.
-After merging you're up-to-date to your remote repo, so ready to `push` to it.
+After that, you'll want to run `git merge` to merge remote changes to your local ones.
+After merging you're up-to-date to your remote repo, so ready to `git push` to it.
 That makes a basic push flow to look like this:
 
 `commit` -> `fetch` -> `merge` -> `push`
@@ -193,29 +197,29 @@ But if there are no changes to your remote repo, that could be just:
 
 `commit` -> `push`
 
-Now, you should really consider using `pull` instead of `fetch`.
+Now, you should really consider using `git pull` instead of `git fetch`.
 Let's see why.
 
 #### Pulling changes from a remote repository
 
-A `pull` command is pretty much like `fetch`, but with the advantage that it runs `merge` for us automatically.
+The `git pull` command is pretty much like `git fetch`, but with the advantage that it runs `git merge` for us automatically.
 To do that, you just need to provide a target branch, alongside remote repo.
-So instead of using `fetch` like this:
+So instead of using `git fetch` like this:
 
 ```shell
 $ git fetch origin
 ```
 
-You can use `pull` like this:
+You can use `git pull` like this:
 
 ```shell
 $ git pull origin master
 ```
 
-That way Git knows you want to merge changes from your remote repo's **master** branch into your _current local branch_ (that may or may not be pointing to your local **master** branch).
+That way Git knows you want to merge changes from your remote repo's `master` branch into your _current local branch_ (that may or may not be pointing to your local `master` branch).
 
 If there are no conflicts to resolve (don't worry about it now), you just have to confirm the default merge message (you can change it if you want).
-After that, you're up-to-date with your remote repo, so ready to `push` to it.
+After that, you're up-to-date with your remote repo, so ready to `git push` to it.
 That makes a basic push flow to look like this:
 
 `commit` -> `pull` -> `push`
@@ -228,7 +232,7 @@ But if there are no changes to your remote repo, that could be just:
 
 One of the things that I love about Git over SVN is that you don't have to do anything special to delete files and directories.
 Just delete them the way you want, using your OS's GUI or command line tool.
-Git will notice it, and report their status as **deleted**, so you just need to run `$ git add .` as usual to prepare your changes to go on the next commmit.
+Git will notice it, and report their status as `deleted`, so you just need to run `git add .` as usual to prepare your changes to go on the next commmit.
 
 #### Renaming and moving files and directories
 

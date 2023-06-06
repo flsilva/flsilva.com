@@ -500,7 +500,9 @@ $ ssh deploy@123.456.78.90
 
 After logging in you should see something like this in your command line tool:
 
-`deploy@flsilva-debian:~$`
+```bash
+deploy@flsilva-debian:~$
+```
 
 Where `deploy` is the user you've logged in, and `flsilva-debian` is your system's hostname.
 Now your server is a little less exposed.
@@ -530,13 +532,13 @@ The command will create two files in your `~/.ssh` directory. `id_rsa` is your p
 When you try to authenticate, SSH will match the server's public key with your local private key.
 
 Let's upload your public key to your server using the _security copy_ command (`$ scp`).
-For Windows you can use [WinSCP](http://winscp.net/eng/index.php)
+For Windows you can use [WinSCP](http://winscp.net/eng/index.php).
 
 ```shell
 $ scp ~/.ssh/id_rsa.pub deploy@123.456.78.90:
 ```
 
-Do not forget the ":" character at the end of the command! 😉
+Don't forget the `:` character at the end of the command! 😉
 
 Now let's log into your server (still using a password) and move the file to the appropriate directory:
 
@@ -572,9 +574,9 @@ $ ssh-add --apple-use-keychain
 
 You should see a message like the following:
 
-_Identity added:_
-
-And the path to your `id_rsa` private key file.
+```bash
+Identity added: <path to your private key>
+```
 
 Otherwise, you'll be asked to type a passphrase or a password.
 That happens because your keys are stored in your drive, but to be used, they need to be stored in Apple's Keychain software, and that's what that command does.
@@ -603,7 +605,8 @@ $ sudo nano /etc/ssh/sshd_config
 Look for the following two lines, and make sure to change their values to _no_ and remove the "#" character in front of the lines, if there's one (it means that the line is commented out, so not effective):
 
 ```shell
-PasswordAuthentication no PermitRootLogin no
+PasswordAuthentication no
+PermitRootLogin no
 ```
 
 Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
@@ -617,12 +620,15 @@ $ sudo service ssh restart
 Now let's test it. Log out and then try to log in as _root_ user:
 
 ```shell
-$ logout $ ssh root@123.456.78.90
+$ logout
+$ ssh root@123.456.78.90
 ```
 
 You should not be asked for a password, and should get a message like the following:
 
-_Permission denied (publickey)._
+```bash
+Permission denied (publickey).
+```
 
 Awesome!
 You have now secured a little more your server.
