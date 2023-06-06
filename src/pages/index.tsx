@@ -18,15 +18,16 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience.
-        I&#39;ve been leading front-end teams since 2007 and working remotely from home since 2009.
+        I&#39;m a Brazilian Full-Stack Software Engineer with 19 years of professional industry
+        experience. I&#39;ve been leading front-end teams since 2007 and working remotely from home
+        since 2009.
       </p>
       <p>
         Since 2018 I&#39;ve specialized in building cross-platform React apps by implementing a
         single, responsive codebase, sharing about 90% of the front-end codebase with all platforms.
-        That enables developers to build the codebase as native iOS and Android apps and as a web app for
-        mobile and desktop browsers. Many businesses can benefit from such a tech strategy by
-        drastically reducing costs and time to market.
+        That enables developers to build the codebase as native iOS and Android apps and as a web
+        app for mobile and desktop browsers. Many businesses can benefit from such a tech strategy
+        by drastically reducing costs and time to market.
       </p>
       <p>
         I have also experience building back-end systems using tools like Node.js, Ruby on Rails,
