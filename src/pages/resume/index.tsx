@@ -44,7 +44,8 @@ const ResumePage: React.FC<PageProps> = () => (
         <li>
           <a href="https://reactjs.org/">React</a>,{' '}
           <a href="https://reactnative.dev/">React Native</a>,{' '}
-          <a href="https://nextjs.org/">Next.js</a>, <a href="https://remix.run/">Remix.run</a>.
+          <a href="https://nextjs.org/">Next.js</a>, <a href="https://remix.run/">Remix.run</a>,{' '}
+          <a href="https://www.apollographql.com/apollo-client">Apollo Client.</a>
         </li>
         <li>
           <a href="https://www.nngroup.com/articles/design-systems-101/">Design systems</a>,{' '}
