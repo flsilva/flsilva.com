@@ -7,6 +7,7 @@ import { Tag } from '../tags/Tag';
 import {
   author as authorStyle,
   authorImage as authorImageStyle,
+  authorText as authorTextStyle,
   heroImage as heroImageStyle,
   description as descriptionStyle,
   tags as tagsStyle,
@@ -69,17 +70,13 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({
           {authorImage && (
             <GatsbyImage image={getImage(authorImage)} alt={author} className={authorImageStyle} />
           )}
-          <div>
+          <div className={authorTextStyle}>
             <div>
               <small>
                 {author} &#8226; {format(new Date(date), 'MMMM d, y')}
               </small>
             </div>
-            {dateUpdated && (
-              <small>
-                Updated on {format(new Date(dateUpdated), 'MMMM d, y')}
-              </small>
-            )}
+            {dateUpdated && <small>Updated on {format(new Date(dateUpdated), 'MMMM d, y')}</small>}
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 declare const styles: {
   readonly author: string;
   readonly authorImage: string;
+  readonly authorText: string;
   readonly description: string;
   readonly heroImage: string;
   readonly footer: string;
