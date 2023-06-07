@@ -78,6 +78,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my website to learn more about me and my work."
     pagePath=""
-    title="About Flavio Silva, a full-stack software engineer"
+    title="About Flavio Silva - Full-Stack Software Engineer"
   />
 );
