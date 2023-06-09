@@ -26,15 +26,15 @@ const setupExternalCssFiles = () => {
 
   githubLightSyntaxHighlighterLinkStyle = document.createElement('link');
   githubLightSyntaxHighlighterLinkStyle.rel = 'stylesheet';
-  githubLightSyntaxHighlighterLinkStyle.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css';
-  githubLightSyntaxHighlighterLinkStyle.integrity = 'sha512-0aPQyyeZrWj9sCA46UlmWgKOP0mUipLQ6OZXu8l4IcAmD2u31EPEy9VcIMvl7SoAaKe8bLXZhYoMaE/in+gcgA==';
+  githubLightSyntaxHighlighterLinkStyle.type = 'text/css';
+  githubLightSyntaxHighlighterLinkStyle.href = '/github.min.css';
   githubLightSyntaxHighlighterLinkStyle.referrerPolicy = 'no-referrer';
   githubLightSyntaxHighlighterLinkStyle.crossorigin="anonymous";
 
   githubDarkSyntaxHighlighterLinkStyle = document.createElement('link');
   githubDarkSyntaxHighlighterLinkStyle.rel = 'stylesheet';
-  githubDarkSyntaxHighlighterLinkStyle.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css';
-  githubDarkSyntaxHighlighterLinkStyle.integrity = 'sha512-rO+olRTkcf304DQBxSWxln8JXCzTHlKnIdnMUwYvQa9/Jd4cQaNkItIUj6Z4nvW1dqK0SKXLbn9h4KwZTNtAyw==';
+  githubDarkSyntaxHighlighterLinkStyle.type = 'text/css';
+  githubDarkSyntaxHighlighterLinkStyle.href = '/github-dark.min.css';
   githubDarkSyntaxHighlighterLinkStyle.referrerPolicy = 'no-referrer';
   githubDarkSyntaxHighlighterLinkStyle.crossorigin="anonymous";
 }
