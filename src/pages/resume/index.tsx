@@ -23,7 +23,7 @@ const ResumePage: React.FC<PageProps> = () => (
         </li>
         <li>
           <a href="https://martinfowler.com/architecture/">Software Architecture</a>,{' '}
-          <a href="http://flsilva.com/blog/what-is-software-testing/">Software Testing</a>,{' '}
+          <a href="/blog/what-is-software-testing/">Software Testing</a>,{' '}
           <a href="https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612/">
             Design Patterns
           </a>
@@ -72,7 +72,7 @@ const ResumePage: React.FC<PageProps> = () => (
         </li>
         <li>
           <a href="http://en.wikipedia.org/wiki/SQL">SQL</a>,{' '}
-          <a href="http://flsilva.com/blog/introduction-to-nosql/">NoSQL</a>,{' '}
+          <a href="/blog/introduction-to-nosql/">NoSQL</a>,{' '}
           <a href="http://www.postgresql.org/">PostgreSQL</a>, <a href="https://redis.io/">Redis</a>
           , <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.
         </li>
@@ -90,7 +90,7 @@ const ResumePage: React.FC<PageProps> = () => (
       <ul className={experience}>
         <li>
           <h6>
-            <a href="http://flsilva.com">Self-Employed</a>
+            <a href="https://flsilva.com">Self-Employed</a>
           </h6>
           <small>since January 2009</small>
           <small>Occupation: Full-Stack Software Engineer</small>
