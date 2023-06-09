@@ -115,6 +115,21 @@ Do not forget to replace all occurences of `flsilva.com` by your domain.
 
 Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
 
+It's a good practice to check for any common errors after changing your website config files. To do that, run the following command:
+
+```shell
+$ sudo nginx -t
+```
+
+You should get the following output:
+
+```bash
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+Otherwise, you'll see some errors.
+
 Next, you'll understand a little bit about this configuration file.
 
 #### Canonical URL
