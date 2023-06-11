@@ -115,8 +115,6 @@ const config: GatsbyConfig = {
           head: true,
           // Setting this parameter is also optional
           respectDNT: true,
-          // Defaults to https://www.googletagmanager.com
-          origin: 'https://flsilva.com',
           // Delays processing pageview events on route update (in milliseconds)
           delayOnRouteUpdate: 0,
         },
