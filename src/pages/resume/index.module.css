@@ -1,3 +1,5 @@
+@import '../../styles/vars.css';
+
 .header h1 {
   margin-block-end: 1rem;
 }
@@ -5,43 +7,36 @@
 .header h3 {
   margin-block-start: -0.5rem;
   margin-block-end: 3rem;
+  font-weight: 600;
+
+  @media $xxsmallScreenMedia {
+    font-size: 1.125rem;
+  }
+  @media $xsmallScreenMedia {
+    font-size: 1.375rem;
+  }
+  @media $smallScreenMedia {
+    font-size: 1.625rem;
+  }
+  @media $midScreenMedia {
+    font-size: 3rem;
+  }
 }
 
 .resume-page small {
   display: block;
+}
+
+.resume-page small:first-child {
   margin-block-start: -0.5rem;
 }
 
-.resume-page .summarySkillset {
-  margin-block-start: -1.75rem;
-  margin-block-end: 0;
-}
+.resume-page h5 {
+  margin-block-start: 2rem;
 
-.resume-page ul li {
-  display: list-item;
-  list-style-type: none;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.resume-page ul li::before {
-  background-color: var(--primary-text-color);
-  border-radius: 50%;
-  content: '';
-  display: block;
-  height: 0.75rem;
-  width: 0.75rem;
-  left: -0.25rem;
-  position: absolute;
-  top: 0.78rem;
-}
-
-.resume-page ul li a {
-  color: var(--primary-text-color);
-}
-
-.resume-page ul li a:hover {
-  color: var(--primary-link-color);
+  &:first-child {
+    margin-block-start: 1rem;
+  }
 }
 
 .resume-page .experience li {

@@ -1,66 +1,82 @@
-/* ## Color variables       ## */
-
 :root {
   color-scheme: light dark;
 }
 
+/* ## Color variables       ## */
+
+/* Light */
+
+$primaryTextColorLight: #050505;
+$secondaryTextColorLight: #8f8f8f;
+$primaryLinkColorLight: #0090ff;
+$primaryBgColorLight: #f5f5f5;
+$primaryWarningColorLight: #eed202;
+$primaryWarningFgColorLight: #ffffc2;
+
 :root.theme-light {
-  --primary-text-color: #050505;
-  --secondary-text-color: #8f8f8f;
-  --primary-link-color: #0090ff;
-  --primary-bg-color: #f5f5f5;
+  --primary-text-color: $primaryTextColorLight;
+  --secondary-text-color: $secondaryTextColorLight;
+  --primary-link-color: $primaryLinkColorLight;
+  --primary-bg-color: $primaryBgColorLight;
+  --primary-warning-color: $primaryWarningColorLight;
+  --primary-warning-fg-color: $primaryWarningFgColorLight;
 }
 
+/* Dark */
+
+$primaryTextColorDark: $primaryBgColorLight;
+$secondaryTextColorDark: $secondaryTextColorLight;
+$primaryLinkColorDark: #2aa2ff;
+$primaryBgColorDark: $primaryTextColorLight;
+$primaryWarningColorDark: $primaryWarningColorLight;
+$primaryWarningFgColorDark: $primaryWarningFgColorLight;
+
 :root.theme-dark {
-  --primary-text-color: #f5f5f5;
-  --secondary-text-color: #8f8f8f;
-  --primary-link-color: #2aa2ff;
-  --primary-bg-color: #050505;
+  --primary-text-color: $primaryTextColorDark;
+  --secondary-text-color: $secondaryTextColorDark;
+  --primary-link-color: $primaryLinkColorDark;
+  --primary-bg-color: $primaryBgColorDark;
+  --primary-warning-color: $primaryWarningColorDark;
+  --primary-warning-fg-color: $primaryWarningFgColorDark;
 }
 
 /* ##                       ## */
 
 /* ## Media Query variables ## */
+$xxsmallScreenWidth: 320px; /* small phones on portrait */
+$xsmallScreenWidth: 375px; /* mid phones on portrait */
+$smallScreenWidth: 412; /* large phones on portrait. value extract from Google Analytics (96% of mobile users of my website has devices with a resolution of 412x823) */
+$midScreenWidth: 768px; /* phones on landscape and portrait tablets */
+$largeScreenWidth: 1024px; /* small notebooks and landscape tablets */
+$xlargeScreenWidth: 1200px; /* notebooks and large tablets */
 
-$mediaXXSmallMaxWidth: 320px; /* portrait small phones */
-$mediaXSmallMaxWidth: 550px; /* portrait large phones */
-$mediaSmallMaxWidth: 767px; /* landscape phones */
-$mediaMidMinWidth: 768px;
-$mediaLargeMinWidth: 1024px;
-$mediaXLargeMinWidth: 1200px;
-
-$mediaMaxXXSmall: only screen and
+$xxsmallScreenMedia: only screen and
   (
-    max-width: $mediaXXSmallMaxWidth
+    min-width: $xxsmallScreenWidth
   );
 
-$mediaMaxXSmall: only screen and
+$xsmallScreenMedia: only screen and
   (
-    max-width: $mediaXXSmallMaxWidth
+    min-width: $xsmallScreenWidth
   );
 
-$mediaMaxSmall: only screen and
+$smallScreenMedia: only screen and
   (
-    max-width: $mediaSmallMaxWidth
+    min-width: $smallScreenWidth
   );
 
-$mediaMaxMid: only screen and
+$midScreenMedia: only screen and
   (
-    max-width: $mediaMidMinWidth
+    min-width: $midScreenWidth
   );
 
-$mediaMinMid: only screen and
+$largeScreenMedia: only screen and
   (
-    min-width: $mediaMidMinWidth
+    min-width: $largeScreenWidth
   );
 
-$mediaMinLarge: only screen and
+$xlargeScreenMedia: only screen and
   (
-    min-width: $mediaLargeMinWidth
-  );
-
-$mediaMinXLarge: only screen and
-  (
-    min-width: $mediaXLargeMinWidth
+    min-width: $xlargeScreenWidth
   );
 /* ##                       ## */

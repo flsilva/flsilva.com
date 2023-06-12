@@ -1,0 +1,36 @@
+@import '../../styles/vars.css';
+
+.anchor {
+  align-items: center;
+  display: flex;
+  height: 2rem;
+  justify-content: center;
+  padding: 0.5rem;
+  width: 2rem;
+
+  svg {
+    height: 1.5rem;
+    width: 1.5rem;
+
+    path {
+      fill: $primaryBgColorLight;
+    }
+  }
+}
+
+.anchor-facebook {
+  background-color: #405b93;
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
+}
+
+.anchor-linkedin {
+  background-color: #0a66c2;
+}
+
+.anchor-twitter {
+  background-color: #50abf1;
+}

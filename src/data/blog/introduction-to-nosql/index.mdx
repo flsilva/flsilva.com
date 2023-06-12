@@ -1,0 +1,282 @@
+---
+author: Flavio Silva
+authorImage: '../../../pages/flavio-thumb.jpg'
+authorUrl: 'https://flsilva.com'
+changefreq: monthly
+contentType: 'blog-post'
+date: '2013-10-08T00:00:00'
+description: Learn what NoSQL is, why it is different, its four main data models (key-value, document, column-family, and graph), when we should use it, and more.
+heroImage: './hero.jpg'
+heroImageCreditText: 'Image by kjpargeter on Freepik'
+heroImageCreditUrl: 'https://www.freepik.com/free-photo/3d-abstract-cyber-network-visualization-design_34940972.htm#&position=23&from_view=undefined'
+priority: 0.6
+slug: 'introduction-to-nosql'
+tags: ['nosql']
+title: Introduction to NoSQL
+tweetText: 'Learn what #NoSQL is, its four main data models (key-value, document, column-family, graph), and more'
+tweetVia: 'flsilva7'
+---
+
+In this article I'll present a brief introduction to what [NoSQL](http://en.wikipedia.org/wiki/NoSQL) is, why to use it, and the basics of its four main data models: [Key-Value](/blog/introduction-to-nosql/#key-value-model), [Document](/blog/introduction-to-nosql/#document-model), [Column-Family](/blog/introduction-to-nosql/#column-family-model) and [Graph](/blog/introduction-to-nosql/#graph-model).
+
+Keep in mind that NoSQL is a vast topic, comprising several different implementations, so you'll see the work "usually" several times here, as this article is not an exhaustive study about all the different databases, but an overview about their features and data models.
+Hopefully, after reading it you'll get a better overview about all the hype around NoQSL and be able to research more effectively about it.
+
+#### RDBMSs
+
+In the last three decades, RDBMSs ([Relational Database Management Systems](http://en.wikipedia.org/wiki/Relational_database_management_system)) were virtually omnipresent in computer software and web applications.
+The concern of architects and developers regarding databases was usually _what_ RDBMS to use, but not _if_ they should use that paradigm or a different one.
+Well, that time is gone now, and the mature architect / developer of today need to know other production-ready alternatives.
+This is not to say relational databases are gone, or will be some day.
+They are a powerful tool which will remain in use, but its omnipresence is surely going to fall.
+And this is very good news, competition is always good.
+The future is "[...] a world of Polyglot Persistence where enterprises, and even individual applications, use multiple technologies for data management." (Sadalage and Fowler xiii)
+
+#### What is NoSQL?
+
+On June 11, 2009, [Johan Oskarsson](https://twitter.com/skr) hosted a meetup in San Francisco named NoSQL.
+He wanted to discuss about non-relational databases, and came up with the term after asking suggestions on the #cassandra IRC channel.
+He wanted something short to make a nice hashtag.
+The term wasn't intended to be used after that, but we know what happened. (Sadalage and Fowler 9)
+
+Because it's not a descriptive term, but nonetheless it was largely adopted, there's no generally accepted definition.
+Some say it means "No SQL", some say it means "Not Only SQL" and others say it means "Non Relational Database".
+For me, the later makes more sense, since NoSQL databases are an alternative to relational ones, not to SQL itself.
+[SQL](http://en.wikipedia.org/wiki/SQL) is an API, a special-purpose programming language designed to manage data held in RDBMSs.
+Obviously, because NoSQL databases are not relational, they don't use SQL.
+Nonetheless, it may be possible to implement a SQL layer over a non-relational database.
+
+Although the term began to gain popularity by 2009, the idea of non-relational databases is much older.
+Oracle's [BerkeleyDB](http://www.oracle.com/technetwork/products/berkeleydb/overview/index.html) (80's) and Google's [Bigtable](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf) (publicly uncovered on 2006) are just two examples.
+In fact, the largest web-based companies are behind this new NoSQL movement, as they need to handle a huge amount of data - [Big Data](http://en.wikipedia.org/wiki/Big_data) - and this is the main issue with relational databases.
+We have [Bigtable](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf) from Google, [Cassandra](http://cassandra.apache.org/) from Facebook, [DynamoDB](http://aws.amazon.com/dynamodb/) from Amazon and [FlockDB](http://en.wikipedia.org/wiki/FlockDB) from Twitter, as some examples.
+
+So, NoSQL is not a technology or a product, or even a data model.
+It's just a term to define a new movement towards non-relational databases, mostly developed in the early 21st century in the context of large-scale data provided by the web, usually sacrificing some consistency for availability and scalability.
+So, when you see the term in this article, keep in mind that I want to mean just that.
+
+Currently, there are [dozens](http://nosql-database.org/) of databases under the NoSQL umbrella, so it just doesn't help to use that term when you want to understand it in details. But there's something that really helps to get a better picture: the data models used by databases.
+
+#### NoSQL data models
+
+Currently, there are four prominent NoSQL data models: [Key-Value](/blog/introduction-to-nosql/#key-value-model), [Document](/blog/introduction-to-nosql/#document-model), [Column-Family](/blog/introduction-to-nosql/#column-family-model) and [Graph](/blog/introduction-to-nosql/#graph-model).
+All of them are schemaless, i.e., no need to define a strict schema before start storing data, as you need with relational databases.
+The first three share more or less a common characteristic: they use keys to store _aggregates_ as values.
+
+#### Aggregates
+
+The term _Aggregate_ was borrowed from Eric Evans (author of [Domain-Driven Design](http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/ref=sr_1_1?ie=UTF8&qid=1380749653&sr=8-1&keywords=domain-driven+design)) by Sadalage and Fowler to name complex records: a collection of related objects, i.e., records that may contain nested data, as nested objects and lists of data. (Sadalage and Fowler 14)
+
+It's very common to application developers to interact with data as aggregates, an approach that resembles objects on [Object-Oriented programming](http://en.wikipedia.org/wiki/Object-oriented_programming).
+
+Consider an example where we have a _Customer_ that has doctor's _Appointments_.
+As several NoSQL databases support [JSON](http://www.json.org/), let's represent data as such:
+
+```json
+{
+  "id": 1,
+  "name": "Flavio Silva",
+  "address": {
+    "city": "São Paulo"
+  },
+  "appointments": [
+    {
+      "id": 1,
+      "date": "2013/09/20",
+      "doctorId": 1
+    },
+    {
+      "id": 2,
+      "date": "2013/10/14",
+      "doctorId": 2
+    }
+  ]
+}
+```
+
+In that model, we have a unique aggregate to represent a customer who has an address and its appointments (as embedded documents inside the main customer document).
+Depending on the way the application will be used, that may be a good fit or not.
+If we want to access all appointments of a doctor, it's not a good way to model it, though.
+In this case, we could have appointments as an independent collection of aggregates.
+But the point is that databases that support aggregates (complex records) are very easy and fast to work with because you don't need to normalize your data as you usually need on relational databases.
+In that case we'd need to have at least one table for customers and another to appointments.
+Furthermore, each table requires an strict schema, which means a bit more work when creating and changing it.
+Aggregates are usually easier to work with.
+Nonetheless, application developers have to think carefully about how data will be manipulated and how the application will be used, as it will guide them on appropriated ways to model aggregates.
+
+###### Advantages:
+
+- Enables databases to run on clusters, but usually an aggregate must live in the same machine (can't split it between nodes).
+- Schemaless. No need to define strict schemas beforehand.
+- Usually, it's faster to query data than relational databases.
+
+###### Disadvantages:
+
+- Sometimes you need to access data in several ways, which may be a problem.
+- Usually, they have no [ACID](http://en.wikipedia.org/wiki/ACID) (Atomicity, Consistency, Isolation, Durability) support crossing aggregates.
+
+#### Key-Value Model
+
+The Key-Value model is a kind of [Hash Table](http://en.wikipedia.org/wiki/Hash_table), where keys are mapped to values.
+To use this model you basically use a unique key (some kind of ID, usually a string) to store an aggregate (value).
+Aggregates on key-value databases are usually opaques (the database don't know its structure), what means we can store several data types, but can only retrieve it through its key (no elaborated query support).
+Nonetheless, it's possible to integrate query / search solutions like [Apache Solr](http://lucene.apache.org/solr/) to such databases (for some data types like JSON, XML).
+
+Key-Value databases are the simplest NoSQL solutions.
+Due to its simplistic nature and usually great performance, they are heavily used not as a primary storage, but rather as some kind of cache for highly accessed data.
+Other common use cases include job queue ([resque](https://github.com/blog/542-introducing-resque), [kue](https://github.com/learnboost/kue)), real time analysis (data analyzed in short amounts of time and them disposed or archived on disk), session management, etc.
+
+Nonetheless, I found [this post (archived)](https://web.archive.org/web/20130620/https://moot.it/blog/technology/redis-as-primary-datastore-wtf.html) from [moot.it](https://moot.it), where they managed to use [Redis](http://redis.io/) as their primary data store. Very impressive.
+
+Example databases: [Memcached](http://memcached.org/), [Redis](http://redis.io/), [Riak](http://basho.com/riak/), [Vedis](http://vedis.symisc.net/).
+
+#### Document Model
+
+The Document model also uses key-value to store data, but here the database can see the structure of the aggregate.
+This way, we can query the database based on fields in aggregates, and it's possible to retrieve parts of an aggregate rather than the whole thing.
+But to be able to do that, document databases impose some restrictions to data structures of its aggregates (e.g. JSON, XML).
+
+Usually, key-value and document databases expect to return the whole aggregate on a single, really simple query.
+Compare this to a relational database, and you can observe a potential huge benefit on performance, where on key-value and document databases it's a simple operation, on a relational database it may require joining several tables, which is always complex and performance expensive.
+On the other hand, the relational model has more flexibility to return data in several (and more granular) ways.
+
+Document databases have broader use cases than Key-Value ones.
+They can be used on content management systems and content-based websites, user generated content (e.g. comments), monitoring systems, product catalog, online gaming (player state, level state, etc), social-network apps (reasonable support for relationships), etc.
+
+Example databases: [CouchDB](http://couchdb.apache.org/), [MongoDB](http://www.mongodb.org/), [RethinkDB](http://www.rethinkdb.com/).
+
+#### Column-Family Model
+
+The column-family model has characteristics of the key-value, document and relational model (but it's schemaless too).
+
+This is an oversimplified way to represent data stored in a relational database (_users_ table):
+
+```json
+id  , name         , age
+123 , Flavio Silva , 28
+456 , Albert King  , 90
+789 , Tony Iommi   , 65
+```
+
+And this is the same data in a column-family database (_users_ column family):
+
+```json
+"Users":
+{
+  "123":
+  {
+    "name":"Flavio Silva",
+    "age":28
+  },
+  "456":
+  {
+    "name":"Albert King",
+    "age":90
+  },
+  "789":
+  {
+    "name":"Tony Iommi",
+    "age":65
+  }
+}
+```
+
+Note that I'm representing all data in JSON format here for didatic purposes, column-family databases do not store data like that.
+
+Several column-families compose this data model, similar to tables in the relational model.
+A column family is a collection of rows, labeled with a key (e.g. "Users").
+Each row is a collection of columns labeled with another key (a row identifier, e.g. "456").
+A row is similar to an aggregate, as you can see in the example, but here the database imposes some structure (columns) to the aggregate.
+And finally, each column is a key-value data (e.g. "age": 90).
+There's no schema, so you can add any column to any row, and rows can have different column keys.
+That structure allows querying a row as a whole, and also for a particular column.
+
+Column-Family databases were designed to handle massive amounts of data, thus they run on clusters (distributed), providing high availability with no single point of failure.
+Not surprisingly, some of the biggest companies in the world are behind most of them: Google, Facebook, Amazon, etc.
+
+Example databases: [Bigtable](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf), [Cassandra](http://cassandra.apache.org/), [Hbase](http://hbase.apache.org/), [SimpleDB](http://aws.amazon.com/simpledb/).
+
+#### Graph Model
+
+The Graph model is an entirely different model than the others.
+It was built to satisfy a scenario where we have lots of relationships between objects.
+In other words, it embraces relationships as first-class citizens.
+The classic example is a social network application.
+Imagine a query where we want to know all the movies tagged "horror" and "japonese", released on 2001, and that only my friends and friends of my friends like.
+On a large scale data, that could be an issue for relational and document databases.
+And very painful to implement on key-value and column-family ones, if somehow possible. But for graph databases it's trivial, it was built to do just that, even on large scale data.
+
+The graph model treats objects as nodes, and relationships as edges, and both can have attributes.
+The query engine is architected with complex relationships in mind, so it's easy to an application developer to implement, and very fast for such databases to execute.
+
+Graph databases usually don't run on clusters, but instead on only one machine, as relational databases.
+On the other hand, they usually do support ACID.
+
+Particularly, graph databases seem amazing for me.
+They match Object-Oriented programming much better than any other model.
+I'm looking forward to use it in a domain model rich on relationships.
+
+Example databases: [DEX (archived)](https://web.archive.org/web/20131005/https://www.sparsity-technologies.com/dex), [FlockDB](http://en.wikipedia.org/wiki/FlockDB), [Neo4J](https://neo4j.com/), [OrientDB](http://www.orientdb.org/).
+
+#### Schemaless or implicit schema?
+
+Usually, the schemalessness feature of NoSQL databases is a bit overstated.
+It's clearly an advantage most of the time, but usually people forget that invariably there will be an implicit schema.
+"This implicit schema is a set of assumptions about the data's structure in the code that manipulates the data. [...]
+Essentially, a schemaless database shifts the schema into the application code that accesses it." (Sadalage and Fowler 29)
+
+As an example, using the prior _Customer_ example, in the code that access and uses that data, we may have something like this:
+
+```javascript
+someCustomer.address.city;
+```
+
+How do we know that a _Customer_ has a property named _address_, that _address_ is an object, and that that object has a _city_ property that is a string?
+Well, that is that set of assumptions.
+But here they aren't explicitly defined in a database as a source of truth, but they are in the application code, and possibly scattered through it, which is not a good idea.
+Of course you can have it well organized using best-practices and design patterns, and you should.
+Also, that means that databases can't validate data coming in, it must be done by the application.
+
+If you need to make more or less complex changes to your database, being it schema or schemaless, you may have a hard time, and even might need to stop the database server until your migration is done.
+So, schemalessness is a good thing most of the time, but it's not without any problems.
+It's not magic.
+
+#### Why NoSQL?
+
+At this time, you know some reasons why you should consider using NoSQL.
+But let's expose some of them more clearly.
+
+###### Scalability
+
+Relational databases are primarily designed to run on a single machine, but applications on the web can grab huge amounts of data.
+Processing large amounts of data in a single node is very expensive compared to clusters of smaller and cheaper nodes ([Vertical Scaling vs Horizontal Scaling](https://social.dnsmadeeasy.com/blog/vertical-and-horizontal-scaling/)).
+Thus, most NoSQL databases are designed explicitly to run on clusters.
+
+###### Application Development Productivity
+
+As the majority of applications written on the last decades use some sort of Object-Oriented programming language, using a relational database results in what's commonly called [_object-relational impedance mismatch_](http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch): the difference between the relational model and the in-memory data structures (usually objects of an Object-Oriented language), considered a major frustration to application developers (Sadalage and Fowler 5).
+That problem requires a non trivial amount of work to translate data to and from those models, and usually means some limitation on your OO modeling, and/or performance issues.
+By freeing up itself from the relational paradigm, NoSQL databases simplifies data mapping.
+
+###### Data Access Performance
+
+Due to a variety of NoSQL databases and its underlying data models, developers have more flexibility to examine and choose the right solution that better fits the application data model and its needs.
+That would result on improved data access performance, and also cost effectiveness.
+
+<br />
+
+Hopefully, now you have a better idea about what NoSQL is and why/when you should use it.
+Keep in mind that everything is still fresh and changing in this topic.
+
+#### Interesting links
+
+[NoSQL - Wikipedia](http://en.wikipedia.org/wiki/NoSQL)<br />
+[What is NoSQL - MongoDB](http://www.mongodb.com/nosql)<br />
+[NoSQL Databases](http://nosql-database.org/)<br />
+[Big Data - Wikipedia](http://en.wikipedia.org/wiki/Big_data)<br />
+[Vertical and Horizontal Scaling - DNS Made Easy](https://social.dnsmadeeasy.com/blog/vertical-and-horizontal-scaling/)<br />
+[Object-relational impedance mismatch - Wikipedia](http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch)
+
+#### Bibliography
+
+Sadalage, Pramod J., and Martin Fowler. _NoSQL Distilled: A Brief Guide to the Emerging World of Polyglot Persistence_. Addison-Wesley Professional, 2012.

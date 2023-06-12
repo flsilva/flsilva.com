@@ -1,18 +1,17 @@
-import * as React from 'react'
-import { Link } from "gatsby"
+import * as React from 'react';
 
-import { LogoDarkSvg } from './LogoDarkSvg'
-import { LogoLightSvg } from './LogoLightSvg'
-import { logo, logoContainer } from './Logo.module.css'
+import { LogoBox2Svg } from './LogoBox2Svg';
+// import { LogoCircle1Svg } from './LogoCircle1Svg'
+// import { LogoTetrisSvg } from './LogoTetrisSvg'
+import { container, logo } from './Logo.module.css';
 
-export const Logo: React.FC = () => {
-  return (
-    <div className={logoContainer}>
-      <div>
-        <LogoDarkSvg />
-        <LogoLightSvg />
-      </div>
-      <h1 className={logo}><Link to="/">flsilva</Link></h1>
+export const Logo: React.FC = () => (
+  <div className={container}>
+    <div>
+      <LogoBox2Svg />
     </div>
-  )
-}
+    <h1 className={logo}>
+      <a href="/">flsilva</a>
+    </h1>
+  </div>
+);

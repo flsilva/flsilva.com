@@ -1,32 +1,21 @@
-import * as React from 'react'
-import { Link } from "gatsby"
-import { changeThemeButtonContainer, mainNav } from './MainNav.module.css'
-import { MoonIconDarkSvg } from '../components/svg/MoonIconDarkSvg'
-import { SunIconLightSvg } from '../components/svg/SunIconLightSvg'
+import * as React from 'react';
+import { container } from './MainNav.module.css';
 
-export const MainNav: React.FC = () => {
-  return (
-    <nav id="main-nav" className={mainNav}>
-      <ul>
-        <li>
-          <a href="/" id="main-nav-blog-button">Blog</a>
-        </li>
-        <li>
-          <a href="/portfolio/" id="main-nav-portfolio-button">Portfolio</a>
-        </li>
-        <li>
-          <a href="/opensource/" id="main-nav-opensource-button">Open Source</a>
-        </li>
-        <li>
-          <Link to="/resume/">Resume</Link>
-        </li>
-        <li className={changeThemeButtonContainer}>
-          <button id="change-theme-button" type="button">
-            <MoonIconDarkSvg />
-            <SunIconLightSvg />
-          </button>
-        </li>
-      </ul>
-    </nav>
-  )
-}
+export const MainNav: React.FC = () => (
+  <nav id="main-nav" className={container}>
+    <ul>
+      <li>
+        <a href="/blog/">Blog</a>
+      </li>
+      <li>
+        <a href="/portfolio/">Portfolio</a>
+      </li>
+      <li>
+        <a href="/open-source/">Open Source</a>
+      </li>
+      <li>
+        <a href="/resume/">Resume</a>
+      </li>
+    </ul>
+  </nav>
+);

@@ -1,0 +1,31 @@
+@import '../../styles/vars.css';
+
+.link-button {
+  /* default styles for $xxsmallScreenMedia */
+  align-self: flex-start;
+  background-color: $primaryTextColorLight;
+  border-radius: 0.5rem;
+  color: $primaryBgColorLight;
+  display: flex;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+
+  &[data-align-self='flex-end'] {
+    align-self: flex-end;
+  }
+
+  @media $xsmallScreenMedia {
+    font-size: 0.875rem;
+    padding: 0.125rem 0.5rem;
+  }
+
+  @media $smallScreenMedia {
+    font-size: 1rem;
+    padding: 0.25rem 1rem;
+  }
+
+  @media $midScreenMedia {
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+  }
+}

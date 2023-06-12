@@ -1,83 +1,82 @@
-import * as React from "react"
-import { StaticImage } from 'gatsby-plugin-image'
-import type { HeadFC, PageProps } from "gatsby"
-import { Layout } from '../layouts/Layout'
-import { SEO } from '../components/SEO'
-import { copyImageContainer, email, header, imageContainer } from './index.module.css'
-/*
-type DataProps = {
-  site: {
-    siteMetadata: {
-      title: string
-    }
-  }
-}
-*/
-const IndexPage: React.FC<PageProps> = () => {
-  return (
-    <Layout>
-      <header className={header}>
-        <h1>Hi, I'm Flavio Silva 👋</h1>
-      </header>
-      <div className={copyImageContainer}>
-        <div className={imageContainer}>
-          <StaticImage
-            alt="Flavio Silva"
-            src="./flavio.jpg"
-            width={400}
-            height={400}
-          />
-        </div>
-        <p>
-          I'm a Brazilian Full-Stack Software Engineer with 18 years of professional industry experience building full-stack web & mobile applications.
-        </p>
-        <p>
-          I started my professional career in 2004, and I've been working remotely from home since 2009 and exclusively for overseas companies and startups since 2013, mainly in the U.S.
-        </p>
-        <p>
-          I've been leading front-end teams since 2007. First on-site, then remotely, working with CEOs, CTOs, managers, and designers.
-        </p>
-        <p>
-          Since 2018 I have specialized in building cross-platform React apps by implementing a single, responsive codebase, sharing about 90% of the codebase with all platforms and only about 10% of platform-specific code. Then, we build it as native iOS and Android apps and as web apps for mobile and desktop browsers. Many businesses can benefit from such a tech strategy by drastically reducing costs and time to market.
-        </p>
-        <p>
-          I have experience with advanced software engineering practices, including Software Architecture, Testing, CI/CD, Agile, and modern technology such as TypeScript, React, React Native, Design Systems, Jest, Node.js, Next.js, Remix, AWS AppSync, Ruby on Rails, PostgreSQL, and GraphQL.
-        </p>
-        <p>
-          Please <a href="mailto:flsilva7@gmail.com">get in touch</a> if you're looking to build full-stack cross-platform apps.
-        </p>
-        <p>
-          And while you're here, look at my resume, portfolio, open-source projects, and blog for more information about my work.
-        </p>
-        <p>
-          Thank you for reading.
-        </p>
-        <p>
-          <br />
-          <a href="https://www.google.com/maps/place/Florian%C3%B3polis,+SC/@7.7500839,-57.3472604,3z/data=!4m5!3m4!1s0x9527394eb2c632d7:0x81bc550b6a04c746!8m2!3d-27.5948036!4d-48.5569286" target="_blank">
-            Florianópolis
-          </a>
-          , December 2022.
-          <br />
-          Flavio Silva
-          <br />
-          <a href="mailto:flsilva7@gmail.com" className={email}>flsilva7@gmail.com</a>
-        </p>
-      </div>
-    </Layout>
-  )
-}
-/*
-export const query = graphql`
-  query IndexPage {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
-*/
-export default IndexPage
+import * as React from 'react';
+import type { HeadFC, PageProps } from 'gatsby';
+import { StaticImage } from 'gatsby-plugin-image';
+import { Layout } from '../components/layouts/Layout';
+import { SEO } from '../components/SEO';
+import { Recommendation } from '../components/recommendations/Recommendation';
+import { Recommendations } from '../components/recommendations/Recommendations';
+import { copyImageContainer, header, imageContainer } from './index.module.css';
 
-export const Head: HeadFC = () => <SEO title="Home" />
+const IndexPage: React.FC<PageProps> = () => (
+  <Layout>
+    <header className={header}>
+      <h1>Hi, I&#39;m Flavio 👋</h1>
+    </header>
+    <div className={copyImageContainer}>
+      <div className={imageContainer}>
+        <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
+      </div>
+      <p>
+        I&#39;m a Brazilian Full-Stack Software Engineer with 19 years of professional industry
+        experience. I&#39;ve been leading front-end teams since 2007 and working remotely from home
+        since 2009.
+      </p>
+      <p>
+        Since 2018 I&#39;ve specialized in building cross-platform React apps by implementing a
+        single, responsive codebase, sharing about 90% of the front-end codebase with all platforms.
+        That enables developers to build the codebase as native iOS and Android apps and as a web
+        app for mobile and desktop browsers. Many businesses can benefit from such a tech strategy
+        by drastically reducing costs and time to market.
+      </p>
+      <p>
+        I have also experience building back-end systems using tools like Node.js, Ruby on Rails,
+        AWS AppSync, and GraphQL and applying advanced software engineering practices, including
+        software architecture, testing, and CI/CD.
+      </p>
+      <p>
+        Please&nbsp;
+        <a href="mailto:flsilva7@gmail.com">get in touch</a> if you&#39;re looking to build
+        full-stack cross-platform apps.
+      </p>
+      <Recommendations>
+        <Recommendation
+          imgComponent={<StaticImage alt="Kate Frucher" src="./kate-frucher.jpg" />}
+          name="Kate Frucher"
+          position="Managing Director | Co–Founder"
+        >
+          Flavio is both fast and thorough. But I was particularly struck by the deep thoughtfulness
+          and helpfulness he brought to the team, and by the smile and positive spirit he shared,
+          every day.
+        </Recommendation>
+        <Recommendation
+          imgComponent={<StaticImage alt="Seyi Moon" src="./seyi-moon.jpg" />}
+          name="Seyi Moon"
+          position="Manager"
+        >
+          Flavio not only has superb communication skills, but he&#39;s also a proactive problem
+          solver. He will go above and beyond what is asked of him to make sure the team and the
+          project will succeed.
+        </Recommendation>
+        <Recommendation
+          imgComponent={<StaticImage alt="Richard Broo" src="./richard-broo.jpg" />}
+          name="Richard Broo"
+          position="Co-Founder"
+        >
+          Flavio came in a freelance developer to help us develop a large platform MVP for a client.
+          He proved himself beyond valuable in ideas and execution. I would recommend him for any
+          project challenge, as he will rise to the occasion.
+        </Recommendation>
+      </Recommendations>
+    </div>
+  </Layout>
+);
+
+export default IndexPage;
+
+export const Head: HeadFC = () => (
+  <SEO
+    description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my website to learn more about me and my work."
+    pagePath=""
+    title="About Flavio Silva - Full-Stack Software Engineer"
+  />
+);

@@ -1,0 +1,82 @@
+---
+author: Flavio Silva
+authorImage: '../../../pages/flavio-thumb.jpg'
+authorUrl: 'https://flsilva.com'
+changefreq: monthly
+contentType: 'blog-post'
+date: '2013-01-14T00:00:00'
+description: Sometimes tricky issues arise in software development, but not all are bugs. In this article you'll learn solid parameters to make sure something really is a bug.
+heroImage: './hero.jpg'
+heroImageCreditText: 'Image by kuritafsheen77 on Freepik'
+heroImageCreditUrl: 'https://www.freepik.com/free-photo/grasshopper-closeup-green-leaves-grasshopper-closeup-with-natural-background_27219202.htm#page=2&query=bug&position=7&from_view=search&track=sph'
+priority: 0.6
+slug: 'what-really-is-a-software-bug'
+tags: ['software-testing']
+title: What is a software bug?
+tweetText: 'Learn solid parameters to make sure whether tricky issues are really bugs or not.'
+tweetVia: 'flsilva7'
+---
+
+Sometimes we neglect what really is a _bug_. Of course there are obvious _bugs_ which you don't need to seriously think about it, but sometimes it may be difficult to evaluate if something really is a _bug_ or not. In the software development process several issues may arise, and not all of them are necessarily _bugs_.
+
+Since bugs are a central piece in software development and testing we need an accurate description about what it is, so when those tricky ones occur we are able to make an accurate judgement about it.
+
+There are several names for software bugs such as _errors_, _problems_, _failures_, _defects_, etc. Just by listing these variations we have a better idea of what it is: some type of error, of course.
+But this is a very narrow definition because it's impossible to firmly state whether something really is a bug based solely on it. We need solid parameters to be able to decide whether something really is a bug or not.
+I have found such solid parameters on Patton (6-7):
+
+1. The software doesn't do something that the product specification says it should do.
+2. The software does something that the product specification says it shouldn't do.
+3. The software does something that the product specification doesn't mention.
+4. The software doesn't do something that the product specification doesn't mention but should.
+5. The software is difficult to understand, hard to use, slow, or—in the software tester's eyes —will be viewed by the end user as just plain not right.
+
+The first two items are quite straightforward, but some questions may rise about the others.
+
+For the third item, suppose a developer implementing a nice _extra_ feature.
+Although it may be a nice feature, it may have side effects.
+The software tester will have more work to do, it may introduce more bugs or it may be part of a future release of the product (messing up with such a plan).
+If you are a developer and have an idea for a new feature, talk about it to your team first.
+
+The fourth item conflict with the third one, but it exists because no specification is perfect and will never cover every detail of the product.
+So here common sense and good communication must prevail.
+Ideally, the specification should be updated with new issues.
+
+The fifth item covers any other possible bug, such as: a GUI icon is very small, a scrollbar is hard to use, a text is blurred, it's difficult to find a piece of information, etc.
+As you can see it demands a lot of common sense and real world experience from the person who is testing, since those possible bugs might be subjective in some degree.
+
+You may have noticed that only the fifth item doesn't mention a [product specification](/blog/what-is-a-product-specification/).
+This is due to the fact that it is a key documentation which must exist for any product.
+For more information about it please read my article [What is a Product Specification?](/blog/what-is-a-product-specification/).
+
+Another important issue to note is the difference between a bug itself, from a _failure_ in the software.
+While a bug is the error itself, the _root cause_ of something bad, a _failure_ is its consequence, its effect in the running software.
+To illustrate this, consider a failure when you perform some operation in a software by pressing some UI button.
+That failure might be caused by a bug in a previous screen, or even by a bug in the software's server-side API, returning an invalid data format.
+Also, a single bug may trigger multiple failures.
+
+When a bug exists, but no one hit its failure, it's called a _latent bug_ (Patton 30).
+
+Note that the way I'm using the terms _bug_ and _failure_ in this article is not universal.
+People may use different terms, and that's ok.
+The important thing is that in the context of a discussion, in the context of a team, everyone is on the same page.
+I've chose bug as the _root cause_ and _failure_ as its consequence because they are very popular terms.
+When the _bug_ term was coined it referred to the _root cause_ of a _failure_: when a real life bug triggered a _failure_ in the system.
+
+I've found those concepts quite revealing and useful not only for myself, as a software developer and tester, but also for whole teams (project coordinators, QA professionals, etc), helping to improve teamwork communication and software's quality.
+
+#### Related posts
+
+[What is Software Testing?](/blog/what-is-software-testing/)<br />
+[Testing is NOT Quality Assurance (QA)](/blog/testing-is-not-quality-assurance-qa/)<br />
+[What is a Product Specification?](/blog/what-is-a-product-specification/)<br />
+[How to Report Bugs Effectively?](/blog/how-to-report-bugs-effectively/)
+
+#### Interesting links
+
+[Software bug (Wikipedia)](https://en.wikipedia.org/wiki/Software_bug)<br />
+[List of software bugs (Wikipedia)](https://en.wikipedia.org/wiki/List_of_software_bugs)
+
+#### Bibliography
+
+Patton, Ron. _Software Testing_. 2nd ed. Sams, 2005.

@@ -1,29 +1,34 @@
-@import "../styles/vars.css";
+@import '../styles/vars.css';
 
-.main-header {
-  align-items: center;
-  flex-direction: row;
+.container {
+  align-items: flex-start;
+  flex-direction: column;
   margin-top: 1rem;
-  @media $mediaMaxSmall {
-    align-items: flex-start;
-    flex-direction: column;
+
+  @media $midScreenMedia {
+    margin-top: 0;
+    align-items: center;
+    flex-direction: row;
   }
 }
 
-.logo-and-hamburger-menu-button {
+.logo-and-hamburger-menu-button-container {
   align-items: center;
   flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 
-  @media $mediaMaxSmall {
-    justify-content: space-between;
-    width: 100%;
+  @media $midScreenMedia {
+    justify-content: flex-start;
+    width: auto;
   }
 }
 
 .hamburger-menu-button {
-  display: none;
-  @media $mediaMaxSmall {
-    display: flex;
-    margin-bottom: 0.625rem;
+  display: flex;
+  margin-bottom: 0.625rem;
+
+  @media $midScreenMedia {
+    display: none;
   }
 }

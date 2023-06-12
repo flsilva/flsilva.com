@@ -1,0 +1,27 @@
+@import '../../styles/vars.css';
+
+.title {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.text-tap-to-see {
+  display: block;
+  margin: -1.25rem 0 3rem;
+  text-align: center;
+}
+
+.recommendations-list-container {
+  align-items: center;
+}
+
+.recommendations-list {
+  cursor: pointer;
+  flex-direction: column;
+  gap: 3rem;
+
+  @media $midScreenMedia {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}

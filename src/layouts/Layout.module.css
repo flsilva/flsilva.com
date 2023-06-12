@@ -15,23 +15,12 @@
   box-sizing: border-box;
   padding: 0 2rem;
   width: 100%;
-  /*
-  @media $mediaMaxXSmall {
-    width: calc($mediaXSmallMaxWidth - 4rem);
-  }
-  @media $mediaMaxSmall {
-    width: calc($mediaSmallMaxWidth - 4rem);
-  }
-  @media $mediaMinMid {
-    width: calc($mediaMidMinWidth - 4rem);
-  }
-  */
+
   @media $mediaMinLarge {
-    /*width: calc($mediaLargeMinWidth - 4rem);*/
     width: $mediaLargeMinWidth;
   }
+
   @media $mediaMinXLarge {
-    /*width: calc($mediaXLargeMinWidth - 4rem);*/
     width: $mediaXLargeMinWidth;
   }
 }
