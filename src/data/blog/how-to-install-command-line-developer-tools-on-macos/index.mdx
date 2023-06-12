@@ -1,0 +1,88 @@
+---
+author: Flavio Silva
+authorImage: '../../../pages/flavio-thumb.jpg'
+authorUrl: 'https://flsilva.com'
+changefreq: monthly
+contentType: 'blog-post'
+date: '2023-06-12T00:00:00'
+description: Installing the Command Line Developer Tools is the first thing you must do when setting up your Mac for software development. But you don't have to download Apple's huge xCode for that. Learn how in this short guide.
+heroImage: './hero.jpg'
+heroImageCreditText: 'Image by Freepik'
+heroImageCreditUrl: 'https://www.freepik.com/free-vector/flat-design-cms-illustration_12067674.htm'
+priority: 0.6
+slug: 'how-to-install-command-line-developer-tools-on-macos'
+tags: ['macOS']
+title: How to install Command Line Developer Tools on macOS
+tweetText: "Installing the Command Line Developer Tools is the first thing you must do when setting up your Mac for software development. But you don't have to download Apple's huge xCode for that. Learn how in this short guide."
+tweetVia: 'flsilva7'
+---
+
+import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+
+I last tested these instructions on macOS Ventura 13.3.1.
+
+#### What are the Command Line Developer Tools, and why do I need them?
+
+**Note:** If you know you will install [Xcode](https://developer.apple.com/xcode/), you don't have to follow this guide to install the Command Line Developer Tools as it's installed when you install Xcode. Otherwise, you can follow this guide to install it, as Xcode is much heavier to download and install (7+GB), and the tools are lightweight.
+
+Installing the Command Line Developer Tools is the first thing you must do when setting up your Mac for software development.
+
+It enhances the development capabilities of macOS by providing a robust set of development tools, including compilers, debugging tools, and other essential components necessary for building and maintaining software applications.
+
+So let's get it installed.
+
+<WarningBoxNoRunDollarSign />
+
+#### Step 1. Make sure your macOS is up to date
+
+Before proceeding, make sure your macOS is up to date. Otherwise, you might get an error installing the Command Line Developer Tools.
+
+#### Step 2. Check if you already have the Command Line Developer Tools installed
+
+Launch the Terminal and run the following command:
+
+```shell
+$ gcc --version
+```
+
+If you already have the Command Line Developer Tools installed, you should see an output including the following:
+
+```bash
+Apple clang version 14.0.3 (clang-1403.0.22.14.1)
+```
+
+If you don't have it installed, you should see a standard message on the Terminal starting with the following:
+
+```bash
+xcode-select: note: No developer tools were found, requesting install.
+```
+
+And a popup window should show up with the following message:
+
+```bash
+The "gcc" command requires the command line developer tools. Would you like to install the tools now?
+```
+
+#### Step 3. Install the Command Line Developer Tools
+
+Go ahead and hit the `Install` button. It should take only a few minutes.
+
+If everything succeeds, you should see a message like `The software was installed.`
+
+#### Step 4. Check the installation
+
+Run `$ gcc --version` again to check if everything worked as expected. You should see an output including the following:
+
+```bash
+Apple clang version 14.0.3 (clang-1403.0.22.14.1)
+```
+
+You're done. Congrats! You now have the Command Line Developer Tools installed.
+
+If you plan to implement native macOS, iOS, watchOS, or TvOS apps, you can install Xcode from Apple's App Store.
+
+#### Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
