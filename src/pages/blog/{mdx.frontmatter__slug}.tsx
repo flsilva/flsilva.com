@@ -100,9 +100,12 @@ export default BlogPostPage;
 
 export const Head: HeadFC<PageProps<Queries.BlogPostQuery>> = ({ data }) => (
   <SEO
+    authorName={data.mdx.frontmatter.author}
     description={data.mdx.frontmatter.description}
+    imagePath={data.mdx.frontmatter.heroImage}
     title={data.mdx?.frontmatter.title}
     pagePath={`/blog/${data.mdx.frontmatter.slug}`}
     title={`${data.mdx.frontmatter.title}`}
+    tweetVia={`${data.mdx.frontmatter.tweetVia}`}
   />
 );
