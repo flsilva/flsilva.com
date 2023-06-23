@@ -1,0 +1,234 @@
+---
+author: Flavio Silva
+authorImage: '../../../pages/flavio-thumb.jpg'
+authorUrl: 'https://flsilva.com'
+changefreq: monthly
+contentType: 'blog-post'
+date: '2023-06-23T00:00:00'
+description: In this step-by-step guide, you'll learn how to sign your Git commits and tags using SSH keys on macOS, how to set up Git to remember your passphrase, and how to verify your signed commits and tags locally and on GitHub.
+heroImage: './hero.jpg'
+heroImageCreditText: 'Image by Freepik'
+heroImageCreditUrl: 'https://www.freepik.com/free-vector/neon-fingerprint-background_6148287.htm'
+priority: 0.6
+slug: 'how-to-sign-git-commits-ssh-keys-macos'
+tags: ['git', 'macos', 'security', 'ssh-keys']
+title: How to sign Git commits with SSH keys on macOS
+tweetText: 'How to sign Git commits with SSH keys on macOS.'
+tweetVia: 'flsilva7'
+---
+
+import { AITools } from '../../../components/boxes/AITools';
+import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+
+I last tested these instructions on macOS Ventura 13.3.1.
+
+#### Introduction
+
+In this step-by-step guide, you'll learn how to sign your Git commits and tags using SSH keys on macOS, how to set up Git to remember your passphrase, and how to verify your signed commits and tags locally and on GitHub.
+
+#### Prerequisite: SSH keys
+
+If you need to generate SSH keys on your macOS or need clarification, head to my guide on [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/).
+
+#### What are signed Git commits, and why should we do that?
+
+A signed Git commit is a commit that includes a cryptographic signature created using a [GPG](https://gnupg.org/) or [SSH key](/blog/how-to-generate-use-ssh-keys-macos/#what-are-ssh-keys-and-why-should-we-use-them).
+
+When we sign a Git commit, we ensure a trusted entity has made it. If anyone modifies a signed commit, the signature is lost, which means it's been tampered with.
+
+<WarningBoxNoRunDollarSign />
+
+#### How to sign Git commits with SSH keys
+
+First, we set up Git to use SSH keys to sign our commits since it supports other alternatives:
+
+```shell
+$ git config --global gpg.format ssh
+```
+
+It gives no output.
+
+Then we set up Git with the SSH key to use to sign our commits (change the file name and path if necessary):
+
+```shell
+$ git config --global user.signingkey ~/.ssh/id_ed25519
+```
+
+Again, no output.
+
+At this point, you can already sign your commits. But to do that, you have to pass the `-S` argument to the `git commit` command as follows:
+
+```shell
+$ git commit -S -m "Commit message."
+```
+
+You should be prompted to type your passphrase.
+
+But what you probably want is to sign your commits automatically. We set up Git to do that by running the following command:
+
+```shell
+$ git config --global commit.gpgsign true
+```
+
+Again, no output.
+
+If you want to sign a Git tag, you can manually do that by running the following (for an annotated tag):
+
+```shell
+$ git tag -s -a tag-name -m "tag message."
+```
+
+The only change from a non-signed tag is passing the `s` option.
+
+But again, what you probably want is to sign your tags automatically. We set up Git to do that by running the following command:
+
+```shell
+$ git config --global tag.gpgsign true
+```
+
+With those Git configurations, you can sign your commits and tags and see them signed on [GitHub](https://github.com/) (after setting it up, which we'll see how in a moment).
+
+At this point, you should be prompted to type your passphrase every time you sign a commit or tag if you added a passphrase to your keys ([you should!](/blog/how-to-generate-use-ssh-keys-macos/#what-are-passphrases-and-why-should-we-use-them) 👀), which is annoying. So let's eliminate that now.
+
+#### How to set up Git to remember your passphrase
+
+**Note:** You don't have to worry about setting up Git to remember your passphrase if you're not using a passphrase for your private key.
+
+Unfortunately, I couldn't get this working with Apple's Keychain, only with `ssh-agent`, which means it does work but doesn't persist on reboots. Please let me know in the comments below if you know how to do that. I'd love to know how to do that and update this post. I tried many versions of the `git config --global core.sshCommand` command, but none worked.
+
+To eliminate the need to type our passphrase every time we sign a commit or tag, you only have to run the following command (change the file name and path if necessary):
+
+```shell
+$ ssh-add ~/.ssh/id_ed25519
+```
+
+You should be asked to type your passphrase (I know). Then, you should see the following message:
+
+```bash
+Identity added: <path to your private key>
+```
+
+You shouldn't have to type your passphrase until you reboot your Mac. When you do, run the command above again.
+
+#### How to verify signed Git commits and tags locally
+
+You must do a few things to verify your signed commits and tags locally.
+
+First, go ahead and create a signed commit. If you set up Git to sign your commits automatically, you just have to run a regular `git commit` command. Otherwise, pass the `-S` option to it, as shown previously.
+
+Now, run the following to check your last three commits, which includes the last one, the signed one:
+
+```shell
+$ git log -3 --show-signature
+```
+
+Even though your commit is signed (you can see it verified on GitHub once you set it up later), you can't verify it locally. So you should see a message like the following attached to a commit that is signed:
+
+```bash
+error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+...
+No signature
+```
+
+Don't worry. Let's make it work.
+
+First, we need to create an `allowed_signers` file. We use this file to add the identification (email) and public key of each committer we want to verify the signature. That is sensitive information. Because of that, where to put this file and if we should check it in our project's repository is open to debate. There are pros and cons to each choice.
+
+Let's keep it safe and simple and add it outside of our project and not check it into our repository. A common place to put it outside a project directory is in your `~/.ssh` folder, alongside your SSH keys.
+
+So let's do that by running the following command:
+
+```shell
+$ touch ~/.ssh/allowed_signers
+```
+
+Now let's add our email and public SSH key to it by running the following command (change the path and name of your public key if necessary):
+
+```shell
+$ echo "$(git config --get user.email) namespaces=\"git\" $(cat ~/.ssh/id_ed25519.pub)" >> ~/.ssh/allowed_signers
+```
+
+Open your `allowed_signers` file and check if your public key was added.
+
+You'll have to do this for each committer you want to verify the signature locally.
+
+The last step is to set up Git to use that file. We do that by running the following command:
+
+```shell
+$ git config --global gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
+```
+
+It gives no output.
+
+Now let's try to check our signed commits locally by running the following command:
+
+```shell
+$ git log -3 --show-signature
+```
+
+You should see a message like the following on your signed commit:
+
+```bash
+Good "git" signature for <your_email> with ED25519 key SHA256:...
+```
+
+To verify a signed tag, run the following:
+
+```shell
+$ git tag -v tag-name
+```
+
+If there are any issues, you should see a message like the following:
+
+```bash
+[...]
+error: no signature found
+```
+
+Otherwise, you should see the same successful `Good "git" signature` message from when you verified a commit above.
+
+Awesome, it works! 🎉
+
+You can now automatically sign your commits and tags and verify them locally.
+
+But what about GitHub?
+
+#### How to verify your signed Git commits on GitHub
+
+To verify your signed Git commits on GitHub, i.e., make GitHub display `Verified` alongside your signed commits, you add your **public** key to GitHub. Make sure you use the file ending with `.pub`. Otherwise, you will expose your private key. If that happens, you should delete the pair (public and private keys) and generate new ones. Remember, they're text files on your filesystem, so you only have to delete them.
+
+I could describe the steps here to add it to GitHub, but GitHub itself has a [page dedicated to it](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account), so you can follow the steps there and get back here to test if it works and finish reading this guide. **Make sure you select** `Signing Key` on the `Key type` dropdown instead of `Authentication Key`.
+
+You can use the same public key as your `Authentication Key` (used to connect to GitHub via SSH) and your `Signing Key` (used to sign Git commits) or have a different one. It's up to you.
+
+After doing that, when you look at your signed commits on GitHub, you should see a green `Verified` label attached to them.
+
+Congrats, you're all set up now! 🥳
+
+#### Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
+
+Are you new to Git? If so, head to my [Introduction to Git](/blog/introducing-git/).
+
+<br />
+<br />
+<br />
+
+<AITools />
+
+<br />
+<br />
+
+#### Related posts
+
+[How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/)<br />
+[What are SSH keys, and why should we use them?](/blog/how-to-generate-use-ssh-keys-macos/#what-are-ssh-keys-and-why-should-we-use-them)<br />
+[How to install Git with Homebrew on macOS](/blog/how-to-install-git-with-homebrew-on-macos/)<br />
+[Introduction to Git](/blog/introducing-git/)
+
+#### Interesting links
+
+[Adding a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
