@@ -5,7 +5,7 @@ authorUrl: 'https://flsilva.com'
 changefreq: monthly
 contentType: 'blog-post'
 date: '2014-05-12T00:00:00'
-dateUpdated: '2023-04-07T00:00:00'
+dateUpdated: '2023-06-24T00:00:00'
 description: 'Learn how to securely set up a Debian or Ubuntu VPS (Virtual Private Server) from scratch in 11 steps.'
 heroImage: './hero.jpg'
 heroImageCreditText: 'Image by DCStudio on Freepik'
@@ -510,37 +510,31 @@ Now your server is a little less exposed.
 #### Step 10. Using SSH key pair authentication
 
 Now, you should start using SSH key pair authentication, disabling password authentication entirely.
-That's a more secure way to log in, as it protects you against brute-force password attacks.
 
-You'll generate a public and private key pair **on your local machine** by running the following command:
+That's a more secure way to log in, as it protects you against brute-force password attacks and provides other advantages.
 
-First, log out from your server:
+If you're on a Mac and need to generate SSH keys or need clarification, head to my guide on [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/).
+
+In that case, you'll generate a public and private key pair **on your local machine**. So first, log out from your server:
 
 ```shell
 $ logout
 ```
 
-Then generate the keys **on your local machine**:
+Then, go ahead and follow that step-by-step guide, then come back here to proceed.
 
-```shell
-$ ssh-keygen
-```
-
-Follow the **keygen** instructions on the screen. You don't need to create a passphrase, it's optional.
-
-The command will create two files in your `~/.ssh` directory. `id_rsa` is your private key, do not share it with anyone. `id_rsa.pub` is your public key, and you'll upload it to your server.
-When you try to authenticate, SSH will match the server's public key with your local private key.
-
-Let's upload your public key to your server using the _security copy_ command (`$ scp`).
+Now that you have your SSH keys, let's upload your **public key** to your server using the [_security copy_](https://www.ssh.com/academy/ssh/scp) command (`$ scp`).
 For Windows you can use [WinSCP](http://winscp.net/eng/index.php).
 
 ```shell
-$ scp ~/.ssh/id_rsa.pub deploy@123.456.78.90:
+$ scp ~/.ssh/id_ed25519.pub deploy@123.456.78.90:
 ```
+
+Change the file name and path if necessary.
 
 Don't forget the `:` character at the end of the command! 😉
 
-Now let's log into your server (still using a password) and move the file to the appropriate directory:
+Now, let's log into your server still using a password and move the file to the appropriate directory:
 
 ```shell
 $ ssh deploy@123.456.78.90
@@ -548,7 +542,7 @@ $ mkdir .ssh
 $ mv id_rsa.pub .ssh/authorized_keys
 ```
 
-Now let's modify the permissions of the `.ssh` directory and public key file (replace `deploy` with your username):
+Now let's modify the permissions of the `.ssh` directory and the public key file (replace `deploy` with your username):
 
 ```shell
 $ chown -R deploy:deploy .ssh
@@ -566,34 +560,18 @@ $ ssh deploy@123.456.78.90
 Congratulations!
 You now have SSH key pair authentication working!
 
-If you're on a macOS machine, you must run the following command whenever you restart your computer:
-
-```shell
-$ ssh-add --apple-use-keychain
-```
-
-You should see a message like the following:
-
-```bash
-Identity added: <path to your private key>
-```
-
-Otherwise, you'll be asked to type a passphrase or a password.
-That happens because your keys are stored in your drive, but to be used, they need to be stored in Apple's Keychain software, and that's what that command does.
-Hopefully, you only need to do that when you restart your computer. 😅
-
 Now, you still need to disable password authentication to make your server even more secure.
 So let's do that!
 
 #### Step 11. Disabling SSH password authentication and `root` login
 
 <WarningBox>
-  If you disable password authentication, and by any reason you can't use your local machine (which
-  has your private key installed), you'll not be able to log in from another machine. So I recommend
-  you to have an external (and secure) backup of your private key file (`id_rsa`). Also, you can
-  install your private key to another machine you own by copying to `.ssh/` directory, making it
-  enabled to connect to your server right away. That way, if there's any issue with your primary
-  machine, you can easily log in through another one.
+  If you disable password authentication, and by any reason you can't use your local machine, which
+  has your private key file, you'll not be able to log in from another machine. So I recommend you
+  to have an external and secure backup of both your public and private key files (`id_ed25519` and
+  `id_ed25519.pub`). Also, you can copy your public and private keys to another machine you own,
+  making it enabled to connect to your server right away. That way, if there's any issue with your
+  primary machine, you can easily log in using another one.
 </WarningBox>
 
 Open the SSH configuration file:
