@@ -1,0 +1,593 @@
+---
+author: Flavio Silva
+authorImage: '../../../pages/flavio-thumb.jpg'
+authorUrl: 'https://flsilva.com'
+changefreq: monthly
+contentType: 'blog-post'
+date: '2023-06-29T00:00:00'
+description: Learn how to set up HTTPS on a Linux server using a wildcard certificate from Let's Encrypt and set up the Nginx website configuration files accordingly.
+heroImage: './hero.jpg'
+heroImageCreditText: 'Image by Freepik'
+heroImageCreditUrl: 'https://www.freepik.com/free-vector/flat-design-ssl-illustration_22112343.htm'
+priority: 0.6
+slug: 'how-to-wildcard-https-tls-linux-lets-encrypt-nginx'
+tags: ['https', 'lets-encrypt', 'linux', 'nginx', 'security', 'sysadmin', 'tls']
+title: Wildcard HTTPS on Linux + Let's Encrypt + Nginx
+tweetText: "Wildcard HTTPS on Linux + Let's Encrypt + Nginx"
+tweetVia: 'flsilva7'
+---
+
+import { AITools } from '../../../components/boxes/AITools';
+import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+
+#### Introduction
+
+In this step-by-step guide, you'll learn how to set up HTTPS on a Linux server for both the root domain and its subdomains. You'll also learn how to use an auto-renewing wildcard certificate from Let's Encrypt and set up the Nginx website configuration files accordingly.
+
+Head to my article [What are HTTPS, TLS certificates, and Let's Encrypt?](/blog/what-are-https-tls-certificates-and-lets-encrypt) if you want an introduction, including what Certbot is and the difference between regular certificates and wildcard certificates.
+
+#### Regular certificates vs. wildcard certificates
+
+In this guide, we'll obtain a regular certificate to secure the `flsilva.com` root domain and a wildcard certificate to secure `*.flsilva.com`. That's more cumbersome, with a few extra steps required. Still, we'll do that with a single certificate issuing command, giving the impression that we only obtain one certificate.
+
+#### My system setup
+
+The following is my system setup at the time of this writing:
+
+```bash
+Debian: 11
+Linux Kernel: 5.10.0-11-amd64
+Nginx: 1.18.0
+Certbot: 1.12.0
+dnsimple.com (as provided on the publish date)
+```
+
+This guide should also work on [Ubuntu](https://ubuntu.com/).
+
+<WarningBoxNoRunDollarSign />
+
+#### About the Nginx plugin for Certbot
+
+There's an [Nginx plugin for Certbot](https://eff-certbot.readthedocs.io/en/stable/using.html#nginx) to automatically change your [Nginx](https://www.nginx.com/) website configuration files, adding TLS certification configuration. But we cannot use it alongside a [DNS plugin for Certbot](https://eff-certbot.readthedocs.io/en/stable/using.html#dns-plugins) that makes auto-renewing certificates possible.
+
+In this guide, we'll go with the latter and manually change Nginx's website configuration files.
+
+In case you're curious, this is how you install the Nginx plugin for Certbot:
+
+```shell
+$ sudo apt install python3-certbot-nginx
+```
+
+You pass a `--nginx` option to the `certbot` command to use it. But again, we won't do that in this guide, so you don't need to run the command above.
+
+#### Prerequisites
+
+Before starting, make sure you have met all the following requirements:
+
+1. A Linux server you can access via SSH and the ability to run `sudo`. If you don't, head to my guide on [How to set up a Linux VPS](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/).
+2. Nginx installed on it. If you don't, head to my guide on [How to install Nginx on Linux](/blog/how-to-install-nginx-tutorial-ubuntu-and-debian/).
+3. Nginx listening to port 80 and serving your website over HTTP. If you don't, head to my guide on [How to set up a website on Nginx + Linux](/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/).
+4. Access to your [DNS provider](https://en.wikipedia.org/wiki/DNS_hosting_service) and the ability to create an access token and a wildcard (`*`) DNS record (we'll see how to do that). Also, your DNS provider must have a Certbot plugin. [This page](https://eff-certbot.readthedocs.io/en/stable/using.html#dns-plugins) lists supported DNS plugins. I can't say if that's a comprehensive list, but many popular providers are listed there. Go check out if yours is.
+
+All good? So let's do this! 😎
+
+#### Step 1. Updating your Linux distro
+
+It's always a good practice to start with everything up to date. So, first, let's update our Linux distro:
+
+```shell
+$ sudo apt-get update
+$ sudo apt-get upgrade --show-upgraded
+```
+
+#### Step 2. Install Certbot
+
+Run the following command to install Certbot:
+
+```shell
+$ sudo apt install certbot
+```
+
+#### Step 3. Check the Certbot installation
+
+Now run the following command to make sure it worked:
+
+```shell
+$ certbot --version
+```
+
+You should see something like `certbot 1.12.0`.
+
+#### Step 4. Make sure you don't have any certificates on your server
+
+Now, let's run the following command to make sure you don't have any certificates on your server:
+
+```shell
+$ sudo certbot certificates
+```
+
+You should see the following output:
+
+```bash
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+No certificates found.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+Great, that's expected. We'll rerun it after trying to obtain our certificate to ensure it's worked.
+
+#### Step 5. Install the Certbot plugin for your DNS provider
+
+This plugin is necessary for wildcard certificates, as it needs to resolve challenges directly with your DNS provider ([DNSimple](https://dnsimple.com/), in my case) and to auto-renew our certificates.
+
+I'm using DNSimple as my DNS provider. If you're using a different provider, you need to find out if it's supported and what's its plugin name so you can install it. [This page](https://eff-certbot.readthedocs.io/en/stable/using.html#dns-plugins) lists supported DNS plugins. I can't say if that's a comprehensive list, but many popular providers are listed there. Go check out if yours is.
+
+I'll run the following to install the DNSimple plugin for Certbot:
+
+```shell
+$ sudo apt install python3-certbot-dns-dnsimple
+```
+
+#### Step 6. Checking Certbot installed plugins
+
+To make sure the plugin installation worked and learn a new command, let's run the following to see all Certbot plugins installed:
+
+```shell
+$ certbot plugins
+```
+
+You should see an output listing the `dns-dnsimple` plugin (or the one you installed).
+
+#### Step 7. Create an access token for your DNS provider
+
+This step is only necessary because we're installing a wildcard certificate.
+
+You'll have to find out exactly how to create an access token on your DNS provider, but it should be simple and similar to what I did.
+
+The following is how I did it on DNSimple:
+
+1. I browsed to `dnsimple.com` and signed in.
+2. In the `Dashboard` screen, I hit `User Settings` at the top right corner of the screen.
+3. In the `User Settings` screen, I could see a `User access tokens` section and hit an `Add` button at the bottom of it.
+4. I'm asked to type a name for this token in the `New access token` screen. To ensure security, I named the token `certbot-wildcard-certification-access` and only granted it to Certbot. If I need to grant access to another service, I create a new token with an appropriate name. That makes it easy to revoke access to any unnecessary services.
+5. Finally, I hit the `Generate token` button.
+6. I get a `Token certbot-wildcard-certification-access generated! See details below...` feedback message.
+7. It shows me the key in the `User access tokens` section and warns me:
+
+```bash
+Keep a copy of this token, we won't show it again.
+```
+
+Yes, sir.
+
+Keep a copy of your token. We'll use it next.
+
+#### Step 8. Put your access token in a secure file on your server
+
+Connect to your server and run the following:
+
+```shell
+$ nano ~/certbot-wildcard-dnsimple-credentials.ini
+```
+
+That will create and open such a file. Now, add the following to it:
+
+```bash
+dns_dnsimple_token = you_access_token_here
+```
+
+Make sure to replace `you_access_token_here` with your access token.
+
+Also, if you're using a DNS provider other than DNSimple, replace only the `dnsimple` bit above with the name of your DNS provider as used when you installed its plugin.
+
+Save the changes and close it by hitting **Control-X**, then **Y**, and then **Enter**.
+
+To keep your token secure, you should limit access to it by other users. To do so, you can use the `chmod` command to give read and write permissions only to your user.
+
+```shell
+$ chmod 600 ~/certbot-wildcard-dnsimple-credentials.ini
+```
+
+#### Step 9. Create a wildcard DNS record on your DNS provider
+
+This step is only necessary because we're installing a wildcard certificate.
+
+You'll have to find out exactly how to add a wildcard DNS record on your DNS provider, but in the end, it should be the same simple thing: you create a new `A` DNS record, typing `*` in the name field, and your web server's IP address in the `IP address` field.
+
+The following is how I did it on DNSimple:
+
+1. I browsed to `dnsimple.com` and signed in.
+2. I chose my domain (`flsilva.com`) in the' Dashboard' screen.
+3. In the `Domain` screen, I hit `DNS` in the left menu.
+4. In the `Domain DNS` screen, I could see a `DNS records` section with a list of records I had set up, and I hit a `Manage` button at its bottom.
+5. At the top of the `Domain DNS records` screen, I hit the `Add record` dropdown menu and chose its `A` option.
+6. I typed `*` in the `name` field of the `Add A record` screen, making it look like `*.flsilva.com`, and my web server's IP address in the `IP Address` field.
+7. Finally, I hit the `Add record` button.
+
+After adding it, you should see a record like `*.flsilva.com` in your list of DNS records (replacing `flsilva.com` with your domain).
+
+Now is the boring part. DNS changes may take up to 48 hours to propagate. However, in most cases, it will propagate within a few hours, and the process also depends on your domain registrar, which may differ from your DNS provider.
+
+We need to wait for propagation before proceeding. In the next step, Certbot will connect Let's Encrypt with your DNS provider to confirm your domain ownership and validate that your wildcard DNS record works appropriately.
+
+The good news is that we can test it! We don't have to just wait for it.
+
+Let's do that.
+
+#### Step 10. Check if your wildcard DNS record is working
+
+To test if a wildcard DNS record is working, we can use the `host` command passing some random, non-existing subdomain name, for example:
+
+```shell
+$ host xyz.flsilva.com
+```
+
+You can run it on your local machine.
+
+If it's working, you should see a message like the following:
+
+```bash
+xyz.flsilva.com has address <your_server_ip_address_here>
+```
+
+In this case, you can move to the next step!
+
+Otherwise, you'd get a message like the following:
+
+```bash
+Host xyz.flsilva.com not found: 3(NXDOMAIN)
+```
+
+Your wildcard DNS record may have yet to propagate, or there could be another issue. I suggest waiting a few hours before attempting to troubleshoot any problems.
+
+#### Step 11. Run the `certbot` command to obtain your certificate
+
+Finally! Let's run the `certbot` command that will generate and download our certificate to `/etc/letsencrypt/` dir:
+
+```shell
+$ sudo certbot certonly \
+  --dns-dnsimple \
+  --dns-dnsimple-credentials ~/certbot-wildcard-dnsimple-credentials.ini \
+  --agree-tos \
+  -m your_email@example.com \
+  -d flsilva.com \
+  -d *.flsilva.com
+```
+
+Don't forget to:
+
+1. Replace `--dns-dnsimple` and `--dns-dnsimple-credentials` with your DNS provider's plugin name.
+2. Replace `~/certbot-wildcard-dnsimple-credentials.ini` with the path to your credentials if you named it something else.
+3. Replace `your_email@example.com` with your email.
+4. Replace `flsilva.com` with your domain name in both places.
+
+You can see that we pass two `-d` (domain) arguments. A wildcard (`*`) certificate will only secure subdomains. It cannot secure the root domain (`flsilva.com` in this case). So we are asking for two certificates, a **wildcard** one for any subdomains and a **single-name** one for the root `flsilva.com` domain.
+
+It's important to know that Let's Encrypt certificates expire every 90 days, so it's necessary to renew them before that. Fortunately, running the Certbot command above sets up a cron job that runs twice daily and automatically renews our certificates 30 days before expiration. Neat!
+
+When you run it, Certbot will ask you if you want to share your email with EFF to get emails about some matters. That's up to you to decide.
+
+After answering that, you should get an output like the following:
+
+```bash
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator dns-dnsimple, Installer None
+Requesting a certificate for flsilva.com and *.flsilva.com
+Performing the following challenges:
+dns-01 challenge for flsilva.com
+dns-01 challenge for flsilva.com
+Waiting 30 seconds for DNS changes to propagate
+Waiting for verification...
+Cleaning up challenges
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/flsilva.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/flsilva.com/privkey.pem
+   Your certificate will expire on <expiration_date>. To obtain a new or
+   tweaked version of this certificate in the future, simply run
+   certbot again. To non-interactively renew *all* of your
+   certificates, run "certbot renew"
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+```
+
+Congratulations, your certificate has been generated and downloaded successfully! 🥳
+
+As the output states, your certificate files are saved at `/etc/letsencrypt/live/flsilva.com/`, replacing `flsilva.com` with your domain.
+
+#### Step 12. Check your certificate
+
+Now, let's rerun the following command to make sure Certbot generated and downloaded your certificate to your server:
+
+```shell
+$ sudo certbot certificates
+```
+
+You should get the following output:
+
+```bash
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Found the following certs:
+  Certificate Name: flsilva.com
+    Serial Number: <serial_number_here>
+    Key Type: RSA
+    Domains: flsilva.com *.flsilva.com
+    Expiry Date: <expiration_date_here> (VALID: 89 days)
+    Certificate Path: /etc/letsencrypt/live/flsilva.com/fullchain.pem
+    Private Key Path: /etc/letsencrypt/live/flsilva.com/privkey.pem
+```
+
+Fantastic, your certificate is definitely on your server!
+
+You can confirm it is a wildcard certificate when it says `Domains: flsilva.com *.flsilva.com`.
+
+You can also `cd` into `/etc/letsencrypt/live/flsilva.com/` to see your certificate files, replacing `flsilva.com` with your domain.
+
+#### Step 13. Check auto-renewing
+
+Let's check if we have auto-renew set up by running the following command:
+
+```shell
+$ sudo certbot renew --dry-run
+```
+
+You should get the following output:
+
+```bash
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Processing /etc/letsencrypt/renewal/flsilva.com.conf
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Cert not due for renewal, but simulating renewal for dry run
+Plugins selected: Authenticator dns-dnsimple, Installer None
+Account registered.
+Simulating renewal of an existing certificate for flsilva.com and *.flsilva.com
+Performing the following challenges:
+dns-01 challenge for flsilva.com
+dns-01 challenge for flsilva.com
+Waiting 30 seconds for DNS changes to propagate
+Waiting for verification...
+Cleaning up challenges
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+new certificate deployed without reload, fullchain is
+/etc/letsencrypt/live/flsilva.com/fullchain.pem
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations, all simulated renewals succeeded:
+  /etc/letsencrypt/live/flsilva.com/fullchain.pem (success)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+That means everything is okay!
+
+If there are any issues, you should get an output like the following:
+
+```bash
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+No simulated renewals were attempted.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+Certbot creates a `certbot` cron job file at the following path:
+
+```bash
+/etc/cron.d/certbot
+```
+
+That's the file responsible for trying to auto-renew your certificate twice daily. It's a text file, so you can open it to take a look.
+
+#### Step 14. Update the Nginx website configuration file for your root domain
+
+The last step is to set up our Nginx website configuration files. Since we couldn't use the Certbot plugin for Nginx, we must do that manually.
+
+Below is all the content of my configuration file for `flsilva.com`:
+
+```bash
+server {
+  listen 80;
+  listen [::]:80;
+  server_name flsilva.com www.flsilva.com;
+
+  return 301 https://flsilva.com$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name www.flsilva.com;
+
+  # RSA certificate
+  ssl_certificate /etc/letsencrypt/live/flsilva.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/flsilva.com/privkey.pem;
+
+  return 301 https://flsilva.com$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name flsilva.com;
+
+  # RSA certificate
+  ssl_certificate /etc/letsencrypt/live/flsilva.com/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/flsilva.com/privkey.pem;
+
+  rewrite "/services/delivery/" /services/ permanent;
+  rewrite "/services/consulting-coaching/" /services/ permanent;
+  rewrite "/opensource/" /open-source/ permanent;
+
+  root /var/www/flsilva.com/public;
+
+  error_log /var/log/nginx/flsilva.com.error.log;
+  access_log /var/log/nginx/flsilva.com.access.log;
+
+  location ~* \.(jpg|jpeg|gif|webp|css|png|js|json|ico|eot|svg|ttf|otf|woff|woff2)$ {
+      expires max;
+  }
+
+  location ~* \.(html)$ {
+      expires epoch;
+  }
+
+  location / {
+      index  index.html index.htm;
+  }
+
+  #error_page  404              /404.html;
+
+  # redirect server error pages to the static page /50x.html
+  #
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+      root   /var/www/flsilva.com;
+  }
+}
+```
+
+The first `server {` block handles HTTP-only requests, redirecting them to HTTPS. It works for both `http://flsilva.com` and `http://www.flsilva.com`, redirecting them to `https://flsilva.com`.
+
+The second `server {` block handles HTTPS requests to `https://www.flsilva.com` only, redirecting it to `https://flsilva.com`.
+
+The third `server {` block handles HTTPS requests to `https://flsilva.com`. That's the one we set up Nginx to serve the website, so we don't redirect from it.
+
+Inside this third block, we only make the following two changes to it compared to an HTTP-based one:
+
+We use `listen 443 ssl;` instead of `listen 80;` and `listen [::]:80;`.
+
+And we add the following lines so Nginx can find and use our certificates:
+
+```bash
+# RSA certificate
+ssl_certificate /etc/letsencrypt/live/flsilva.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/flsilva.com/privkey.pem;
+```
+
+Don't forget to replace `flsilva.com` with your domain.
+
+#### Step 15. Update the Nginx website configuration file for your subdomains
+
+Below is all the content of my configuration file for a subdomain, in this case, `vostokframework.flsilva.com`:
+
+```bash
+server {
+  listen 80;
+  listen [::]:80;
+  server_name vostokframework.flsilva.com;
+
+  return 301 https://vostokframework.flsilva.com$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name vostokframework.flsilva.com;
+
+    # RSA certificate
+    ssl_certificate /etc/letsencrypt/live/flsilva.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/flsilva.com/privkey.pem;
+
+    root /var/www/vostokframework.flsilva.com/public;
+
+    error_log /var/log/nginx/vostokframework.flsilva.com.error.log;
+    access_log /var/log/nginx/vostokframework.flsilva.com.access.log;
+
+    location / {
+        index  index.html index.htm;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /var/www/vostokframework.flsilva.com/public;
+    }
+
+}
+```
+
+The first `server {` block is like the first block from the `flsilva.com` config file above, except we don't need to worry about the `www` part. It handles HTTP-only requests, redirecting them from `http://vostokframework.flsilva.com` to the HTTPS version, `https://vostokframework.flsilva.com`.
+
+The second `server {` block is like the third block from the `flsilva.com` config file above. It handles HTTPS requests to `https://vostokframework.flsilva.com`. That's the one we set up Nginx to serve the website, so we don't redirect from it.
+
+Inside this second block, we only make the following two changes to it compared to an HTTP-based one (the same changes as the `flsilva.com` config file above):
+
+We use `listen 443 ssl;` instead of `listen 80;` and `listen [::]:80;`.
+
+And we add the following lines so Nginx can use our certificate:
+
+```bash
+# RSA certificate
+ssl_certificate /etc/letsencrypt/live/flsilva.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/flsilva.com/privkey.pem;
+```
+
+Don't forget to replace `flsilva.com` and `vostokframework.flsilva.com` with your domain.
+
+Checking for any common errors is advisable after changing your Nginx configuration files. To do this, execute the following command:
+
+```shell
+$ sudo nginx -t
+```
+
+You should get the following output:
+
+```bash
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+Otherwise, you should see some errors.
+
+You must do that for every subdomain you want to serve under HTTPS. That's what I did since I only have a few subdomains. Other ways to accomplish that include setting up a dynamic configuration that can work for many subdomains.
+
+#### Step 16. Reload your Nginx instance to make your changes take effect
+
+To do that, run the following command:
+
+```shell
+$ sudo systemctl reload nginx
+```
+
+#### Step 17. Test your website!
+
+You can now test your website by opening it in your browser! If you followed the instructions on changing your Nginx website configuration files, you could type your domain and subdomain names without typing `https://` for your server to use it. Additionally, even if you type `http://` (without the `s`), you will still be redirected to your website's `https://` version. 👌
+
+#### Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
+
+<br />
+<br />
+<br />
+
+<AITools />
+
+<br />
+<br />
+
+#### Related posts
+
+[What are HTTPS, TLS certificates, and Let's Encrypt?](/blog/what-are-https-tls-certificates-and-lets-encrypt)<br />
+[How to set up a Linux VPS](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/)<br />
+[How to install Nginx on Linux](/blog/how-to-install-nginx-tutorial-ubuntu-and-debian/)<br />
+[How to set up a website on Linux + Nginx](https://flsilva.com/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/)<br />
+[How to password-protect content on Linux + Nginx](https://flsilva.com/blog/how-to-password-protect-file-directory-nginx/)
+
+#### Interesting links
+
+[FAQ - Let's Encrypt](https://letsencrypt.org/docs/faq/)<br />
+[User Guide - Certbot documentation](https://eff-certbot.readthedocs.io/en/stable/using.html)
