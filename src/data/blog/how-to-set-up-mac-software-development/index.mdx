@@ -20,25 +20,73 @@ tweetVia: 'flsilva7'
 import { AITools } from '../../../components/boxes/AITools';
 import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
-In this post, you'll find links with step-by-step guides on how to install [Homebrew](/blog/how-to-set-up-mac-software-development/#3-homebrew), [Git](/blog/how-to-set-up-mac-software-development/#4-git), [Node.js](http://localhost:8000/blog/how-to-set-up-mac-software-development/#nodejs), [Oh My Zsh](http://localhost:8000/blog/how-to-set-up-mac-software-development/#6-antigen-and-oh-my-zsh), [SSH keys](http://localhost:8000/blog/how-to-set-up-mac-software-development/#7-ssh-keys), and more.
-
 #### Introduction
 
-There are many ways to set up a Mac for software development from scratch. Some advanced developers install and set up everything on their machines automatically using all sorts of scripts. And that's awesome if you ask me.
+In this post, you'll find a list of the most popular [Code Editors](/blog/how-to-set-up-mac-software-development/#1-code-editor) and links with step-by-step guides on how to install [Homebrew](/blog/how-to-set-up-mac-software-development/#3-homebrew), [Git](/blog/how-to-set-up-mac-software-development/#4-git), [Node.js](http://localhost:8000/blog/how-to-set-up-mac-software-development/#nodejs), [Oh My Zsh](http://localhost:8000/blog/how-to-set-up-mac-software-development/#6-antigen-and-oh-my-zsh), [how to generate and use SSH keys](http://localhost:8000/blog/how-to-set-up-mac-software-development/#7-ssh-keys), and more.
 
-But for me, I've been keeping it as simple as possible, one of the reasons being that the tools I use are frequently changing. When not them themselves, then how we install and set them up.
+#### Setting up your Mac for software development
 
-Another reason is that it takes me a few years to set up a Mac from scratch. Installing and setting up everything manually will refresh my knowledge and ensure I still need what I used on my previous Mac. That way, I can have a fresh start, as it feels natural to discard or replace tools while making it simple to tweak their installations and configurations as necessary.
+There are many ways to set up a Mac for software development. Some experienced developers install and set up everything on their machines automatically using all sorts of scripts. And that's awesome if you ask me.
+
+I've been keeping it as simple as possible, as I don't use that many tools, and it takes me a few years to set up a Mac from scratch.
+
+Installing and setting up everything manually will refresh my knowledge and ensure I still need what I used on my previous Mac. That way, I can have a fresh start, feeling natural to discard or replace some tools I don't need any more while making it easy to tweak their installations and configurations as necessary.
 
 #### General software development tools
 
-The following tools are helpful for virtually any software developer using a Mac.
+The following tools are useful for virtually any software developer using a Mac.
 
 ##### 1. Code Editor
 
-That's a no-brainer if you have any software development experience, but if you don't, you'll have to choose what editor you like more.
+That's a no-brainer if you have any software development experience. But if you don't, you'll have to choose what editor you like more. It could take a few shots until you decide which one you prefer.
 
-I've been using [Visual Studio Code](https://code.visualstudio.com/) for several years now, and I like it a lot as I'm a Full-Stack Software Engineer working with client and server web technologies. It's the most popular editor for web development nowadays, so it's a safe choice if you are looking for something to start in that area.
+I've created a list of [the most popular code editors and IDEs](https://survey.stackoverflow.co/2023/#section-most-popular-technologies-integrated-development-environment), along with the programming languages they are most suitable for.
+
+###### [Visual Studio Code](https://code.visualstudio.com/)
+
+Great for: HTML, CSS, JavaScript, TypeScript, Python, PHP, and more.
+
+Microsoft's Visual Studio Code is the most popular code editor in the world.
+
+I've been using it for several years, and I like it a lot. It supports many plugins and extensions, making it suitable for dozens of programming languages and platforms.
+
+###### [Vim](https://www.vim.org/) and [Neovim](https://neovim.io/)
+
+Great for: HTML, CSS, JavaScript, TypeScript, Python, and more.
+
+Vim is a free and open-source code editor with exceptional features, including its famous _Command Mode_, where you type commands as shortcuts to edit your code. But it has a steeper learning curve and is more popular on Linux.
+
+Neovim is built on top of Vim and is seen as an improvement.
+
+###### [Xcode](https://developer.apple.com/xcode/)
+
+Great for: Swift and Objective-C for developing apps for the Apple ecosystem.
+
+Apple's Xcode is the the-facto IDE for Mac developers working with the Apple ecosystem. If you plan to develop native macOS, iOS, watchOS, or TvOS apps, you'll use it.
+
+###### [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+
+Great for: Java, Kotlin, Scala, and Android apps.
+
+JetBrains's IntelliJ IDEA is one of the most popular IDEs for Java and Android software development. It's been highly regarded for decades, and Google has built Android Studio on top of it, specially tailored for Android software development.
+
+###### [Android Studio](https://developer.android.com/studio)
+
+Great for: Android development with Java and Kotlin.
+
+Google's Android Studio is the official IDE for Android software development, built on top of IntelliJ IDEA. If you plan to develop Android apps, this is where you should start.
+
+###### [PyCharm](https://www.jetbrains.com/pycharm/)
+
+Great for: Python.
+
+JetBrains's PyCharm is one of the most popular IDEs for Python software development, and it's also built on top of IntelliJ IDEA.
+
+###### [Visual Studio](https://visualstudio.microsoft.com/)
+
+Great for: .NET, C#, and C++ for developing apps for the Windows ecosystem.
+
+Microsoft's Visual Studio is the the-facto IDE for Windows developers working with the .NET platform. It's like Apple's Xcode but for Windows. It does include a native macOS version.
 
 ##### 2. Command Line Developer Tools
 
@@ -92,7 +140,7 @@ Antigen makes it very easy to manage dozens of plugins for Zsh, but how do we br
 
 Oh My Zsh is a very popular framework for managing your Zsh configurations and a hub for more than [300 plugins](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins) and [150 syntax highlighting themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) that we can easily install. That makes browsing and managing different plugins a lot easier.
 
-Antigen and Oh My Zsh are a great combination that allows you to customize Zsh to your liking easily.
+Antigen and Oh My Zsh is a perfect match to give you the power to customize Zsh to your needs quickly and easily.
 
 Head to my guide on [How to install and use Antigen and Oh My Zsh on macOS](/blog/how-to-install-use-antigen-oh-my-zsh-macos).
 
@@ -102,7 +150,7 @@ SSH keys allow secure passwordless authentication and offer several advantages o
 
 Head to my guide on [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/).
 
-##### 8. Signing Git commits with SSH keys
+##### 8. Sign Git commits with SSH keys
 
 A signed Git commit is a commit that includes a cryptographic signature created using a [GPG](https://gnupg.org/) or [SSH](/blog/how-to-generate-use-ssh-keys-macos/#what-are-ssh-keys-and-why-should-we-use-them) key.
 
@@ -112,13 +160,9 @@ Head to my guide on [How to sign Git commits with SSH keys on macOS](/blog/how-t
 
 #### Technology and language-specific tools
 
-The following are only a couple of technology and language-specific tools you might or might not need, depending on your work.
+The following are only a few technology and language-specific tools you might or might not need, depending on your work.
 
 I'll try to keep this post updated and include more tools as I find the time to write about them.
-
-##### Xcode
-
-If you plan to develop native macOS, iOS, watchOS, or TvOS apps, you can install Xcode [directly from Apple's App Store](https://apps.apple.com/us/app/xcode/id497799835).
 
 ##### Node.js
 
