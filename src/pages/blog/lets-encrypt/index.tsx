@@ -5,10 +5,10 @@ import { graphql } from 'gatsby';
 import { SEO } from '../../../components/SEO';
 import { PostsByTag } from '../../../components/blog/PostsByTag';
 
-const UbuntuPosts: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data }) => (
+const LetsEncryptPosts: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data }) => (
   <PostsByTag
     nodes={data.allMdx.nodes.filter(
-      (node) => node.frontmatter.tags && node.frontmatter.tags.indexOf('ubuntu') !== -1,
+      (node) => node.frontmatter.tags && node.frontmatter.tags.indexOf('lets-encrypt') !== -1,
     )}
   />
 );
@@ -40,12 +40,12 @@ export const query = graphql`
   }
 `;
 
-export default UbuntuPosts;
+export default LetsEncryptPosts;
 
 export const Head: HeadFC = () => (
   <SEO
-    description="Check out my articles about Ubuntu Linux distro."
-    pagePath="/blog/sysadmin"
-    title="Ubuntu Linux distro articles by Flavio Silva: Full-Stack Software Engineer"
+    description="Check out my articles about Let's Encrypt."
+    pagePath="/blog/lets-encrypt"
+    title="Let's Encrypt articles by Flavio Silva: Full-Stack Software Engineer"
   />
 );

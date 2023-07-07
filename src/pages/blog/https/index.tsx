@@ -5,10 +5,10 @@ import { graphql } from 'gatsby';
 import { SEO } from '../../../components/SEO';
 import { PostsByTag } from '../../../components/blog/PostsByTag';
 
-const DebianPosts: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data }) => (
+const HTTPSPosts: React.FC<PageProps<Queries.PortfolioProjectsQuery>> = ({ data }) => (
   <PostsByTag
     nodes={data.allMdx.nodes.filter(
-      (node) => node.frontmatter.tags && node.frontmatter.tags.indexOf('debian') !== -1,
+      (node) => node.frontmatter.tags && node.frontmatter.tags.indexOf('https') !== -1,
     )}
   />
 );
@@ -40,12 +40,12 @@ export const query = graphql`
   }
 `;
 
-export default DebianPosts;
+export default HTTPSPosts;
 
 export const Head: HeadFC = () => (
   <SEO
-    description="Check out my articles about Debian Linux distro."
-    pagePath="/blog/debian"
-    title="Debian Linux distro articles by Flavio Silva: Full-Stack Software Engineer"
+    description="Check out my articles about HTTPS."
+    pagePath="/blog/https"
+    title="HTTPS articles by Flavio Silva: Full-Stack Software Engineer"
   />
 );
