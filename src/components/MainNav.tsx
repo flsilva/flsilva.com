@@ -14,7 +14,7 @@ export const MainNav: React.FC = () => (
         <a href="/open-source/">Open Source</a>
       </li>
       <li>
-        <a href="/resume/">Resume</a>
+        <a href="/Flavio-Silva-Resume-2023-12-12.pdf">Resume</a>
       </li>
     </ul>
   </nav>
