@@ -1,4 +1,4 @@
-@import "../../styles/vars.css";
+@import '../../styles/vars.css';
 
 .oss-project {
   margin-top: 2rem;
@@ -9,6 +9,26 @@
   border-radius: 0.5rem;
   box-sizing: border-box;
   padding: 2rem;
+}
+
+.opentask > div {
+  background-color: transparent;
+
+  @media $midScreenMedia {
+    width: 18rem;
+  }
+}
+
+.opentask img {
+  @media $xsmallScreenMedia {
+    width: 220px;
+    height: 110px;
+  }
+
+  @media $smallScreenMedia {
+    width: 260px;
+    height: 130px;
+  }
 }
 
 .vostok-framework > div {

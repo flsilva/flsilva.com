@@ -9,6 +9,7 @@ import {
   as3Collections,
   as3Utils,
   as3CoreAddendum,
+  opentask,
 } from './index.module.css';
 
 const OpenSourcePage: React.FC<PageProps> = () => (
@@ -18,6 +19,17 @@ const OpenSourcePage: React.FC<PageProps> = () => (
       invite anyone interested in analyzing my software engineering skills to look at these
       projects.
     </p>
+    <div className={[ossProject, opentask].join(' ')}>
+      <div>
+        <StaticImage alt="OpenTask" src="./opentask.png" />
+      </div>
+      <p>
+        <a href="https://opentask.app">OpenTask</a> is a free and{' '}
+        <a href="https://github.com/flsilva/opentask">open-source</a> fully functional and
+        responsive PWA MVP task management app built with Next.js 14 and the new{' '}
+        <a href="https://nextjs.org/docs/app">App Router</a> in 2023.
+      </p>
+    </div>
     <div className={[ossProject, vostokFramework].join(' ')}>
       <div>
         <StaticImage alt="VostokFramework" src="./vostokframework.png" />
