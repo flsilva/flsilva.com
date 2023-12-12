@@ -1,7 +1,7 @@
 @import '../../styles/vars.css';
 
 .title {
-  margin-top: 3rem;
+  margin-top: 6rem;
   text-align: center;
 }
 
@@ -13,6 +13,7 @@
 
 .recommendations-list-container {
   align-items: center;
+  margin-bottom: 4rem;
 }
 
 .recommendations-list {
