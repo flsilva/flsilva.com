@@ -1,7 +1,6 @@
 import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
-import { Script } from 'gatsby';
 import { DiscussionEmbed } from 'disqus-react';
 import Giscus from '@giscus/react';
 
@@ -65,7 +64,7 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
           repoId="MDEwOlJlcG9zaXRvcnk3MjQwODY1="
           category="Announcements"
           categoryId="DIC_kwDOAG58oc4Cbr5k"
-          mapping="pathname"
+          mapping="title"
           term="Welcome to flsilva.com Blog discussions!"
           reactionsEnabled="1"
           emitMetadata="0"
