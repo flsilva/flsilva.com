@@ -1,7 +1,9 @@
 import * as React from 'react';
 import type { HeadFC, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
+import { Script } from 'gatsby';
 import { DiscussionEmbed } from 'disqus-react';
+import Giscus from '@giscus/react';
 
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';
@@ -47,13 +49,33 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
         authorUrl={data.mdx.frontmatter.authorUrl}
         workTitle={data.mdx.frontmatter.title}
       />
-      <DiscussionEmbed
-        config={{
-          identifier: `/blog/${data.mdx.frontmatter.slug}/`,
-          title: data.mdx.frontmatter.title,
-        }}
-        shortname={process.env.GATSBY_DISQUS_NAME || ''}
-      />
+      {data.mdx.frontmatter.slug === 'introduction-to-nodejs' && (
+        <DiscussionEmbed
+          config={{
+            identifier: `/blog/${data.mdx.frontmatter.slug}/`,
+            title: data.mdx.frontmatter.title,
+          }}
+          shortname={process.env.GATSBY_DISQUS_NAME || ''}
+        />
+      )}
+      {data.mdx.frontmatter.slug !== 'introduction-to-nodejs' && (
+        <Giscus
+          id="comments"
+          repo="flsilva/flsilva.com"
+          repoId="MDEwOlJlcG9zaXRvcnk3MjQwODY1="
+          category="Announcements"
+          categoryId="DIC_kwDOAG58oc4Cbr5k"
+          mapping="pathname"
+          term="Welcome to flsilva.com Blog discussions!"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme="light"
+          lang="en"
+          loading="lazy"
+          strict='1'
+        />
+      )}
     </div>
   </Layout>
 );

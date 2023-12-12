@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@fontsource/open-sans": "5.0.2",
+    "@giscus/react": "2.3.0",
     "@mdx-js/react": "2.3.0",
     "autoprefixer": "10.4.14",
     "date-fns": "2.30.0",
