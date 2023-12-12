@@ -17,26 +17,53 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a Brazilian Full-Stack Software Engineer with 19 years of professional industry
-        experience. I&#39;ve been leading front-end teams since 2007 and working remotely from home
-        since 2009.
+        I&#39;m a full-stack software engineer from Brazil with 19 years of professional experience,
+        with the last 14 years working remotely. I&#39;ve been leading front-end teams since 2007.
       </p>
       <p>
-        Since 2018 I&#39;ve specialized in building cross-platform React apps by implementing a
-        single, responsive codebase, sharing about 90% of the front-end codebase with all platforms.
-        That enables developers to build the codebase as native iOS and Android apps and as a web
-        app for mobile and desktop browsers. Many businesses can benefit from such a tech strategy
-        by drastically reducing costs and time to market.
+        I have experience working directly with co-founders and designers throughout the feature
+        spec and design process to deliver engaging and performant apps.
       </p>
       <p>
-        I have also experience building back-end systems using tools like Node.js, Ruby on Rails,
-        AWS AppSync, and GraphQL and applying advanced software engineering practices, including
-        software architecture, testing, and CI/CD.
+        I&#39;ve just shipped <a href="https://opentask.app">OpenTask</a> while learning the new{' '}
+        <a href="https://nextjs.org/docs/app">Next.js App Router</a>. It&#39;s a fully functional
+        and responsive <a href="https://github.com/flsilva/opentask">open-source</a> PWA MVP.
       </p>
       <p>
-        Please&nbsp;
-        <a href="mailto:flsilva7@gmail.com">get in touch</a> if you&#39;re looking to build
-        full-stack cross-platform apps.
+        I built it on TypeScript, React 18, the new Next.js App Router , Tailwind CSS,{' '}
+        <a href="https://supabase.com/">Supabase (Postgres)</a>, and{' '}
+        <a href="https://www.prisma.io/">Prisma</a> and set up CI/CD with{' '}
+        <a href="https://github.com/features/actions">GitHub Actions</a>.
+      </p>
+      <p>
+        It leverages new features from React and Next.js, including{' '}
+        <a href="https://vercel.com/blog/understanding-react-server-components">
+          React Server Components (RSCs)
+        </a>{' '}
+        and{' '}
+        <a href="https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions">
+          Server Actions
+        </a>
+        .
+      </p>
+      <p>
+        It&#39;s a rewarding time to be a full-stack software engineer. I feel incredibly productive
+        and satisfied with my work. I can write clean and modular code and deliver top-quality
+        applications supported by unit and integration testing.
+      </p>
+      <p>
+        Over the past years, I&#39;ve led the development of a cross-platform{' '}
+        <a href="https://necolas.github.io/react-native-web/">React Native Web</a> app, sharing
+        about 90% of the front-end codebase across the iOS, Android, and Web apps among other
+        projects.
+      </p>
+      <p>
+        I&#39;m available to work with TypeScript, React 18, Nextjs v14 App Router, Vercel, and
+        GitHub Copilot! 🚀
+      </p>
+      <p>
+        Let&#39;s&nbsp;
+        <a href="mailto:flsilva7@gmail.com">get in touch</a>.
       </p>
       <Recommendations>
         <Recommendation
