@@ -64,11 +64,13 @@ export const PortfolioCard: React.FC<PortfolioCardProps> = ({
     imageObjectTarget = image;
   }
 
-  projectImageContainerStyle = {
-    ...projectImageContainerStyle,
-    width: imageObjectTarget.childImageSharp.gatsbyImageData.width || 0,
-    height: imageObjectTarget.childImageSharp.gatsbyImageData.height || 0,
-  };
+  if (imageObjectTarget) {
+    projectImageContainerStyle = {
+      ...projectImageContainerStyle,
+      width: imageObjectTarget.childImageSharp.gatsbyImageData.width || 0,
+      height: imageObjectTarget.childImageSharp.gatsbyImageData.height || 0,
+    };
+  }
 
   return (
     <div className={project}>
