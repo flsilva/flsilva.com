@@ -111,7 +111,8 @@ h1 {
 }
 
 h1,
-h1 a {
+h1 a,
+h1 .ch-inline-code > code {
   font-weight: 700;
 
   @media $xxsmallScreenMedia {
@@ -138,7 +139,8 @@ h2 {
 }
 
 h2,
-h2 a {
+h2 a,
+h2 .ch-inline-code > code {
   font-weight: 600;
 
   @media $xxsmallScreenMedia {
@@ -165,7 +167,8 @@ h3 {
 }
 
 h3,
-h3 a {
+h3 a,
+h3 .ch-inline-code > code {
   font-weight: 600;
 
   @media $xxsmallScreenMedia {
@@ -192,7 +195,8 @@ h4 {
 }
 
 h4,
-h4 a {
+h4 a,
+h4 .ch-inline-code > code {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
@@ -219,7 +223,8 @@ h5 {
 }
 
 h5,
-h5 a {
+h5 a,
+h5 .ch-inline-code > code {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
@@ -246,7 +251,8 @@ h6 {
 }
 
 h6,
-h6 a {
+h6 a,
+h6 .ch-inline-code > code {
   font-weight: 500;
 
   @media $xxsmallScreenMedia {
@@ -460,28 +466,6 @@ html.theme-dark .svgLight {
 
 html.theme-light .svgDark {
   display: none;
-}
-
-code {
-  border-radius: 0.25rem;
-}
-
-:not(pre) > code {
-  padding: 0.125rem 0.25rem;
-}
-
-html.theme-light :not(pre) > code {
-  background-color: #0d1117;
-  color: $primaryTextColorDark;
-}
-
-html.theme-dark :not(pre) > code {
-  background-color: $primaryBgColorLight;
-  color: $primaryTextColorLight;
-}
-
-html.theme-dark .hljs {
-  background: $primaryBgColorLight;
 }
 
 #main-nav.active {

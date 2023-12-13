@@ -67,11 +67,11 @@ A regular certificate, a.k.a. a single-domain certificate, is only valid for one
 
 A wildcard certificate eliminates the need to obtain and manage individual certificates for every subdomain. That makes certificate management more convenient, especially when there are many subdomains to secure.
 
-Wildcard certificates use a wildcard character (\*) in the domain name to match any subdomain, hence their name.
+Wildcard certificates use a wildcard character (_`*`_) in the domain name to match any subdomain, hence their name.
 
-It's important to note that a wildcard certificate cannot secure the root domain itself. For example, a wildcard certificate for `*.example.com` will not cover `example.com`. You'll need a separate, single-domain certificate to secure the root `example.com` domain.
+It's important to note that a wildcard certificate cannot secure the root domain itself. For example, a wildcard certificate for _`*.example.com`_ will not cover _`example.com`_. You'll need a separate, single-domain certificate to secure the root _`example.com`_ domain.
 
-Also, a wildcard certificate can only secure one level of subdomains. For example, if you have a wildcard certificate for `*.example.com`, it will cover `subdomain.example.com`, but not `sub.subdomain.example.com`. If you have multiple subdomain levels, you need different wildcard certificates for each one.
+Also, a wildcard certificate can only secure one level of subdomains. For example, if you have a wildcard certificate for _`*.example.com`_, it will cover _`subdomain.example.com`_, but not _`sub.subdomain.example.com`_. If you have multiple subdomain levels, you need different wildcard certificates for each one.
 
 #### Conclusion
 

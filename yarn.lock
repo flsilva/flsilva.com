@@ -1690,6 +1690,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@code-hike/lighter@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@code-hike/lighter@npm:0.7.0"
+  checksum: 9fdad374c921d80345ca9c95a285606bf76c6e17b52ec5b1941c7a13cfada91a8532b000c73aadc86d4212402983e1dd71aa6742d47b0ee3b45703a9534d307d
+  languageName: node
+  linkType: hard
+
+"@code-hike/mdx@npm:0.9.0":
+  version: 0.9.0
+  resolution: "@code-hike/mdx@npm:0.9.0"
+  dependencies:
+    "@code-hike/lighter": "npm:0.7.0"
+    node-fetch: "npm:^2.0.0"
+  peerDependencies:
+    react: ^16.8.3 || ^17 || ^18
+  checksum: f7d708f11e815836d45ea5c66fb4bee990ddbdfdc278180b3afd03e770d01a35f2bb2ebae165bde042935895d9dcca7dbfd9a65e8f8035fbc181b739d3c5a834
+  languageName: node
+  linkType: hard
+
 "@eslint-community/eslint-utils@npm:^4.2.0":
   version: 4.4.0
   resolution: "@eslint-community/eslint-utils@npm:4.4.0"
@@ -7422,15 +7441,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fault@npm:^1.0.0":
-  version: 1.0.4
-  resolution: "fault@npm:1.0.4"
-  dependencies:
-    format: "npm:^0.2.0"
-  checksum: 5ac610d8b09424e0f2fa8cf913064372f2ee7140a203a79957f73ed557c0e79b1a3d096064d7f40bde8132a69204c1fe25ec23634c05c6da2da2039cff26c4e7
-  languageName: node
-  linkType: hard
-
 "fb-watchman@npm:^2.0.0":
   version: 2.0.2
   resolution: "fb-watchman@npm:2.0.2"
@@ -7620,6 +7630,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "flsilva.com@workspace:."
   dependencies:
+    "@code-hike/mdx": "npm:0.9.0"
     "@fontsource/open-sans": "npm:5.0.2"
     "@giscus/react": "npm:2.3.0"
     "@mdx-js/react": "npm:2.3.0"
@@ -7662,7 +7673,6 @@ __metadata:
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     rehype-autolink-headings: "npm:3.0.0"
-    rehype-highlight: "npm:4.1.0"
     rehype-slug: "npm:3.0.0"
     remark-gfm: "npm:1.0.0"
     typescript: "npm:5.0.4"
@@ -7734,13 +7744,6 @@ __metadata:
     combined-stream: "npm:^1.0.8"
     mime-types: "npm:^2.1.12"
   checksum: 944b40ff63b9cb1ca7a97e70f72104c548e0b0263e3e817e49919015a0d687453086259b93005389896dbffd3777cccea2e67c51f4e827590e5979b14ff91bf7
-  languageName: node
-  linkType: hard
-
-"format@npm:^0.2.0":
-  version: 0.2.2
-  resolution: "format@npm:0.2.2"
-  checksum: 5f878b8fc1a672c8cbefa4f293bdd977c822862577d70d53456a48b4169ec9b51677c0c995bf62c633b4e5cd673624b7c273f57923b28735a6c0c0a72c382a4a
   languageName: node
   linkType: hard
 
@@ -9149,17 +9152,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hast-util-to-text@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "hast-util-to-text@npm:2.0.1"
-  dependencies:
-    hast-util-is-element: "npm:^1.0.0"
-    repeat-string: "npm:^1.0.0"
-    unist-util-find-after: "npm:^3.0.0"
-  checksum: 71006964dc6dde72dd31bfa7181848f60f634ac3b7a6ab6506a7e1bc4b480e40a0bf9c72653687c630f7dc3fb5add6d6b8a1d07fcc70154b409c2e772f761f83
-  languageName: node
-  linkType: hard
-
 "hast-util-to-text@npm:^3.0.0":
   version: 3.1.2
   resolution: "hast-util-to-text@npm:3.1.2"
@@ -9224,13 +9216,6 @@ __metadata:
     capital-case: "npm:^1.0.4"
     tslib: "npm:^2.0.3"
   checksum: 571c83eeb25e8130d172218712f807c0b96d62b020981400bccc1503a7cf14b09b8b10498a962d2739eccf231d950e3848ba7d420b58a6acd2f9283439546cd9
-  languageName: node
-  linkType: hard
-
-"highlight.js@npm:~10.7.0":
-  version: 10.7.3
-  resolution: "highlight.js@npm:10.7.3"
-  checksum: db8d10a541936b058e221dbde77869664b2b45bca75d660aa98065be2cd29f3924755fbc7348213f17fd931aefb6e6597448ba6fe82afba6d8313747a91983ee
   languageName: node
   linkType: hard
 
@@ -10757,16 +10742,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lowlight@npm:^1.10.0":
-  version: 1.20.0
-  resolution: "lowlight@npm:1.20.0"
-  dependencies:
-    fault: "npm:^1.0.0"
-    highlight.js: "npm:~10.7.0"
-  checksum: 3294677be15bbc256556f097d9b675f23f14309aceeada7880473c57bdbdd7761f200d903fe26d8fa5e82259f70a39465d1d40754c4c049ad2bbd33d77e2c06f
-  languageName: node
-  linkType: hard
-
 "lru-cache@npm:4.0.0":
   version: 4.0.0
   resolution: "lru-cache@npm:4.0.0"
@@ -12108,6 +12083,20 @@ __metadata:
     encoding:
       optional: true
   checksum: 4bc9245383db92c35601a798c9a992fdf38d99920ceac11e0e6512ef3014d188b3807ccb060bc6c4bdb57a145030c73f5b5fd6730f665979f9264bc43ca3afea
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.0.0":
+  version: 2.7.0
+  resolution: "node-fetch@npm:2.7.0"
+  dependencies:
+    whatwg-url: "npm:^5.0.0"
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: b24f8a3dc937f388192e59bcf9d0857d7b6940a2496f328381641cb616efccc9866e89ec43f2ec956bbd6c3d3ee05524ce77fe7b29ccd34692b3a16f237d6676
   languageName: node
   linkType: hard
 
@@ -13975,17 +13964,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-highlight@npm:4.1.0":
-  version: 4.1.0
-  resolution: "rehype-highlight@npm:4.1.0"
-  dependencies:
-    hast-util-to-text: "npm:^2.0.0"
-    lowlight: "npm:^1.10.0"
-    unist-util-visit: "npm:^2.0.0"
-  checksum: 560d568aea3d4393d9604313cbc5a72d4bb028fbc2b447bf600051b166e65afbf52b8bea01c537ba332a0f8121353c6f25078b56f945a672ef5e3dd94d1d9a43
-  languageName: node
-  linkType: hard
-
 "rehype-infer-description-meta@npm:^1.1.0":
   version: 1.1.0
   resolution: "rehype-infer-description-meta@npm:1.1.0"
@@ -15719,15 +15697,6 @@ __metadata:
   version: 2.0.3
   resolution: "unist-builder@npm:2.0.3"
   checksum: e946fdf77dbfc320feaece137ce4959ae2da6614abd1623bd39512dc741a9d5f313eb2ba79f8887d941365dccddec7fef4e953827475e392bf49b45336f597f6
-  languageName: node
-  linkType: hard
-
-"unist-util-find-after@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "unist-util-find-after@npm:3.0.0"
-  dependencies:
-    unist-util-is: "npm:^4.0.0"
-  checksum: daa9a28f6cdf533a72ce7ec4864dbe0f11f0fd3efd337b54c08a8a9a47cdc8d10a299cd984d7f512a57e97af012df052210a51aab7c9afd6b1e24da3b2d0a714
   languageName: node
   linkType: hard
 

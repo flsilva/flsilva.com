@@ -18,7 +18,7 @@ tweetText: 'Get a comprehensive intro to what Node.js is, when we should use it,
 tweetVia: 'flsilva7'
 ---
 
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 Most [Node.js](http://nodejs.org/) tutorials on the internet show you how to build a simple HTTP web server.
 This article, however, attempts to address a prior issue, namely, what Node is, what Evented I/O means, why Node is different, when we should use it, among other things.
@@ -101,7 +101,7 @@ $ nvm ls-remote
 ```
 
 It should list all available Node versions to install.
-Now you can run `$ nvm install` with your desired version, for example:
+Now you can run _`$ nvm install`_ with your desired version, for example:
 
 ```shell
 $ nvm install 0.10
@@ -125,9 +125,9 @@ Visit the [official repository](https://github.com/creationix/nvm) for more info
 
 #### Node is a command line tool too
 
-Copy and paste the following code into a file named `helloworld.js`:
+Copy and paste the following code into a file named _`helloworld.js`_:
 
-```javascript
+```js
 var sys = require('sys');
 
 setTimeout(function () {
@@ -137,7 +137,7 @@ setTimeout(function () {
 sys.puts('hello');
 ```
 
-Now run `$ node helloworld.js`
+Now run _`$ node helloworld.js`_
 (make sure to point to the files' directory)
 
 You should see "hello" printed immediately on screen, and "world" three seconds later.
@@ -147,10 +147,10 @@ You should see "hello" printed immediately on screen, and "world" three seconds 
 Node comes with an interactive prompt called REPL (pronounced "repple"), _read-eval-print loop_.
 While you're exploring the use of Node and figuring out the code for your custom module or Node application, you don't have to type JavaScript into a file and run it with Node to test your code. (Powers 21)
 
-To open REPL you just run `$ node` without providing any arguments to the command.
+To open REPL you just run _`$ node`_ without providing any arguments to the command.
 Try the following as a simple example:
 
-```javascript
+```js
 > a = 2;
 // 2
 
@@ -164,10 +164,10 @@ Try the following as a simple example:
 You can type the same JavaScript into REPL just like you'd type it into a file, including require statements to import modules. (Powers 24)
 
 Let's try a bit more interesting example.
-Create a simple `hello-world-string.txt` text file with a simple "Hello World!" line of text.
+Create a simple _`hello-world-string.txt`_ text file with a simple "Hello World!" line of text.
 Then write the following on a REPL session:
 
-```javascript
+```js
 > var printData = function(error, data) { // hit enter here
 ... console.log(data); // hit enter here
 ... } // hit enter here
@@ -204,7 +204,7 @@ Blocking I/O, or synchronous I/O, is a form of I/O processing that blocks other 
 
 Example:
 
-```javascript
+```js
 // Synchronous code.
 var result = db.query('select * from my_table');
 
@@ -226,7 +226,9 @@ Or in other words, it means that applications don't have to wait for an input/ou
 
 Example:
 
-```javascript
+<CH.Section>
+
+```js
 // Asynchronous code.
 var result = db.query('select * from my_table', function (result) {
   // This is standard JavaScript's asynchronous callback functionality
@@ -239,14 +241,16 @@ unrelatedLogic();
 // has finished, i.e., no need to wait for it.
 ```
 
-When the call to `db.query()` is executed, a callback (event handler) is registered to run when the processing finishes.
-Right after that _registering_, `unrelatedLogic()` is executed, and any other following code, while `db.query()` operation is running.
-When `db.query()` finishes, the JavaScript's callback function is executed, asynchronously.
+When the call to _`db.query()`_ is executed, a callback (event handler) is registered to run when the processing finishes.
+Right after that _registering_, _`unrelatedLogic()`_ is executed, and any other following code, while _`db.query()`_ operation is running.
+When _`db.query()`_ finishes, the JavaScript's callback function is executed, asynchronously.
+
+</CH.Section>
 
 That asynchronous JavaScript's callback functionality is the same used in the client-side.
 Using jQuery's [ready()](http://api.jquery.com/ready/) function, for example, we add an event listener (callback) in the same way, just in this case for when the DOM is fully loaded:
 
-```javascript
+```js
 $(document).ready(function () {
   // asynchronous code executed here
 });
@@ -264,7 +268,7 @@ Node is single-threaded, which means there's no possibility to parallel code exe
 But what exactly does that mean?
 Let's illustrate it with a simple example:
 
-```javascript
+```js
 console.log('Hello there!');
 
 var i = 0;
@@ -279,12 +283,12 @@ console.log('i: ' + i);
 ```
 
 Copy and paste that code into a file and run it.
-You should notice a short delay (a few seconds) before "Goodbye!" is printed on screen.
+You should notice a short delay (a few seconds) before _`Goodbye!`_ is printed on screen.
 
 So what's happening here?
 First of all, there's no I/O processing happening here.
-Nevertheless, `console.log('Goodbye!')` is only executed after the execution of `while()`.
-In this example, the `while()` block of code **should be interpreted as a CPU-intensive task**, like resizing an image.
+Nevertheless, _`console.log('Goodbye!')`_ is only executed after the execution of _`while()`_.
+In this example, the _`while()`_ block of code **should be interpreted as a CPU-intensive task**, like resizing an image.
 
 So while the single thread model of Node is _not_ an issue for I/O processing, because in fact Node will be delegating the processing to another component (on its own thread) and continue its code execution, it _is_ an issue with CPU-intensive code executed _by_ Node.
 In this case the execution of Node's code is blocked until, e.g., the image processing has finished.
@@ -314,16 +318,16 @@ Modules in Node are regular JavaScript files following the [CommonJS module syst
 
 In your code you only interact with modules, and that is done through the Node's require() function:
 
-```javascript
+```js
 var http = require('http');
 ```
 
-The `require()` function takes one parameter, which may be the name of the library or a path to the module file.
+The _`require()`_ function takes one parameter, which may be the name of the library or a path to the module file.
 In this case we're using a Node's core (built-in) module.
 
 NPM (Node Package Manager) comes bundled with Node. It allow developers to install third-party packages running the following command:
 
-`$ npm install package_name` (the package should be available in npm registry at [npmjs.org](https://www.npmjs.com)).
+_`$ npm install package_name`_ (the package should be available in npm registry at [npmjs.org](https://www.npmjs.com)).
 
 After installing a third-party package you can start requiring its modules and interacting with its API.
 
@@ -370,7 +374,7 @@ That's what I'm doing right now, and I'd like to have an opportunity to work wit
 
 "Input/Output" \_Wikipedia\* , n.d. Web. 13 March 2013 &#60;<a href="http://en.wikipedia.org/wiki/Input/output" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Input/output</a>&#62;
 
-"Introduction to Chrome V8" _Google Developers_ , n.d. Web. 11 March 2013 &#60;<a href="https://web.archive.org/web/20130125202435/https://developers.google.com/v8/intro" style={{ lineBreak: 'anywhere' }}>ht<span />tps://web.archive.org/web/20130125202435/https://developers.google.com/v8/intro</a>&#62;
+"Introduction to Chrome V8" _Google Developers_ , n.d. Web. 11 March 2013 &#60;<a href="https://web.archive.org/web/20130125202435/https://developers.google.com/v8/intro" style={{ lineBreak: 'anywhere' }}>ht<span />tps://web.archive.org/web/20130125202435/ht<span />tps://developers.google.com/v8/intro</a>&#62;
 
 McLaughlin, Brett. _What Is Node?_. O'Reilly Media, Inc, 2011.
 

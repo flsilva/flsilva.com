@@ -18,7 +18,7 @@ tweetVia: 'flsilva7'
 ---
 
 import { WarningBox } from '../../../components/boxes/WarningBox';
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 import { ImageWithCaption } from '../../../components/ImageWithCaption';
 
 If you're new to [Git](http://git-scm.com/) or want to know a little more about its basics and its distributed model, do not hesitate to read my [Introduction to Git](/blog/introducing-git/).
@@ -48,18 +48,18 @@ It really is.
 
 #### Master branch and the HEAD pointer
 
-When you run `$ git init` or `$ git clone` commands to create a new repository, Git automatically creates a _master_ branch for you, and points development to it.
+When you run _`$ git init`_ or _`$ git clone`_ commands to create a new repository, Git automatically creates a _master_ branch for you, and points development to it.
 Git has a special pointer to know what is the current branch, and it's called _HEAD_.
 It's different than the concept of _HEAD_ in other VCSs. _HEAD_ in Git means the last snapshot (commit) of the current branch.
 How do you know what branches you have, and which is the current one?
-That's easy, you just run `$ git branch`.
-If you run that right after `$ git init`, you should see something like:
+That's easy, you just run _`$ git branch`_.
+If you run that right after _`$ git init`_, you should see something like:
 
 ```bash
 * master
 ```
 
-That means you only have _master_ branch, and it's the current one, indicated by the `*` sign.
+That means you only have _master_ branch, and it's the current one, indicated by the _`*`_ sign.
 
 #### Current branch
 
@@ -97,14 +97,14 @@ Let's create a new branch (_testing_), change the pointer to it, make some chang
   directory or stagging area.
 </WarningBox>
 
-To create a new branch, you run a command like `$ git branch [branch-name]`, for example:
+To create a new branch, you run a command like _`$ git branch [branch-name]`_, for example:
 
 ```shell
 $ git branch testing
 ```
 
 But that command doesn't point to it automatically (it doesn't move your _HEAD_ pointer).
-If you run `$ git branch` now, you should see something like:
+If you run _`$ git branch`_ now, you should see something like:
 
 ```bash
 * master
@@ -112,14 +112,14 @@ If you run `$ git branch` now, you should see something like:
 ```
 
 That pretty much confirms we now have a _testing_ branch, but we're still pointing to _master_.
-You need to run a command like `$ git checkout [branch-name]` to switch between branches, for example:
+You need to run a command like _`$ git checkout [branch-name]`_ to switch between branches, for example:
 
 ```shell
 $ git checkout testing
 ```
 
 Now we should be pointing to _testing_.
-If we run `$git branch` now, we should see something like:
+If we run _`$ git branch`_ now, we should see something like:
 
 ```bash
   master
@@ -145,8 +145,8 @@ Next, you'll see those cases.
 #### Fast forward merge
 
 In the current state of our repository, if you want to merge _testing_ into _master_, it would be the simplest kind of merge that can possibly exist.
-Because you didn't make any changes in your _master_ branch **after** creating your new _testing_ branch, running `$ git merge` command just moves _master_ forward to point to the last commit in the _testing_ branch, which in this case is the next commit, but you could have made _n_ commits in _testing_ before merging it.
-To merge two branches, you have to point to the branch you want to merge into (_master_ in this case, which will receive changes from _testing_) and run a `$ git merge` command:
+Because you didn't make any changes in your _master_ branch **after** creating your new _testing_ branch, running _`$ git merge`_ command just moves _master_ forward to point to the last commit in the _testing_ branch, which in this case is the next commit, but you could have made _n_ commits in _testing_ before merging it.
+To merge two branches, you have to point to the branch you want to merge into (_master_ in this case, which will receive changes from _testing_) and run a _`$ git merge`_ command:
 
 ```shell
 $ git checkout master
@@ -155,7 +155,7 @@ $ git merge testing
 
 You'll notice a _Fast forward_ feedback message, indicating a simple forward.
 After that, your two branches point to a common commit again, as they were doing right after you created your _testing_ branch).
-At this point you can delete your _testing_ branch by running a command like `$ git branch -d [branch-name]`, for example:
+At this point you can delete your _testing_ branch by running a command like _`$ git branch -d [branch-name]`_, for example:
 
 ```shell
 $ git branch -d testing
@@ -169,7 +169,7 @@ So you can be sure that conflicts will arise at some point! 😉
 
 To simulate another possible merge case, a more complex one, let's pretend we didn't run the merge command above.
 
-Let's go back to our _master_ branch by running `$ git checkout master` (remember: when you switch between branches, your working directory changes too).
+Let's go back to our _master_ branch by running _`$ git checkout master`_ (remember: when you switch between branches, your working directory changes too).
 Let's then make a change and commit it. So now this is the state of our repository:
 
 <ImageWithCaption caption="Figure 3. The last two commits (c2b9e and 87ab2) are isolated in separate branches. This image was taken from Pro Git book (respecting its Creative Commons License).">
@@ -181,10 +181,10 @@ Now, we have isolated commits in both branches.
 Trying to merge them now will give Git some work.
 If no conflicts arise, i.e., if there are no changes in the same part of the same files, Git can do everything by itself, automatically.
 
-So, in such case, what will Git do after we run `$ git merge`?
+So, in such case, what will Git do after we run _`$ git merge`_?
 Go ahead and give it a try!
 
-Git will do a simple three-way merge, using the last snapshot (commit) of each branch plus the common ancestor of both (`f30ab` in Figure 3).
+Git will do a simple three-way merge, using the last snapshot (commit) of each branch plus the common ancestor of both (_`f30ab`_ in Figure 3).
 To do that, Git creates a new snapshot (commit) that is referred to as a _merge commit_, and it's special because it has more than one parent (Chacon 57):
 
 <ImageWithCaption caption="Figure 4. Git creates a new commit containing your merged changes. Note that that new commit (09b8e) has two parents. This image was taken from the Pro Git book and edited (respecting its Creative Commons License).">
@@ -206,19 +206,19 @@ But fear nothing, Git is very elegant to handle conflicts too, you should have g
 Let's suppose you've changed the same lines of a text file in both branches (_testing_ and _master_), and tried to merge them.
 Git will give you a feedback like this:
 
-```bash
+```diff
 Auto-merging file-name
 CONFLICT (content): Merge conflict in file-name
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 
-If you run `$ git status` now, Git will show you an _Unmerged paths_ section listing files that are in a conflict state (_both modified_).
+If you run _`$ git status`_ now, Git will show you an _Unmerged paths_ section listing files that are in a conflict state (_both modified_).
 And this time Git didn't create a new merge commit for us, as the merge has failed.
 
 But such conflict is very simple to fix.
 If you open that file, you should see something like this:
 
-```bash
+```diff
 <<<<<<< HEAD
 This section was changed by master branch.
 =======
@@ -226,14 +226,14 @@ This section was changed by testing branch.
 >>>>>>> testing
 ```
 
-Everything that is below `<< HEAD` and above `==` is the _HEAD_ version of the file (the last snapshot of the current branch when you run `$ git merge`), in this case, the _master_ branch version of the file.
-And everything above `>> testing` and below `==` is the version of the file in the other branch (_testing_, in this case).
+Everything that is below _`<< HEAD`_ and above _`==`_ is the _HEAD_ version of the file (the last snapshot of the current branch when you run _`$ git merge`_), in this case, the _master_ branch version of the file.
+And everything above _`>> testing`_ and below _`==`_ is the version of the file in the other branch (_testing_, in this case).
 
 From the Git perspective, to fix that conflict you just have to remove those Git markers, manually, and save the file.
-Also, if you prefer you can run `$ git mergetool` to open a visual merge tool.
+Also, if you prefer you can run _`$ git mergetool`_ to open a visual merge tool.
 
 After removing those markers, you need to tell Git that you've fixed that conflict.
-You do that by running `$ git add`:
+You do that by running _`$ git add`_:
 
 ```shell
 $ git add file-name

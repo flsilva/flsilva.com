@@ -18,7 +18,7 @@ tweetVia: 'flsilva7'
 ---
 
 import { AITools } from '../../../components/boxes/AITools';
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 I last tested these instructions on macOS Ventura 13.3.1.
 
@@ -50,7 +50,7 @@ An SSH server is a software program that uses the Secure Shell protocol to accep
 
 #### OpenSSH on macOS
 
-The macOS provides OpenSSH as its default SSH implementation. The conveniently named `ssh` command line tool is the client part of the OpenSSH software package.
+The macOS provides OpenSSH as its default SSH implementation. The conveniently named _`ssh`_ command line tool is the client part of the OpenSSH software package.
 
 If you want to know about it, run the following command:
 
@@ -58,7 +58,7 @@ If you want to know about it, run the following command:
 $ ssh -V
 ```
 
-You should see an output like this: `OpenSSH_9.0p1, LibreSSL 3.3.6`.
+You should see an output like this: _`OpenSSH_9.0p1, LibreSSL 3.3.6`_.
 
 Now you can notice that it also mentions [LibreSSL](https://www.libressl.org/). That's because macOS combines OpenSSH and LibreSSL for its SSH implementation.
 
@@ -70,7 +70,7 @@ You can also use OpenSSH's server software on your macOS. To allow your Mac to a
 Apple Menu -> System Settings -> General -> Sharing
 ```
 
-Then, turn the `Remote Login` option `on`. Be cautious, though. Only do that if you need it. Only open ports on your computer as you need. It's turned `off` by default for a reason.
+Then, turn the _`Remote Login`_ option _`on`_. Be cautious, though. Only do that if you need it. Only open ports on your computer as you need. It's turned _`off`_ by default for a reason.
 
 #### What are SSH keys, and why should we use them?
 
@@ -88,7 +88,7 @@ Securely backing up your public and private keys is also advised. That way, when
 
 You might have SSH keys already and don't know it. So let's figure it out.
 
-Open your Terminal and `cd` into your user's dir:
+Open your Terminal and _`cd`_ into your user's dir:
 
 ```shell
 $ cd ~/
@@ -100,7 +100,7 @@ Now let's list all files and folders in that dir:
 $ ls -lah
 ```
 
-Look for a directory named `.ssh`. If you can't find one, you don't have SSH keys. If you have, `cd` into it and list all files to make sure you have your keys there:
+Look for a directory named _`.ssh`_. If you can't find one, you don't have SSH keys. If you have, _`cd`_ into it and list all files to make sure you have your keys there:
 
 ```shell
 $ cd .ssh
@@ -110,7 +110,7 @@ $ cd .ssh
 $ ls -lah
 ```
 
-You can have many key pairs and give them whatever names you want, but usually, any files inside the `.ssh` dir other than `known_hosts` and `config` are keys. The public one typically has the same name as the private one but ends with `.pub`.
+You can have many key pairs and give them whatever names you want, but usually, any files inside the _`.ssh`_ dir other than _`known_hosts`_ and _`config`_ are keys. The public one typically has the same name as the private one but ends with _`.pub`_.
 
 If you generated your keys using the RSA algorithm (more about that in the next section) and used the default names, you should be able to see the following two files:
 
@@ -140,17 +140,17 @@ It's easy to generate SSH keys on macOS. You only have to run the following comm
 $ ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-Don't forget to replace `your_email@example.com` with your email.
+Don't forget to replace _`your_email@example.com`_ with your email.
 
-The `ssh-keygen` command is one of the utilities included in OpenSSH. We use it to generate, manage, and manipulate SSH key pairs.
+The _`ssh-keygen`_ command is one of the utilities included in OpenSSH. We use it to generate, manage, and manipulate SSH key pairs.
 
-We use the `-t` option to specify the type of cryptographic algorithm used to generate our keys.
+We use the _`-t`_ option to specify the type of cryptographic algorithm used to generate our keys.
 
 [RSA (Rivest–Shamir–Adleman)](<https://en.wikipedia.org/wiki/RSA_(cryptosystem)>) is a widely used cryptography algorithm.
 
 In the case above, though, we're using the [Ed25519 algorithm](https://en.wikipedia.org/wiki/EdDSA). It's a modern [elliptic curve cryptography (ECC)](https://en.wikipedia.org/wiki/Elliptic-curve_cryptography) algorithm known for its strong security and efficient performance, and it's becoming increasingly popular and recommended for most SSH key generation. For example, GitHub is now [recommending it](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) on its SSH guides.
 
-We use the `-C` option to add a comment to the generated keys, usually an email address or any other descriptive comment.
+We use the _`-C`_ option to add a comment to the generated keys, usually an email address or any other descriptive comment.
 
 After running the command, you should see an output like the following:
 
@@ -159,7 +159,7 @@ Generating public/private ed25519 key pair.
 Enter file in which to save the key (/Users/your_user_name/.ssh/id_ed25519):
 ```
 
-You can type your custom key name or hit `return` to use the default one. I'll use the default one.
+You can type your custom key name or hit _`return`_ to use the default one. I'll use the default one.
 
 After that, you'll be asked to type a passphrase:
 
@@ -176,9 +176,9 @@ Your identification has been saved in /Users/your_user_name/.ssh/id_ed25519
 Your public key has been saved in /Users/your_user_name/.ssh/id_ed25519.pub
 ```
 
-In the message above, "Your identification" means your private key, i.e., the file `id_ed25519`.
+In the message above, "Your identification" means your private key, i.e., the file _`id_ed25519`_.
 
-Congrats! You now have your keys on the `~/.ssh` dir (provided you went with the default dir).
+Congrats! You now have your keys on the _`~/.ssh`_ dir (provided you went with the default dir).
 
 #### What are passphrases, and why should we use them?
 
@@ -194,17 +194,17 @@ But there are two ways to avoid typing your passphrase every time you start an S
 
 #### How to prevent typing your passphrase every time on macOS
 
-1. Using the `ssh-agent` tool. This way requires you to run two commands and type your passphrase every time you create a new macOS user session (typically after a computer reboot). [Use ssh-agent](/blog/how-to-generate-use-ssh-keys-macos/#what-is-the-ssh-agent-and-how-to-use-it) if you prefer this way.
+1. Using the _`ssh-agent`_ tool. This way requires you to run two commands and type your passphrase every time you create a new macOS user session (typically after a computer reboot). [Use ssh-agent](/blog/how-to-generate-use-ssh-keys-macos/#what-is-the-ssh-agent-and-how-to-use-it) if you prefer this way.
 
 2. Using Apple's Keychain. This way requires you to run one command, add a simple configuration to a text file, and type your passphrase, all three steps only once, ever. Then, every time you create a new macOS user session (e.g., boot your computer and log in), your passphrase will be available in memory by the Keychain. That's the best way to have the best of both worlds: your private key is protected, i.e., if anyone copies it, they still can't use it without its passphrase, and you don't have to type your passphrase ever again unless you format your macOS or get a new one. [Use Keychain](/blog/how-to-generate-use-ssh-keys-macos/#what-is-apples-keychain-and-how-to-add-your-ssh-keys-to-it) if you prefer this way, as I do.
 
 #### What is the ssh-agent, and how to use it?
 
-**Note:** You don't have to worry about the `ssh-agent` if you didn't type a passphrase when you generated your keys. In that case, head to the [How to use your SSH keys on GitHub](/blog/how-to-generate-use-ssh-keys-macos/#how-to-use-your-ssh-keys-on-github) section.
+**Note:** You don't have to worry about the _`ssh-agent`_ if you didn't type a passphrase when you generated your keys. In that case, head to the [How to use your SSH keys on GitHub](/blog/how-to-generate-use-ssh-keys-macos/#how-to-use-your-ssh-keys-on-github) section.
 
-The `ssh-agent` command line tool manages SSH keys and facilitates secure authentication when using SSH. It acts as a security agent that holds private keys in memory and provides them to SSH clients upon request, eliminating the need to enter passphrases for encrypted private keys repeatedly.
+The _`ssh-agent`_ command line tool manages SSH keys and facilitates secure authentication when using SSH. It acts as a security agent that holds private keys in memory and provides them to SSH clients upon request, eliminating the need to enter passphrases for encrypted private keys repeatedly.
 
-To do that, we have to do two things. First, we have to run the following command every time we reboot our computer (or create a new user session) to start `ssh-agent`:
+To do that, we have to do two things. First, we have to run the following command every time we reboot our computer (or create a new user session) to start _`ssh-agent`_:
 
 ```shell
 $ eval "$(ssh-agent -s)"
@@ -216,9 +216,9 @@ You should see an output like this:
 Agent pid 5361
 ```
 
-Nice, that means `ssh-agent` is now running in the background.
+Nice, that means _`ssh-agent`_ is now running in the background.
 
-Then, we run the following command to decrypt our private key and send it to `ssh-agent`. It will then hold the decrypted key in memory and provide it whenever requested.
+Then, we run the following command to decrypt our private key and send it to _`ssh-agent`_. It will then hold the decrypted key in memory and provide it whenever requested.
 
 ```shell
 $ ssh-add ~/.ssh/id_ed25519
@@ -250,14 +250,14 @@ You'll be asked to type your passphrase.
 
 Now, you can connect via SSH without typing your passphrase again. But if you restart your machine, it'll be like you never run that command, i.e., you'll have to type your passphrase every time you start an SSH connection. So you need to take one more step.
 
-Check if you have a `config` file in your `.ssh` dir:
+Check if you have a _`config`_ file in your _`.ssh`_ dir:
 
 ```shell
 $ cd ~/.ssh
 $ ls -lah
 ```
 
-If you can't see it, run the following command to create an empty `config` file:
+If you can't see it, run the following command to create an empty _`config`_ file:
 
 ```shell
 $ touch ~/.ssh/config
@@ -299,7 +299,7 @@ The authenticity of host 'github.com (20.201.28.151)' can't be established.
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
 
-Type `yes` and hit `return`.
+Type _`yes`_ and hit _`return`_.
 
 Then you should see the following:
 
@@ -307,15 +307,15 @@ Then you should see the following:
 git@github.com: Permission denied (publickey).
 ```
 
-Alternatively, you can try to `git clone` a GitHub repo using the SSH path (the one starting with `git@github.com` instead of `https://github.com`).
+Alternatively, you can try to _`git clone`_ a GitHub repo using the SSH path (the one starting with _`git@github.com`_ instead of _`https://github.com`_).
 
 You should get the same error message alongside some other output.
 
 If those commands work, you already have your public SSH key added to GitHub. Otherwise, let's keep going.
 
-You'll add your **public** key to GitHub. Make sure you use the file ending with `.pub`. Otherwise, you will expose your private key. If that happens, you should delete the pair (public and private keys) and generate new ones. Remember, they're text files on your filesystem, so you only have to delete them.
+You'll add your **public** key to GitHub. Make sure you use the file ending with _`.pub`_. Otherwise, you will expose your private key. If that happens, you should delete the pair (public and private keys) and generate new ones. Remember, they're text files on your filesystem, so you only have to delete them.
 
-I could describe here the steps to add it to GitHub, but GitHub itself has a [page dedicated to it](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account), so you can follow the steps there and get back here to test if it works and finish reading this guide. Just make sure you select `Authentication Key` on the `Key type` dropdown.
+I could describe here the steps to add it to GitHub, but GitHub itself has a [page dedicated to it](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account), so you can follow the steps there and get back here to test if it works and finish reading this guide. Just make sure you select _`Authentication Key`_ on the _`Key type`_ dropdown.
 
 After adding your public key to GitHub, rerun the following command:
 
@@ -331,7 +331,7 @@ Hi <your_github_user_name>! You've successfully authenticated, but GitHub does n
 
 Yay! It works! 🥳
 
-You can also use the SSH path to `git clone` a repo without having to type any password or passphrase. It should just work.
+You can also use the SSH path to _`git clone`_ a repo without having to type any password or passphrase. It should just work.
 
 If you went with Apple's Keychain path, you can now make the final test. Yes. I know that you know, and I know that you know that I know. Go ahead. Do it. Restart your Mac and try to run the command above. See for yourself. No more passphrases! 🤯
 

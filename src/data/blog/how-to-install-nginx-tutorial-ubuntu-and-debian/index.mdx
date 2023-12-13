@@ -18,7 +18,7 @@ tweetText: 'Learn how to install Nginx on Debian & Ubuntu'
 tweetVia: 'flsilva7'
 ---
 
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 The superfast, open-source [Nginx](http://nginx.org/) HTTP webserver is becoming very popular nowadays.
 Fortunately, it's very simple to install and set it up, as we'll see in this tutorial.
@@ -54,7 +54,9 @@ $ sudo nginx -v
 
 You should see something like this:
 
-_"nginx version: nginx/1.18.0"_
+```shell
+"nginx version: nginx/1.18.0"
+```
 
 That should be very close to the latest version!
 
@@ -70,14 +72,18 @@ $ sudo systemctl status nginx
 
 You should see a bunch of useful information, including something like this:
 
-_Active: active (running)_
+```shell
+Active: active (running)
+```
 
 That means Nginx is up and running! 😎
 
 If you're setting up a VPS from scratch, you can now try to access its IP on your browser.
 You should see something like this:
 
-_"Welcome to nginx!"_
+```shell
+"Welcome to nginx!"
+```
 
 Congrats!
 Nginx is up and listening to port 80 (HTTP).
@@ -97,7 +103,7 @@ $ sudo systemctl reload nginx
 You'll get an error message if there's an error in any configuration file.
 Otherwise, you won't get any feedback.
 
-There is also the `start`, `stop` and `restart` commands that you might need at some point:
+There is also the _`start`_, _`stop`_ and _`restart`_ commands that you might need at some point:
 
 ```shell
 $ sudo systemctl stop nginx
@@ -111,7 +117,7 @@ $ sudo systemctl start nginx
 $ sudo systemctl restart nginx
 ```
 
-The `restart` command will `stop` and `start` it again.
+The _`restart`_ command will _`stop`_ and _`start`_ it again.
 
 #### Updating Nginx
 

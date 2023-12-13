@@ -17,7 +17,7 @@ tweetText: 'How to install Command Line Developer Tools on macOS.'
 tweetVia: 'flsilva7'
 ---
 
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 I last tested these instructions on macOS Ventura 13.3.1.
 
@@ -69,13 +69,13 @@ The "gcc" command requires the command line developer tools. Would you like to i
 
 #### Step 3. Install the Command Line Developer Tools
 
-Go ahead and hit the `Install` button. It should take only a few minutes.
+Go ahead and hit the _`Install`_ button. It should take only a few minutes.
 
-If everything succeeds, you should see a message like `The software was installed.`
+If everything succeeds, you should see a message like _`The software was installed.`_
 
 #### Step 4. Check the installation
 
-Run `$ gcc --version` again to check if everything worked as expected. You should see an output including the following:
+Run _`$ gcc --version`_ again to check if everything worked as expected. You should see an output including the following:
 
 ```bash
 Apple clang version 14.0.3 (clang-1403.0.22.14.1)

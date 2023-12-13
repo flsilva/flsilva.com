@@ -17,7 +17,7 @@ tweetText: 'How to install Git with Homebrew on macOS.'
 tweetVia: 'flsilva7'
 ---
 
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 I last tested these instructions on macOS Ventura 13.3.1.
 
@@ -93,7 +93,7 @@ $ brew list
 
 If you can't see Git listed, you don't have it installed!
 
-An easier way to check for a specific package when you have too many installed with Homebrew is by running the `list` command with the name of the package after it, like the following:
+An easier way to check for a specific package when you have too many installed with Homebrew is by running the _`list`_ command with the name of the package after it, like the following:
 
 ```shell
 $ brew list git
@@ -152,7 +152,7 @@ That means Homebrew installed Git successfully!
 
 #### Step 6. Check the installation
 
-Now, if you open a new Terminal window or tab and run `$ git --version`, you should see the just installed version.
+Now, if you open a new Terminal window or tab and run _`$ git --version`_, you should see the just installed version.
 
 To make it work on your current Zsh instance, you must run the following command to reload it, making the installation changes take effect:
 
@@ -160,9 +160,9 @@ To make it work on your current Zsh instance, you must run the following command
 $ exec zsh
 ```
 
-Now if you run `$ git --version`, you should see the latest one!
+Now if you run _`$ git --version`_, you should see the latest one!
 
-And if you run `$ which git`, you should see this:
+And if you run _`$ which git`_, you should see this:
 
 ```bash
 /opt/homebrew/bin/git
@@ -202,9 +202,9 @@ $ git config --global user.name "Your Name"
 $ git config --global user.email youremail@example.com
 ```
 
-Don't forget to replace `Your Name` and `youremail@example.com`.
+Don't forget to replace _`Your Name`_ and _`youremail@example.com`_.
 
-Using the `--global` argument makes it globally available for Git, so it's used in any Git repository you work with. If you want to override that information for a specific repo, go to that repo's root directory and run that command _without_ the `--global` argument.
+Using the _`--global`_ argument makes it globally available for Git, so it's used in any Git repository you work with. If you want to override that information for a specific repo, go to that repo's root directory and run that command _without_ the _`--global`_ argument.
 
 You can run the following command to double-check your info:
 
@@ -212,7 +212,7 @@ You can run the following command to double-check your info:
 $ git config --list
 ```
 
-You should see a bunch of information, including `user.name` and `user.email`.
+You should see a bunch of information, including _`user.name`_ and _`user.email`_.
 
 #### Conclusion
 

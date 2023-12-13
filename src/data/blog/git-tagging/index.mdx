@@ -17,7 +17,7 @@ tweetText: 'Learn how Git tagging works and how to use it to tag your software r
 tweetVia: 'flsilva7'
 ---
 
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 If you're new to [Git](http://git-scm.com/) or want to know a little more about its basics and its distributed model, do not hesitate to read the [Introduction to Git](/blog/introducing-git/) article.
 
@@ -71,7 +71,7 @@ $ git show tag-name
 
 #### Sending your tags to tour remote repository
 
-By default, the `$ git push` command doesn't send tags to remote repositories.
+By default, the _`$ git push`_ command doesn't send tags to remote repositories.
 To send them you have to do the same thing as with branches:
 
 ```shell

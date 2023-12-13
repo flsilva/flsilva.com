@@ -17,7 +17,7 @@ tweetText: 'How to install and use Homebrew on macOS.'
 tweetVia: 'flsilva7'
 ---
 
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 I last tested these instructions on macOS Ventura 13.3.1.
 
@@ -51,7 +51,7 @@ Before proceeding, make sure you don't have Homebrew installed already by runnin
 $ brew --version
 ```
 
-If you see something like `Homebrew 1.6.2`, you already have it installed! Then, you can head to the What are some of the most popular commands to use with Homebrew? section to learn more about how to use it.
+If you see something like _`Homebrew 1.6.2`_, you already have it installed! Then, you can head to the What are some of the most popular commands to use with Homebrew? section to learn more about how to use it.
 
 Otherwise, you should see something like:
 
@@ -83,11 +83,11 @@ If it doesn't work, you can look at its [website](https://brew.sh), as they migh
 
 #### Step 3. Add Homebrew to your PATH
 
-You should also see instructions to run two more commands necessary to add Homebrew to your `PATH` in the `==> Next steps:` section of the output message.
+You should also see instructions to run two more commands necessary to add Homebrew to your _`PATH`_ in the _`==> Next steps:`_ section of the output message.
 
 Before going ahead, let's understand why we need to do that.
 
-If you try to run any `brew` commands now, you'll still get that same error as when you first tried it before installing Homebrew. Try it:
+If you try to run any _`brew`_ commands now, you'll still get that same error as when you first tried it before installing Homebrew. Try it:
 
 ```shell
 $ brew --version
@@ -99,15 +99,15 @@ You should get that same error message:
 zsh: command not found: brew
 ```
 
-That's because we haven't set our `PATH` variable yet.
+That's because we haven't set our _`PATH`_ variable yet.
 
-The `PATH` is an environment variable that specifies a list of directories where macOS looks for executable files or commands when you enter a command in the Terminal (`brew` in this case).
+The _`PATH`_ is an environment variable that specifies a list of directories where macOS looks for executable files or commands when you enter a command in the Terminal (_`brew`_ in this case).
 
-By running the first command, we'll create a new `.zprofile` file (if one doesn't exist) and add an `eval` command to it that adds Homebrew's executable directory to our `PATH`. That way, macOS can find Homebrew's executable `brew` command.
+By running the first command, we'll create a new _`.zprofile`_ file (if one doesn't exist) and add an _`eval`_ command to it that adds Homebrew's executable directory to our _`PATH`_. That way, macOS can find Homebrew's executable _`brew`_ command.
 
-That command will also set up the `PATH` variable so that tools installed with Homebrew will take precedence over tools already installed in the system or installed in other ways.
+That command will also set up the _`PATH`_ variable so that tools installed with Homebrew will take precedence over tools already installed in the system or installed in other ways.
 
-For example, when we install the [Command Line Developer Tools](/blog/how-to-install-command-line-developer-tools-on-macos/), we get Git installed as part of the bundle. But that installation is not easy to update. So it's advised to install a new Git version with Homebrew, making it very easy to update. But then we ended up with two Git versions installed. Since our `PATH` is correctly set, macOS will resolve to the Homebrew-installed one when we run `git`.
+For example, when we install the [Command Line Developer Tools](/blog/how-to-install-command-line-developer-tools-on-macos/), we get Git installed as part of the bundle. But that installation is not easy to update. So it's advised to install a new Git version with Homebrew, making it very easy to update. But then we ended up with two Git versions installed. Since our _`PATH`_ is correctly set, macOS will resolve to the Homebrew-installed one when we run _`git`_.
 
 So let's go ahead and run the first command:
 
@@ -115,9 +115,9 @@ So let's go ahead and run the first command:
 (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
 ```
 
-Now, we have our `PATH` variable properly set up, but we still get that error message if we try to run any `$ brew` commands.
+Now, we have our _`PATH`_ variable properly set up, but we still get that error message if we try to run any _`$ brew`_ commands.
 
-Zsh reads the `~/.zprofile` file automatically, but only when we open a new Terminal window or tab. If you open a new Terminal window or tab, your `$ brew` commands will work.
+Zsh reads the _`~/.zprofile`_ file automatically, but only when we open a new Terminal window or tab. If you open a new Terminal window or tab, your _`$ brew`_ commands will work.
 
 But to make it work in your current Zsh instance, we must run the second command that Homebrew instructions tell us. Let's do that:
 
@@ -133,13 +133,13 @@ Now run the following command to make sure it worked:
 $ brew --version
 ```
 
-You should see something like `Homebrew 4.0.18`.
+You should see something like _`Homebrew 4.0.18`_.
 
 Awesome! We finally have it working! Congrats!
 
-#### A bit about the `.zprofile` file
+#### A bit about the _`.zprofile`_ file
 
-Zsh automatically reads some files at certain moments. The `.zprofile` file is one of them, and Zsh only evaluates it when you log in to your Mac user account.
+Zsh automatically reads some files at certain moments. The _`.zprofile`_ file is one of them, and Zsh only evaluates it when you log in to your Mac user account.
 
 We should use such files to add our custom configurations to Zsh as we did for Homebrew.
 
@@ -281,15 +281,15 @@ $ brew info wget
 
 Homebrew has a special command to check for issues with your installed packages.
 
-You can run `$ brew doctor` to check for issues with your installed packages. The command will exit with a non-zero status if it finds any problems.
+You can run _`$ brew doctor`_ to check for issues with your installed packages. The command will exit with a non-zero status if it finds any problems.
 
 #### Taps (Third-Party Repositories)
 
 When you try to install a package with Homebrew, it looks into its official repository to see if it can find the package you're trying to install. But sometimes the package you want is outside the official repo, so you need to add an unofficial repo for Homebrew to look into too. Just be careful, as you might install malware.
 
-The `$ brew tap` command adds more repositories to the list of formulae that Homebrew tracks, updates, and installs from. By default, tap assumes that the repositories come from GitHub, but the command isn't limited to any location.
+The _`$ brew tap`_ command adds more repositories to the list of formulae that Homebrew tracks, updates, and installs from. By default, tap assumes that the repositories come from GitHub, but the command isn't limited to any location.
 
-Without arguments, the `$ brew tap` command lists all currently tapped repositories.
+Without arguments, the _`$ brew tap`_ command lists all currently tapped repositories.
 
 To tap into a repo, you run a command with the following format:
 
@@ -301,7 +301,7 @@ Head to the [official Tap page](https://docs.brew.sh/Taps) to read more about th
 
 #### How to get some help
 
-You can run `$ brew help` or `$ man brew` to get helpful information about Homebrew itself on your Terminal.
+You can run _`$ brew help`_ or _`$ man brew`_ to get helpful information about Homebrew itself on your Terminal.
 
 #### More about Homebrew
 

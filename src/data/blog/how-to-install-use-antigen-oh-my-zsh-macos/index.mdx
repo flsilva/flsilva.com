@@ -16,7 +16,7 @@ tweetVia: 'flsilva7'
 ---
 
 import { AITools } from '../../../components/boxes/AITools';
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 I last tested these instructions on macOS Ventura 13.3.1.
 
@@ -85,15 +85,15 @@ You should see a bunch of output and something like the following close to the e
 
 That means Homebrew installed Antigen successfully! But it still needs to be _activated_.
 
-#### Step 2. Using Antigen: the `~/.zshrc` file
+#### Step 2. Using Antigen: the _`~/.zshrc`_ file
 
-We use Antigen by setting it up in our `~/.zshrc` file.
+We use Antigen by setting it up in our _`~/.zshrc`_ file.
 
-If you know the `~/.zshrc` file and how to use it, you can [skip to the next section](/blog/how-to-install-use-antigen-oh-my-zsh-macos/#step-3-using-antigen-adding-configuration-to-your-zshrc-file).
+If you know the _`~/.zshrc`_ file and how to use it, you can [skip to the next section](/blog/how-to-install-use-antigen-oh-my-zsh-macos/#step-3-using-antigen-adding-configuration-to-your-zshrc-file).
 
-Zsh automatically reads some files at certain moments. The `~/.zshrc` file is one of them, and Zsh evaluates it every time it starts. We should use such files to add our custom configurations to Zsh, like what we will do with Antigen.
+Zsh automatically reads some files at certain moments. The _`~/.zshrc`_ file is one of them, and Zsh evaluates it every time it starts. We should use such files to add our custom configurations to Zsh, like what we will do with Antigen.
 
-To check if you have your `~/.zshrc` run the following two commands:
+To check if you have your _`~/.zshrc`_ run the following two commands:
 
 ```shell
 $ cd ~/
@@ -103,7 +103,7 @@ $ cd ~/
 $ ls -lah
 ```
 
-And look for that file. You should see it listed after a file named `.zsh_sessions`.
+And look for that file. You should see it listed after a file named _`.zsh_sessions`_.
 
 If you don't have it, create it by running the following command:
 
@@ -113,9 +113,9 @@ $ touch ~/.zshrc
 
 You can read more about those files and how to use them in this [StackExchange topic](https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout).
 
-#### Step 3. Using Antigen: adding configuration to your `~/.zshrc` file
+#### Step 3. Using Antigen: adding configuration to your _`~/.zshrc`_ file
 
-Now open your `~/.zshrc` file and add the following to it:
+Now open your _`~/.zshrc`_ file and add the following to it:
 
 ```bash
 # Make Antigen always available to Zsh
@@ -183,21 +183,21 @@ Other plugins you might be interested in:
 [antigen bundle rsync](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/rsync)<br />
 [antigen bundle ssh-agent](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent)
 
-The above `~/.zshrc` file is just an example of how you can have several plugins added to it. I only added general programming stuff that many programmers would like to have and omitted specific plugins like language ones so that the file can work as a nice starting point for your needs.
+The above _`~/.zshrc`_ file is just an example of how you can have several plugins added to it. I only added general programming stuff that many programmers would like to have and omitted specific plugins like language ones so that the file can work as a nice starting point for your needs.
 
 Feel free to review it and remove any plugins you don't like or won't use. It's a personal matter, and there's virtually a plugin for anything you can think of, which is great because it's up to you to choose what fits your needs. I would first look for plugins on Oh My Zsh's [plugins list page](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).
 
 #### Step 4. Activating Antigen
 
-Now you need to open a new Terminal window or tab so Zsh can read your `~/.zshrc` file and activate Antigen, installing all plugins you listed. Alternatively, you can run the following command to reload your current shell, making it read your `~/.zshrc` file:
+Now you need to open a new Terminal window or tab so Zsh can read your _`~/.zshrc`_ file and activate Antigen, installing all plugins you listed. Alternatively, you can run the following command to reload your current shell, making it read your _`~/.zshrc`_ file:
 
 ```shell
 $ exec zsh
 ```
 
-You must do either step above every time you change your `~/.zshrc` file.
+You must do either step above every time you change your _`~/.zshrc`_ file.
 
-You should see a bunch of `Installing` output lines. That means it is now activated and installed your plugins. Double-check your output to see if you've got any error messages, as some plugins might require additional configuration.
+You should see a bunch of _`Installing`_ output lines. That means it is now activated and installed your plugins. Double-check your output to see if you've got any error messages, as some plugins might require additional configuration.
 
 If you added a syntax highlighting theme (included in the config above), it should also be working by now, and you should be able to see some colors! 🌈 Nice, huh?
 
@@ -219,15 +219,15 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 The line above will add the plugin located at [github.com/zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting).
 
-The only rule regarding adding plugins to your `~/.zshrc` file is to list them before the `antigen apply` line.
+The only rule regarding adding plugins to your _`~/.zshrc`_ file is to list them before the _`antigen apply`_ line.
 
-To learn more about Antigen commands like `antigen bundle`, `antigen theme`, and `antigen apply`, check the official [Commands doc page](https://github.com/zsh-users/antigen/wiki/Commands).
+To learn more about Antigen commands like _`antigen bundle`_, _`antigen theme`_, and _`antigen apply`_, check the official [Commands doc page](https://github.com/zsh-users/antigen/wiki/Commands).
 
-Themes work like plugins, i.e., if it's from the Oh My Zsh repo, you type their name after `antigen theme`. Otherwise, you use the GitHub path.
+Themes work like plugins, i.e., if it's from the Oh My Zsh repo, you type their name after _`antigen theme`_. Otherwise, you use the GitHub path.
 
 #### Step 6. Installing plugins and themes
 
-Whenever we change our `~/.zshrc` file, we need to open a new Terminal window or run the following command to make it take effect:
+Whenever we change our _`~/.zshrc`_ file, we need to open a new Terminal window or run the following command to make it take effect:
 
 ```shell
 $ source ~/.zshrc
@@ -237,7 +237,7 @@ By doing that now, we should see Antigen installing our plugins, so go ahead and
 
 #### How to have your plugins, themes, and Antigen itself automatically updated for you
 
-In the example `~/.zshrc` file above, we have the following plugin listed:
+In the example _`~/.zshrc`_ file above, we have the following plugin listed:
 
 ```bash
 antigen bundle unixorn/autoupdate-antigen.zshplugin
@@ -245,14 +245,14 @@ antigen bundle unixorn/autoupdate-antigen.zshplugin
 
 That plugin will automatically update all your installed plugins and Antigen itself within a predefined number of days (defaults to 7).
 
-To change that interval, you can define two variables on your `~/.zshrc` file before the line listing the plugin, like the following:
+To change that interval, you can define two variables on your _`~/.zshrc`_ file before the line listing the plugin, like the following:
 
 ```bash
 ANTIGEN_PLUGIN_UPDATE_DAYS=30
 ANTIGEN_SYSTEM_UPDATE_DAYS=30
 ```
 
-And replace `30` with the number of days you want.
+And replace _`30`_ with the number of days you want.
 
 #### How to manually update plugins and themes
 
@@ -310,7 +310,7 @@ You should see an output like the following:
 Done. Please open a new shell to see the changes.
 ```
 
-Ensure you manually remove the plugins you're uninstalling from your `~/.zshrc` file. Otherwise, Antigen will install them again the next time you open a shell.
+Ensure you manually remove the plugins you're uninstalling from your _`~/.zshrc`_ file. Otherwise, Antigen will install them again the next time you open a shell.
 
 After that, you can reload your Zsh instance by running the following:
 

@@ -3,6 +3,7 @@ import type { HeadFC, PageProps } from 'gatsby';
 import { graphql } from 'gatsby';
 import { DiscussionEmbed } from 'disqus-react';
 import Giscus from '@giscus/react';
+import "@code-hike/mdx/dist/index.css"
 
 import { Layout } from '../../components/layouts/Layout';
 import { SEO } from '../../components/SEO';

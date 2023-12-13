@@ -26,6 +26,7 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@code-hike/mdx", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:0.9.0"],\
           ["@fontsource/open-sans", "npm:5.0.2"],\
           ["@giscus/react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:2.3.0"],\
           ["@mdx-js/react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:2.3.0"],\
@@ -68,7 +69,6 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:18.2.0"],\
           ["rehype-autolink-headings", "npm:3.0.0"],\
-          ["rehype-highlight", "npm:4.1.0"],\
           ["rehype-slug", "npm:3.0.0"],\
           ["remark-gfm", "npm:1.0.0"],\
           ["typescript", "patch:typescript@npm%3A5.0.4#optional!builtin<compat/typescript>::version=5.0.4&hash=b5f058"]\
@@ -3251,6 +3251,39 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@builder.io-partytown-npm-0.7.5-c5b78f3be8-694f22ea52.zip/node_modules/@builder.io/partytown/",\
         "packageDependencies": [\
           ["@builder.io/partytown", "npm:0.7.5"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@code-hike/lighter", [\
+      ["npm:0.7.0", {\
+        "packageLocation": "./.yarn/cache/@code-hike-lighter-npm-0.7.0-2f88b6f490-9fdad374c9.zip/node_modules/@code-hike/lighter/",\
+        "packageDependencies": [\
+          ["@code-hike/lighter", "npm:0.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@code-hike/mdx", [\
+      ["npm:0.9.0", {\
+        "packageLocation": "./.yarn/cache/@code-hike-mdx-npm-0.9.0-32449af466-f7d708f11e.zip/node_modules/@code-hike/mdx/",\
+        "packageDependencies": [\
+          ["@code-hike/mdx", "npm:0.9.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:0.9.0", {\
+        "packageLocation": "./.yarn/__virtual__/@code-hike-mdx-virtual-034b421d3e/0/cache/@code-hike-mdx-npm-0.9.0-32449af466-f7d708f11e.zip/node_modules/@code-hike/mdx/",\
+        "packageDependencies": [\
+          ["@code-hike/mdx", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:0.9.0"],\
+          ["@code-hike/lighter", "npm:0.7.0"],\
+          ["@types/react", "npm:18.2.7"],\
+          ["node-fetch", "virtual:034b421d3ee91f67af489306c3778a83f16e473b208719711ceae327957a1bc899d3f4cfc391cab01b6a1544acf87f99c7f0b89be24f4d57523c3ae048dcf26a#npm:2.7.0"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -10811,16 +10844,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["fault", [\
-      ["npm:1.0.4", {\
-        "packageLocation": "./.yarn/cache/fault-npm-1.0.4-2788bc13e3-5ac610d8b0.zip/node_modules/fault/",\
-        "packageDependencies": [\
-          ["fault", "npm:1.0.4"],\
-          ["format", "npm:0.2.2"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["fb-watchman", [\
       ["npm:2.0.2", {\
         "packageLocation": "./.yarn/cache/fb-watchman-npm-2.0.2-bcb6f8f831-4f95d336fb.zip/node_modules/fb-watchman/",\
@@ -11042,6 +11065,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["flsilva.com", "workspace:."],\
+          ["@code-hike/mdx", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:0.9.0"],\
           ["@fontsource/open-sans", "npm:5.0.2"],\
           ["@giscus/react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:2.3.0"],\
           ["@mdx-js/react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:2.3.0"],\
@@ -11084,7 +11108,6 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:18.2.0"],\
           ["rehype-autolink-headings", "npm:3.0.0"],\
-          ["rehype-highlight", "npm:4.1.0"],\
           ["rehype-slug", "npm:3.0.0"],\
           ["remark-gfm", "npm:1.0.0"],\
           ["typescript", "patch:typescript@npm%3A5.0.4#optional!builtin<compat/typescript>::version=5.0.4&hash=b5f058"]\
@@ -11188,15 +11211,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/form-data-encoder-npm-2.1.4-6f48cca6c9-3778e7db3c.zip/node_modules/form-data-encoder/",\
         "packageDependencies": [\
           ["form-data-encoder", "npm:2.1.4"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["format", [\
-      ["npm:0.2.2", {\
-        "packageLocation": "./.yarn/cache/format-npm-0.2.2-679f3acc64-5f878b8fc1.zip/node_modules/format/",\
-        "packageDependencies": [\
-          ["format", "npm:0.2.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -13101,16 +13115,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["hast-util-to-text", [\
-      ["npm:2.0.1", {\
-        "packageLocation": "./.yarn/cache/hast-util-to-text-npm-2.0.1-2541ca4a18-71006964dc.zip/node_modules/hast-util-to-text/",\
-        "packageDependencies": [\
-          ["hast-util-to-text", "npm:2.0.1"],\
-          ["hast-util-is-element", "npm:1.1.0"],\
-          ["repeat-string", "npm:1.6.1"],\
-          ["unist-util-find-after", "npm:3.0.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:3.1.2", {\
         "packageLocation": "./.yarn/cache/hast-util-to-text-npm-3.1.2-922eb1f623-5612c71012.zip/node_modules/hast-util-to-text/",\
         "packageDependencies": [\
@@ -13180,15 +13184,6 @@ const RAW_RUNTIME_STATE =
           ["header-case", "npm:2.0.4"],\
           ["capital-case", "npm:1.0.4"],\
           ["tslib", "npm:2.4.1"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["highlight.js", [\
-      ["npm:10.7.3", {\
-        "packageLocation": "./.yarn/cache/highlight.js-npm-10.7.3-247e67d5c0-db8d10a541.zip/node_modules/highlight.js/",\
-        "packageDependencies": [\
-          ["highlight.js", "npm:10.7.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -14886,17 +14881,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["lowlight", [\
-      ["npm:1.20.0", {\
-        "packageLocation": "./.yarn/cache/lowlight-npm-1.20.0-771a13490e-3294677be1.zip/node_modules/lowlight/",\
-        "packageDependencies": [\
-          ["lowlight", "npm:1.20.0"],\
-          ["fault", "npm:1.0.4"],\
-          ["highlight.js", "npm:10.7.3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["lru-cache", [\
       ["npm:4.0.0", {\
         "packageLocation": "./.yarn/cache/lru-cache-npm-4.0.0-fc17b4c73f-7073d363f2.zip/node_modules/lru-cache/",\
@@ -16351,6 +16335,27 @@ const RAW_RUNTIME_STATE =
           ["node-fetch", "npm:2.6.7"]\
         ],\
         "linkType": "SOFT"\
+      }],\
+      ["npm:2.7.0", {\
+        "packageLocation": "./.yarn/cache/node-fetch-npm-2.7.0-587d57004e-b24f8a3dc9.zip/node_modules/node-fetch/",\
+        "packageDependencies": [\
+          ["node-fetch", "npm:2.7.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:034b421d3ee91f67af489306c3778a83f16e473b208719711ceae327957a1bc899d3f4cfc391cab01b6a1544acf87f99c7f0b89be24f4d57523c3ae048dcf26a#npm:2.7.0", {\
+        "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-e616394356/0/cache/node-fetch-npm-2.7.0-587d57004e-b24f8a3dc9.zip/node_modules/node-fetch/",\
+        "packageDependencies": [\
+          ["node-fetch", "virtual:034b421d3ee91f67af489306c3778a83f16e473b208719711ceae327957a1bc899d3f4cfc391cab01b6a1544acf87f99c7f0b89be24f4d57523c3ae048dcf26a#npm:2.7.0"],\
+          ["@types/encoding", null],\
+          ["encoding", null],\
+          ["whatwg-url", "npm:5.0.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/encoding",\
+          "encoding"\
+        ],\
+        "linkType": "HARD"\
       }],\
       ["virtual:e38e5ca8e1744318ac1975938907457c0f0befe93ad187c39d15fd5ce11ab03b8492a950d348f50afe3b5a8f5b9bcca3686af15f7e6cda727d34c57568870ca6#npm:2.6.11", {\
         "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-07332085b1/0/cache/node-fetch-npm-2.6.11-160e4174c3-de59f077d4.zip/node_modules/node-fetch/",\
@@ -18937,18 +18942,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["rehype-highlight", [\
-      ["npm:4.1.0", {\
-        "packageLocation": "./.yarn/cache/rehype-highlight-npm-4.1.0-581fdd8624-560d568aea.zip/node_modules/rehype-highlight/",\
-        "packageDependencies": [\
-          ["rehype-highlight", "npm:4.1.0"],\
-          ["hast-util-to-text", "npm:2.0.1"],\
-          ["lowlight", "npm:1.20.0"],\
-          ["unist-util-visit", "npm:2.0.3"]\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["rehype-infer-description-meta", [\
       ["npm:1.1.0", {\
         "packageLocation": "./.yarn/cache/rehype-infer-description-meta-npm-1.1.0-01793c20a7-b1a4d51862.zip/node_modules/rehype-infer-description-meta/",\
@@ -20894,14 +20887,6 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["unist-util-find-after", [\
-      ["npm:3.0.0", {\
-        "packageLocation": "./.yarn/cache/unist-util-find-after-npm-3.0.0-7381434645-daa9a28f6c.zip/node_modules/unist-util-find-after/",\
-        "packageDependencies": [\
-          ["unist-util-find-after", "npm:3.0.0"],\
-          ["unist-util-is", "npm:4.1.0"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
       ["npm:4.0.1", {\
         "packageLocation": "./.yarn/cache/unist-util-find-after-npm-4.0.1-0f069ee279-999062494b.zip/node_modules/unist-util-find-after/",\
         "packageDependencies": [\

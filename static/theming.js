@@ -46,18 +46,22 @@ const setupExternalCssFiles = () => {
 const changeTheme = (colorTheme) => {
   if (colorTheme === THEME_DARK_NAME) {
     document.getElementsByTagName('html')[0].className = `${THEME_NAME}-${THEME_DARK_NAME}`;
+    /*
     head.appendChild(githubLightSyntaxHighlighterLinkStyle);
 
     if (githubDarkSyntaxHighlighterLinkStyle.parent) {
       githubDarkSyntaxHighlighterLinkStyle.parent.removeChild(githubDarkSyntaxHighlighterLinkStyle);
     }
+    */
   } else {
     document.getElementsByTagName('html')[0].className = `${THEME_NAME}-${THEME_LIGHT_NAME}`;
+    /*
     head.appendChild(githubDarkSyntaxHighlighterLinkStyle);
 
     if (githubLightSyntaxHighlighterLinkStyle.parent) {
       githubLightSyntaxHighlighterLinkStyle.parent.removeChild(githubLightSyntaxHighlighterLinkStyle);
     }
+    */
   }
 
   currentTheme = colorTheme;
@@ -112,7 +116,7 @@ if (currentTheme === undefined || currentTheme === null) {
 }
 
 window.addEventListener('load', function() {
-  setupExternalCssFiles();
+  // setupExternalCssFiles();
   changeTheme(currentTheme);
 
   setTimeout(() => {

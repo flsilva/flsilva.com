@@ -18,7 +18,7 @@ tweetVia: 'flsilva7'
 ---
 
 import { WarningBox } from '../../../components/boxes/WarningBox';
-import { WarningBoxNoRunDollarSign } from '../../../components/boxes/WarningBoxNoRunDollarSign';
+import WarningBoxNoRunDollarSign from '../../../components/boxes/WarningBoxNoRunDollarSign';
 
 My previous article about Git [(Git Workflow)](/blog/git-workflow) was too much theoretical, but that was intentional.
 I believe it's necessary to understand some of the core concepts of Git to make proper use of it, in an easy and intuitive way.
@@ -39,13 +39,13 @@ $ git config --global user.name "Your Name"
 $ git config --global user.email youremail@example.com
 ```
 
-Using `--global` option makes it globally available for Git, so available to any repository you work on.
-If you want to override that information for a specific repo, just go to that repo's root directory and run the command without `--global` option.
+Using _`--global`_ option makes it globally available for Git, so available to any repository you work on.
+If you want to override that information for a specific repo, just go to that repo's root directory and run the command without _`--global`_ option.
 
 #### Creating a new repository
 
-There are two ways to create a new Git repo: using the `git init` or `git clone` commands.
-Let's start with `git init`.
+There are two ways to create a new Git repo: using the _`git init`_ or _`git clone`_ commands.
+Let's start with _`git init`_.
 
 Go to the directory that will be your repository and run:
 
@@ -58,31 +58,31 @@ Don't worry about it right now, [branching](/blog/git-branching-and-merging/) is
 
 #### Cloning an existing repository
 
-To clone an existing remote repository go to the directory that you want to create your new repo and run a command like `$ git clone [url]`, for example:
+To clone an existing remote repository go to the directory that you want to create your new repo and run a command like _`$ git clone [url]`_, for example:
 
 ```shell
 $ git clone git://github.com/flsilva/as3coreaddendum.git
 ```
 
-That will create an `as3coreaddendum` directory in your file system.
+That will create an _`as3coreaddendum`_ directory in your file system.
 
 #### Checking the status of your files
 
-After making changes, adding, and deleting files, you'll frequently run `git status` to check the status of your local repository:
+After making changes, adding, and deleting files, you'll frequently run _`git status`_ to check the status of your local repository:
 
 ```shell
 $ git status
 ```
 
-When you see a message like `nothing to commit, working directory clean`, it means that your [_working directory_](/blog/git-workflow/#working-directory) is fully synchronized with your local repository, i.e., there are no changes to be committed.
+When you see a message like _`nothing to commit, working directory clean`_, it means that your [_working directory_](/blog/git-workflow/#working-directory) is fully synchronized with your local repository, i.e., there are no changes to be committed.
 
-When you see a message like `Changes not staged for commit`, it means that you've made changes to tracked files (files already in your local repo) but have not added them to the [_staging area_](/blog/git-workflow/#staging-area), which means they will _not_ be committed when you run `git commit`.
-Usually, you'll also see a message like `Untracked files`, which means there are new files not added to the [_staging area_](/blog/git-workflow/#staging-area).
+When you see a message like _`Changes not staged for commit`_, it means that you've made changes to tracked files (files already in your local repo) but have not added them to the [_staging area_](/blog/git-workflow/#staging-area), which means they will _not_ be committed when you run _`git commit`_.
+Usually, you'll also see a message like _`Untracked files`_, which means there are new files not added to the [_staging area_](/blog/git-workflow/#staging-area).
 
 #### Adding changes to the staging area
 
 After making some changes to your files and checking their status, you'll want to add your changes to the [_staging area_](/blog/git-workflow/#staging-area).
-There are two main ways to do that, running `git add` for individual files (or directories):
+There are two main ways to do that, running _`git add`_ for individual files (or directories):
 
 ```shell
 $ git add file-name
@@ -94,7 +94,7 @@ Or:
 $ git add directory-name
 ```
 
-Or running `git add` for all your files and directories:
+Or running _`git add`_ for all your files and directories:
 
 ```shell
 $ git add -A
@@ -112,15 +112,15 @@ After that you can check the status of your files again:
 $ git status
 ```
 
-Now you should see a message like `Changes to be committed`.
+Now you should see a message like _`Changes to be committed`_.
 That means that you've staged your changes, and they are ready to be committed.
 
 #### Committing changes to your local repository
 
-Every time you run `git commit`, Git sends the content of your [_staging area_](/blog/git-workflow/#staging-area) (new files, modified files, etc) to your local repo, so not the content of your file system at the moment you run it.
+Every time you run _`git commit`_, Git sends the content of your [_staging area_](/blog/git-workflow/#staging-area) (new files, modified files, etc) to your local repo, so not the content of your file system at the moment you run it.
 Most of the times they will be the same, but there's a situation where they may differ.
-That's the case if you run `git add` for some modified file, but before you run `git commit` you make more changes to that same modified file, and then run `git commit` _without_ running `git add` again for that later changes.
-In such case, Git will not commit your later changes, only the ones that were added to the staging area using `git add`.
+That's the case if you run _`git add`_ for some modified file, but before you run _`git commit`_ you make more changes to that same modified file, and then run _`git commit`_ _without_ running _`git add`_ again for that later changes.
+In such case, Git will not commit your later changes, only the ones that were added to the staging area using _`git add`_.
 This is a gotcha using Git, and illustrates how it uses its concept of staging area.
 
 To send your changes to your local repository you run:
@@ -143,96 +143,104 @@ To send changes to a remote repository you should have one, obviously, but you a
 Assuming you already have a remote repository configured somewhere (you can always setup one for free on [GitHub](http://github.com) or [Bitbucket](https://bitbucket.org)), there are two ways to create a reference to it in your local repo.
 The first, and easier one, is cloning an existing repo.
 In that case, Git automatically creates a reference to your cloned repo, naming it _origin_.
-But if you created your local repo from scratch using `git init`, and time has come for you to send your local repo to a remote repo for the first time, you have to set up a reference to it manually by running a command like:
+But if you created your local repo from scratch using _`git init`_, and time has come for you to send your local repo to a remote repo for the first time, you have to set up a reference to it manually by running a command like:
 
 ```shell
 $ git remote add [remote-name] [remote-url]
 ```
 
-`remote-name` is the name you want to give to that repository, it's an alias for it.
-`remote-url` is the url to your remote repository, and it depends on the protocol you'll be using (ssh, https, git://, etc)
+_`remote-name`_ is the name you want to give to that repository, it's an alias for it.
+_`remote-url`_ is the url to your remote repository, and it depends on the protocol you'll be using (ssh, https, git://, etc)
 
-Usually, you'll create an `origin` alias pointing to your canonical remote repository, like:
+Usually, you'll create an _`origin`_ alias pointing to your canonical remote repository, like:
 
 ```shell
 $ git remote add origin git@github.com:flsilva/as3coreaddendum.git
 ```
 
-That creates a new **reference** to your remote repository with the `origin` alias.
-You can always check all your remote references by running `$ git remote -v`.
+That creates a new **reference** to your remote repository with the _`origin`_ alias.
+You can always check all your remote references by running _`$ git remote -v`_.
 
-Now, to send your local changes to a remote repo you run a command like `$ git push [remote] [branch]`, for example:
+Now, to send your local changes to a remote repo you run a command like _`$ git push [remote] [branch]`_, for example:
 
 ```shell
 $ git push origin master
 ```
 
-`master` is the name of the default main branch in Git.
+_`master`_ is the name of the default main branch in Git.
 Don't worry about it right now, branching is the subject of our next article: [Git branching and merging](/blog/git-branching-and-merging/).
 
 <WarningBox>
-  You'll need write permission to a remote repository to successfully run a `push` command.
+  You'll need write permission to a remote repository to successfully run a _`push`_ command.
 </WarningBox>
 
 #### Fetching changes from a remote repository
 
-You should always run `git fetch` before running `git push`, because if someone else has pushed to the remote repository, you'll have to fetch it first, then merge it into your local branch, before being able to push your changes.
+You should always run _`git fetch`_ before running _`git push`_, because if someone else has pushed to the remote repository, you'll have to fetch it first, then merge it into your local branch, before being able to push your changes.
 Git enforces it. Also, before fetching changes from a remote repo, you should commit your local ones, if you have any.
 
-To fetch from a remote repository you run a command like `$ git fetch [remote]`, for example:
+To fetch from a remote repository you run a command like _`$ git fetch [remote]`_, for example:
 
 ```shell
 $ git fetch origin
 ```
 
-The `git fetch` command fetches all changes from a target remote repo, creating remote branches in your local repo.
+The _`git fetch`_ command fetches all changes from a target remote repo, creating remote branches in your local repo.
 Don't worry about remote branches for now, that's the subject of another article: [Git remote and tracking branches](/blog/git-remote-and-tracking-branches/).
-After that, you'll want to run `git merge` to merge remote changes to your local ones.
-After merging you're up-to-date to your remote repo, so ready to `git push` to it.
+After that, you'll want to run _`git merge`_ to merge remote changes to your local ones.
+After merging you're up-to-date to your remote repo, so ready to _`git push`_ to it.
 That makes a basic push flow to look like this:
 
-`commit` -> `fetch` -> `merge` -> `push`
+```shell
+commit -> fetch -> merge -> push
+```
 
 But if there are no changes to your remote repo, that could be just:
 
-`commit` -> `push`
+```shell
+commit -> push
+```
 
-Now, you should really consider using `git pull` instead of `git fetch`.
+Now, you should really consider using _`git pull`_ instead of _`git fetch`_.
 Let's see why.
 
 #### Pulling changes from a remote repository
 
-The `git pull` command is pretty much like `git fetch`, but with the advantage that it runs `git merge` for us automatically.
+The _`git pull`_ command is pretty much like _`git fetch`_, but with the advantage that it runs _`git merge`_ for us automatically.
 To do that, you just need to provide a target branch, alongside remote repo.
-So instead of using `git fetch` like this:
+So instead of using _`git fetch`_ like this:
 
 ```shell
 $ git fetch origin
 ```
 
-You can use `git pull` like this:
+You can use _`git pull`_ like this:
 
 ```shell
 $ git pull origin master
 ```
 
-That way Git knows you want to merge changes from your remote repo's `master` branch into your _current local branch_ (that may or may not be pointing to your local `master` branch).
+That way Git knows you want to merge changes from your remote repo's _`master`_ branch into your _current local branch_ (that may or may not be pointing to your local _`master`_ branch).
 
 If there are no conflicts to resolve (don't worry about it now), you just have to confirm the default merge message (you can change it if you want).
-After that, you're up-to-date with your remote repo, so ready to `git push` to it.
+After that, you're up-to-date with your remote repo, so ready to _`git push`_ to it.
 That makes a basic push flow to look like this:
 
-`commit` -> `pull` -> `push`
+```shell
+commit -> pull -> push
+```
 
 But if there are no changes to your remote repo, that could be just:
 
-`commit` -> `push`
+```shell
+commit -> push
+```
 
 #### Deleting files and directories
 
 One of the things that I love about Git over SVN is that you don't have to do anything special to delete files and directories.
 Just delete them the way you want, using your OS's GUI or command line tool.
-Git will notice it, and report their status as `deleted`, so you just need to run `git add .` as usual to prepare your changes to go on the next commmit.
+Git will notice it, and report their status as _`deleted`_, so you just need to run _`git add .`_ as usual to prepare your changes to go on the next commmit.
 
 #### Renaming and moving files and directories
 
