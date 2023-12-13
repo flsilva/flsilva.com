@@ -26,8 +26,8 @@ const IndexPage: React.FC<PageProps> = () => (
       </p>
       <p>
         I&#39;ve just shipped <a href="https://opentask.app">OpenTask</a> while learning the new{' '}
-        <a href="https://nextjs.org/docs/app">Next.js App Router</a>. It&#39;s a fully functional
-        and responsive <a href="https://github.com/flsilva/opentask">open-source</a> PWA MVP.
+        <a href="https://nextjs.org/docs/app">Next.js App Router</a>. It&#39;s a free,{' '}
+        <a href="https://github.com/flsilva/opentask/">open-source</a>, fully functional, and responsive PWA MVP task management app.
       </p>
       <p>
         I built it on TypeScript, React 18, the new Next.js App Router , Tailwind CSS,{' '}
@@ -58,8 +58,12 @@ const IndexPage: React.FC<PageProps> = () => (
         projects.
       </p>
       <p>
-        I&#39;m available to work with TypeScript, React 18, Nextjs v14 App Router, Vercel, and
+        I&#39;m available to work with TypeScript, React 18, Next.js App Router, Vercel, and
         GitHub Copilot! 🚀
+      </p>
+      <p>
+        Florianópolis, Brazil.<br />
+        December 2023.
       </p>
       <p>
         Let&#39;s&nbsp;
