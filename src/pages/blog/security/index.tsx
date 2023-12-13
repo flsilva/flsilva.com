@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about software security."
     pagePath="/blog/security"
-    title="Software security articles by Flavio Silva: Full-Stack Software Engineer"
+    title="Software security articles by Flavio Silva: full-stack engineer"
   />
 );

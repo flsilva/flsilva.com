@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about Oh My Zsh."
     pagePath="/blog/ohmyzsh"
-    title="Oh My Zsh articles by Flavio Silva: Full-Stack Software Engineer"
+    title="Oh My Zsh articles by Flavio Silva: full-stack engineer"
   />
 );

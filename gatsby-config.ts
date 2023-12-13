@@ -4,7 +4,6 @@ const { remarkCodeHike } = require("@code-hike/mdx");
 const config: GatsbyConfig = {
   siteMetadata: {
     imagePath: '/logo-share.png',
-    title: ' | flsilva.com',
     siteUrl: 'https://flsilva.com',
   },
   // More easily incorporate content into your pages through automatic

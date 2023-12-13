@@ -36,10 +36,10 @@ export const SEO: React.FC<SEOProps> = ({
 
   return (
     <>
-      <title>{`${title}${data.site?.siteMetadata?.title}`}</title>
-      <meta name="title" content={`${title}${data.site?.siteMetadata?.title}`} />
+      <title>{`${title}`}</title>
+      <meta name="title" content={`${title}`} />
       <meta name="og:site_name" content="flsilva.com" />
-      <meta name="og:title" content={`${title}${data.site?.siteMetadata?.title}`} />
+      <meta name="og:title" content={`${title}`} />
       <meta name="description" content={description} />
       <meta name="og:description" content={description} />
       <meta name="og:type" content="article" />
@@ -47,7 +47,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="og:site" content={`${data.site?.siteMetadata?.siteUrl}${pagePath}`} />
       <meta name="og:url" content={`${data.site?.siteMetadata?.siteUrl}${pagePath}`} />
       <meta name="og:image" content={`${data.site?.siteMetadata?.siteUrl}${imgPath}`} />
-      <meta name="twitter:title" content={`${title}${data.site?.siteMetadata?.title}`} />
+      <meta name="twitter:title" content={`${title}`} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={`${data.site?.siteMetadata?.siteUrl}${imgPath}`} />
       {tweetVia && <meta name="twitter:card" content="summary_large_image" />}

@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about Let's Encrypt."
     pagePath="/blog/lets-encrypt"
-    title="Let's Encrypt articles by Flavio Silva: Full-Stack Software Engineer"
+    title="Let's Encrypt articles by Flavio Silva: full-stack engineer"
   />
 );

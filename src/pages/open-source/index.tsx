@@ -111,6 +111,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out the open source software projects I've created."
     pagePath="/open-source"
-    title="Open Source Software"
+    title="Open Source Software by Flavio Silva: full-stack engineer"
   />
 );

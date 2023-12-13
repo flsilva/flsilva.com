@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about Antigen."
     pagePath="/blog/antigen"
-    title="Antigen articles by Flavio Silva: Full-Stack Software Engineer"
+    title="Antigen articles by Flavio Silva: full-stack engineer"
   />
 );

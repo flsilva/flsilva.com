@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about SSH Keys."
     pagePath="/blog/ssh-keys"
-    title="SSH Keys articles by Flavio Silva: Full-Stack Software Engineer"
+    title="SSH Keys articles by Flavio Silva: full-stack engineer"
   />
 );

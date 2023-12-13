@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about Nginx web server."
     pagePath="/blog/nginx"
-    title="Nginx web server articles by Flavio Silva: Full-Stack Software Engineer"
+    title="Nginx web server articles by Flavio Silva: full-stack engineer"
   />
 );

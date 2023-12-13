@@ -46,6 +46,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="Check out my articles about NoSQL."
     pagePath="/blog/nosql"
-    title="NoSQL articles by Flavio Silva: Full-Stack Software Engineer"
+    title="NoSQL articles by Flavio Silva: full-stack engineer"
   />
 );
