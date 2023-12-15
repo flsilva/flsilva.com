@@ -59,6 +59,8 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
         />
       )}
       {data.mdx.frontmatter.slug !== 'introduction-to-nodejs' && (
+        <>
+        <h4 id="post-comments" style={{ marginBottom: '50px', textAlign: 'center' }}>Leave a comment using your GitHub account</h4>
         <Giscus
           id="comments"
           repo="flsilva/flsilva.com"
@@ -75,6 +77,7 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostQuery>> = ({ children, da
           loading="lazy"
           strict='1'
         />
+        </>
       )}
     </div>
   </Layout>
@@ -112,6 +115,11 @@ export const query = graphql`
         tags
         tweetText
         tweetVia
+        tweetCardImage {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
         title
       }
     }
@@ -124,7 +132,7 @@ export const Head: HeadFC<PageProps<Queries.BlogPostQuery>> = ({ data }) => (
   <SEO
     authorName={data.mdx.frontmatter.author}
     description={data.mdx.frontmatter.description}
-    imagePath={data.mdx.frontmatter.heroImage}
+    imagePath={data.mdx.frontmatter.tweetCardImage ?? data.mdx.frontmatter.heroImage}
     title={data.mdx?.frontmatter.title}
     pagePath={`/blog/${data.mdx.frontmatter.slug}`}
     title={`${data.mdx.frontmatter.title}`}
