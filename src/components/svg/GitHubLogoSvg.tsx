@@ -2,8 +2,8 @@ import * as React from 'react';
 
 export const GitHubLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    width="3rem"
-    height="3rem"
+    width="2rem"
+    height="2rem"
     viewBox="0 0 1024 1024"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

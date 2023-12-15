@@ -2,8 +2,8 @@ import * as React from 'react';
 
 export const MailIconSvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    width="3.5rem"
-    height="3.5rem"
+    width="2.5rem"
+    height="2.5rem"
     viewBox="0 0 16 16"
     xmlns="http://www.w3.org/2000/svg"
     {...props}

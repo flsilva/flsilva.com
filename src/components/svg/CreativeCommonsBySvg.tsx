@@ -3,8 +3,8 @@ import * as React from 'react';
 export const CreativeCommonsBySvg = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="3rem"
-    height="3rem"
+    width="2rem"
+    height="2rem"
     viewBox="5.5 -3.5 64 64"
     xmlSpace="preserve"
     {...props}

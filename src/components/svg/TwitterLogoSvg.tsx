@@ -5,8 +5,8 @@ export const TwitterLogoSvg = (props: React.SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     viewBox="0 0 248 204"
-    width="3rem"
-    height="3rem"
+    width="2rem"
+    height="2rem"
     {...props}
   >
     <path
