@@ -17,39 +17,49 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a full-stack software engineer from Brazil with 19 years of professional experience,
-        with the last 14 years working remotely. I&#39;ve been leading front-end teams since 2007.
+        I&#39;m a full-stack software engineer from Brazil with over two decades of professional
+        experience, with the last 15 years working remotely. I&#39;ve been leading front-end teams
+        since 2007.
       </p>
       <p>
         I have experience working directly with co-founders and designers throughout the feature
         spec and design process to deliver engaging and performant apps.
       </p>
       <p>
-        I&#39;ve just shipped <a href="https://opentask.app">OpenTask</a> while learning the new{' '}
-        <a href="https://nextjs.org/docs/app">Next.js App Router</a>. It&#39;s a free,{' '}
-        <a href="https://github.com/flsilva/opentask/">open-source</a>, fully functional, and responsive PWA MVP task management app.
+        I&#39;ve just shipped <a href="https://opentask.app">OpenTask</a>, a free,{' '}
+        <a href="https://github.com/flsilva/opentask/">open-source</a>, fully functional, and
+        responsive PWA MVP task management app.
       </p>
       <p>
-        I built it on TypeScript, React 18, the new Next.js App Router , Tailwind CSS,{' '}
+        I built it on TypeScript, React 18, the new{' '}
+        <a href="https://nextjs.org/docs/app">Next.js App Router</a>, Tailwind CSS,{' '}
         <a href="https://supabase.com/">Supabase (Postgres)</a>, and{' '}
-        <a href="https://www.prisma.io/">Prisma</a> and set up CI/CD with{' '}
-        <a href="https://github.com/features/actions">GitHub Actions</a>.
+        <a href="https://www.prisma.io/">Prisma</a>. I set up CI/CD with{' '}
+        <a href="https://github.com/features/actions">GitHub Actions</a> and deployed it to{' '}
+        <a href="https://vercel.com/">Vercel</a>.
       </p>
       <p>
         It leverages new features from React and Next.js, including{' '}
-        <a href="https://vercel.com/blog/understanding-react-server-components">
+        <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/">
           React Server Components (RSCs)
         </a>{' '}
         and{' '}
-        <a href="https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions">
+        <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-actions">
           Server Actions
         </a>
         .
       </p>
       <p>
-        It&#39;s a rewarding time to be a full-stack software engineer. I feel incredibly productive
-        and satisfied with my work. I can write clean and modular code and deliver top-quality
-        applications supported by unit and integration testing.
+        I designed <a href="https://nexar.dev/">Nexar</a>, an application architecture for Next.js
+        App Router apps while building OpenTask.
+      </p>
+      <p>
+        It&#39;s a rewarding time to be a full-stack engineer. I feel incredibly productive and
+        satisfied with my work. I can write clean and{' '}
+        <a href="https://flsilva.com/blog/what-is-software-architecture/#modules-and-modular-architectures">
+          modular
+        </a>{' '}
+        code and deliver top-quality applications supported by unit and integration testing.
       </p>
       <p>
         Over the past years, I&#39;ve led the development of a cross-platform{' '}
@@ -58,16 +68,17 @@ const IndexPage: React.FC<PageProps> = () => (
         projects.
       </p>
       <p>
-        I&#39;m available to work with TypeScript, React 18, Next.js App Router, Vercel, and
-        GitHub Copilot! 🚀
-      </p>
-      <p>
-        Florianópolis, Brazil.<br />
-        December 2023.
+        I&#39;m available to work with TypeScript, React 18, Next.js App Router, Vercel, and GitHub
+        Copilot! 🚀
       </p>
       <p>
         Let&#39;s&nbsp;
         <a href="mailto:flsilva7@gmail.com">get in touch</a>.
+      </p>
+      <p>
+        Florianópolis, Brazil.
+        <br />
+        December 2023.
       </p>
       <Recommendations>
         <Recommendation
