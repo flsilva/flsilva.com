@@ -1,5 +1,6 @@
 import type { GatsbyConfig } from 'gatsby';
-const { remarkCodeHike } = require("@code-hike/mdx");
+
+const { remarkCodeHike } = require('@code-hike/mdx');
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -59,7 +60,7 @@ const config: GatsbyConfig = {
             require('rehype-slug'),
             // require('rehype-autolink-headings'),
           ],
-          remarkPlugins: [[remarkCodeHike, { theme: "dark-plus" }]],
+          remarkPlugins: [[remarkCodeHike, { theme: 'dark-plus' }]],
         },
         gatsbyRemarkPlugins: [
           {
