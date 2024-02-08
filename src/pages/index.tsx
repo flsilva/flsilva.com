@@ -28,7 +28,9 @@ const IndexPage: React.FC<PageProps> = () => (
       <p>
         I&#39;ve just shipped <a href="https://opentask.app">OpenTask</a>, a free,{' '}
         <a href="https://github.com/flsilva/opentask/">open-source</a>, fully functional, and
-        responsive PWA MVP task management app.
+        responsive PWA MVP task management app. I wrote a{' '}
+        <a href="https://flsilva.com/blog/opentask-nextjs-app-router-case-study/">case study</a>{' '}
+        about it.
       </p>
       <p>
         I built it on TypeScript, React 18, the new{' '}
@@ -41,7 +43,7 @@ const IndexPage: React.FC<PageProps> = () => (
       <p>
         It leverages new features from React and Next.js, including{' '}
         <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/">
-          React Server Components (RSCs)
+          React Server Components
         </a>{' '}
         and{' '}
         <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-actions">
