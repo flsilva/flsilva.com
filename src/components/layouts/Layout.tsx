@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { BannerBox } from '../boxes/BannerBox';
 import { MainHeader } from '../MainHeader';
 import { MainFooter } from '../MainFooter';
 import { ChildrenProps } from '../ChildrenProps';
@@ -14,6 +15,7 @@ export const Layout: React.FC<ChildrenProps> = ({ children }): JSX.Element => (
     <div className={pageInnerContainer}>
       <div className={pageHeaderAndMainContent}>
         <MainHeader />
+        <BannerBox />
         <main className={pageMainContent}>
           <article>{children}</article>
         </main>
