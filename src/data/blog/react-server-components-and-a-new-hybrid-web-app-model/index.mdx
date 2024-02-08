@@ -5,6 +5,7 @@ authorUrl: 'https://flsilva.com'
 changefreq: monthly
 contentType: 'blog-post'
 date: '2023-12-18T00:00:00'
+dateUpdated: '2024-02-08T00:00:00'
 description: Learn why React Server Components and the new Next.js App Router unlock a new hybrid web application model, why it makes sense, and how to use it.
 heroImage: './hero.jpg'
 heroImageCreditText: 'Image by rawpixel.com on Freepik'
@@ -12,8 +13,8 @@ heroImageCreditUrl: 'https://www.freepik.com/free-vector/atomic-science-technolo
 priority: 0.6
 slug: 'react-server-components-and-a-new-hybrid-web-app-model'
 tags: ['react', 'nextjs', 'hybrid-web-app-model']
-title: "React Server Components and a new hybrid web app model"
-tweetText: "Learn why React Server Components and the new Next.js App Router unlock a new hybrid web application model, why it makes sense, and how to use it."
+title: 'React Server Components and a new hybrid web app model'
+tweetText: 'Learn why React Server Components and the new Next.js App Router unlock a new hybrid web application model, why it makes sense, and how to use it.'
 tweetVia: 'flsilva7'
 tweetCardImage: './tweet-card.png'
 ---
@@ -24,52 +25,52 @@ import { SocialMediaShareButtons } from '../../../components/social-media-share/
 
 ### Table of Contents
 
-- [Introduction](/blog/react-server-components-and-a-new-hybrid-web-app-model/#introduction)
-- [A brief overview of web application models](/blog/react-server-components-and-a-new-hybrid-web-app-model/#a-brief-overview-of-web-application-models)
-  - [1990s](/blog/react-server-components-and-a-new-hybrid-web-app-model/#1990s)
-  - [2000s](/blog/react-server-components-and-a-new-hybrid-web-app-model/#2000s)
-  - [2010s](/blog/react-server-components-and-a-new-hybrid-web-app-model/#2010s)
-  - [2016: Next.js FTW](/blog/react-server-components-and-a-new-hybrid-web-app-model/#2016-nextjs-ftw)
-  - [Next.js Pages Router's issues](/blog/react-server-components-and-a-new-hybrid-web-app-model/#nextjs-pages-routers-issues)
-    - [Pages Router's issue #1](/blog/react-server-components-and-a-new-hybrid-web-app-model/#pages-routers-issue-1)
-    - [Pages Router's issue #2](/blog/react-server-components-and-a-new-hybrid-web-app-model/#pages-routers-issue-2)
-    - [Pages Router's issue #3](/blog/react-server-components-and-a-new-hybrid-web-app-model/#pages-routers-issue-3)
-    - [Pages Router's issue #4](/blog/react-server-components-and-a-new-hybrid-web-app-model/#pages-routers-issue-4)
-- [A new hybrid web application model](/blog/react-server-components-and-a-new-hybrid-web-app-model/#a-new-hybrid-web-application-model)
-  - [2023: Next.js App Router FTW](/blog/react-server-components-and-a-new-hybrid-web-app-model/#2023-nextjs-app-router-ftw)
-- [What are React Server Components?](/blog/react-server-components-and-a-new-hybrid-web-app-model/#what-are-react-server-components-rscs)
-- [What are Client Components?](/blog/react-server-components-and-a-new-hybrid-web-app-model/#what-are-client-components)
-- [React Server Components vs SSR](/blog/react-server-components-and-a-new-hybrid-web-app-model/#react-server-components-vs-ssr)
-- [React Server Components constraints](/blog/react-server-components-and-a-new-hybrid-web-app-model/#react-server-components-constraints)
-  - [Hooks](/blog/react-server-components-and-a-new-hybrid-web-app-model/#hooks)
-  - [Interactivity](/blog/react-server-components-and-a-new-hybrid-web-app-model/#interactivity)
-  - [Browser APIs](/blog/react-server-components-and-a-new-hybrid-web-app-model/#browser-apis)
-  - [Continuous updates](/blog/react-server-components-and-a-new-hybrid-web-app-model/#continuous-updates)
-  - [Data serialization](/blog/react-server-components-and-a-new-hybrid-web-app-model/#data-serialization)
-  - [Too many constraints?](/blog/react-server-components-and-a-new-hybrid-web-app-model/#too-many-constraints)
-- [React Server Components benefits](/blog/react-server-components-and-a-new-hybrid-web-app-model/#react-server-components-benefits)
-  - [Security](/blog/react-server-components-and-a-new-hybrid-web-app-model/#security)
-  - [Zero-Bundle-Size impact](/blog/react-server-components-and-a-new-hybrid-web-app-model/#zero-bundle-size-impact)
-  - [Automatic client code splitting](/blog/react-server-components-and-a-new-hybrid-web-app-model/#automatic-client-code-splitting)
-  - [SSG](/blog/react-server-components-and-a-new-hybrid-web-app-model/#ssg)
-  - [Server-side data fetching](/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-side-data-fetching)
-  - [Unlock a new hybrid web application model](/blog/react-server-components-and-a-new-hybrid-web-app-model/#unlock-a-new-hybrid-web-application-model)
-- [Server Components must be pure functions](/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-components-must-be-pure-functions)
-- [How to write Server and Client Components](/blog/react-server-components-and-a-new-hybrid-web-app-model/#how-to-write-server-and-client-components)
-- [What are Shared Components?](/blog/react-server-components-and-a-new-hybrid-web-app-model/#what-are-shared-components)
-- [When to use Server and Client Components](/blog/react-server-components-and-a-new-hybrid-web-app-model/#when-to-use-server-and-client-components)
-- [Interleaving Server and Client Components](/blog/react-server-components-and-a-new-hybrid-web-app-model/#interleaving-server-and-client-components)
-- [Building full-stack React components](/blog/react-server-components-and-a-new-hybrid-web-app-model/#building-full-stack-react-components)
-  - [Different data sources](/blog/react-server-components-and-a-new-hybrid-web-app-model/#different-data-sources)
-- [Server Actions](/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-actions)
-- [How to re-render Server Components](/blog/react-server-components-and-a-new-hybrid-web-app-model/#how-to-re-render-server-components)
-  - [The Request/Response Lifecycle](/blog/react-server-components-and-a-new-hybrid-web-app-model/#the-requestresponse-lifecycle)<br />
-  - [Using revalidatePath() and revalidateTag()](/blog/react-server-components-and-a-new-hybrid-web-app-model/#using-revalidatepath-and-revalidatetag)<br />
-  - [Using router.refresh()](/blog/react-server-components-and-a-new-hybrid-web-app-model/#using-routerrefresh)<br />
-  - [React preserves the UI state](/blog/react-server-components-and-a-new-hybrid-web-app-model/#react-preserves-the-ui-state)<br />
-- [Suspense & Streaming](/blog/react-server-components-and-a-new-hybrid-web-app-model/#suspense--streaming)
-  - [Partial Prerendering (PPR)](/blog/react-server-components-and-a-new-hybrid-web-app-model/#partial-prerendering-ppr)
-- [Conclusion](/blog/react-server-components-and-a-new-hybrid-web-app-model/#conclusion)
+- [Introduction](#introduction)
+- [A brief overview of web application models](#a-brief-overview-of-web-application-models)
+  - [1990s](#1990s)
+  - [2000s](#2000s)
+  - [2010s](#2010s)
+  - [2016: Next.js FTW](#2016-nextjs-ftw)
+  - [Next.js Pages Router's issues](#nextjs-pages-routers-issues)
+    - [Pages Router's issue #1](#pages-routers-issue-1)
+    - [Pages Router's issue #2](#pages-routers-issue-2)
+    - [Pages Router's issue #3](#pages-routers-issue-3)
+    - [Pages Router's issue #4](#pages-routers-issue-4)
+- [A new hybrid web application model](#a-new-hybrid-web-application-model)
+  - [2023: Next.js App Router FTW](#2023-nextjs-app-router-ftw)
+- [What are React Server Components?](#what-are-react-server-components-rscs)
+- [What are Client Components?](#what-are-client-components)
+- [React Server Components vs SSR](#react-server-components-vs-ssr)
+- [React Server Components constraints](#react-server-components-constraints)
+  - [Hooks](#hooks)
+  - [Interactivity](#interactivity)
+  - [Browser APIs](#browser-apis)
+  - [Continuous updates](#continuous-updates)
+  - [Data serialization](#data-serialization)
+  - [Too many constraints?](#too-many-constraints)
+- [React Server Components benefits](#react-server-components-benefits)
+  - [Security](#security)
+  - [Zero-Bundle-Size impact](#zero-bundle-size-impact)
+  - [Automatic client code splitting](#automatic-client-code-splitting)
+  - [SSG](#ssg)
+  - [Server-side data fetching](#server-side-data-fetching)
+  - [The key to unlocking a new hybrid web application model](#the-key-to-unlocking-a-new-hybrid-web-application-model)
+- [Server Components must be pure functions](#server-components-must-be-pure-functions)
+- [How to write Server and Client Components](#how-to-write-server-and-client-components)
+- [What are Shared Components?](#what-are-shared-components)
+- [When to use Server and Client Components](#when-to-use-server-and-client-components)
+- [Interleaving Server and Client Components](#interleaving-server-and-client-components)
+- [Building full-stack React components](#building-full-stack-react-components)
+  - [Different data sources](#different-data-sources)
+- [Server Actions](#server-actions)
+- [How to re-render Server Components](#how-to-re-render-server-components)
+  - [The Request/Response Lifecycle](#the-requestresponse-lifecycle)<br />
+  - [Using revalidatePath() and revalidateTag()](#using-revalidatepath-and-revalidatetag)<br />
+  - [Using router.refresh()](#using-routerrefresh)<br />
+  - [React preserves the UI state](#react-preserves-the-ui-state)<br />
+- [Suspense & Streaming](#suspense--streaming)
+  - [Partial Prerendering (PPR)](#partial-prerendering-ppr)
+- [Conclusion](#conclusion)
 
 ### Introduction
 
@@ -79,7 +80,7 @@ Those new features represent a major technological innovation that has taken Rea
 
 In this article, we'll first take a step back to understand how we got here and why this new model makes sense.
 
-Then, we'll learn what React Server Components are, their benefits and constraints, when to use Server and Client components, what Server Actions are, and how to assemble everything to build full-stack React components and hybrid web applications.
+Then, we'll learn what React Server Components are, their benefits and constraints, when to use Server and Client components, what Server Actions are, and how to assemble everything to build full-stack React components and hybrid web applications to solve four important problems with the Next.js Pages Router.
 
 To this date, Next.js App Router is the most comprehensive and only production-ready implementation of React Server Components (RSCs) and other React 18 features like Server Actions and Suspense (integrated into RSCs). Therefore, I'll base the examples on a Next.js App Router implementation.
 
@@ -91,7 +92,7 @@ In the 1990s, we took a server-centric model of rendering everything on the serv
 
 #### 2000s
 
-In the 2000s, we started writing asynchronous JavaScript code to fetch XML data using the [`XMLHttpRequest`](https://en.wikipedia.org/wiki/XMLHttpRequest) API, known as [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)), and updating only the parts of the page that needed to change with [jQuery](https://en.wikipedia.org/wiki/JQuery), providing a much better user experience.
+In the 2000s, we started writing asynchronous JavaScript code to fetch XML data using the [`XMLHttpRequest`](https://en.wikipedia.org/wiki/XMLHttpRequest) API, known as [AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>), and updating only the parts of the page that needed to change with [jQuery](https://en.wikipedia.org/wiki/JQuery), providing a much better user experience.
 
 Things started to become interesting at this point, with web applications starting to rival desktop ones. [Gmail](https://en.wikipedia.org/wiki/Gmail) was launched in 2004.
 
@@ -99,7 +100,7 @@ But the JavaScript code became [spaghetti code](https://en.wikipedia.org/wiki/Sp
 
 #### 2010s
 
-But they came, eventually, in the 2010s. [Backbone.js](https://en.wikipedia.org/wiki/Backbone.js), [AngularJS](https://en.wikipedia.org/wiki/AngularJS), and [React](https://en.wikipedia.org/wiki/React_(software)) were launched. As developers, we eagerly welcomed and fully embraced them.
+But they came, eventually, in the 2010s. [Backbone.js](https://en.wikipedia.org/wiki/Backbone.js), [AngularJS](https://en.wikipedia.org/wiki/AngularJS), and [React](<https://en.wikipedia.org/wiki/React_(software)>) were launched. As developers, we eagerly welcomed and fully embraced them.
 
 SPAs became the norm. We took a client-centric model of rendering everything on the client ([CSR](https://web.dev/articles/rendering-on-the-web#client-side_rendering)). In this model, we render nothing on the server, returning an empty HTML instead, having the client load and execute a large amount of JavaScript code to make several HTTP requests to the server to fetch data, and finally, rendering an interactive HTML application that only updates the necessary parts of the page! 😅
 
@@ -124,15 +125,19 @@ The Next.js framework we're discussing was later named [Pages Router](https://ne
 And it turns out the SSR solution in Pages Router has its [own issues](https://vercel.com/blog/understanding-react-server-components#what-did-server-side-rendering-and-react-suspense-solve).
 
 ##### Pages Router's issue #1
-- We have to use proprietary _`getServerSideProps()`_ and _`getStaticProps()`_ functions at the page level to fetch data server-side and drill it down to the components that need it, i.e., **we cannot fetch data server-side at the component level**.
+
+- We have to use proprietary _`getServerSideProps()`_ and _`getStaticProps()`_ functions at a top-level page component to fetch data server-side and drill it down to the necessary components. **We cannot fetch data server-side at the component level.**
 
 ##### Pages Router's issue #2
+
 - We must fetch data for **the entire page** before rendering our components server-side.
 
 ##### Pages Router's issue #3
+
 - The client gets a server-side rendered static HTML page to show the user, but it must download the JavaScript code for **the entire page** before React can hydrate the components, i.e., making them interactive.
 
 ##### Pages Router's issue #4
+
 - React must hydrate **the entire page** before the user can interact with it.
 
 Those issues are also explained [here](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming#what-is-streaming), with issues #2, #3, and #4 representing a waterfall problem that spans from the server to the client, where each issue must be resolved before moving to the next one.
@@ -152,38 +157,37 @@ This new model will unlock the next layer of innovations for the React ecosystem
 Now, we can compose a hybrid React component tree rendering on both the server and the client. That brings React's composability flagship feature to the server, allowing us to seamlessly fetch data on the server and mutate data on the client without a server-side API layer and the complexity of client-side data fetching and state management logic.
 
 <InfoBox>
-We're moving parts of the code back to the server while removing others, making the client and the server lightweight again.
+  We're moving parts of the code back to the server while removing others, making the client and the
+  server lightweight again.
 </InfoBox>
 
 Hybrid web applications promise to bring the best of both worlds while reducing complexity, code, and costs.
 
 Can it deliver on its promises?
 
-Let's learn how to use React Server Components and the new Next.js App Router to build hybrid web applications and fix those four issues.
+Let's learn React Server Components and how to use them with the new Next.js App Router to build hybrid web applications and fix those four issues.
 
 ### What are React Server Components (RSCs)?
 
-A React Server Component is a new kind of React component designed to run only on the server and render static HTML<sup>[1]</sup> that's never hydrated on the client, extending the React programming model.
+A React Server Component is a new kind of React component designed to run only on the server ([or at build time](/blog/react-server-components-and-a-new-hybrid-web-app-model/#ssg)) and render static HTML<sup>[1]</sup> that's never hydrated on the client, extending the React programming model.
 
-<InfoBox>
-React is now a full-stack component-based solution!
-</InfoBox>
+<InfoBox>React is now a full-stack component-based solution!</InfoBox>
 
 It's a rewarding time to be a full-stack engineer, as we've just got a fantastic new tool.
 
-React Server Components are React components only on the server. On the client, they're plain old static HTML. That's why they can't have state or handle button clicks.
+React Server Components are React components only on the server. On the client (browser), they're plain old static HTML. That's why they can't have state or handle button clicks.
 
-They're stateless and non-interactive. Their JavaScript code only runs on the server and is never shipped to the browser.
+They're stateless and non-interactive. Their JavaScript code only runs on the server (or at build time) and is never shipped to the browser.
 
-React can only update RSCs on the server where their JavaScript code runs. And it does that by using the traditional [request/response lifecycle](https://nextjs.org/docs/app/building-your-application/rendering#request-response-lifecycle) of the web ([more on this later](/blog/react-server-components-and-a-new-hybrid-web-app-model/#how-to-re-render-server-components)).
+React can only update Server Components on the server where their JavaScript code runs. And it does that by using the traditional [request/response lifecycle](https://nextjs.org/docs/app/building-your-application/rendering#request-response-lifecycle) of the web ([more on this later](/blog/react-server-components-and-a-new-hybrid-web-app-model/#how-to-re-render-server-components)).
 
 With the advent of Server Components, React now offers two kinds of components: Server and [Client Components](https://nextjs.org/docs/app/building-your-application/rendering/client-components).
 
-[1] Technically, React renders RSCs into a special data format called the [React Server Component Payload (RSC Payload)](https://nextjs.org/docs/app/building-your-application/rendering/server-components#how-are-server-components-rendered), and in a later step renders that data into HTML. That's necessary for React to keep the current Client Components' state while re-rendering a hybrid React component tree, i.e., a component tree composed of Server and Client components.
+[1] Technically, React renders Server Components into a special data format called the [React Server Component Payload (RSC Payload)](https://nextjs.org/docs/app/building-your-application/rendering/server-components#how-are-server-components-rendered), and in a later step renders that data into HTML. That's necessary for React to keep the current Client Components' state while re-rendering a hybrid React component tree, i.e., a component tree composed of Server and Client components.
 
 ### What are Client Components?
 
-Server Components don't replace Client Components. 
+Server Components don't replace Client Components.
 
 Client Components are the React components we're used to. They haven't changed.
 
@@ -207,7 +211,7 @@ No _`useState()`_, _`useEffect()`_, _`useContext()`_, etc.
 
 Hooks are functions that let you "hook into" React state and lifecycle features, and custom hooks allow us to reuse stateful logic among components.
 
-But Server Components are **stateless**, so hooks don't make sense. We use plain-old JavaScript functions to share logic among Server Components.
+But Server Components are **stateless** and have no lifecycle, so hooks don't apply to them. We use plain-old JavaScript functions to share logic among Server Components.
 
 Do you need a hook? Then, you need a Client Component. Hooks are still great for Client Components.
 
@@ -243,7 +247,7 @@ Server Actions provide a seamless [Remote Procedure Call](https://en.wikipedia.o
 
 #### Too many constraints?
 
-That's a lot of constraints; are RSCs that helpful?
+That's a lot of constraints; are React Server Components that helpful?
 
 Well, having such clear boundaries between Client and Server components is fantastic. It makes it easier to figure out which one to use.
 
@@ -262,7 +266,8 @@ The JavaScript code of Server Components stays on the server, making them perfec
 Since their JavaScript code is never shipped to the browser, Server Components have zero impact on bundle size.
 
 <InfoBox>
-By embracing Server Components, your bundle size doesn't grow linearly as your app grows with new features as it does with Client Components.
+  By embracing Server Components, your bundle size doesn't grow linearly as your app grows with new
+  features as it does with Client Components.
 </InfoBox>
 
 You can also consume heavyweight dependencies on the server without affecting the user experience.
@@ -277,7 +282,7 @@ In Next.js App Router, Server Components render at build time by default unless 
 
 We can read static data from Server Components at build time from different sources, including the filesystem, remote APIs, and databases.
 
-That means we can use Server Components to generate static HTML pages and complete static websites that can be served from a CDN, making them the ultimate React [SSG](https://www.patterns.dev/react/static-rendering) tool!
+That means we don't need a server to use Server Components, and we can use them to generate static HTML pages and complete static websites that can be served from a CDN, making them the ultimate React [SSG](https://www.patterns.dev/react/static-rendering) tool!
 
 #### Server-side data fetching
 
@@ -295,17 +300,13 @@ To fetch data from a Server Component, we turn it into an [async function](https
 
 We can use [third-party libraries](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries) to access databases directly or use the standard JavaScript _`fetch`_ function that [Next.js extends](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-fetch) to allow developers to configure the caching and revalidating behavior for each fetch request.
 
-<InfoBox>
-We don't need to create an API layer to fetch data from Server Components.
-</InfoBox>
+<InfoBox>We don't need to create an API layer to fetch data from Server Components.</InfoBox>
 
 Client Components [can still fetch data](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-client-with-route-handlers), and we can use [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) in the server to handle it. However, we should fetch data on the server [whenever possible](https://nextjs.org/docs/app/building-your-application/data-fetching/patterns#fetching-data-on-the-server).
 
-#### Unlock a new hybrid web application model
+#### The key to unlocking a new hybrid web application model
 
-<InfoBox>
 By introducing React Server Components, React allows us to choose where to render each component, whether in the server or client, combining the best of each environment and unlocking a new hybrid web application model.
-</InfoBox>
 
 ### Server Components must be pure functions
 
@@ -350,7 +351,7 @@ export const Header = () => {
       <Logo />
     </header>
   );
-}
+};
 ```
 
 When a Server Component imports _`<Header>`_, it behaves like a Server Component, i.e., it renders to HTML on the server, its JavaScript code is never shipped to the browser, and it never hydrates.
@@ -364,7 +365,9 @@ That gives us even more flexibility, and we should strive to have as many Shared
 ### When to use Server and Client Components
 
 <InfoBox>
-We should use Server Components as much as possible due to their numerous benefits, including zero impact on bundle size and server-side data fetching, [moving Client Components down the tree](https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#moving-client-components-down-the-tree).
+  We should use Server Components as much as possible due to their numerous benefits, including zero
+  impact on bundle size and server-side data fetching, [moving Client Components down the
+  tree](https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns#moving-client-components-down-the-tree).
 </InfoBox>
 
 When we hit one of the constraints of Server Components, we weave in a Client Component.
@@ -408,7 +411,8 @@ By balancing Server and Client Components, we can create a high-performance, eff
 We no longer need to use the proprietary _`getServerSideProps()`_ and _`getStaticProps()`_ functions at the top-level page component to fetch data on the server and drill it down to the necessary components.
 
 <InfoBox>
-We can now build highly reusable and composable full-stack components that fetch data and render the UI in the server in a single roundtrip with Server Components.
+  We can now build highly reusable and composable full-stack components that fetch data and render
+  the UI in the server in a single roundtrip with Server Components.
 </InfoBox>
 
 Take a _`<TaskList>`_ component, for example. It's supposed to render a list of tasks. So, why can't we have it fetch its data?
@@ -428,7 +432,8 @@ That also means the _`<TaskList>`_'s composability is hurt because we cannot jus
 Enter Server Components and App Router. 💡
 
 <InfoBox>
-With Server Components, we can effortlessly fetch data on the server at the component level for the first time ever! 🤯
+  With Server Components, we can effortlessly fetch data on the server at the component level for
+  the first time ever! 🤯
 </InfoBox>
 
 We can have our cake and eat it too!
@@ -448,18 +453,16 @@ import { getTasks } from './actions';
 export const TaskList = async () => {
   const tasks = await getTasks();
 
-  return(
+  return (
     <div>
       {tasks.map((task) => (
         <div key={task.id}>
-          <Link href={`/app/tasks/${task.id}`}>
-            {task.name}
-          </Link>
+          <Link href={`/app/tasks/${task.id}`}>{task.name}</Link>
         </div>
       ))}
     </div>
   );
-}
+};
 ```
 
 <CH.Section>
@@ -503,7 +506,8 @@ In a large-scale application or a suite of applications, we can now design, reus
 That's the power of React's composability on the server side.
 
 <InfoBox>
-I call this component a full-stack component: a self-contained data-driven Server Component that's fully reusable and composable despite its data dependencies.
+  I call this component a full-stack component: a self-contained data-driven Server Component that's
+  fully reusable and composable despite its data dependencies.
 </InfoBox>
 
 That new pattern works exceptionally well for reducing complexity and code while keeping components lightweight.
@@ -534,7 +538,7 @@ We can define Server Actions in Server Components or a separate file. Let's see 
 export const createTask = async (formData: FormData) => {
   const data = Object.fromEntries(formData);
   return await prisma.tasks.create(data);
-}
+};
 ```
 
 When defining Server Actions in a separate file, we must _`"use server"`_ at the top of the file and only export async functions.
@@ -545,7 +549,7 @@ Server Components only render on the server. On the client, they're plain old st
 
 That means React cannot re-render them on the client.
 
-####  The Request/Response Lifecycle
+#### The Request/Response Lifecycle
 
 We use the [request/response lifecycle](https://nextjs.org/docs/app/building-your-application/rendering#request-response-lifecycle) of the traditional web to re-render Server Components.
 
@@ -587,12 +591,12 @@ export const TaskForm = () => {
       <button type="submit">Add task</button>
     </form>
   );
-}
+};
 ```
 
 However, after submitting the form and creating a task, _`<TaskList>`_ won't automatically re-render to fetch an updated list of tasks and update the UI.
 
-####  Using revalidatePath() and revalidateTag()
+#### Using revalidatePath() and revalidateTag()
 
 Fortunately, Next.js provides a few straightforward ways to solve that. In our _`createTask()`_ Server Action, we can call [revalidatePath()](https://nextjs.org/docs/app/api-reference/functions/revalidatePath) or [revalidateTag()](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) functions:
 
@@ -607,18 +611,18 @@ export const createTask = async (formData: FormData) => {
   const data = Object.fromEntries(formData);
   await prisma.tasks.create(data);
   revalidateTag('tasks');
-}
+};
 ```
 
 That will trigger a re-render from top to bottom of the application, re-rendering _`<TasksPage>`_ on the server and everything inside it. That means _`<TaskList>`_ will also re-render, fetching an updated list of tasks and updating the UI.
 
 All of that happens in a single client/server roundtrip: the client sends an HTTP request to the server to create a task, the server processes the request, saves a new task to a database, re-renders Server Components, and sends an HTTP response back to the client with the result, which the client then merges into the UI **while preserving its state**.
 
-####  Using router.refresh()
+#### Using router.refresh()
 
 Another way to re-render Server Components, this time from a Client Component, is by using [router.refresh()](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter).
 
-####  React preserves the UI state
+#### React preserves the UI state
 
 It's important to note that in any of the scenarios mentioned above, **React will preserve the UI state**, so it's not the same as doing a hard reload.
 
@@ -637,11 +641,7 @@ Take the following example:
 <CH.Section>
 
 ```tsx page.tsx
-export default function TaskDialogPage({
-  params: { taskId },
-}: {
-  params: { taskId: string };
-}) {
+export default function TaskDialogPage({ params: { taskId } }: { params: { taskId: string } }) {
   return (
     <Dialog>
       <TaskCard taskId={taskId} />
@@ -702,7 +702,7 @@ This new hybrid web application model is a huge leap forward and the future of w
 
 However, it's also a mental shift that will take time for the community to embrace.
 
-But we will embrace it and build reusable Server Components. We already have. CodeHike's [Bright](https://bright.codehike.org/) is a great example.
+But we will embrace it and build reusable and composable Server Components. We already have. CodeHike's [Bright](https://bright.codehike.org/) is a great example.
 
 Alongside other advancements in [DeveloperExperience](https://vercel.com/products/dx-platform), [infrastructure](https://vercel.com/products/managed-infrastructure), and AI tools for developers like [GitHub Copilot](https://github.com/features/copilot), it's faster than ever to build high-quality web applications. Individual engineers are more empowered than ever.
 
@@ -733,24 +733,30 @@ While you're here, please share this article. Your support means a lot to me!
 <br />
 
 Thanks for reading!
+
 </InfoBox>
 
 <br />
 
+### Related posts
+
+- [OpenTask: A Next.js App Router Case Study](/blog/opentask-nextjs-app-router-case-study/)
+- [Nexar: application architecture for Next.js App Router apps](/blog/nexar-application-architecture-for-nextjs-app-router-apps/)
+
 ### Interesting links
 
-[Next.js App Router](https://nextjs.org/docs/app)<br />
-[Understanding React Server Components (Vercel)](https://vercel.com/blog/understanding-react-server-components)<br />
-[React Server Components, Next.js App Router and examples (Addy Osmani)](https://addyosmani.com/blog/react-server-components-app-router/)<br />
-[Everything I wish I knew before moving 50,000 lines of code to React Server Components (Darius Cepulis)](https://www.mux.com/blog/what-are-react-server-components)<br />
-[React Server Components: A comprehensive guide (LogRocket)](https://blog.logrocket.com/react-server-components-comprehensive-guide/)<br />
-[Making Sense of React Server Components (Joshua Comeau)](https://www.joshwcomeau.com/react/server-components/)<br />
-[React Server Components – How and Why You Should Use Them in Your Code (Tapas Adhikary)](https://www.freecodecamp.org/news/how-to-use-react-server-components/)<br />
-[React Labs: What We've Been Working On – March 2023](https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023)<br />
-[React Labs: What We've Been Working On – June 2022](https://react.dev/blog/2022/06/15/react-labs-what-we-have-been-working-on-june-2022)<br />
-[React v18.0 (March 2022)](https://react.dev/blog/2022/03/29/react-v18)<br />
-[React 18 Keynote (React Conf 2021)](https://www.youtube.com/watch?v=FZ0cG47msEk&list=PLNG_1j3cPCaZZ7etkzWA7JfdmKWT0pMsa&ab_channel=ReactConf2021)<br />
-[Introducing Zero-Bundle-Size React Server Components (React Blog 2020)](https://react.dev/blog/2020/12/21/data-fetching-with-react-server-components)
+- [Next.js App Router](https://nextjs.org/docs/app)
+- [Understanding React Server Components (Vercel)](https://vercel.com/blog/understanding-react-server-components)
+- [React Server Components, Next.js App Router and examples (Addy Osmani)](https://addyosmani.com/blog/react-server-components-app-router/)
+- [Everything I wish I knew before moving 50,000 lines of code to React Server Components (Darius Cepulis)](https://www.mux.com/blog/what-are-react-server-components)
+- [React Server Components: A comprehensive guide (LogRocket)](https://blog.logrocket.com/react-server-components-comprehensive-guide/)
+- [Making Sense of React Server Components (Joshua Comeau)](https://www.joshwcomeau.com/react/server-components/)
+- [React Server Components – How and Why You Should Use Them in Your Code (Tapas Adhikary)](https://www.freecodecamp.org/news/how-to-use-react-server-components/)
+- [React Labs: What We've Been Working On – March 2023](https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023)
+- [React Labs: What We've Been Working On – June 2022](https://react.dev/blog/2022/06/15/react-labs-what-we-have-been-working-on-june-2022)
+- [React v18.0 (March 2022)](https://react.dev/blog/2022/03/29/react-v18)
+- [React 18 Keynote (React Conf 2021)](https://www.youtube.com/watch?v=FZ0cG47msEk&list=PLNG_1j3cPCaZZ7etkzWA7JfdmKWT0pMsa&ab_channel=ReactConf2021)
+- [Introducing Zero-Bundle-Size React Server Components (React Blog 2020)](https://react.dev/blog/2020/12/21/data-fetching-with-react-server-components)
 
 ### Bibliography
 

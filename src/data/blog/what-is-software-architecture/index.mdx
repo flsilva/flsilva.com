@@ -5,6 +5,7 @@ authorUrl: 'https://flsilva.com'
 changefreq: monthly
 contentType: 'blog-post'
 date: '2023-12-20T00:00:00'
+dateUpdated: '2024-02-08T00:00:00'
 description: Learn what software architecture is, why it's important, and how components, modules, and layers help you modularize your applications.
 heroImage: './hero.jpg'
 heroImageCreditText: 'Image by Freepik'
@@ -24,37 +25,37 @@ import { SocialMediaShareButtons } from '../../../components/social-media-share/
 
 ### Table of Contents
 
-- [Introduction](/blog/what-is-software-architecture/#introduction)
-- [What is software architecture?](/blog/what-is-software-architecture/#what-is-software-architecture)
-- [How is software design different than software architecture?](/blog/what-is-software-architecture/#how-is-software-design-different-than-software-architecture)
-- [Why software architecture is important?](/blog/what-is-software-architecture/#why-software-architecture-is-important)
-- [Components, modules, and layers](/blog/what-is-software-architecture/#components-modules-and-layers)
-- [What are components?](/blog/what-is-software-architecture/#what-are-components)
-  - [No mud](/blog/what-is-software-architecture/#no-mud)
-  - [A small ball of mud](/blog/what-is-software-architecture/#a-small-ball-of-mud)
-- [Modules and Modular Architectures](/blog/what-is-software-architecture/#modules-and-modular-architectures)
-  - [What are modules?](/blog/what-is-software-architecture/#what-are-modules)
-  - [Modular Architectures](/blog/what-is-software-architecture/#modular-architectures)
-    - [Monolith applications](/blog/what-is-software-architecture/#monolith-applications)
-    - [Modular Monolith architectures](/blog/what-is-software-architecture/#modular-monolith-architectures)
-    - [Microservices architectures](/blog/what-is-software-architecture/#microservices-architectures)
-    - [Plug-in architectures](/blog/what-is-software-architecture/#plug-in-architectures)
-- [Layers and Layered architectures](/blog/what-is-software-architecture/#layers-and-layered-architectures)
-  - [Presentation Layer (UI layer)](/blog/what-is-software-architecture/#application-layer)
-  - [Application Layer](/blog/what-is-software-architecture/#application-layer)
-  - [Domain Layer](/blog/what-is-software-architecture/#domain-layer)
-  - [Data Access Layer](/blog/what-is-software-architecture/#data-access-layer)
-  - [Layered architecture downsides](/blog/what-is-software-architecture/#layered-architecture-downsides)
-- [Other types of software architectures](/blog/what-is-software-architecture/#other-types-of-software-architectures)
-- [Common questions about software architecture](/blog/what-is-software-architecture/#common-questions-about-software-architecture)
-  - [Is software architecture only relevant for large projects?](/blog/what-is-software-architecture/#is-software-architecture-only-relevant-for-large-projects)
-  - [Who architects a system?](/blog/what-is-software-architecture/#who-architects-a-system)
-  - [What artifacts make up a software architecture?](/blog/what-is-software-architecture/#what-artifacts-make-up-a-software-architecture)
-  - [Does software architecture restrict flexibility and agility?](/blog/what-is-software-architecture/#does-software-architecture-restrict-flexibility-and-agility)
-  - [Is software architecture a one-time activity?](/blog/what-is-software-architecture/#is-software-architecture-a-one-time-activity)
-  - [Does software architecture guarantee success?](/blog/what-is-software-architecture/#does-software-architecture-guarantee-success)
-- [Classic books about software architecture](/blog/what-is-software-architecture/#classic-books-about-software-architecture)
-- [Conclusion](/blog/what-is-software-architecture/#conclusion)
+- [Introduction](#introduction)
+- [What is software architecture?](#what-is-software-architecture)
+- [How is software design different than software architecture?](#how-is-software-design-different-than-software-architecture)
+- [Why software architecture is important?](#why-software-architecture-is-important)
+- [Components, modules, and layers](#components-modules-and-layers)
+- [What are components?](#what-are-components)
+  - [No mud](#no-mud)
+  - [A small ball of mud](#a-small-ball-of-mud)
+- [Modules and Modular Architectures](#modules-and-modular-architectures)
+  - [What are modules?](#what-are-modules)
+  - [Modular Architectures](#modular-architectures)
+    - [Monolith applications](#monolith-applications)
+    - [Modular Monolith architectures](#modular-monolith-architectures)
+    - [Microservices architectures](#microservices-architectures)
+    - [Plug-in architectures](#plug-in-architectures)
+- [Layers and Layered architectures](#layers-and-layered-architectures)
+  - [Presentation Layer (UI layer)](#application-layer)
+  - [Application Layer](#application-layer)
+  - [Domain Layer](#domain-layer)
+  - [Data Access Layer](#data-access-layer)
+  - [Layered architecture downsides](#layered-architecture-downsides)
+- [Other types of software architectures](#other-types-of-software-architectures)
+- [Common questions about software architecture](#common-questions-about-software-architecture)
+  - [Is software architecture only relevant for large projects?](#is-software-architecture-only-relevant-for-large-projects)
+  - [Who architects a system?](#who-architects-a-system)
+  - [What artifacts make up a software architecture?](#what-artifacts-make-up-a-software-architecture)
+  - [Does software architecture restrict flexibility and agility?](#does-software-architecture-restrict-flexibility-and-agility)
+  - [Is software architecture a one-time activity?](#is-software-architecture-a-one-time-activity)
+  - [Does software architecture guarantee success?](#does-software-architecture-guarantee-success)
+- [Classic books about software architecture](#classic-books-about-software-architecture)
+- [Conclusion](#conclusion)
 
 ### Introduction
 
@@ -143,7 +144,7 @@ Small applications have dozens of components.
 
 Imagine a simple task management web application where users can authenticate and create projects and tasks. The entire application could have about 20 components, each in a separate file. It's a simple application, but imagine all those 20 components in the same folder.
 
-I don't know about you, but it would bother me. Of course, if we know that's all we'll ever have for this application, and it won't grow in any way, that's fine. It'd still bother me, but I'd forget about it since I wouldn't touch it again.
+I don't know about you, but it would bother me. Of course, if we know that's all we'll ever have for this application and it won't grow in any way, that's fine. It'd still bother me, but I'd forget about it since I wouldn't touch it again.
 
 However, that's not how things work. In the real world, an application of that size would be a good [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product), with the next iteration adding features.
 
@@ -242,9 +243,13 @@ In a layered architecture, we organize components into horizontal layers, each o
 
 Although there are many variations of the layered architecture, the industry has converged to some variation of the following four layers:
 
-<div style={{ width: '35%', height: 'auto', margin: '4rem auto' }}>
-  ![Layered Architecture](./layered-arhitecture-01.png)
-</div>
+<img
+  alt="Layered Architecture"
+  src="/layered-architecture-01.png"
+  width={984}
+  height={2075}
+  style={{ width: '35%', height: 'auto', margin: '4rem auto' }}
+/>
 
 #### Presentation Layer (UI layer)
 
@@ -319,7 +324,7 @@ Software architecture is an ongoing process that starts in the early stages of d
 
 #### Does software architecture guarantee success?
 
-While a well-designed architecture significantly increases the chances of project success, it's not a magic bullet. A combination of skilled developers, effective project management, and continuous improvement is essential for ensuring a high-quality software system's successful development and deployment.
+While a well-designed architecture significantly increases the chances of project success, it's not a magical solution. A combination of skilled developers, effective project management, and continuous improvement is essential for ensuring the successful development and deployment of a high-quality software system.
 
 ### Classic books about software architecture
 
@@ -355,7 +360,7 @@ While you're here, please share this article. Your support means a lot to me!
 <br />
 
 <SocialMediaShareButtons
-  hashtags={['software-architecture']}
+  hashtags={['software-architecture', 'modularity']}
   tweetText="Learn what software architecture is, why it's important, and how components, modules, and layers help you modularize your applications."
   tweetVia="flsilva7"
   url="https://flsilva.com/blog/what-is-software-architecture"
@@ -375,13 +380,14 @@ Thanks for reading!
 
 ### Related posts
 
-[Introduction to UML](/blog/introduction-to-uml-concepts/)<br />
-[What is software testing?](/blog/what-is-software-testing/)<br />
-[Software testing in the real world](/blog/software-testing-in-the-real-world/)<br />
-[Testing is not quality assurance (QA)](/blog/testing-is-not-quality-assurance-qa/)<br />
-[What is a product specification?](/blog/what-is-a-product-specification/)<br />
-[What is a software bug?](/blog/what-really-is-a-software-bug/)<br />
-[How to report bugs effectively?](/blog/how-to-report-bugs-effectively/)
+- [Nexar: application architecture for Next.js App Router apps](/blog/nexar-application-architecture-for-nextjs-app-router-apps/)
+- [Introduction to UML](/blog/introduction-to-uml-concepts/)
+- [What is software testing?](/blog/what-is-software-testing/)
+- [Software testing in the real world](/blog/software-testing-in-the-real-world/)
+- [Testing is not quality assurance (QA)](/blog/testing-is-not-quality-assurance-qa/)
+- [What is a product specification?](/blog/what-is-a-product-specification/)
+- [What is a software bug?](/blog/what-really-is-a-software-bug/)
+- [How to report bugs effectively?](/blog/how-to-report-bugs-effectively/)
 
 ### Bibliography
 
