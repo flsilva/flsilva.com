@@ -481,7 +481,23 @@ iframe {
 /**/
 
 /* CodeHike */
-.ch-frame-title-bar { flex-direction: row; }
+.ch-frame-title-bar {
+  flex-direction: row;
+}
 
-.ch-frame-buttons { flex-direction: row; }
+.ch-frame-buttons {
+  flex-direction: row;
+}
+
+.ch-inline-code > code > span {
+  overflow-wrap: break-word;
+}
+
+.ch-code-scroll-content {
+  overflow: auto !important;
+
+  @media $midScreenMedia {
+    overflow: hidden !important;
+  }
+}
 /**/
