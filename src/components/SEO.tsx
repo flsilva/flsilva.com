@@ -38,7 +38,7 @@ export const SEO: React.FC<SEOProps> = ({
     <>
       <title>{`${title}`}</title>
       <meta name="title" content={`${title}`} />
-      <meta name="og:site_name" content="flsilva.com" />
+      <meta name="og:site_name" content="Flavio Silva" />
       <meta name="og:title" content={`${title}`} />
       <meta name="description" content={description} />
       <meta name="og:description" content={description} />
