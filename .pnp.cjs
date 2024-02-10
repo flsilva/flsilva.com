@@ -48,6 +48,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-hooks", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:4.6.0"],\
           ["gatsby", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.3"],\
           ["gatsby-plugin-google-gtag", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
+          ["gatsby-plugin-google-tagmanager", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
           ["gatsby-plugin-image", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:3.13.1"],\
           ["gatsby-plugin-manifest", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.10.0"],\
           ["gatsby-plugin-mdx", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
@@ -11370,6 +11371,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-hooks", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:4.6.0"],\
           ["gatsby", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.3"],\
           ["gatsby-plugin-google-gtag", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
+          ["gatsby-plugin-google-tagmanager", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
           ["gatsby-plugin-image", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:3.13.1"],\
           ["gatsby-plugin-manifest", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.10.0"],\
           ["gatsby-plugin-mdx", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
@@ -12077,6 +12079,38 @@ const RAW_RUNTIME_STATE =
           ["minimatch", "npm:3.1.2"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/gatsby",\
+          "@types/react-dom",\
+          "@types/react",\
+          "gatsby",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["gatsby-plugin-google-tagmanager", [\
+      ["npm:5.13.1", {\
+        "packageLocation": "./.yarn/cache/gatsby-plugin-google-tagmanager-npm-5.13.1-f82e0c3055-e4d7e6e0c9.zip/node_modules/gatsby-plugin-google-tagmanager/",\
+        "packageDependencies": [\
+          ["gatsby-plugin-google-tagmanager", "npm:5.13.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1", {\
+        "packageLocation": "./.yarn/__virtual__/gatsby-plugin-google-tagmanager-virtual-fbcd858cd8/0/cache/gatsby-plugin-google-tagmanager-npm-5.13.1-f82e0c3055-e4d7e6e0c9.zip/node_modules/gatsby-plugin-google-tagmanager/",\
+        "packageDependencies": [\
+          ["gatsby-plugin-google-tagmanager", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
+          ["@babel/runtime", "npm:7.20.13"],\
+          ["@types/gatsby", null],\
+          ["@types/react", "npm:18.2.7"],\
+          ["@types/react-dom", "npm:18.2.4"],\
+          ["gatsby", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.3"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:18.2.0"],\
+          ["web-vitals", "npm:1.1.2"]\
         ],\
         "packagePeers": [\
           "@types/gatsby",\
@@ -21831,6 +21865,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/weak-lru-cache-npm-1.2.2-0dc8dfa322-441f86236d.zip/node_modules/weak-lru-cache/",\
         "packageDependencies": [\
           ["weak-lru-cache", "npm:1.2.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["web-vitals", [\
+      ["npm:1.1.2", {\
+        "packageLocation": "./.yarn/cache/web-vitals-npm-1.1.2-8e3860bc35-eece838206.zip/node_modules/web-vitals/",\
+        "packageDependencies": [\
+          ["web-vitals", "npm:1.1.2"]\
         ],\
         "linkType": "HARD"\
       }]\
