@@ -27,7 +27,10 @@ export const MainFooter: React.FC = () => (
             </a>
           </li>
           <li>
-            <a href="mailto:flsilva7@gmail.com">
+            <a
+              href="mailto:flsilva7@gmail.com"
+              onClick={() => gtag_report_conversion('mailto:flsilva7@gmail.com')}
+            >
               <MailIconSvg />
             </a>
           </li>
