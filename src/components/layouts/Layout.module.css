@@ -38,6 +38,6 @@
 
 .page-main-content {
   @media $midScreenMedia {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 }

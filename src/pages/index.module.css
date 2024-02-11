@@ -67,11 +67,95 @@
   }
 }
 
+.image-container-campaign {
+  align-self: center;
+  border: 0.375rem solid var(--secondary-text-color);
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+  margin-top: 2rem;
+
+  @media $xxsmallScreenMedia {
+    border-width: 0.25rem;
+    width: 180px;
+    height: 180px;
+  }
+  @media $xsmallScreenMedia {
+    border-width: 0.25rem;
+    width: 180px;
+    height: 180px;
+  }
+  @media $smallScreenMedia {
+    width: 250px;
+    height: 250px;
+  }
+  @media $midScreenMedia {
+    align-self: auto;
+    display: block;
+    float: right;
+    margin-bottom: 0;
+    margin-top: 2rem;
+    width: 250px;
+    height: 250px;
+  }
+  @media $largeScreenMedia {
+    width: 250px;
+    height: 250px;
+  }
+}
+
+.image-container-campaign img {
+  border-radius: 50%;
+  @media $xxsmallScreenMedia {
+    width: 130px;
+    height: 130px;
+  }
+  @media $xsmallScreenMedia {
+    width: 130px;
+    height: 130px;
+  }
+  @media $smallScreenMedia {
+    margin-top: 0;
+    width: 250px;
+    height: 250px;
+  }
+  @media $midScreenMedia {
+    width: 250px;
+    height: 250px;
+  }
+  @media $largeScreenMedia {
+    width: 250px;
+    height: 250px;
+  }
+}
+
 .header h1 {
   flex-grow: 1;
   text-align: center;
 
   @media $midScreenMedia {
     text-align: left;
+  }
+}
+
+.header h4 {
+  margin-bottom: 0;
+  text-align: center;
+
+  @media $midScreenMedia {
+    text-align: left;
+  }
+}
+
+.get-in-touch-button {
+  background-color: rgb(22, 163, 74);
+  color: rgb(255, 255, 255);
+  border-radius: 6px;
+  font-size: 1.125rem;
+  line-height: 1.25rem;
+  padding: 0.625rem 0.875rem;
+
+  &:hover {
+    text-decoration: none;
+    background-color: rgb(34, 197, 94);
   }
 }

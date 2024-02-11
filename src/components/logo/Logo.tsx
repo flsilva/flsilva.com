@@ -1,8 +1,14 @@
 import * as React from 'react';
+import { container, logo } from './Logo.module.css';
 
+export const Logo: React.FC = () => (
+  <h1 className={logo}>
+    <a href="/">fls</a>
+  </h1>
+);
+
+/*
 import { LogoBox2Svg } from './LogoBox2Svg';
-// import { LogoCircle1Svg } from './LogoCircle1Svg'
-// import { LogoTetrisSvg } from './LogoTetrisSvg'
 import { container, logo } from './Logo.module.css';
 
 export const Logo: React.FC = () => (
@@ -15,3 +21,4 @@ export const Logo: React.FC = () => (
     </h1>
   </div>
 );
+*/

@@ -75,18 +75,12 @@ const IndexPage: React.FC<PageProps> = () => (
       </p>
       <p>
         Let&#39;s&nbsp;
-        <a
-          href="mailto:flsilva7@gmail.com"
-          onClick={() => gtag_report_conversion('mailto:flsilva7@gmail.com')}
-        >
-          get in touch
-        </a>
-        .
+        <a href="mailto:flsilva7@gmail.com">get in touch</a>.
       </p>
       <p>
-        Florianópolis, Brazil.
+        Florianopolis, Brazil
         <br />
-        December 2023.
+        February, 2024
       </p>
       <Recommendations>
         <Recommendation
