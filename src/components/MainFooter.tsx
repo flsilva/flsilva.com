@@ -12,25 +12,22 @@ export const MainFooter: React.FC = () => (
       <nav className={nav}>
         <ul>
           <li>
-            <a href="http://www.github.com/flsilva">
+            <a href="http://www.github.com/flsilva" className="gtm-footer-link">
               <GitHubLogoSvg />
             </a>
           </li>
           <li>
-            <a href="http://www.twitter.com/flsilva7">
+            <a href="http://www.twitter.com/flsilva7" className="gtm-footer-link">
               <TwitterLogoSvg />
             </a>
           </li>
           <li>
-            <a href="http://www.linkedin.com/in/flsilva">
+            <a href="http://www.linkedin.com/in/flsilva" className="gtm-footer-link">
               <LinkedInLogoSvg />
             </a>
           </li>
           <li>
-            <a
-              href="mailto:flsilva7@gmail.com"
-              onClick={() => gtag_report_conversion('mailto:flsilva7@gmail.com')}
-            >
+            <a href="mailto:flsilva7@gmail.com" className="gtm-footer-link">
               <MailIconSvg />
             </a>
           </li>

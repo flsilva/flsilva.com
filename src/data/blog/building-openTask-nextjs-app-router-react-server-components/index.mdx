@@ -5,15 +5,15 @@ authorUrl: 'https://flsilva.com'
 changefreq: monthly
 contentType: 'blog-post'
 date: '2024-02-08T00:00:00'
-description: 'Learn how I built OpenTask, a free, open-source, fully functional, and responsive PWA MVP, using the new Next.js App Router, React Server Components, Server Actions, Suspense, Tailwind CSS, Radix, Supabase, and Prisma.'
+description: 'Learn how I built OpenTask, an open-source MVP task management web app, using the new Next.js App Router, React Server Components, Server Actions, Suspense, Tailwind CSS, Radix, Supabase, and Prisma.'
 heroImage: './hero.png'
 heroImageCreditText: ''
 heroImageCreditUrl: ''
 priority: 0.6
-slug: 'opentask-nextjs-app-router-case-study'
+slug: 'building-opentask-nextjs-app-router-react-server-components'
 tags: ['react', 'nextjs', 'opentask', 'nexar', 'hybrid-web-app-model']
-title: 'OpenTask: A Next.js App Router Case Study'
-tweetText: 'Learn how I built OpenTask (OSS) with @nextjs App Router, @reactjs Server Components, Server Actions, @tailwindcss, @supabase, @prisma, and more.'
+title: 'Building OpenTask with Next.js App Router and RSCs'
+tweetText: 'Learn how I built OpenTask, an open-source MVP task management web app with @nextjs App Router, @reactjs Server Components, Server Actions, @tailwindcss, @supabase, @prisma, and more.'
 tweetVia: 'flsilva7'
 tweetCardImage: './tweet-card.png'
 ---
@@ -115,7 +115,7 @@ import { SocialMediaShareButtons } from '../../../components/social-media-share/
 
 In this article, you'll learn how I fully embraced the new React 18 and Next.js App Router features, including React Server Components, Server Actions, and Suspense, to build a full-stack hybrid web application that has never been possible, eliminating whole layers of code including no client-side data fetching, replaced by a more straightforward and faster server-side data fetching, no client-side state management, and no server-side API.
 
-The resulting application is [OpenTask](https://opentask.app/): a free, [open-source](https://github.com/flsilva/opentask), fully functional, and responsive PWA MVP.
+The resulting application is [OpenTask](https://opentask.app/): an [open-source](https://github.com/flsilva/opentask) and responsive MVP task management web application.
 
 Let's see how to combine those features to build OpenTask, with plenty of code snippets and screenshots to investigate.
 
@@ -153,7 +153,7 @@ React Server Components, Server Actions, and Suspense are at the forefront of th
 
 To understand how and why we got here and what problems they solve alongside the new Next.js App Router, please read my article [React Server Components and a new hybrid web app model](https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/).
 
-That article provides a solid conceptual foundation for those new features and officially introduces this case study, so I assume you read it before proceeding.
+That article provides a solid conceptual foundation for those new features and officially introduces this article, so I assume you read it before proceeding.
 
 ### Building an application to test it all
 
@@ -165,7 +165,7 @@ I was sold. I just had to decide on what to build! 😅
 
 ### What application to build?
 
-After weighing different options, including one involving AI, I decided to keep it simple and build a task management app that is fully functional and responsive. With a short timeline in mind, this was the perfect experiment.
+After weighing different options, including one involving AI, I kept it simple and built a task management web application. However, I built an MVP with all the essential features users come to expect from a real-world product.
 
 A task management app is well-known and simple enough to build as part of a case study. Nonetheless, it includes common features in most apps, such as authentication, data fetching, data mutation, data (model) relationships, and UI elements like forms and dialogs.
 
@@ -731,7 +731,7 @@ When we click the OTP sign-in link from the iPhone's email app, it opens Safari 
 
 It works on Android when switching from Chrome to the PWA, but we shouldn't expect users to switch back to the PWA window; that's a terrible UX.
 
-The expected UX is clicking the OTP magic link in the email app and going directly to the PWA window to get authenticated. I couldn't make it work, though. If you did that before, please [leave a comment below](/blog/opentask-nextjs-app-router-case-study/#post-comments) or [ping me on X](https://twitter.com/flsilva7), I'd love to make it work if that's possible. I'm using [Giscus](https://giscus.app/), so you can use your GitHub account to comment.
+The expected UX is clicking the OTP magic link in the email app and going directly to the PWA window to get authenticated. I couldn't make it work, though. If you did that before, please [leave a comment below](#post-comments) or [ping me on X](https://twitter.com/flsilva7). I'd love to make it work if it's doable. I'm using [Giscus](https://giscus.app/), so you can use your GitHub account to comment.
 
 Many mobile authentication options have great UX, but I kept it simple for the MVP.
 
@@ -925,7 +925,7 @@ For small screens, we have a hamburger menu button in the [_`<Header>`_](https:/
 
 We render a [_`<InstallPwaDialog />`_](https://github.com/flsilva/opentask/blob/feb-2024/src/features/shared/ui/pwa/InstallPwaDialog.tsx) Client Component to show a one-time dialog asking Android and iOS users to install the PWA right after the first sign-in.
 
-Android users see an _`Add to Home Screen`_ button. When they click it, we call the [_`BeforeInstallPromptEvent.prompt()`_](https://developer.mozilla.org/en-US/docs/Web/API/BeforeInstallPromptEvent/prompt) function from the context provided by [_`<InstallPwaProvider>`_](https://github.com/flsilva/opentask/blob/feb-2024/src/features/shared/ui/pwa/InstallPwaProvider.tsx) as we saw explained [here](/blog/opentask-nextjs-app-router-case-study/#rootlayout) to add the app to the home screen.
+Android users see an _`Add to Home Screen`_ button. When they click it, we call the [_`BeforeInstallPromptEvent.prompt()`_](https://developer.mozilla.org/en-US/docs/Web/API/BeforeInstallPromptEvent/prompt) function from the context provided by [_`<InstallPwaProvider>`_](https://github.com/flsilva/opentask/blob/feb-2024/src/features/shared/ui/pwa/InstallPwaProvider.tsx) as we saw explained [here](#rootlayout) to add the app to the home screen.
 
 <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
   <div style={{ maxWidth: '280px', flexGrow: 1 }}>
@@ -2835,7 +2835,7 @@ While you're here, please share this article. Your support means a lot to me!
   hashtags={['react', 'nextjs', 'open-task', 'hybrid-web-app-model']}
   tweetText="Learn how I built OpenTask (OSS) with @nextjs App Router, @reactjs Server Components, Server Actions, @tailwindcss, @supabase, @prisma, etc."
   tweetVia="flsilva7"
-  url="https://flsilva.com/blog/opentask-nextjs-app-router-case-study"
+  url="https://flsilva.com/blog/building-opentask-nextjs-app-router-react-server-components"
 />
 
 <br />
@@ -2851,6 +2851,7 @@ Thanks for reading!
 - [React Server Components and a new hybrid web app model](/blog/react-server-components-and-a-new-hybrid-web-app-model/)
 - [Nexar: application architecture for Next.js App Router apps](/blog/nexar-application-architecture-for-nextjs-app-router-apps/)
 - [What is software architecture?](/blog/what-is-software-architecture/)
+- [Accelerate Your Startup Success with the Next.js App Router](/case-studies/accelerate-your-startup-success-nextjs-app-router/)
 
 ### Interesting links
 

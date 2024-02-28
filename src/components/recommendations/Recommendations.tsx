@@ -12,7 +12,10 @@ export const Recommendations: React.FC<ChildrenProps> = ({ children }) => (
     <h2 className={title}>Recommendations</h2>
     <small className={textTapToSee}>Tap to see on LinkedIn</small>
     <div className={recommendationsListContainer}>
-      <div id="recommendations-list" className={recommendationsList}>
+      <div
+        id="recommendations-list"
+        className={`${recommendationsList} gtm-linkedin-recommendations-link`}
+      >
         {children}
       </div>
     </div>

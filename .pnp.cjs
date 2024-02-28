@@ -47,7 +47,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:7.32.2"],\
           ["eslint-plugin-react-hooks", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:4.6.0"],\
           ["gatsby", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.3"],\
-          ["gatsby-plugin-google-gtag", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
           ["gatsby-plugin-google-tagmanager", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
           ["gatsby-plugin-image", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:3.13.1"],\
           ["gatsby-plugin-manifest", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.10.0"],\
@@ -11370,7 +11369,6 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:7.32.2"],\
           ["eslint-plugin-react-hooks", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:4.6.0"],\
           ["gatsby", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.3"],\
-          ["gatsby-plugin-google-gtag", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
           ["gatsby-plugin-google-tagmanager", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
           ["gatsby-plugin-image", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:3.13.1"],\
           ["gatsby-plugin-manifest", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.10.0"],\
@@ -12055,38 +12053,6 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@parcel/core",\
           "@types/parcel__core"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
-    ["gatsby-plugin-google-gtag", [\
-      ["npm:5.13.1", {\
-        "packageLocation": "./.yarn/cache/gatsby-plugin-google-gtag-npm-5.13.1-993d935611-70a88d4abd.zip/node_modules/gatsby-plugin-google-gtag/",\
-        "packageDependencies": [\
-          ["gatsby-plugin-google-gtag", "npm:5.13.1"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1", {\
-        "packageLocation": "./.yarn/__virtual__/gatsby-plugin-google-gtag-virtual-52d76c2517/0/cache/gatsby-plugin-google-gtag-npm-5.13.1-993d935611-70a88d4abd.zip/node_modules/gatsby-plugin-google-gtag/",\
-        "packageDependencies": [\
-          ["gatsby-plugin-google-gtag", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.1"],\
-          ["@babel/runtime", "npm:7.20.13"],\
-          ["@types/gatsby", null],\
-          ["@types/react", "npm:18.2.7"],\
-          ["@types/react-dom", "npm:18.2.4"],\
-          ["gatsby", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:5.13.3"],\
-          ["minimatch", "npm:3.1.2"],\
-          ["react", "npm:18.2.0"],\
-          ["react-dom", "virtual:af2b9f7e0ac9022c5e6a1192a0d16eb80366597772bd846fbffc309d8230072ce83cfc401bc4fc596bfd0e3e7b4144895e7d59f64d7357b3f93490dfe27c8bb3#npm:18.2.0"]\
-        ],\
-        "packagePeers": [\
-          "@types/gatsby",\
-          "@types/react-dom",\
-          "@types/react",\
-          "gatsby",\
-          "react-dom",\
-          "react"\
         ],\
         "linkType": "HARD"\
       }]\

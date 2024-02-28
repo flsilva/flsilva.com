@@ -24,10 +24,10 @@ const OpenSourcePage: React.FC<PageProps> = () => (
         <StaticImage alt="OpenTask" src="./opentask.png" />
       </div>
       <p>
-        <a href="https://opentask.app">OpenTask</a> is a free and{' '}
-        <a href="https://github.com/flsilva/opentask">open-source</a> fully functional and
-        responsive PWA MVP task management app built with Next.js 14 and the new{' '}
-        <a href="https://nextjs.org/docs/app">App Router</a> in 2023.
+        <a href="https://opentask.app">OpenTask</a> is an{' '}
+        <a href="https://github.com/flsilva/opentask">open-source</a> and responsive MVP task
+        management web application I built with the new{' '}
+        <a href="https://nextjs.org/docs/app">Next.js App Router</a> in 2023.
       </p>
     </div>
     <div className={[ossProject, vostokFramework].join(' ')}>

@@ -31,7 +31,9 @@ export const SEO: React.FC<SEOProps> = ({
   `);
 
   const imgPath = imagePath
-    ? imagePath.childImageSharp.gatsbyImageData.images.fallback.src
+    ? typeof imagePath === 'string'
+      ? imagePath
+      : imagePath.childImageSharp.gatsbyImageData.images.fallback.src
     : data.site?.siteMetadata?.imagePath;
 
   return (
@@ -50,7 +52,7 @@ export const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:title" content={`${title}`} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={`${data.site?.siteMetadata?.siteUrl}${imgPath}`} />
-      {tweetVia && <meta name="twitter:card" content="summary_large_image" />}
+      <meta name="twitter:card" content="summary_large_image" />
       {tweetVia && <meta name="twitter:site" content={`@${tweetVia}`} />}
       {tweetVia && <meta name="twitter:creator" content={`@${tweetVia}`} />}
       {authorName && <meta name="author" content={authorName} />}

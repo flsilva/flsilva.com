@@ -16,7 +16,9 @@ const DeliveryPage: React.FC<PageProps> = () => (
   <LayoutCampaign>
     <header className={header}>
       <h1>Remote Startup Developer</h1>
-      <h4 style={{ marginTop: '0' }}>Need an MVP fast? Hire a results-driven expert.</h4>
+      <h4 style={{ marginTop: '0' }}>
+        Need an MVP fast? Hire a results-driven senior collaborator.
+      </h4>
     </header>
     <div className={copyImageContainer}>
       <div className={imageContainerCampaign}>
@@ -28,7 +30,8 @@ const DeliveryPage: React.FC<PageProps> = () => (
         early-stage startups launch their SaaS ideas from concept to product in a few weeks.
       </p>
       <p>
-        Here&#39;s why you should hire me <b>to build your startup MVP now:</b>
+        Here&#39;s why you should hire me as your senior collaborator{' '}
+        <b>to build your startup MVP:</b>
       </p>
       <ul style={{ display: 'block' }}>
         <li>
@@ -39,30 +42,44 @@ const DeliveryPage: React.FC<PageProps> = () => (
         </li>
         <li>
           <b>Build products fast with proven tech:</b> I&#39;ve just shipped{' '}
-          <a href="https://opentask.app/">OpenTask</a>, an{' '}
-          <a href="https://github.com/flsilva/opentask">open-source</a> MVP as part of a{' '}
-          <a href="https://flsilva.com/blog/opentask-nextjs-app-router-case-study/">case study</a> I
-          wrote. I&#39;m using{' '}
-          <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/">
+          <a href="https://opentask.app/" className="gtm-opentask-website-link">
+            OpenTask
+          </a>
+          , an{' '}
+          <a href="https://github.com/flsilva/opentask" className="gtm-opentask-github-repo-link">
+            open-source
+          </a>{' '}
+          MVP as part of a{' '}
+          <a
+            href="/case-studies/accelerate-your-startup-success-nextjs-app-router/"
+            className="gtm-blog-post-opentask-case-study-link"
+          >
+            case study
+          </a>{' '}
+          I wrote. I&#39;m using{' '}
+          <a
+            href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/"
+            className="gtm-blog-post-react-server-components-hybrid-model-link"
+          >
             new React and Next.js features
           </a>{' '}
           that help developers build products faster with less code and bugs.
         </li>
       </ul>
-      <p>
+      <h5 style={{ marginTop: '3rem', textAlign: 'center' }}>
         I&#39;m available today to discuss your startup product idea.{' '}
-        <b>Start now with a free estimate.</b>
-      </p>
+      </h5>
       <p style={{ margin: '4rem 0', textAlign: 'center' }}>
         <a
-          className={getInTouchButton}
+          className={`${getInTouchButton} gtm-google-ads-2024-campaigns-cta-link`}
           href="mailto:flsilva7@gmail.com"
-          onClick={() => gtag_report_conversion('mailto:flsilva7@gmail.com')}
         >
           Accelerate Your Startup Launch Now
         </a>
       </p>
-      <h3 style={{ marginTop: '4rem', textAlign: 'center' }}>Featured Project: OpenTask</h3>
+      <h3 style={{ marginTop: '4rem', textAlign: 'center' }}>
+        Accelerate Your Startup Success with the Next.js App Router
+      </h3>
       <div
         style={{
           display: 'flex',
@@ -81,6 +98,14 @@ const DeliveryPage: React.FC<PageProps> = () => (
           />
         </div>
       </div>
+      <p style={{ margin: '4rem 0', textAlign: 'center' }}>
+        <a
+          className={`${getInTouchButton} gtm-blog-post-opentask-case-study-link`}
+          href="/case-studies/accelerate-your-startup-success-nextjs-app-router/"
+        >
+          Read the Case Study
+        </a>
+      </p>
       <Recommendations>
         <Recommendation
           imgComponent={<StaticImage alt="Kate Frucher" src="../kate-frucher.jpg" />}
@@ -112,9 +137,8 @@ const DeliveryPage: React.FC<PageProps> = () => (
       </Recommendations>
       <p style={{ margin: '0 0 2rem', textAlign: 'center' }}>
         <a
-          className={getInTouchButton}
+          className={`${getInTouchButton} gtm-google-ads-2024-campaigns-cta-link`}
           href="mailto:flsilva7@gmail.com"
-          onClick={() => gtag_report_conversion('mailto:flsilva7@gmail.com')}
         >
           Accelerate Your Startup Launch Now
         </a>
@@ -127,8 +151,8 @@ export default DeliveryPage;
 
 export const Head: HeadFC = () => (
   <SEO
-    description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my website to learn more about me and my work."
+    description="Discover how I leverage the new Next.js App Router to launch successful MVPs for startups in record time. See my case study and client testimonials. I have over a decade of experience building products full-stack."
     pagePath=""
-    title="About Flavio Silva - Full-Stack Software Engineer"
+    title="Remote Startup Engineer - Flavio Silva"
   />
 );

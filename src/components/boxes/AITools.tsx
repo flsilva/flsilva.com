@@ -4,8 +4,9 @@ import { InfoBox } from './InfoBox';
 export const AITools: React.FC = () => (
   <InfoBox>
     <p>
-      I used AI tools to assist me in writing this content, but only to research information faster
-      and express my ideas clearly. It&#39;s not copy and paste.
+      I incorporated generative AI tools into my workflow, and I love them. But I use them carefully
+      to brainstorm, research information faster, and express myself clearly. It&#39;s not copied
+      and pasted in any possible way.
     </p>
   </InfoBox>
 );

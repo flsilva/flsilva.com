@@ -5,82 +5,94 @@ import { Layout } from '../components/layouts/Layout';
 import { SEO } from '../components/SEO';
 import { Recommendation } from '../components/recommendations/Recommendation';
 import { Recommendations } from '../components/recommendations/Recommendations';
-import { copyImageContainer, header, imageContainer } from './index.module.css';
+import { copyImageContainer, getInTouchButton, header, imageContainer } from './index.module.css';
 
 const IndexPage: React.FC<PageProps> = () => (
   <Layout>
     <header className={header}>
-      <h1>Hi, I&#39;m Flavio 👋</h1>
+      <h2>Your Product Development Collaborator</h2>
     </header>
-    <div className={copyImageContainer}>
+    <div style={{ marginTop: '2rem' }} className={copyImageContainer}>
       <div className={imageContainer}>
-        <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
+        <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={250} height={250} />
       </div>
+      <h4>Hi, I&#39;m Flavio 👋</h4>
+      <p>I help startup founders launch and evolve MVPs in record time.</p>
       <p>
-        I&#39;m a full-stack software engineer from Brazil with over two decades of professional
-        experience, with the last 15 years working remotely. I&#39;ve been leading front-end teams
-        since 2007.
+        With over 15 years working remotely and a decade building products full-stack, I specialize
+        in the new <a href="https://nextjs.org/docs/app">Next.js App Router</a> to accelerate
+        development, improve user experiences, and drive business results.
       </p>
+      <p>My approach prioritizes:</p>
+      <ul>
+        <li>
+          <b>Seamless Collaboration:</b> Ensuring clear communication and alignment on your vision.
+        </li>
+        <li>
+          <b>Tech-Driven Speed:</b> Maximizing launch velocity with the App Router&#39;s efficiency.
+        </li>
+        <li>
+          <b>Sustainable Quality:</b> Building maintainable and scalable codebases that support your
+          growth.
+        </li>
+      </ul>
+      <h4>Ready to launch your MVP in a few weeks?</h4>
       <p>
-        I have experience working directly with co-founders and designers throughout the feature
-        spec and design process to deliver engaging and performant apps.
+        Explore my{' '}
+        <a href="/case-studies/accelerate-your-startup-success-nextjs-app-router/">case study</a> on
+        how I accelerate startup success with the Next.js App Router, then let&#39;s discuss your
+        launch and beyond.
       </p>
-      <p>
-        I&#39;ve just shipped <a href="https://opentask.app">OpenTask</a>, a free,{' '}
-        <a href="https://github.com/flsilva/opentask/">open-source</a>, fully functional, and
-        responsive PWA MVP task management app. I wrote a{' '}
-        <a href="https://flsilva.com/blog/opentask-nextjs-app-router-case-study/">case study</a>{' '}
-        about it.
-      </p>
-      <p>
-        I built it on TypeScript, React 18, the new{' '}
-        <a href="https://nextjs.org/docs/app">Next.js App Router</a>, Tailwind CSS,{' '}
-        <a href="https://supabase.com/">Supabase (Postgres)</a>, and{' '}
-        <a href="https://www.prisma.io/">Prisma</a>. I set up CI/CD with{' '}
-        <a href="https://github.com/features/actions">GitHub Actions</a> and deployed it to{' '}
-        <a href="https://vercel.com/">Vercel</a>.
-      </p>
-      <p>
-        It leverages new features from React and Next.js, including{' '}
-        <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/">
-          React Server Components
-        </a>{' '}
-        and{' '}
-        <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-actions">
-          Server Actions
+      <p style={{ margin: '4rem 0' }}>
+        <a
+          className={`${getInTouchButton} gtm-get-in-touch-mailto-link`}
+          href="mailto:flsilva7@gmail.com"
+        >
+          Accelerate Your MVP Launch Now
         </a>
-        .
       </p>
+      <h4>Available for joining teams</h4>
+      <p>Are you looking for a full-stack collaborator to join your startup team?</p>
       <p>
-        I designed <a href="https://nexar.dev/">Nexar</a>, an application architecture for Next.js
-        App Router apps while building OpenTask.
+        I&#39;m interested in leading or joining skilled startup teams building and evolving
+        products in TypeScript, React, Next.js, and Node.js.
       </p>
-      <p>
-        It&#39;s a rewarding time to be a full-stack engineer. I feel incredibly productive and
-        satisfied with my work. I can write clean and{' '}
-        <a href="https://flsilva.com/blog/what-is-software-architecture/#modules-and-modular-architectures">
-          modular
-        </a>{' '}
-        code and deliver top-quality applications supported by unit and integration testing.
+      <p style={{ margin: '4rem 0' }}>
+        <a
+          className={`${getInTouchButton} gtm-get-in-touch-mailto-link`}
+          href="mailto:flsilva7@gmail.com"
+        >
+          Contact Me
+        </a>
       </p>
-      <p>
-        Over the past years, I&#39;ve led the development of a cross-platform{' '}
-        <a href="https://necolas.github.io/react-native-web/">React Native Web</a> app, sharing
-        about 90% of the front-end codebase across the iOS, Android, and Web apps among other
-        projects.
-      </p>
-      <p>
-        I&#39;m available to work with TypeScript, React 18, Next.js App Router, Vercel, and GitHub
-        Copilot! 🚀
-      </p>
-      <p>
-        Let&#39;s&nbsp;
-        <a href="mailto:flsilva7@gmail.com">get in touch</a>.
-      </p>
-      <p>
-        Florianopolis, Brazil
-        <br />
-        February, 2024
+      <h3 style={{ marginTop: '4rem', textAlign: 'center' }}>
+        Accelerate Your Startup Success with the Next.js App Router
+      </h3>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginTop: '4rem',
+        }}
+      >
+        <div style={{ display: 'flex', width: '240px' }}>
+          <StaticImage
+            alt="OpenTask"
+            src="./screenshot-iphone-14-2024-02-07-project-no-browser.png"
+            width={436}
+            height={885}
+            style={{ maxWidth: '240px' }}
+          />
+        </div>
+      </div>
+      <p style={{ margin: '4rem 0', textAlign: 'center' }}>
+        <a
+          className={`${getInTouchButton} gtm-blog-post-opentask-case-study-link`}
+          href="/case-studies/accelerate-your-startup-success-nextjs-app-router/"
+        >
+          Read the Case Study
+        </a>
       </p>
       <Recommendations>
         <Recommendation
@@ -111,6 +123,9 @@ const IndexPage: React.FC<PageProps> = () => (
           project challenge, as he will rise to the occasion.
         </Recommendation>
       </Recommendations>
+      <p style={{ fontSize: '0.875rem', lineHeight: '1.25rem', marginTop: '8rem' }}>
+        February 2024. Florianópolis, Brazil.
+      </p>
     </div>
   </Layout>
 );
@@ -121,6 +136,6 @@ export const Head: HeadFC = () => (
   <SEO
     description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my website to learn more about me and my work."
     pagePath=""
-    title="About Flavio Silva - Full-Stack Software Engineer"
+    title="Product-Minded Full-Stack Engineer - Flavio Silva"
   />
 );
