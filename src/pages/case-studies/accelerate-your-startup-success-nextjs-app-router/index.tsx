@@ -17,7 +17,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
   <LayoutCampaign>
     <header className={header}>
       <h2 className={caseStudyTitle}>
-        Accelerate Your Startup&apos;s Success with the new Next.js App Router
+        Accelerate Your Startup&apos;s Success with the New Next.js App Router
       </h2>
     </header>
     <div className={copyImageContainer}>
