@@ -17,9 +17,9 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={250} height={250} />
       </div>
       <h4>Hi, I&#39;m Flavio 👋</h4>
-      <p>I help startup founders launch and evolve MVPs in record time.</p>
+      <p>I help startups launch and evolve MVPs in record time.</p>
       <p>
-        With over 15 years working remotely and a decade building products full-stack, I specialize
+        I have over 15 years of experience building products full-stack remotely, and I specialize
         in the new <a href="https://nextjs.org/docs/app">Next.js App Router</a> to accelerate
         development, improve user experiences, and drive business results.
       </p>
