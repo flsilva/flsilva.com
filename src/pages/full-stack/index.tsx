@@ -91,7 +91,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
         </a>
       </p>
       <h3 style={{ marginTop: '4rem', textAlign: 'center' }}>
-        Accelerate Your Startup Success with the Next.js App Router
+        Accelerate Your Startup&#39;s Success with the Next.js App Router
       </h3>
       <div
         style={{

@@ -265,6 +265,6 @@ export const Head: HeadFC = () => (
     description="Discover how I leverage the new Next.js App Router to launch successful MVPs for startups in record time. See my case study and client testimonials. I have over a decade of experience building products, full-stack."
     imagePath="/images/case-studies/accelerate-your-startup-success-nextjs-app-router/social-media-card.png"
     pagePath="/case-studies/accelerate-your-startup-success-nextjs-app-router/"
-    title="Accelerate Your Startup Success with the Next.js App Router"
+    title="Accelerate Your Startup's Success with the Next.js App Router"
   />
 );
