@@ -123,12 +123,22 @@
 }
 
 .case-study-title {
-  font-size: 2.125rem;
+  font-size: 2.125rem !important;
   line-height: 2.75rem;
 
   @media $midScreenMedia {
-    font-size: 3.875rem;
+    font-size: 3.875rem !important;
     line-height: 4.5rem;
+  }
+}
+
+.case-study-title2 {
+  font-size: 2.125rem !important;
+  line-height: 2.75rem;
+
+  @media $midScreenMedia {
+    font-size: 2.75rem !important;
+    line-height: 3.75rem;
   }
 }
 

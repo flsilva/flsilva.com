@@ -25,11 +25,8 @@ export const MainNav: React.FC = () => (
         </a>
       </li>
       <li>
-        <a
-          href="/case-studies/accelerate-your-startup-success-nextjs-app-router/"
-          className={`${caseStudyItem} gtm-main-menu-link`}
-        >
-          Case Study
+        <a href="/opentask-showcase/" className={`${caseStudyItem} gtm-main-menu-link`}>
+          OpenTask
           <span>new</span>
         </a>
       </li>

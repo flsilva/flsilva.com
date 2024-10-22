@@ -6,5 +6,6 @@ declare const styles: {
   readonly imageContainerCampaign: string;
   readonly getInTouchButton: string;
   readonly caseStudyTitle: string;
+  readonly caseStudyTitle2: string;
 };
 export = styles;
