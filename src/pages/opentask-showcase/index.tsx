@@ -93,11 +93,16 @@ const DeliveryPage: React.FC<PageProps> = () => (
         </a>
         .
       </p>
+      <h4 style={{ marginBlockStart: '3rem' }}>Nexar</h4>
+      <p>
+        I designed <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&apos;s an
+        application architecture for Next.js App Router apps.
+      </p>
       <h4 style={{ marginBlockStart: '3rem' }}>Joining a Talented Team</h4>
       <p>
-        I&apos;m seeking a remote Senior Full-Stack Engineer position to join a talented team as an
-        individual contributor where I can be challenged, collaborate to deliver exceptional
-        solutions, and learn new technologies.
+        I&apos;m seeking a full-time remote position as a Senior Full-Stack Engineer to join a
+        talented team where I can be challenged, learn new technologies, and collaborate to deliver
+        exceptional solutions.
       </p>
       <p>
         Let&apos;s{' '}

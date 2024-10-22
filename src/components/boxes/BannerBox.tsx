@@ -4,10 +4,10 @@ import { container } from './BannerBox.module.css';
 export const BannerBox: React.FC = () => (
   <div className={container}>
     <p>
-      I&apos;m available to deliver your SaaS MVP <b>in a few weeks</b>, full-stack with the new{' '}
-      Next.js App Router.{' '}
-      <a href="mailto:flsilva7@gmail.com" className="gtm-top-message-cta-link">
-        <b>Accelerate Your MVP Launch Now</b>
+      I&apos;m seeking a full-time remote position as a Senior Full-Stack Engineer to join a
+      talented team. Let&apos;s{' '}
+      <a className="gtm-get-in-touch-mailto-link" href="mailto:flsilva7@gmail.com">
+        get in touch
       </a>
       .
     </p>
