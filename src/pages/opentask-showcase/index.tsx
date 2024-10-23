@@ -154,7 +154,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
       </ul>
       <Recommendations>
         <Recommendation
-          imgComponent={<StaticImage alt="Kate Frucher" src="../../kate-frucher.jpg" />}
+          imgComponent={<StaticImage alt="Kate Frucher" src="../kate-frucher.jpg" />}
           name="Kate Frucher"
           position="Managing Director | Co–Founder"
         >
@@ -163,7 +163,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
           architecture, build the foundations, and make the app come alive.
         </Recommendation>
         <Recommendation
-          imgComponent={<StaticImage alt="Seyi Moon" src="../../seyi-moon.jpg" />}
+          imgComponent={<StaticImage alt="Seyi Moon" src="../seyi-moon.jpg" />}
           name="Seyi Moon"
           position="Manager"
         >
@@ -172,7 +172,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
           project will succeed.
         </Recommendation>
         <Recommendation
-          imgComponent={<StaticImage alt="Richard Broo" src="../../richard-broo.jpg" />}
+          imgComponent={<StaticImage alt="Richard Broo" src="../richard-broo.jpg" />}
           name="Richard Broo"
           position="Co-Founder"
         >
