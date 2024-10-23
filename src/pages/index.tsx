@@ -17,8 +17,10 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a full-stack software engineer from Brazil with over two decades of professional
-        experience, with the last 15 years working remotely for American companies and startups.
+        I&#39;m a full-stack engineer from Brazil with over two decades of professional experience,
+        with the last 15 years building products remotely for American companies and startups. I
+        specialize in React, Next.js, and Node.js to accelerate development, improve user
+        experiences, and drive business results.
       </p>
       <p>
         I have experience working directly with co-founders and designers throughout the feature
