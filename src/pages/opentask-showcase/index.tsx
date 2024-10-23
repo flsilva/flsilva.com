@@ -181,11 +181,6 @@ const DeliveryPage: React.FC<PageProps> = () => (
           project challenge, as he will rise to the occasion.
         </Recommendation>
       </Recommendations>
-      <p style={{ margin: '0 0 2rem', textAlign: 'center' }}>
-        <a className={`${getInTouchButton}`} href="mailto:flsilva7@gmail.com">
-          Accelerate Your MVP Launch Now
-        </a>
-      </p>
     </div>
   </LayoutCampaign>
 );
