@@ -46,7 +46,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
       <p>
         As a senior full-stack engineer passionate about modern web technologies, I built OpenTask
         in 2023 to learn the new Next.js App Router and{' '}
-        <a href="http://localhost:8000/blog/react-server-components-and-a-new-hybrid-web-app-model/">
+        <a href="/blog/react-server-components-and-a-new-hybrid-web-app-model/">
           React Server Components
         </a>{' '}
         while creating a practical, user-focused application. It showcases modern web development
