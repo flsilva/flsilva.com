@@ -424,6 +424,10 @@ ul li::before {
   }
 }
 
+ul li > p {
+  margin: 0;
+}
+
 img {
   max-width: 100%;
 }
