@@ -104,8 +104,11 @@ const DeliveryPage: React.FC<PageProps> = () => (
       </p>
       <h4 style={{ marginBlockStart: '3rem' }}>Nexar</h4>
       <p>
-        I designed <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&apos;s an
-        application architecture for Next.js App Router apps.
+        I designed <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&#39;s a{' '}
+        <a href="/what-is-software-architecture/#modules-and-modular-architectures">
+          layered and modular application architecture
+        </a>{' '}
+        for Next.js App Router apps.
       </p>
       <h4 style={{ marginBlockStart: '3rem' }}>Joining a Talented Team</h4>
       <p>

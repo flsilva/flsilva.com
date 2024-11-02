@@ -17,71 +17,41 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a full-stack engineer from Brazil with over two decades of professional experience,
-        with the last 15 years building products remotely for American companies and startups. I
-        specialize in React, Next.js, and Node.js to accelerate development, improve user
-        experiences, and drive business results.
+        I&#39;m a senior full-stack engineer with 20 years of experience, specializing in{' '}
+        <b>React</b>, <b>Next.js</b>, and <b>Node.js</b> to build performant web applications.
+        I&#39;ve worked remotely with American startups for the past 11 years, collaborating
+        directly with founders and designers to deliver products that drive business results.
       </p>
       <p>
-        I have experience working directly with co-founders and designers throughout the feature
-        spec and design process to deliver engaging and performant apps.
-      </p>
-      <p>
-        I shipped <a href="/opentask-showcase/">OpenTask</a> in 2023, an{' '}
+        Recently, I built <a href="/opentask-showcase/">OpenTask</a>, an{' '}
         <a href="https://github.com/flsilva/opentask/">open-source</a> and responsive task
-        management web app MVP.
-      </p>
-      <p>
-        I built it on TypeScript, React 18, the new{' '}
-        <a href="https://nextjs.org/docs/app">Next.js App Router</a>, Tailwind CSS,{' '}
-        <a href="https://supabase.com/">Supabase (Postgres)</a>, and{' '}
-        <a href="https://www.prisma.io/">Prisma</a>. I set up CI/CD with{' '}
-        <a href="https://github.com/features/actions">GitHub Actions</a> and deployed it to{' '}
-        <a href="https://vercel.com/">Vercel</a>.
-      </p>
-      <p>
-        It leverages new features from React and Next.js, including{' '}
-        <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/">
+        management MVP showcasing modern web development practices with{' '}
+        <a href="/blog/react-server-components-and-a-new-hybrid-web-app-model/">
           React Server Components
         </a>{' '}
-        and{' '}
-        <a href="https://flsilva.com/blog/react-server-components-and-a-new-hybrid-web-app-model/#server-actions">
-          Server Actions
-        </a>
-        .
-      </p>
-      <p>
-        I designed <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&apos;s an
-        application architecture for Next.js App Router apps.
-      </p>
-      <p>
-        It&#39;s a rewarding time to be a full-stack engineer. I feel incredibly productive and
-        satisfied with my work. I can write{' '}
-        <a href="https://flsilva.com/blog/what-is-software-architecture/#modules-and-modular-architectures">
-          clean and modular code
+        and the new <a href="https://nextjs.org/docs/app">Next.js App Router</a>. I designed{' '}
+        <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&#39;s a{' '}
+        <a href="/blog/what-is-software-architecture/#modules-and-modular-architectures">
+          layered and modular application architecture
         </a>{' '}
-        and deliver top-quality applications supported by{' '}
-        <a href="/blog/what-is-software-testing/">unit and integration testing</a>.
+        for Next.js App Router apps.
       </p>
       <p>
-        I&apos;m seeking a full-time remote position as a Senior Full-Stack Engineer to join a
-        talented team where I can be challenged, learn new technologies, and collaborate to deliver
-        exceptional solutions.
+        I&#39;m seeking a full-time remote position where I can leverage my expertise in building
+        scalable solutions while collaborating with a talented team.
       </p>
       <p>
-        Let&apos;s{' '}
         <a className="gtm-get-in-touch-mailto-link" href="mailto:flsilva7@gmail.com">
-          get in touch
-        </a>
-        . I&apos;d love to discuss how my experience and skills can contribute to your team&apos;s
-        success.
+          Let&apos;s discuss
+        </a>{' '}
+        how I can contribute to your team&#39;s success.
       </p>
       <p>
         <br />
         <br />
-        Sao Paulo,
+        São Paulo,
         <br />
-        October 2024.
+        November 2024.
       </p>
       <Recommendations>
         <Recommendation
@@ -120,7 +90,7 @@ export default IndexPage;
 
 export const Head: HeadFC = () => (
   <SEO
-    description="I'm a Brazilian Full-Stack Software Engineer with 19 years of professional industry experience. Check out my website to learn more about me and my work."
+    description="I'm a Brazilian Full-Stack Software Engineer with 20 years of professional industry experience. Check out my website to learn more about my work."
     pagePath=""
     title="About Flavio Silva - Full-Stack Software Engineer"
   />
