@@ -52,6 +52,15 @@ const DeliveryPage: React.FC<PageProps> = () => (
         while creating a practical, user-focused application. It showcases modern web development
         practices focused on seamless, fast user experiences and faster development cycles.
       </p>
+      <h4 style={{ marginBlockStart: '3rem' }}>Tech Stack</h4>
+      <p>
+        I built OpenTask on TypeScript, React 18, the new{' '}
+        <a href="https://nextjs.org/docs/app">Next.js App Router</a>, Tailwind CSS,{' '}
+        <a href="https://supabase.com/">Supabase (Postgres)</a>, and{' '}
+        <a href="https://www.prisma.io/">Prisma</a>. I set up CI/CD with{' '}
+        <a href="https://github.com/features/actions">GitHub Actions</a> and deployed it to{' '}
+        <a href="https://vercel.com/">Vercel</a>.
+      </p>
       <h4 style={{ marginBlockStart: '3rem' }}>
         Delivering Business Value with the Next.js App Router
       </h4>
