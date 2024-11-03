@@ -17,10 +17,10 @@ const IndexPage: React.FC<PageProps> = () => (
         <StaticImage alt="Flavio Silva" src="./flavio.jpg" width={400} height={400} />
       </div>
       <p>
-        I&#39;m a senior full-stack engineer with 20 years of experience, specializing in{' '}
-        <b>React</b>, <b>Next.js</b>, and <b>Node.js</b> to build performant web applications.
-        I&#39;ve worked remotely with American startups for the past 11 years, collaborating
-        directly with founders and designers to deliver products that drive business results.
+        I&#39;m a senior full-stack engineer with 20 years of experience, with the last 11 years
+        building products remotely for American startups. I specialize in <b>React</b>,{' '}
+        <b>Next.js</b>, and <b>Node.js</b>, and I have a track record of leading teams, architecting
+        solutions, and collaborating with founders and designers to drive business results.
       </p>
       <p>
         Recently, I built <a href="/opentask-showcase/">OpenTask</a>, an{' '}
@@ -31,10 +31,11 @@ const IndexPage: React.FC<PageProps> = () => (
         </a>{' '}
         and the new <a href="https://nextjs.org/docs/app">Next.js App Router</a>. I designed{' '}
         <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&#39;s a{' '}
-        <a href="/blog/what-is-software-architecture/#modules-and-modular-architectures">
-          layered and modular application architecture
-        </a>{' '}
-        for Next.js App Router apps.
+        <a href="/blog/what-is-software-architecture/#modules-and-modular-architectures">modular</a>{' '}
+        and{' '}
+        <a href="/blog/what-is-software-architecture/#layers-and-layered-architectures">layered</a>{' '}
+        application architecture to improve scalability and maintainability of Next.js App Router
+        apps
       </p>
       <p>
         I&#39;m seeking a full-time remote position where I can leverage my expertise in building
