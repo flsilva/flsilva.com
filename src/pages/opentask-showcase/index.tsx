@@ -112,17 +112,14 @@ const DeliveryPage: React.FC<PageProps> = () => (
       </p>
       <h4 style={{ marginBlockStart: '3rem' }}>Joining a Talented Team</h4>
       <p>
-        I&apos;m seeking a full-time remote position as a Senior Full-Stack Engineer to join a
-        talented team where I can be challenged, learn new technologies, and collaborate to deliver
-        exceptional solutions.
+        I&#39;m seeking a full-time remote position where I can leverage my expertise in building
+        scalable solutions while collaborating with a talented team.
       </p>
       <p>
-        Let&apos;s{' '}
         <a className="gtm-get-in-touch-mailto-link" href="mailto:flsilva7@gmail.com">
-          get in touch
-        </a>
-        . I&apos;d love to discuss how my experience and skills can contribute to your team&apos;s
-        success.
+          Let&apos;s discuss
+        </a>{' '}
+        how I can contribute to your team&#39;s success.
       </p>
       <div
         style={{
@@ -148,7 +145,7 @@ const DeliveryPage: React.FC<PageProps> = () => (
         <a href="/blog/building-opentask-nextjs-app-router-react-server-components">
           in-depth article
         </a>{' '}
-        on building it with the Next.js App Router.
+        on building it with the new Next.js App Router.
       </p>
       <h4 style={{ marginBlockStart: '3rem' }}>Further Resources</h4>
       <ul>
