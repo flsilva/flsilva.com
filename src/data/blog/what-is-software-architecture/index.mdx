@@ -20,6 +20,7 @@ tweetCardImage: './tweet-card.png'
 ---
 
 import { AITools } from '../../../components/boxes/AITools';
+import { ImageWithCaption } from '../../../components/ImageWithCaption';
 import { InfoBox } from '../../../components/boxes/InfoBox';
 import { SocialMediaShareButtons } from '../../../components/social-media-share/SocialMediaShareButtons';
 
@@ -243,13 +244,13 @@ In a layered architecture, we organize components into horizontal layers, each o
 
 Although there are many variations of the layered architecture, the industry has converged to some variation of the following four layers:
 
-<img
-  alt="Layered Architecture"
-  src="/layered-architecture-01.png"
-  width={984}
-  height={2075}
-  style={{ width: '35%', height: 'auto', margin: '4rem auto' }}
-/>
+<div style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', margin: '4rem 0' }}>
+  <div style={{ maxWidth: '35%', height: 'auto', flexGrow: 1 }}>
+    <ImageWithCaption caption="Layered Architecture">
+      ![Layered Architecture](./layered-architecture-01.png)
+    </ImageWithCaption>
+  </div>
+</div>
 
 #### Presentation Layer (UI layer)
 
