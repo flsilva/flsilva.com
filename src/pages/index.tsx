@@ -29,23 +29,25 @@ const IndexPage: React.FC<PageProps> = () => (
         <a href="/blog/react-server-components-and-a-new-hybrid-web-app-model/">
           React Server Components
         </a>{' '}
-        and the new <a href="https://nextjs.org/docs/app">Next.js App Router</a>. I designed{' '}
-        <a href="https://nexar.dev/">Nexar</a> while building OpenTask. It&#39;s a{' '}
+        and the new <a href="https://nextjs.org/docs/app">Next.js App Router</a>.
+      </p>
+      <p>
+        OpenTask implements <a href="https://nexar.dev/">Nexar</a>, a{' '}
         <a href="/blog/what-is-software-architecture/#modules-and-modular-architectures">modular</a>{' '}
         and{' '}
         <a href="/blog/what-is-software-architecture/#layers-and-layered-architectures">layered</a>{' '}
-        application architecture to improve scalability and maintainability of Next.js App Router
-        apps
+        application architecture I designed to help teams build scalable and maintainable Next.js
+        App Router apps.
       </p>
       <p>
-        I&#39;m seeking a full-time remote position where I can leverage my expertise in building
-        scalable solutions while collaborating with a talented team.
+        I&#39;m available for challenging remote roles where I can leverage my expertise in building
+        scalable solutions while collaborating with talented teams.
       </p>
       <p>
         <a className="gtm-get-in-touch-mailto-link" href="mailto:flsilva7@gmail.com">
           Let&apos;s discuss
         </a>{' '}
-        how I can contribute to your team&#39;s success.
+        how I can contribute to your next project.
       </p>
       <p>
         <br />

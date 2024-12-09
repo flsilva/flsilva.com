@@ -110,16 +110,16 @@ const DeliveryPage: React.FC<PageProps> = () => (
         </a>{' '}
         for Next.js App Router apps.
       </p>
-      <h4 style={{ marginBlockStart: '3rem' }}>Joining a Talented Team</h4>
+      <h4 style={{ marginBlockStart: '3rem' }}>Open to New Opportunities</h4>
       <p>
-        I&#39;m seeking a full-time remote position where I can leverage my expertise in building
-        scalable solutions while collaborating with a talented team.
+        I&#39;m available for challenging remote roles where I can leverage my expertise in building
+        scalable solutions while collaborating with talented teams.
       </p>
       <p>
         <a className="gtm-get-in-touch-mailto-link" href="mailto:flsilva7@gmail.com">
           Let&apos;s discuss
         </a>{' '}
-        how I can contribute to your team&#39;s success.
+        how I can contribute to your next project.
       </p>
       <div
         style={{
@@ -198,9 +198,9 @@ export default DeliveryPage;
 
 export const Head: HeadFC = () => (
   <SEO
-    description="Discover how I leverage the new Next.js App Router to launch successful MVPs for startups in record time. See my case study and client testimonials. I have over a decade of experience building products, full-stack."
+    description="Discover how I leverage the new Next.js App Router to build successful products for startups in record time."
     imagePath="/images/opentask-showcase/social-media-card.png"
     pagePath="/opentask-showcase/"
-    title="Accelerate Your Startup's Success with the Next.js App Router"
+    title="OpenTask: A Next.js App Router Showcase"
   />
 );

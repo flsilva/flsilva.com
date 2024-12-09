@@ -4,7 +4,7 @@ import { container } from './BannerBox.module.css';
 export const BannerBox: React.FC = () => (
   <div className={container}>
     <p>
-      I&apos;m seeking a full-time remote position to join a talented team. Let&apos;s{' '}
+      I&#39;m available for challenging remote roles. Let&apos;s{' '}
       <a className="gtm-get-in-touch-mailto-link" href="mailto:flsilva7@gmail.com">
         get in touch
       </a>
