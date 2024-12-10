@@ -20,7 +20,7 @@ export const MainNav: React.FC = () => (
         </a>
       </li>
       <li>
-        <a href="/Flavio-Silva-Resume-2024-11-03.pdf" className="gtm-main-menu-link">
+        <a href="/Flavio-Silva-Resume-2024-12-10.pdf" className="gtm-main-menu-link">
           Resume
         </a>
       </li>
