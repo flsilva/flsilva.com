@@ -1,0 +1,219 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2023-06-28T00:00:00";
+
+export const description =
+  "Learn how to install Homebrew, Git, Node.js, Oh My Zsh, generate SSH keys, and more.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-photo/html-system-website-concept_41740250.htm";
+
+export const heroImageHeight = 1335;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "how-to-set-up-mac-software-development";
+
+export const tags = ["macos"];
+
+export const title = "How to set up your Mac for software development";
+
+export const tweetText = "How to set up your Mac for software development";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+
+## Introduction
+
+In this post, you'll find a list of the most popular [Code Editors](#1-code-editor) and links with step-by-step guides on how to install [Homebrew](#3-homebrew), [Git](#4-git), [Node.js](#nodejs), [Oh My Zsh](#6-antigen-and-oh-my-zsh), [how to generate and use SSH keys](#7-ssh-keys), and more.
+
+## Setting up your Mac for software development
+
+There are many ways to set up a Mac for software development. Some experienced developers install and set up everything on their machines automatically using all sorts of scripts. And that's awesome if you ask me.
+
+I've been keeping it as simple as possible, as I don't use that many tools, and it takes me a few years to set up a Mac from scratch.
+
+Installing and setting up everything manually will refresh my knowledge and ensure I still need what I used on my previous Mac. That way, I can have a fresh start, feeling natural to discard or replace some tools I don't need any more while making it easy to tweak their installations and configurations as necessary.
+
+## General software development tools
+
+The following tools are useful for virtually any software developer using a Mac.
+
+### 1. Code Editor
+
+That's a no-brainer if you have any software development experience. But if you don't, you'll have to choose what editor you like more. It could take a few shots until you decide which one you prefer.
+
+I've created a list of [the most popular code editors and IDEs](https://survey.stackoverflow.co/2023/#section-most-popular-technologies-integrated-development-environment), along with the programming languages they are most suitable for.
+
+#### Visual Studio Code
+
+Great for: HTML, CSS, JavaScript, TypeScript, Python, PHP, and more.
+
+Microsoft's [Visual Studio Code](https://code.visualstudio.com/) is the most popular code editor in the world.
+
+I've been using it for several years, and I like it a lot. It supports many plugins and extensions, making it suitable for dozens of programming languages and platforms.
+
+#### Vim and Neovim
+
+Great for: HTML, CSS, JavaScript, TypeScript, Python, and more.
+
+[Vim](https://www.vim.org/) is a free and open-source code editor with exceptional features, including its famous _Command Mode_, where you type commands as shortcuts to edit your code. But it has a steeper learning curve and is more popular on Linux.
+
+[Neovim](https://neovim.io/) is built on top of Vim and is seen as an improvement.
+
+#### Xcode
+
+Great for: Swift and Objective-C for developing apps for the Apple ecosystem.
+
+Apple's [Xcode](https://developer.apple.com/xcode/) is the the-facto IDE for Mac developers working with the Apple ecosystem. If you plan to develop native macOS, iOS, watchOS, or TvOS apps, you'll use it.
+
+#### IntelliJ IDEA
+
+Great for: Java, Kotlin, Scala, and Android apps.
+
+JetBrains's [IntelliJ IDEA](https://www.jetbrains.com/idea/) is one of the most popular IDEs for Java and Android software development. It's been highly regarded for decades, and Google has built Android Studio on top of it, specially tailored for Android software development.
+
+#### Android Studio
+
+Great for: Android development with Java and Kotlin.
+
+Google's [Android Studio](https://developer.android.com/studio) is the official IDE for Android software development, built on top of IntelliJ IDEA. If you plan to develop Android apps, this is where you should start.
+
+#### PyCharm
+
+Great for: Python.
+
+JetBrains's [PyCharm](https://www.jetbrains.com/pycharm/) is one of the most popular IDEs for Python software development, and it's also built on top of IntelliJ IDEA.
+
+#### Visual Studio
+
+Great for: .NET, C#, and C++ for developing apps for the Windows ecosystem.
+
+Microsoft's [Visual Studio](https://visualstudio.microsoft.com/) is the the-facto IDE for Windows developers working with the .NET platform. It's like Apple's Xcode but for Windows. It does include a native macOS version.
+
+### 2. Command Line Developer Tools
+
+<InfoBox theme="warning">
+  If you know you will install [Xcode](#xcode), you can skip this step since the
+  Command Line Developer Tools is installed when you install Xcode. But if
+  you're not sure you need Xcode, you can install the tools, as Xcode is a lot
+  heavier to download and install (7GB+), while the tools are lightweight.
+</InfoBox>
+
+Installing the Command Line Developer Tools is the first thing you must do to start setting up your Mac for software development.
+
+It enhances the development capabilities of your Mac by providing a robust set of development tools, including compilers, debugging tools, and other essential components necessary for building and maintaining software applications.
+
+Head to my guide on [How to install Command Line Developer Tools on macOS](/blog/how-to-install-command-line-developer-tools-on-macos/).
+
+### 3. Homebrew
+
+[Homebrew](https://brew.sh/) is a popular package manager for macOS that simplifies the installation and management of software packages and libraries. It allows users to easily install, update, and uninstall a wide range of command-line tools and applications from a vast repository of packages.
+
+Head to my guide on [How to install and use Homebrew on macOS](/blog/how-to-install-and-use-homebrew-on-macos/).
+
+### 4. Git
+
+[Git](https://git-scm.com) is a distributed version control system widely used in software development to track changes made to source code files. [GitHub](https://github.com) and [BitBucket](https://bitbucket.org) are services built on top of Git.
+
+When you install the Command Line Developer Tools, you get Git as part of the package. But it's more complicated to keep that installation updated. That's why we install a new version of Git with Homebrew that's easy to update.
+
+Head to my guide on [How to install Git with Homebrew on macOS](/blog/how-to-install-git-with-homebrew-on-macos/).
+
+If you're new to Git, head to my [Introduction to Git](/blog/introducing-git/). You can check all my posts about Git [here](/blog/git/).
+
+### 5. Zsh (no need to install it anymore 🤙)
+
+We no longer need to install [Zsh](https://zsh.sourceforge.io/), as it is the default [shell](https://en.wikipedia.org/wiki/Unix_shell) app starting from macOS Catalina (2019)! 🎉 Bye-bye, [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>).
+
+Zsh, short for Z shell, is a powerful and enjoyable Unix command-line shell. It is an alternative to Bash and incorporates advanced command-line editing capabilities, including tab completion, spelling correction, and syntax highlighting, which enhance productivity and ease of use.
+
+Zsh also supports advanced scripting features and compatibility with existing Bash scripts and can be customized with third-party plugins and themes.
+
+That has fostered a thriving ecosystem, but with it comes the challenge of selecting and configuring from many features and plugins. That's why we're taking the next step to make it easier to customize Zsh. 👇
+
+### 6. Antigen and Oh My Zsh
+
+Even though Zsh is great, it doesn't offer a plugin management system to easily add, update, and remove third-party plugins.
+
+[Antigen](https://github.com/zsh-users/antigen) is a plugin manager for Zsh. It simplifies managing Zsh plugins by providing a straightforward configuration format that lets users specify the plugins they want to use.
+
+In addition, Antigen handles downloading, updating, and loading those plugins, making it convenient to enhance Zsh with additional features and customization options.
+
+We'll install [Oh My Zsh](https://ohmyz.sh/) as an Antigen plugin.
+
+Now, you might be thinking, why do I need Oh My Zsh if I have Antigen? And that's a great question I had myself.
+
+Antigen makes it very easy to manage dozens of plugins for Zsh, but how do we browse and curate all the plugins out there? That's a gap that Oh My Zsh fills amazingly well.
+
+Oh My Zsh is a very popular framework for managing your Zsh configurations and a hub for more than [300 plugins](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins) and [150 syntax highlighting themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) that we can easily install. That makes browsing and managing different plugins a lot easier.
+
+Antigen and Oh My Zsh is a perfect match to give you the power to customize Zsh to your needs quickly and easily.
+
+Head to my guide on [How to install and use Antigen and Oh My Zsh on macOS](/blog/how-to-install-use-antigen-oh-my-zsh-macos).
+
+### 7. SSH keys
+
+SSH keys allow secure passwordless authentication and offer several advantages over traditional password-based authentication. You can use them with GitHub and any other services supporting SSH.
+
+Head to my guide on [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/).
+
+### 8. Sign Git commits with SSH keys
+
+A signed Git commit is a commit that includes a cryptographic signature created using a [GPG](https://gnupg.org/) or [SSH](/blog/how-to-generate-use-ssh-keys-macos/#what-are-ssh-keys-and-why-should-we-use-them) key.
+
+When we sign a Git commit, we verify that a trusted person or entity created it. If someone alters a signed commit, the signature is invalidated, indicating it has been tampered with.
+
+Head to my guide on [How to sign Git commits with SSH keys on macOS](/blog/how-to-sign-git-commits-ssh-keys-macos/).
+
+## Technology and language-specific tools
+
+The following are only a few technology and language-specific tools you might or might not need, depending on your work.
+
+I'll try to keep this post updated and include more tools as I find the time to write about them.
+
+### Node.js
+
+[Node.js](https://nodejs.org/) has become one of the world's most used web development tools.
+
+It powers back-end tools like [Express](https://expressjs.com/), [Nest](https://nestjs.com/), [Koa](https://koajs.com/), and many more.
+
+And it also powers front-end tools like [Next.js](https://nextjs.org/), [Remix.run](https://remix.run/), [Angular](https://angular.io/), [Nuxt](https://nuxt.com/), and many more.
+
+When you work with Node on several projects, whether front-end or back-end or a mix of both, they'll rarely use the same Node version, so you need a way to run project-based Node versions effortlessly. And to do that, you need a tool to manage Node versions, as Node itself cannot do that.
+
+That's what [nvm](https://github.com/nvm-sh/nvm) does, and it's the way I recommend you handle it.
+
+Head to my guide on [How to install and run Node.js with nvm on macOS](/blog/how-to-install-nodejs-nvm-macos/).
+
+Head to my [Introduction to Node.js](/blog/introduction-to-nodejs/) if you want to know more about it.
+
+## Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know in the comments below what tools you're using and which ones you would like me to include in this guide.
+
+<br />
+<br />
+
+<AITools />

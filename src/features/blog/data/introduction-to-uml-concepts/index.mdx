@@ -1,0 +1,182 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2013-02-27T00:00:00";
+
+export const description =
+  "Get an introduction to what UML is, what are models, requirements, use cases, and more.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by rawpixel.com on Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-photo/writing-work-process_18411602.htm#&position=30&from_view=undefined";
+
+export const heroImageHeight = 1047;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "introduction-to-uml-concepts";
+
+export const tags = ["uml"];
+
+export const title = "Introduction to UML";
+
+export const tweetText =
+  "Get an introduction to what UML is, what are models, requirements, use cases, and more.";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+## Introduction
+
+This article is a short introduction to the basic concepts of UML (Unified Modeling Language).
+It's a fast way to understand main elements of software architecture and design represented by UML.
+It doesn't go into technical details about its implementation (its notation and implementation by UML modeling programs).
+It's also targeted to non-developer professionals that are directly related to software development processes, such as project coordinators and project managers.
+
+## What is UML?
+
+<InfoBoxQuotation>
+  UML is the standard modeling language for software and systems development.
+  (Russ and Hamilton 1)
+</InfoBoxQuotation>
+
+<InfoBoxQuotation>
+  In 2000 the Unified Modeling Language was accepted by the International
+  Organization for Standardization (ISO) as industry standard for modeling
+  software-intensive systems. ("Unified Modeling Language")
+</InfoBoxQuotation>
+
+## Why modeling?
+
+- Modeling is useful to help managing complexity.
+- Modeling helps you see the big picture, focusing on the important aspects of your system's design.
+
+## What is a model?
+
+- A model is an abstraction of the real thing, leaving out details.
+- "The collection of all the elements that describe your system, including their connections to each other, make up your model." (Russ and Hamilton 12).
+
+## Why UML?
+
+- Because UML is a formal language. Its elements are simple and have a strongly defined meaning.
+- It's scalable from small to large projects and is an open standard widely used in the object-oriented community.
+- It's effective.
+
+## How much UML?
+
+- The amount of modeling basically depends on the type of the system and the software development process used (waterfall, iterative, agile, etc).
+
+## What is a requirement?
+
+- A requirement is a statement that identifies a critical need a system must meet in order to have value.
+- Requirements should drive software modeling and development processes.
+
+## What are functional requirements?
+
+- Functional requirements are requirements that capture how the system should behave, what functionalities it must execute, **what it is supposed to do**.
+
+## What are non-functional requirements?
+
+- Non-functional requirements are requirements that define **how a system is supposed to be**. It's related to quality attributes of the system. These requirements are most expensive and difficult to implement.
+- Some non-functional requirements (quality factors) are: testability, maintainability, scalability, usability, availability, portability, security, accuracy, cost, performance, programming languages, etc.
+
+## What is a Use Case?
+
+- A use case is a situation where your system is used by external actors to perform some task that is directly related to functional requirements.
+- Every use case must have a very clear pass/fail criteria.
+- "The use case is probably the single most powerful construct in UML to make sure your system does what it is supposed to." (Russ and Hamilton 26)
+
+## What is an Actor?
+
+- An Actor is something that is outside of your system but which interacts with it. You don't have control over actors. It can be a person or anything else, like another system.
+
+## What is a Primary Actor?
+
+- A Primary Actor is one that initiates the interaction with the system to perform a certain task.
+
+## What is a Secondary Actor?
+
+- A Secondary Actor is one from which the system needs assistance to complete a goal.
+
+## 4+1 Architectural View Model
+
+<div
+  style={{
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  }}
+>
+  <div style={{ maxWidth: "280px", flexGrow: 1 }}>
+    <ImageWithCaption caption="Philippe Kruchten's 4+1 architectural view model.">
+      ![Philippe Kruchten's 4+1 architectural view
+      model.](/images/blog/introduction-to-uml-concepts/4-1-view-model.jpg)
+    </ImageWithCaption>
+  </div>
+</div>
+
+"The views are used to describe the system from the viewpoint of different stakeholders, such as end-users, developers and project managers." ("Unified Modeling Language")
+
+## Logical View
+
+"Used to model what a system is made up of and how the parts interact with each other." (Russ and Hamilton 14)
+It is composed by Class, Object, State Machine, Sequence and Interaction diagrams.
+
+## Process View
+
+Process view is used to model and visualize what must happen inside a system.
+It is composed by Activity diagrams.
+
+## Development View
+
+“Describes how your system's parts are organized into modules and components.” (Russ and Hamilton 14)
+It is composed by Package and Component diagrams.
+
+## Physical View
+
+Physical view shows what are the real-world artifacts produced by the system's architecture.
+It is composed by Deployment diagrams.
+
+## Use Case View
+
+"Describes the functionality of the system being modeled from the perspective of the outside world.
+This view is needed to describe what the system is supposed to do.
+All of the other views rely on the use case view to guide them—that's why the model is called 4+1." (Russ and Hamilton 14)
+It is composed by Use Case, Description and Overview diagrams.
+
+There's much more about UML than what is described here, but hopefully you have now an overview on the topic.
+Any questions and suggestions are welcome.
+
+## Related posts
+
+- [What is a product specification?](/blog/what-is-a-product-specification/)
+
+## Interesting links
+
+- [Unified Modeling Language (Wikipedia)](http://en.wikipedia.org/wiki/Unified_Modeling_Language)<br />
+- [4+1 architectural view model (Wikipedia)](http://en.wikipedia.org/wiki/4%2B1_Architectural_View_Model)<br />
+- [Object Management Group (Wikipedia)](http://en.wikipedia.org/wiki/Object_Management_Group)
+
+## Bibliography
+
+- Miles, Russ and Kim Hamilton. _Learning UML 2.0_. O'Reilly Media, Inc, 2006.
+
+- "Unified Modeling Language" _Wikipedia_ , n.d. Web. 20 December 2010 &#60;<A href="http://en.wikipedia.org/wiki/Unified_Modeling_Language" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Unified_Modeling_Language</A>&#62;

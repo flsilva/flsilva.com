@@ -1,0 +1,373 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2023-06-16T00:00:00";
+
+export const description =
+  "Antigen and Oh My Zsh are a great combination that allows you to customize Zsh to your liking easily. Learn how to install both in six easy steps.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageHeight = 1858;
+
+export const heroImageWidth = 2764;
+
+export const priority = 0.6;
+
+export const slug = "how-to-install-use-antigen-oh-my-zsh-macos";
+
+export const tags = ["antigen", "macos", "ohmyzsh"];
+
+export const title = "How to install and use Antigen and Oh My Zsh on macOS";
+
+export const tweetText =
+  "How to install and use Antigen and Oh My Zsh on macOS.";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+
+I last tested these instructions on macOS Ventura 13.3.1.
+
+## Introduction
+
+Antigen and Oh My Zsh are a great combination that allows you to customize Zsh to your liking easily.
+
+In this step-by-step guide, you'll learn how to install both in six easy steps.
+
+## What is Antigen, and why do I need it?
+
+Even though Zsh is great, it doesn't offer a plugin management system to easily add, update, and remove third-party plugins.
+
+[Antigen](https://github.com/zsh-users/antigen) is a plugin manager for Zsh. It simplifies managing Zsh plugins by providing a straightforward configuration format that lets users specify the plugins they want to use. In addition, Antigen handles downloading, updating, and loading those plugins, making it convenient to enhance Zsh with additional features and customization options.
+
+Antigen call plugins as bundles, so I'll use both terms interchangeably for this guide.
+
+We'll install [Oh My Zsh](https://ohmyz.sh/) as an Antigen plugin.
+
+## What is Oh My Zsh, and why do I need it?
+
+Now you might be thinking, why do I need Oh My Zsh if I have Antigen? And that's a great question I asked myself.
+
+Antigen makes it very easy to manage dozens of plugins for Zsh, but how do we browse and curate all the plugins out there? That's a gap that Oh My Zsh fills amazingly well.
+
+[Oh My Zsh](https://ohmyz.sh/) is a very popular framework for managing your Zsh configuration and a hub for more than [300 plugins](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins) and [150 syntax highlighting themes](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) that we can easily install. That makes browsing and managing different plugins much easier.
+
+## Prerequisite: Git
+
+If you don't have Git installed on your macOS or need clarification, head to my guide on [How to install Git with Homebrew on macOS](/blog/how-to-install-git-with-homebrew-on-macos/).
+
+<WarningBoxNoRunDollarSign />
+
+## Step 1. Install Antigen on macOS
+
+There are two main ways to install Antigen on macOS.
+
+We can install it by using their official installation script by running the following command:
+
+```shell
+$ curl -L git.io/antigen > antigen.zsh
+```
+
+Or we can install it using [Homebrew](https://brew.sh/). Since I use Homebrew for other tools, I'll use it because I find it easier to manage everything I can with one package manager.
+
+If you want to install Antigen with Homebrew too but need to install it or need clarification, head to my guide on [How to install and use Homebrew on macOS](/blog/how-to-install-and-use-homebrew-on-macos/).
+
+It's a good practice to first update Homebrew itself:
+
+```shell
+$ brew update
+```
+
+To install Antigen with Homebrew, run the following:
+
+```shell
+$ brew install antigen
+```
+
+You should see a bunch of output and something like the following close to the end:
+
+```bash
+==> Summary
+🍺  /opt/homebrew/Cellar/antigen/2.2.3: 5 files, 80KB
+```
+
+That means Homebrew installed Antigen successfully! But it still needs to be _activated_.
+
+## Step 2. Using Antigen: the _`~/.zshrc`_ file
+
+We use Antigen by setting it up in our _`~/.zshrc`_ file.
+
+If you know the _`~/.zshrc`_ file and how to use it, you can [skip to the next section](#step-3-using-antigen-adding-configuration-to-your-zshrc-file).
+
+Zsh automatically reads some files at certain moments. The _`~/.zshrc`_ file is one of them, and Zsh evaluates it every time it starts. We should use such files to add our custom configurations to Zsh, like what we will do with Antigen.
+
+To check if you have your _`~/.zshrc`_ run the following two commands:
+
+```shell
+$ cd ~/
+```
+
+<br />
+
+```shell
+$ ls -lah
+```
+
+And look for that file. You should see it listed after a file named _`.zsh_sessions`_.
+
+If you don't have it, create it by running the following command:
+
+```shell
+$ touch ~/.zshrc
+```
+
+You can read more about those files and how to use them in this [StackExchange topic](https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout).
+
+## Step 3. Using Antigen: adding configuration to your _`~/.zshrc`_ file
+
+Now open your _`~/.zshrc`_ file and add the following to it:
+
+```bash
+# Make Antigen always available to Zsh
+# Change this path if you didn't install Antigen with Homebrew
+source /opt/homebrew/share/antigen/antigen.zsh
+
+# Defaults
+MAGIC_ENTER_GIT_COMMAND='git status'
+MAGIC_ENTER_OTHER_COMMAND='ls -lah .'
+
+# History management settings
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+HISTSIZE=9999
+
+# Load oh-my-zsh library
+antigen use oh-my-zsh
+
+# Non oh-my-zsh plugins
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# oh-my-zsh plugins
+antigen bundle command-not-found # depends on Homebrew
+antigen bundle git
+antigen bundle history-substring-search
+antigen bundle magic-enter
+
+# Load a syntax highlighting theme
+antigen theme robbyrussell
+
+# Tell Antigen you're done
+antigen apply
+```
+
+If you are not sure how to open that file, you can use a few options, including opening the built-in TextEditor from the command line by running the following:
+
+```shell
+$ open -a TextEdit ~/.zshrc
+```
+
+For more information about each bundle (plugin) used above, here are their links:
+
+- [antigen use oh-my-zsh](https://ohmyz.sh/)
+
+<div />
+
+- [antigen bundle unixorn/autoupdate-antigen.zshplugin](https://github.com/unixorn/autoupdate-antigen.zshplugin)<br />
+- [antigen bundle zsh-users/zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/)<br />
+- [antigen bundle zsh-users/zsh-completions](https://github.com/zsh-users/zsh-completions)<br />
+- [antigen bundle zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+
+<div />
+
+- [antigen bundle command-not-found](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found)<br />
+- [antigen bundle git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git)<br />
+- [antigen bundle history-substring-search](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/history-substring-search)<br />
+- [antigen bundle magic-enter](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/magic-enter)
+
+- [antigen theme robbyrussell](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#robbyrussell)
+
+Other plugins you might be interested in:
+
+- [antigen bundle copyfile](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/copyfile)<br />
+- [antigen bundle nvm](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/nvm)<br />
+- [antigen bundle rbenv](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/rbenv)<br />
+- [antigen bundle rsync](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/rsync)<br />
+- [antigen bundle ssh-agent](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent)
+
+The above _`~/.zshrc`_ file is just an example of how you can have several plugins added to it. I only added general programming stuff that many programmers would like to have and omitted specific plugins like language ones so that the file can work as a nice starting point for your needs.
+
+Feel free to review it and remove any plugins you don't like or won't use. It's a personal matter, and there's virtually a plugin for anything you can think of, which is great because it's up to you to choose what fits your needs. I would first look for plugins on Oh My Zsh's [plugins list page](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins).
+
+## Step 4. Activating Antigen
+
+Now you need to open a new Terminal window or tab so Zsh can read your _`~/.zshrc`_ file and activate Antigen, installing all plugins you listed. Alternatively, you can run the following command to reload your current shell, making it read your _`~/.zshrc`_ file:
+
+```shell
+$ exec zsh
+```
+
+You must do either step above every time you change your _`~/.zshrc`_ file.
+
+You should see a bunch of _`Installing`_ output lines. That means it is now activated and installed your plugins. Double-check your output to see if you've got any error messages, as some plugins might require additional configuration.
+
+If you added a syntax highlighting theme (included in the config above), it should also be working by now, and you should be able to see some colors! 🌈 Nice, huh?
+
+## Step 5. Adding more plugins
+
+To add a plugin from Oh My Zsh, you use their name as follows:
+
+```bash
+antigen bundle <plugin-name>
+```
+
+That's because Oh My Zsh is the default repository for Antigen.
+
+To add plugins for any other repository, you usually type their GitHub path, for example:
+
+```bash
+antigen bundle zsh-users/zsh-syntax-highlighting
+```
+
+The line above will add the plugin located at [github.com/zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting).
+
+The only rule regarding adding plugins to your _`~/.zshrc`_ file is to list them before the _`antigen apply`_ line.
+
+To learn more about Antigen commands like _`antigen bundle`_, _`antigen theme`_, and _`antigen apply`_, check the official [Commands doc page](https://github.com/zsh-users/antigen/wiki/Commands).
+
+Themes work like plugins, i.e., if it's from the Oh My Zsh repo, you type their name after _`antigen theme`_. Otherwise, you use the GitHub path.
+
+## Step 6. Installing plugins and themes
+
+Whenever we change our _`~/.zshrc`_ file, we need to open a new Terminal window or run the following command to make it take effect:
+
+```shell
+$ source ~/.zshrc
+```
+
+By doing that now, we should see Antigen installing our plugins, so go ahead and take either step.
+
+## How to have your plugins, themes, and Antigen itself automatically updated for you
+
+In the example _`~/.zshrc`_ file above, we have the following plugin listed:
+
+```bash
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+```
+
+That plugin will automatically update all your installed plugins and Antigen itself within a predefined number of days (defaults to 7).
+
+To change that interval, you can define two variables on your _`~/.zshrc`_ file before the line listing the plugin, like the following:
+
+```bash
+ANTIGEN_PLUGIN_UPDATE_DAYS=30
+ANTIGEN_SYSTEM_UPDATE_DAYS=30
+```
+
+And replace _`30`_ with the number of days you want.
+
+## How to manually update plugins and themes
+
+If you don't want your plugins, themes, and Antigen itself updated automatically, you should manually run the following command:
+
+```shell
+$ antigen update <plugin-name>
+```
+
+If you want to update all your plugins at once, run the command without any plugin name:
+
+```shell
+$ antigen update
+```
+
+The updates downloaded are not immediately available. You have to open a new shell to see the changes or run the following command to make it take effect:
+
+```shell
+$ source ~/.zshrc
+```
+
+Check the [antigen update doc](https://github.com/zsh-users/antigen/wiki/Commands#antigen-update) for more information.
+
+## How to manually update Antigen itself
+
+If you installed Antigen with Homebrew, it's a good practice to first update Homebrew itself:
+
+```shell
+$ brew update
+```
+
+Then you can update Antigen by running the following command:
+
+```shell
+$ brew upgrade antigen
+```
+
+If you installed it with their official installation script, you should run the following command to update it:
+
+```shell
+$ antigen selfupdate
+```
+
+## How to uninstall plugins and themes
+
+To uninstall plugins and themes from your filesystem, run the following command:
+
+```shell
+$ antigen purge <plugin-name> --force
+```
+
+You should see an output like the following:
+
+```bash
+Done. Please open a new shell to see the changes.
+```
+
+Ensure you manually remove the plugins you're uninstalling from your _`~/.zshrc`_ file. Otherwise, Antigen will install them again the next time you open a shell.
+
+After that, you can reload your Zsh instance by running the following:
+
+```shell
+$ exec zsh
+```
+
+## How to list all installed plugins
+
+To list all installed plugins, run the following command:
+
+```shell
+$ antigen list --short
+```
+
+## Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
+
+## Related posts
+
+- [How to set up your Mac for software development](/blog/how-to-set-up-mac-software-development/)<br />
+- [How to install and use Homebrew on macOS](/blog/how-to-install-and-use-homebrew-on-macos/)<br />
+- [How to install Git with Homebrew on macOS](/blog/how-to-install-git-with-homebrew-on-macos/)<br />
+- [How to install and run Node.js with nvm on macOS](/blog/how-to-install-nodejs-nvm-macos/)<br />
+- [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/)<br />
+- [How to sign Git commits with SSH keys on macOS](/blog/how-to-sign-git-commits-ssh-keys-macos)<br />
+- [How to install Command Line Developer Tools on macOS](/blog/how-to-install-command-line-developer-tools-on-macos/)
+
+<br />
+<br />
+
+<AITools />

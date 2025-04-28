@@ -1,0 +1,168 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2014-07-16T00:00:00";
+
+export const dateUpdated = "2023-04-06T00:00:00";
+
+export const description =
+  "Learn how to install Nginx on Debian or Ubuntu in 5 steps.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by fullvector on Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-vector/big-data-processing-concept-server-room-blockchain-technology-token-access_3629651.htm#&position=11&from_view=undefined";
+
+export const heroImageHeight = 3141;
+
+export const heroImageWidth = 6000;
+
+export const priority = 0.6;
+
+export const slug = "how-to-install-nginx-tutorial-ubuntu-and-debian";
+
+export const tags = ["linux", "nginx", "sysadmin"];
+
+export const title = "How to install Nginx on Linux";
+
+export const tweetText = "Learn how to install Nginx on Debian & Ubuntu";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+## Introduction
+
+The superfast, open-source [Nginx](http://nginx.org/) HTTP webserver is becoming very popular nowadays.
+Fortunately, it's very simple to install and set it up, as we'll see in this tutorial.
+
+If you want to know about how to securely set up a Linux VPS (Ubuntu & Debian) [click here](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/) to read my article about just that.
+
+<WarningBoxNoRunDollarSign />
+
+## Step 1. Updating your Linux distro
+
+It's always a good practice to start with everything up to date, so after connecting to your server via SSH, update your Linux distro:
+
+```shell
+$ sudo apt-get update
+$ sudo apt-get upgrade --show-upgraded
+```
+
+## Step 2. Installing Nginx
+
+To install Nginx run the following command:
+
+```shell
+$ sudo apt install nginx
+```
+
+## Step 3. Checking your installation
+
+Now let's make sure it's installed, and which version.
+
+```shell
+$ sudo nginx -v
+```
+
+You should see something like this:
+
+```shell
+"nginx version: nginx/1.18.0"
+```
+
+That should be very close to the latest version!
+
+## Step 4. Checking the status of Nginx
+
+At any time you want, you can check the status of Nginx, for example, wether it's running.
+
+Let's do that now to see if Nginx is already running. It should be as it's Debian's default behavior, but let's make sure by running the following command:
+
+```shell
+$ sudo systemctl status nginx
+```
+
+You should see a bunch of useful information, including something like this:
+
+```shell
+Active: active (running)
+```
+
+That means Nginx is up and running! 😎
+
+If you're setting up a VPS from scratch, you can now try to access its IP on your browser.
+You should see something like this:
+
+```shell
+"Welcome to nginx!"
+```
+
+Congrats!
+Nginx is up and listening to port 80 (HTTP).
+If your server is restarted, you don't have to worry about Nginx, it'll be initialized automatically!
+
+## Step 5. Managing the Nginx process
+
+You'll probably have to manage Nginx using a few commands throughout your sysadmin activities.
+
+For example, every time you change a website configuration file, or even Nginx's configuration file, you need to reload Nginx so it can take those changes into account.
+To do that, you run the following command:
+
+```shell
+$ sudo systemctl reload nginx
+```
+
+You'll get an error message if there's an error in any configuration file.
+Otherwise, you won't get any feedback.
+
+There is also the _`start`_, _`stop`_ and _`restart`_ commands that you might need at some point:
+
+```shell
+$ sudo systemctl stop nginx
+$ sudo systemctl start nginx
+$ sudo systemctl restart nginx
+```
+
+The _`restart`_ command will _`stop`_ and _`start`_ it again.
+
+## Updating Nginx
+
+You can update Nginx at any time by running:
+
+```shell
+$ sudo apt-get update
+$ sudo apt-get upgrade nginx
+```
+
+And that's it. You can find more posts related to Nginx and sysadmin in the Related posts section below.
+
+## Related posts
+
+- [How to set up a website on Linux + Nginx](/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/)<br />
+- [How to password-protect content on Linux + Nginx](/blog/how-to-password-protect-file-directory-nginx/)<br />
+- [Wildcard HTTPS on Linux + Let's Encrypt + Nginx](/blog/how-to-wildcard-https-tls-linux-lets-encrypt-nginx/)<br />
+- [What are HTTPS, TLS certificates, and Let's Encrypt?](/blog/what-are-https-tls-certificates-and-lets-encrypt/)<br />
+- [How to set up a Linux VPS](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/)
+
+## Interesting links
+
+- [Nginx](http://nginx.org/)<br />
+
+- [Nginx - Wikipedia](http://en.wikipedia.org/wiki/Nginx)
+
+## Bibliography
+
+- "Virtual Private Server - Wikipedia" _Wikipedia_ , n.d. Web. 06 May 2014 &#60;<A href="http://en.wikipedia.org/wiki/Virtual_private_server" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Virtual_private_server</A>&#62;

@@ -1,0 +1,125 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2015-02-03T00:00:00";
+
+export const description =
+  "In this short entry I'll talk about something you may not know: it's not possible to release bug-free software! Get to know why, and how to proceed with your testing activities in the real world.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-photo/close-up-man-with-portable-devices_5287213.htm#page=4&query=testing%20notebook%20tablet%20smartphone%20landscape&position=16&from_view=search&track=ais";
+
+export const heroImageHeight = 1047;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "software-testing-in-the-real-world";
+
+export const tags = ["software-testing"];
+
+export const title = "Software testing in the real world";
+
+export const tweetText =
+  "Get to know why it's not possible to release bug-free software, and how to proceed";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+## Introduction
+
+Learning and stuying theory is not just great, but imperative for any serious work, but the real world has its own weird, and sometimes relentless rules.
+We all know this, and sometimes through the worst way possible.
+And guess what?
+It couldn't be different with software engineering!
+
+## It's not possible to release bug-free software
+
+In this short entry I'll talk about something you may not know: it's not possible to release bug-free software<sup>1</sup>!
+So you might think: "So, why so much effort?".
+The reason is simple, and a good one too: to deliver a high-quality product, as safe as possible, despite some bugs.
+It's not a crime for a software to have a few bugs, but before talking about that let's see why it's not possible to release bug-free software: because it's not possible to completely test a software!
+Another simple, but good answer, isn't it? And why is that?
+According to Patton (24-25):
+
+1. The number of possibly inputs is very large
+2. The number of possibly outputs is very large
+3. The number paths through the software is very large
+4. The software specification is subjective. You might say that a bug is in the eye of the beholder
+
+Convincing, insn't it?
+I thought so.
+
+So, what's the result of all of that?
+Since it's not possible to completely test a software, the key question that raises is: What to test?
+Well, for that one I do not have a simple answer!
+
+<sup>1</sup> Of course I'm not talking about a very simple software, or one which
+runs only under specific and controlled conditions, which ideally could be bug-free.
+
+## What to test?
+
+Of course, the core and critical features should be tested extensively, covered with automated tests.
+Generally, we should strive for a balanced testing: not too much, due to high costs looking for small or rare bugs, and not too little, despite low costs, possibly lots of undetected bugs, which may result in high costs to fix later.
+Of course this balance is relative to each product, and its industry (e.g. software for the health care industry is extremely critical, so should be its development process).
+
+That's why software testing is considered a _risk-based exercise_ (Patton 26): we need to make wise decisions about what to test, and what to not test.
+But don't worry too much by now, we'll see how to do that effectively on later articles.
+
+## Not every detected bug can be fixed
+
+Besides the fact that it's virtually impossible to detect all bugs in a system, another issue is true in the real world: not every detected bug can be fixed.
+Among some reasons for that are short deadlines, too expensive to fix rare bugs, very risky to fix not critical bugs, bugs in features that can be worked around, etc.
+
+## Product specifications and the real world
+
+The real world is not very friendly with _perfect_ product specifications.
+They will rarely be complete, exact or immutable once its considered done.
+Features will probably be added, removed, changed.
+The customer may change his mind, his business may evolve, and so on.
+That's the real world, and trying to fight against it is not a wise solution.
+That's why development models like Agile, which literally embraces change, has been gaining popularity and credibility in the software development community and market.
+We need to be better prepared for the real world.
+
+## What is the best time to start testing?
+
+Well, this is not a simple question, and its answer is directly related to the software development lifecycle model used to develop the product.
+For instance, in the classic Waterfall model, which each phase must be 100% complete before starting the next one, the testing activity takes place only after the development (implementation) phase. Since this is a linear model, you don't go back to the development phase, making it very difficult to fix bugs, and even worst, blocking the testing activity to be part of the development, and other phases like design.
+That's why from a software testing perspective it's a poor approach.
+There's no participation in the planning and development phases by the testing team, and as we have seen, the sooner the better to find bugs.
+
+On the other hand, in iterative models, like Agile, things are the opposite.
+In such models the phases (e.g. planning, design, implementation, testing) are repeated throughout the product's lifecycle, which means testing activities can be performed in planning, design, implementation, pre-release, etc.
+In fact, in a model like Agile, practices such as Test-Driven Development (TDD) are recommended, which developers first write unit tests that fail, and then write code to pass those tests.
+In such models there's a lot of space for software testing, and those unit tests are just one step.
+
+## Related posts
+
+- [What is software testing?](/blog/what-is-software-testing/)<br />
+- [Testing is not Quality Assurance (QA)](/blog/testing-is-not-quality-assurance-qa/)<br />
+- [What is a software bug?](/blog/what-really-is-a-software-bug/)<br />
+- [What is a product specification?](/blog/what-is-a-product-specification/)<br />
+- [How to report bugs effectively?](/blog/how-to-report-bugs-effectively/)<br />
+
+## Interesting links
+
+- [Software testing (Wikipedia)](http://en.wikipedia.org/wiki/Software_testing)<br />
+- [Software Testing Help](http://www.softwaretestinghelp.com/)<br />
+- [Software testability (Wikipedia)](http://en.wikipedia.org/wiki/Software_testability)
+
+## Bibliography
+
+- Patton, Ron. _Software Testing_. 2nd ed. Sams, 2005.

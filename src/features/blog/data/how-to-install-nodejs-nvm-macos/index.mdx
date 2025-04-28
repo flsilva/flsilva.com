@@ -1,0 +1,529 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2023-06-26T00:00:00";
+
+export const description =
+  "Learn how to install and run multiple Node.js versions effortlessly using nvm.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by jcomp on Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-vector/industry-4-0-illustration-with-robotic-arm-smart-industrial-revolution-factory-process_13744582.htm";
+
+export const heroImageHeight = 1143;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "how-to-install-nodejs-nvm-macos";
+
+export const tags = ["macos", "nodejs", "nvm"];
+
+export const title = "How to install and run Node.js with nvm on macOS";
+
+export const tweetText = "How to install and run Node.js with nvm on macOS";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+
+I last tested these instructions on macOS Ventura 13.3.1.
+
+Head to my [Introduction to Node.js](/blog/introduction-to-nodejs/) if you want to know more about it.
+
+## Introduction
+
+In this step-by-step guide, you'll learn what nvm is, how to install it, and how to install, run and manage multiple Node.js versions effortlessly, including how to use _`.nvmrc`_ files for project-based Node.js versions, and how to install and set up an nvm plugin for Zsh to switch Node.js versions automatically for you.
+
+## What is nvm, and why should we use it?
+
+When you work with Node on several projects, each one will be set up with a different version of Node, so you need a way to install, manage and run different Node versions. You need a way to run project-based Node versions efficiently and to do that, you need a tool to manage Node versions, as Node itself cannot do that. That's what nvm does.
+
+[nvm](https://github.com/nvm-sh/nvm) is a version manager for Node, allowing us to install and use different Node versions quickly.
+
+With nvm, we can create a simple _`.nvmrc`_ text file in the root of our project dir, defining a specific Node version for that project. Then, all we have to do besides installing such a Node version is run _`$ nvm use`_ in that root project dir to switch our current Node version to the one wanted. And there are ways even to avoid manually running _`$ nvm use`_, which is great, and we'll see them moving forward.
+
+In short, nvm makes using multiple Node versions on different projects a breeze.
+
+## Prerequisite: Have a _`~/.zshrc`_ file
+
+You can skip to the [next section](#step-1-make-sure-you-dont-have-nvm-installed-already) if you already have a _`~/.zshrc`_ file.
+
+Zsh automatically reads some files at certain moments. The _`~/.zshrc`_ file is one of them, and Zsh evaluates it every time it starts. We should use such files to add our custom configurations to Zsh, like what we will do with Antigen.
+
+To check if you have your _`~/.zshrc`_ file, run the following two commands:
+
+```shell
+$ cd ~/
+$ ls -lah
+```
+
+And look for that file. You should see it listed after a file named _`.zsh_sessions`_.
+
+If you don't have it, create it by running the following command:
+
+```shell
+$ touch ~/.zshrc
+```
+
+You can read more about those files and how to use them in this [StackExchange topic](https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout).
+
+## Step 1. Make sure you don't have nvm installed already
+
+Before proceeding, make sure you don't have nvm installed already by running the following command:
+
+```shell
+$ nvm --version
+```
+
+If you see something like _`0.39.3`_, you already have it installed! So you can head to [Step 4. Install a Node version with nvm](#step-4-install-a-node-version-with-nvm).
+
+Otherwise, you should see something like the following:
+
+```bash
+zsh: command not found: nvm
+```
+
+In that case, let's get it installed.
+
+## Step 2. Install nvm on macOS
+
+You only need to run a single command from the official installation guide to install nvm. But that command contains the **specific** nvm version you'll install. If I add it here, it'll be outdated shortly after I publish this guide.
+
+To make sure you install the latest nvm version, copy the command from the official [installation instructions](https://github.com/nvm-sh/nvm#install--update-script) (the one starting with _`curl -o-`_), run it in your Terminal, and get right back here to follow on.
+
+That command will download and run the official nvm installation script.
+
+You should see a bunch of output, including the following:
+
+```bash
+=> Downloading nvm from git to '/Users/your_user_name/.nvm'
+=> Cloning into '/Users/your_user_name/.nvm'...
+```
+
+That means the installation script could run and clone the nvm Git repo into the expected dir, i.e., _`~/.nvm`_.
+
+You should also see the following:
+
+```bash
+=> Appending nvm source string to /Users/your_user_name/.zshrc
+=> Appending bash_completion source string to /Users/your_user_name/.zshrc
+```
+
+That means the installation script could find and add the required configuration to your _`~/.zshrc`_ file. It adds the following three lines to the bottom of your _`~/.zshrc`_ file:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
+
+You can let it as is for now, as we'll remove those lines after installing the nvm plugin for Zsh.
+
+## Step 3. Make Zsh read your updated _`~/.zshrc`_ file
+
+Now, even though nvm is installed, trying to run any nvm command, for example, _`nvm --version`_, will result in the following error:
+
+```bash
+zsh: command not found: nvm
+```
+
+That's because we need to open a new Terminal window or tab so Zsh can read our updated _`~/.zshrc`_ file and apply the changes we made to it.
+
+Alternatively, you can run the following command to reload your current shell, making it read your _`~/.zshrc`_ file:
+
+```shell
+$ exec zsh
+```
+
+You must do either step above every time you change your _`~/.zshrc`_ file.
+
+Now you should be able to run any _`nvm`_ command. Try the following:
+
+```shell
+$ nvm --version
+```
+
+You should see an output like this: _`0.39.3`_.
+
+Awesome, nvm is installed and set up.
+
+## Step 4. Install a Node version with nvm
+
+Now that we have nvm up and running let's install a Node version with it. The first version we install using nvm becomes nvm's default Node version, i.e., if we don't tell nvm to use a specific Node version, like right after opening a new shell instance, it uses the default one.
+
+To install a specific Node version, we run a command like the following:
+
+```shell
+$ nvm install <node_version>
+```
+
+For example:
+
+```shell
+$ nvm install 14.7.0
+```
+
+If we want to install the latest version, we don't have to open Node's official website to check what that version is. nvm provides the _`node`_ alias to install the latest Node version. So let's do that by running the following command:
+
+```shell
+$ nvm install node
+```
+
+You should see an output containing the following:
+
+```bash
+Downloading and installing node v20.2.0...
+...
+Now using node v20.2.0 (npm v9.6.6)
+Creating default alias: default -> node (-> v20.2.0)
+```
+
+Nice. Now, if you run the following:
+
+```shell
+$ node --version
+```
+
+You should see an output like _`v20.2.0`_ (or the version you've got installed).
+
+That means you now have not only nvm working but a Node version installed with it working as well! Yay! 🎉
+
+## Step 5. Set specific Node versions for your projects using a _`.nvmrc`_ file
+
+Quickly installing, managing, and switching multiple Node.js versions is the most helpful feature of nvm.
+
+The second most helpful feature is the _`.nvmrc`_ file.
+
+In any project's root directory, you can create a _`.nvmrc`_ text file with only a node version number like _`14.7.0`_. Then, when you're in that root dir, you can run _`$ nvm use`_, and nvm will start using the Node version specified in that _`.nvmrc`_ file.
+
+That's how you set up project-based Node.js versions with nvm, and that's very helpful when you work on multiple Node.js projects because they'll rarely use the same version.
+
+After that, anything you do Node-related will use that Node version. That way, you can easily switch between projects using different Node versions.
+
+If you want to install a Node version set in a _`.nvmrc`_ file, all you have to do is _`$ cd`_ into the dir with the _`.nvmrc`_ file and run _`$ nvm install`_ without passing any arguments to it.
+
+Now, what's even better than just having to run _`$ nvm use`_ to switch between project-based Node versions? Not having to run it at all!
+
+There are a few ways to accomplish this. Next, we'll see one of them.
+
+See the [official documentation about .nvmrc](https://github.com/nvm-sh/nvm#nvmrc) for more information.
+
+## What is the nvm plugin for Zsh, and why should we use it?
+
+The nvm plugin for Zsh adds some features to Zsh related to nvm. For example, it adds autocompletion for nvm commands and makes it easy to load _`.nvmrc`_ files for you automatically, so you don't ever have to run _`$ nvm use`_.
+
+We'll use [Antigen](https://github.com/zsh-users/antigen), a plugin manager for Zsh, to install the nvm plugin for Zsh.
+
+If you still need to install Antigen or need clarification, head to my guide on [How to install and use Antigen and Oh My Zsh on macOS](/blog/how-to-install-use-antigen-oh-my-zsh-macos/), then get back here to proceed.
+
+## Install and set up the nvm plugin for Zsh using Antigen
+
+Open your _`~/.zshrc`_ file and add the following to it:
+
+```bash
+...
+# nvm plugin: lazy startup config
+zstyle ':omz:plugins:nvm' lazy yes
+
+# nvm plugin:  auto load node version when it finds a .nvmrc file
+zstyle ':omz:plugins:nvm' autoload yes
+
+...
+# Load oh-my-zsh library
+...
+# oh-my-zsh plugins
+...
+antigen bundle nvm
+...
+```
+
+**Note:** Do not add the _`...`_ you see above. That's an indication that those places could have more config lines.
+
+We must add the nvm plugin config before loading Oh My Zsh.
+
+We add two configurations for the nvm plugin.
+
+The first, _`lazy yes`_, avoid loading nvm right after opening a new Zsh instance, speeding up its startup time. In this case, nvm will only be loaded when we run an nvm or node command.
+
+The second, _`autoload yes`_, sets up the plugin to automatically load a Node version when it finds a _`.nvmrc`_ file in the current directory. And what is even better: if you don't have such a Node version installed, it'll install it for you! How cool is that? Well, you have to see it in action to understand it! 😉
+
+That way, you have the best of both worlds: you don't have nvm starting automatically every time you open a new Zsh instance. At the same time, you have it automatically loaded and running the desired Node version specified in your current _`.nvmrc`_ file. So you can freely browser your projects, and when you _`cd`_ into a project containing a _`.nvmrc`_ file, you know you're good to go and use Node.
+
+If you followed my guide on [How to install and use Antigen and Oh My Zsh on macOS](/blog/how-to-install-use-antigen-oh-my-zsh-macos/) and added everything I added there, nothing more, nothing less, then your _`~/.zshrc`_ file should look like the following after adding the nvm plugin config above:
+
+```bash
+# Make Antigen always available to Zsh
+# Change this path if you didn't install Antigen with Homebrew
+source /opt/homebrew/share/antigen/antigen.zsh
+
+# Defaults
+MAGIC_ENTER_GIT_COMMAND='git status'
+MAGIC_ENTER_OTHER_COMMAND='ls -lah .'
+
+# History management settings
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+HISTSIZE=9999
+
+# nvm plugin: lazy startup config
+zstyle ':omz:plugins:nvm' lazy yes
+
+# nvm plugin:  auto load node version when it finds a .nvmrc file
+zstyle ':omz:plugins:nvm' autoload yes
+
+# Load oh-my-zsh library
+antigen use oh-my-zsh
+
+# Non oh-my-zsh plugins
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# oh-my-zsh plugins
+antigen bundle command-not-found # depends on Homebrew
+antigen bundle git
+antigen bundle history-substring-search
+antigen bundle magic-enter
+antigen bundle nvm
+
+# Load a syntax highlighting theme
+antigen theme robbyrussell
+
+# Tell Antigen you're done
+antigen apply
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
+
+## Reload Zsh to apply your changes to the _`~/.zshrc`_ file
+
+Now, you need to open a new Terminal window or tab so Zsh can read your _`~/.zshrc`_ file and apply your changes, **installing the nvm plugin**. Alternatively, you can run the following command to reload your current shell, making it read your _`~/.zshrc`_ file:
+
+```shell
+$ exec zsh
+```
+
+You must do either step above every time you change your _`~/.zshrc`_ file.
+
+You should see an output like the following:
+
+```bash
+load-nvmrc:2: command not found: nvm_find_nvmrc
+```
+
+That's fine, I couldn't get rid of it, but everything works as expected. At the time of this writing, this message appears whenever I _`cd`_ into dirs that don't result in a change of Node version by nvm (e.g., _`cd`_ back and forth into projects using the same Node version) and when opening new Terminal windows. That's weird, but it doesn't affect its functionality. It seems to be a bug in the nvm plugin, but it could be something I did wrong in the installation or setup. But as I said, everything works as expected. Let me know if I did something wrong that's causing that problem.
+
+Now, open your _`~/.zshrc`_ file again and delete those three lines that the nvm installation script added to its bottom. We don't need them anymore now that we have the nvm plugin for Zsh up and running, as it runs nvm for us.
+
+Then, reload your Zsh instance:
+
+```shell
+$ exec zsh
+```
+
+You should get that same output again.
+
+## Using _`~/.nvmrc`_ files in your projects
+
+If you have Node projects with _`.nvmrc`_ files in their root dirs, you can now _`cd`_ into them and see the magic happens. Go ahead, test it. Go to their dirs, then run _`$ node --version`_ to see that it switches Node versions automatically for you and even automatically installs those you don't have installed!
+
+If you don't have such projects set up but want to see it working, create the following dir structure:
+
+```bash
+- project-a
+  .nvmrc
+- project-b
+  .nvmrc
+```
+
+You can have the following inside _`project-a/.nvmrc`_:
+
+```bash
+18.16.0
+```
+
+And the following inside _`project-b/.nvmrc`_:
+
+```bash
+16.20.0
+```
+
+Go back and forth into each of those dirs, and every time you get into a project dir, run the following:
+
+```shell
+$ node --version
+```
+
+You should see the correct Node version for each project! Nice, huh?
+
+Every time you _`cd`_ into a dir that contains a _`.nvmrc`_ file, you'll also see a message like the following:
+
+```bash
+Found '<path to your .nvmrc>' with version <node_version>
+Now using node <node_version> (npm <npm_version>)
+```
+
+Now that we have that awesome setup working let's learn the most common nvm commands.
+
+## The most common nvm commands
+
+```shell
+$ nvm install <node_version>
+```
+
+Installs a specific Node version.
+
+```shell
+$ nvm uninstall <node_version>
+```
+
+Uninstalls a specific Node version.
+
+```shell
+$ nvm ls
+```
+
+Outputs all installed Node versions (_`->`_ points to the active version).
+
+```shell
+$ nvm ls-remote
+```
+
+Outputs all available Node versions for you to install.
+
+```shell
+$ nvm current
+```
+
+Outputs the active version. That's the same as running _`$ node --version`_.
+
+```shell
+$ nvm alias default <version>
+```
+
+Sets a default (global) version of Node to use in all shells.
+
+```shell
+$ nvm use
+```
+
+Sets the active Node version to the one in the _`.nvmrc`_, if available. Otherwise, it outputs the following error:
+
+```bash
+No .nvmrc file found
+```
+
+<br />
+
+```shell
+$ nvm use <version>
+```
+
+Sets the active Node version to the one specified in _`<version>`_.
+
+## How to update nvm
+
+If you followed this guide and installed nvm running their official installation script, you run the same command to update it. That's why the official documentation calls it [Install & Update Script](https://github.com/nvm-sh/nvm#install--update-script).
+
+## How to uninstall nvm
+
+To uninstall nvm manually, run the following command:
+
+```shell
+$ rm -rf "$NVM_DIR"
+```
+
+Then, open your _`~/.zshrc`_ file and delete those three lines that were added by nvm when we installed it. They should look like the ones below:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
+```
+
+If you're using the nvm plugin for Zsh, you already removed those lines from your _`~/.zshrc`_ file, so you don't have to do it.
+
+And that's it. nvm should be uninstalled. You can make sure by running the following command:
+
+```shell
+$ nvm --version
+```
+
+You should see an output like the following:
+
+```bash
+zsh: command not found: nvm
+```
+
+For more information about uninstalling nvm, visit the [official instructions](https://github.com/nvm-sh/nvm#uninstalling--removal).
+
+## How to uninstall the nvm plugin for Zsh
+
+If you want to keep nvm but want to uninstall the nvm plugin for Zsh, run the following command:
+
+```shell
+$ antigen purge nvm --force
+```
+
+You should see an output like the following:
+
+```bash
+Done. Please open a new shell to see the changes.
+```
+
+That removes the nvm plugin from your filesystem.
+
+But you must also manually delete all configuration lines for the nvm plugin from your _`~/.zshrc`_ file, especially the following one:
+
+```bash
+antigen bundle nvm
+```
+
+Otherwise, Antigen will install the nvm plugin again the next time you open a shell.
+
+After that, you can reload your Zsh instance by running the following:
+
+```shell
+$ exec zsh
+```
+
+And that's it. The nvm plugin should be uninstalled.
+
+## Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
+
+## Related posts
+
+- [Introduction to Node.js](/blog/introduction-to-nodejs/)<br />
+- [How to set up your Mac for software development](/blog/how-to-set-up-mac-software-development/)<br />
+- [How to install and use Homebrew on macOS](/blog/how-to-install-and-use-homebrew-on-macos/)<br />
+- [How to install Git with Homebrew on macOS](/blog/how-to-install-git-with-homebrew-on-macos/)<br />
+- [How to install and use Antigen and Oh My Zsh on macOS](/blog/how-to-install-use-antigen-oh-my-zsh-macos/)<br />
+- [How to install Command Line Developer Tools on macOS](/blog/how-to-install-command-line-developer-tools-on-macos/)<br />
+- [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/)<br />
+- [How to sign Git commits with SSH keys on macOS](/blog/how-to-sign-git-commits-ssh-keys-macos)
+
+<br />
+<br />
+
+<AITools />

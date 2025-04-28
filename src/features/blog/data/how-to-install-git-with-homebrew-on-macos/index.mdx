@@ -1,0 +1,263 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2023-06-15T00:00:00";
+
+export const description =
+  "Learn how to install Git with Homebrew in six easy steps.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-vector/flat-design-cms-illustration_12067674.htm";
+
+export const heroImageHeight = 1334;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "how-to-install-git-with-homebrew-on-macos";
+
+export const tags = ["git", "macos", "homebrew"];
+
+export const title = "How to install Git with Homebrew on macOS";
+
+export const tweetText = "How to install Git with Homebrew on macOS.";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+
+I last tested these instructions on macOS Ventura 13.3.1.
+
+## Introduction
+
+In this step-by-step guide, you'll learn how to install Git with Homebrew in six easy steps.
+
+## What is Git?
+
+[Git](https://git-scm.com) is a distributed version control system widely used in software development to track changes made to source code files. [GitHub](https://github.com) and [BitBucket](https://bitbucket.org) are services built on top of Git.
+
+If you're new to Git, head to my [Introduction to Git](/blog/introducing-git/). You can check all my posts about Git [here](/blog/git/).
+
+## Prerequisite 1: Command Line Developer Tools
+
+Installing the Command Line Developer Tools is the first thing you must do to start setting up your Mac for software development. When you do that, you get Git as part of the package.
+
+The problem is that it takes work to keep that Git installation updated. That's why we install a new version of Git with Homebrew and one that's easy to update.
+
+But first things first, if you still need to install the Command Line Developer Tools or need clarification, head to my guide on [How to install Command Line Developer Tools on macOS](/blog/how-to-install-command-line-developer-tools-on-macos/), then get back here to proceed.
+
+## Prerequisite 2: Homebrew
+
+[Homebrew](https://brew.sh/) is a popular package manager for macOS that simplifies the installation and management of software packages and libraries. It allows users to easily install, update, and uninstall a wide range of command-line tools and applications from a vast repository of packages.
+
+If you still need to install Homebrew or need clarification, head to my guide on [How to install and use Homebrew on macOS](/blog/how-to-install-and-use-homebrew-on-macos/), then get back here to proceed.
+
+<WarningBoxNoRunDollarSign />
+
+## Step 1. Check your Git version
+
+Let's check which version of Git you have installed by running the following command:
+
+```shell
+$ git --version
+```
+
+You should see something like the following:
+
+```bash
+git version 2.39.2 (Apple Git-143)
+```
+
+Also, take a look at where this Git version is installed by running this:
+
+```shell
+$ which git
+```
+
+You should see an output like this:
+
+```bash
+/usr/bin/git
+```
+
+## Step 2. Update Homebrew itself
+
+Before proceeding, let's update Homebrew itself to have everything fresh:
+
+```shell
+$ brew update
+```
+
+## Step 3. Check if you don't have a Homebrew-installed Git version already
+
+You might already have Git installed with Homebrew and can't remember it, or maybe you're just curious to learn how to check that.
+
+To see all packages you have installed with Homebrew, run the following command:
+
+```shell
+$ brew list
+```
+
+If you can't see Git listed, you don't have it installed!
+
+An easier way to check for a specific package when you have too many installed with Homebrew is by running the _`list`_ command with the name of the package after it, like the following:
+
+```shell
+$ brew list git
+```
+
+If you have Git installed, you'll get an output with several lines starting with something like this:
+
+```bash
+/opt/homebrew/Cellar/git/...
+/opt/homebrew/Cellar/git/...
+/opt/homebrew/Cellar/git/...
+```
+
+In that case, you can head to the [How to update Git](#how-to-update-git) section at the end of this post.
+
+Otherwise, you should get this:
+
+```bash
+Error: No such keg: /opt/homebrew/Cellar/git
+```
+
+In that case, let's move on.
+
+## Step 4. Check the latest available Git version on Homebrew
+
+It's pretty easy to install Git using Homebrew, but before proceeding, let's find out the latest version of Git available on Homebrew. To do that, run the following command:
+
+```shell
+$ brew info git
+```
+
+The first line of the output should be something like the following:
+
+```bash
+==> git: stable 2.40.1 (bottled), HEAD
+```
+
+With that information, you can compare this version with the one you already have installed (we checked that in [Step 1](#step-1-check-your-git-version)). So after the installation, you can ensure the latest version, the Homebrew-installed version, takes precedence over the one installed with the Command Line Developer Tools.
+
+## Step 5. Install Git with Homebrew on macOS
+
+Now let's finally install the latest Git version using Homebrew. To do that, run the following command:
+
+```shell
+$ brew install git
+```
+
+You should see a bunch of output and something like the following close to the bottom:
+
+```bash
+==> Summary
+🍺  /opt/homebrew/Cellar/git/2.40.1: 1,635 files, 48.9MB
+```
+
+That means Homebrew installed Git successfully!
+
+## Step 6. Check the installation
+
+Now, if you open a new Terminal window or tab and run _`$ git --version`_, you should see the just installed version.
+
+To make it work on your current Zsh instance, you must run the following command to reload it, making the installation changes take effect:
+
+```shell
+$ exec zsh
+```
+
+Now if you run _`$ git --version`_, you should see the latest one!
+
+And if you run _`$ which git`_, you should see this:
+
+```bash
+/opt/homebrew/bin/git
+```
+
+Instead of this (as before):
+
+```bash
+/usr/bin/git
+```
+
+Congrats, you now have Git installed with Homebrew and can easily update it! 🎉
+
+Let's see how next.
+
+## How to update Git
+
+The whole point of installing another version of Git with Homebrew is that you can easily update it by running the following command:
+
+```shell
+$ brew upgrade git
+```
+
+And that's it. 😎
+
+## Bonus: Global settings
+
+The first thing you should do when you install Git is to set your name and email address. That's important because every Git commit uses this information to identify its author.
+
+To do that, run the following commands:
+
+```shell
+$ git config --global user.name "Your Name"
+```
+
+<br />
+
+```shell
+$ git config --global user.email youremail@example.com
+```
+
+Don't forget to replace _`Your Name`_ and _`youremail@example.com`_.
+
+Using the _`--global`_ argument makes it globally available for Git, so it's used in any Git repository you work with. If you want to override that information for a specific repo, go to that repo's root directory and run that command _without_ the _`--global`_ argument.
+
+You can run the following command to double-check your info:
+
+```shell
+$ git config --list
+```
+
+You should see a bunch of information, including _`user.name`_ and _`user.email`_.
+
+## Conclusion
+
+And that's it for this guide. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
+
+## Related posts
+
+- [How to set up your Mac for software development](/blog/how-to-set-up-mac-software-development/)<br />
+- [How to install and use Antigen and Oh My Zsh on macOS](/blog/how-to-install-use-antigen-oh-my-zsh-macos/)<br />
+- [How to generate and use SSH keys on macOS](/blog/how-to-generate-use-ssh-keys-macos/)<br />
+- [How to sign Git commits with SSH keys on macOS](/blog/how-to-sign-git-commits-ssh-keys-macos)<br />
+- [How to install and run Node.js with nvm on macOS](/blog/how-to-install-nodejs-nvm-macos/)<br />
+- [Introduction to Git](/blog/introducing-git/)<br />
+- [Git Workflow](/blog/git-workflow/)<br />
+- [Git Basic Commands Explained](/blog/git-basic-commands-explained/)<br />
+- [Git Branching and Merging](/blog/git-branching-and-merging/)<br />
+- [Git Tagging](/blog/git-tagging/)<br />
+- [Git Remote and Tracking Branches](/blog/git-remote-and-tracking-branches/)
+
+## Interesting links
+
+- [Git](http://git-scm.com/)<br />
+- [Pro Git Book](https://git-scm.com/book/en/v2)

@@ -1,0 +1,491 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2017-07-20T00:00:00";
+
+export const description =
+  "Do you know what are remote and tracking branches? Tracking ones can make our lives easier, get to know why and how.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-photo/bright-colorful-pop-landscape_20034573.htm#page=5&query=futuristic%20cloud%20branch&position=24&from_view=search&track=ais";
+
+export const heroImageHeight = 1047;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "git-remote-and-tracking-branches";
+
+export const tags = ["git"];
+
+export const title = "Remote and tracking branches with Git";
+
+export const tweetText =
+  "Get to know what are remote and tracking branches, and why tracking ones make our lives easier";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+
+## Introduction
+
+If you're new to [Git](http://git-scm.com/) or want to know a little more about its basics and its distributed model, do not hesitate to read my [Introduction to Git](/blog/introducing-git/).
+
+If you're not very familiar with Git branching, or you'd like to refresh your understanding about it, please head to [Branching and merging with Git](/blog/git-branching-and-merging/), then come back and move on.
+
+In this article you'll learn what are remote and tracking branches, how they work and how to use them.
+
+<WarningBoxNoRunDollarSign />
+
+## What are remote branches?
+
+<InfoBoxQuotation>
+  Remote references are references to the state of branches on your remote
+  repositories. They're local branches that you can't move; they're moved
+  automatically whenever you do any network communication. (Chacon 50)
+</InfoBoxQuotation>
+
+So a remote branch is a **local branch** (created in your local repo) that points to and contains a copy of a branch in some remote repo.
+It's also ready-only, so you cannot change it, it's supposed to be updated when we run a _`$ git fetch`_.
+A bit confusing?
+I know, it really is at a first glance.
+
+## Starting a new local repo
+
+For the sake of learning, we'll create a very simple Git project/repo and play with it to better understand branching and remote branches.
+So now please create a new directory, add a couple files in it, and run _`$ git init`_.
+Now, if you run _`$ git status`_ you should see your files listed as _Untracked files_.
+So let's run _`$ git add .`_, and then _`$ git commit -m "adding some files."`_.
+Nice, now we have a local repo with some files committed to it.
+
+## Starting a new remote repo
+
+Now, take the time to set up a remote repo.
+You can use [GitHub](http://github.com/), [Bitbucket](http://bitbucket.org/), or any other service you like.
+
+## Adding a remote reference to your local repo
+
+After you have setup your remote repo, let's add a reference to it in your local repo.
+To do that, run a command like:
+
+```shell
+$ git remote add origin [your-remote-url-goes-here]
+```
+
+Note that we're giving that remote an alias of _`origin`_, but it could be anything we wanted.
+If you run _`$ git remote`_ now you should see something like:
+
+```shell
+origin
+```
+
+If you want more info about your remote repo you can append _`-v`_ option to that command:
+
+```shell
+$ git remote -v
+```
+
+In that case you should see something like:
+
+```shell
+origin   [your-remote-repo-url] (fetch)
+origin   [your-remote-repo-url] (push)
+```
+
+Note that Git lists two references to it, one for reading from your remote repo (fetch), and another for writing to your remote repo (push).
+
+## Pushing to a remote repo
+
+Now we can push to our remote repo, so let's do just that:
+
+```shell
+$ git push origin master
+```
+
+You should see something like:
+
+```shell
+Counting objects...
+...
+Writing objects: 100%...
+...
+  * [new branch]      master -> master
+```
+
+That means the operation was successfully completed.
+Git should have created a _master_ branch in your remote repo, and created a reference to it in your local repo.
+That reference is our remote branch (our remote _master_ branch in this case), created in our local repo.
+By default, when we push to a remote repo, and there's no remote branch setup for that local branch we're pushing, Git creates one for us automatically, and names it as _`remotes/remote-name/branch-name`_, so in this case _`remotes/origin/master`_.
+
+## Checking your remote branches
+
+If you run _`$ git branch -r`_ now (_`-r`_ option means _remote_), you should see something like:
+
+```shell
+remotes/origin/master
+```
+
+You can also run _`$ git branch -a`_ to see all branches, local and remote.
+In that case, you should see something like:
+
+```shell
+* master
+  remotes/origin/master
+```
+
+Your _`remotes/origin/master`_ remote branch is a copy of your remote repo's _master_ branch, a branch living in your remote repo.
+At this time they are the same, but when you work on a project with other members, they will also update the project's remote repo, so your _`remotes/origin/master`_ remote branch will become outdated at some point.
+Just keep that in mind for now.
+
+## Switching to remote branches
+
+You can really switch to remote branches if you want. Let's just try that by running:
+
+```shell
+$ git checkout origin/master
+```
+
+You should see some output, including something like _Note: checking out 'origin/master'_.
+Note that you can omit _`remotes/`_ prefix when referring to remote branches.
+
+What's coolest is that it's a local operation, because you have a copy of the contents of your remote repo's _master_ branch exactly as it is.
+Nice, isn't it?
+
+Cool, now I feel you have a better understanding about what are remote branches.
+Next, let's see how to update them when someone else pushes code to a remote repo we're working on.
+
+## Updating our remote branches
+
+We know that to send our local changes to a remote repository we run a _`$ git push`_ command.
+But it's a good practice to always run a _`$ git fetch`_ command _before_ _`$ git push`_, as we've seen [here](/blog/git-basic-commands-explained/#fetching-changes-from-a-remote-repository).
+The only exception is when we're pushing a new branch to our remote repo, effectively creating that new branch in our remote repo.
+In that case, since that branch didn't exist in that remote repo yet, there's nothing to fetch from.
+
+A _`$ git fetch`_ command synchronizes our local repo with a remote repo:
+
+```shell
+$ git fetch [remote-name]
+```
+
+By synchronize we understand a copy of all branches in the remote repo to our local repo **as remote branches**.
+If a remote branch already exists in our local repo, it is updated.
+
+But a _`$ git fetch`_ command doens't touch our local branches (_master_, etc), only our remote ones (_`origin/master`_, etc).
+So our _master_ branch keeps outdated if we get new changes from our remote repo when we run _`$ git fetch`_.
+We need to _`$ git merge`_ those changes into our local _master_ branch after running _`$ git fetch`_.
+We'll do that in a moment, first let's see why we need to run _`$ git fetch`_ before _`$ git push`_ one more time.
+
+## Why do we need to run fetch before push?
+
+If someone else has pushed content to a remote repo, you need to _`$ git fetch`_ those changes first, and _`$ git merge`_ them into your local branch.
+Only then you can _`$ git push`_ your changes.
+Git doesn't allow us to push our changes to a remote repo if our local branch is outdated in relation to our target branch.
+In other words, if someone else has updated our remote repo's _master_ branch, we first need to merge those changes into our local _master_ branch, and only then push our changes.
+That's the same for any branch, not only _master_.
+Note that you don't need to worry about branches that other people are pushing to a remote repo if you're not working on them.
+
+## Faking a team member
+
+Since we're not working on a real project at the moment, let's fake a team member working on our project, pushing changes.
+To do that, you can create another folder in your filesystem (outside your current repo, so not a subfolder of it), and clone your remote repo into it by running:
+
+```shell
+$ git clone [your-remote-url-goes-here]
+```
+
+Now, point to that new repo in your command line tool, make some small changes to any file, then commit and push it:
+
+```shell
+$ git add .
+$ git commit -m "some change from cloned repo."
+$ git push origin master
+```
+
+You should see some output, including _Writing objects: 100%_.
+
+## Integrating team members' changes
+
+Now, let's get our command line tool back to point to the first repo we created, the one we started by using _`$ git init`_.
+
+At this point, you should note that this first repo is now outdated, as our remote repo was just updated _by another team member_.
+But let's pretend we don't know about that, we're working on our own stuff.
+So let's make some other change, to another file (or to the same file but on a different line just so we avoid any conflicts), add it, commit it, and try to push it:
+
+```shell
+$ git add .
+$ git commit -m "some change from init repo."
+$ git push origin master
+```
+
+You should see an error message like:
+
+```shell
+To [your-remote-url]
+  ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to '[your-remote-url]'
+hint: Updates were rejected because the remote contains work that you do not have locally.
+```
+
+Yup, that's expected.
+Git makes it pretty clear stating that _Updates were rejected because the remote contains work that you do not have locally_.
+
+So let's fetch those changes by running _`$ git fetch origin`_.
+You should see some output, including something like _Unpacking objects: 100%_.
+Nice, now our (local) remote branch _`origin/master`_ is updated with the contents of our remote repo's _master_ branch.
+Let's merge those changes into our local _master_ branch by running:
+
+```shell
+$ git merge origin/master
+```
+
+That should launch your system's default text editor with Git's default merge commit message, something like _Merge remote-tracking branch 'origin/master'_.
+Just save and close it.
+If for some reason you get an error message like:
+
+```shell
+error: There was a problem with the editor 'vi'.
+Not committing merge; use 'git commit' to complete the merge.
+```
+
+Don't worry, you just have to commit it manually.
+In that case just run:
+
+```shell
+$ git commit -m "Merge remote-tracking branch 'origin/master'"
+```
+
+Nice!
+Your local _master_ branch is now up to date with _`origin/master`_, and ready to be pushed, so let's do that:
+
+```shell
+$ git push origin master
+```
+
+You should see a successful message, including _Writing objects: 100%_.
+
+And that's it for remote branches.
+That's a pretty common flow that you're probably going through when working on a remote repo alongside other people.
+
+**Remember**: you only have to worry about merging remote changes if there were changes pushed to the remote repo by another person, so changes that you do not have in your local repo, and if they changed branches that you're working on.
+
+Now, let's take a look at a closely related topic: tracking branches.
+
+## What are tracking branches?
+
+<InfoBoxQuotation>
+  Tracking branches are local branches that have a direct relationship to a
+  remote branch. If you're on a tracking branch and run git push, Git
+  automatically knows which server and branch to push to. (Chacon 57)
+</InfoBoxQuotation>
+
+A tracking branch is just your regular local branch, but with some extra tracking information.
+It tells your local branches to track remote branches.
+
+## Trying to push, the short version
+
+Let's continue playing with our local repo.
+Make sure that you point your command line tool to your local repo that you started by running _`$ git init`_, not the one you cloned (this is important).
+Now, change some file, add and commit it.
+Now, just try to run _`$ git push`_.
+You should see an error message like:
+
+```shell
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin master
+```
+
+That means Git doesn't know where to push your local branch to.
+It doesn't know which remote repo to use, and how it should name it in the target repo (you can push your local _master_ branch using a different name, Git doesn't assumes you want to use the same name).
+
+## Pushing, the long version
+
+So far, we've been running _`$ git push`_ like so:
+
+```shell
+$ git push origin master
+```
+
+That tells Git to push our current branch to our _`origin`_ remote and name it _`master`_.
+If such branch exists in our remote repo, it's updated, otherwise it's created.
+
+But we're looking for a short version of that.
+And that's why we need tracking branches.
+
+## Creating tracking branches
+
+Let's make our local _master_ branch track our remote _master_ branch.
+Git told us how to do that in that error message:
+
+```shell
+$ git push --set-upstream origin master
+```
+
+But there's a shorthand for that command:
+
+```shell
+$ git push -u origin master
+```
+
+You can do that at any time.
+If you don't have local changes to push, Git returns a message like _Everything up-to-date_ as usual, but in this case, since we're providing a _`-u`_ parameter it also returns a message like _Branch master set up to track remote branch master from origin_.
+Nice, looks like it worked! Do you think so?
+
+## Pushing, the short version
+
+Let's make sure that worked.
+Let's make one more change to any file, add and commit it.
+Now, let's try to push it the short version, without providing _`remote-name`_ and _`branch-name`_:
+
+```shell
+$ git push
+```
+
+You should see a regular success message.
+Awesome!
+Now you have your _master_ branch tracking your remote _master_ branch, and can easily pull and push to it without having to provide _`remote-name`_ and _`branch-name`_ every time.
+You can do the same for pull, running just _`$ git pull`_.
+Nice, huh?
+
+## Creating new tracking branches
+
+When you create new branches, you can append _`-u`_ when you first push it to your remote repo, like:
+
+```shell
+$ git push -u your-remote-name your-branch-name
+```
+
+There's no problem if you forget to do that the first time you push your new branch to your remote repo, you can do that at any time.
+
+## More advantages of using tracking branches
+
+Besides being able to run _`$ git push`_ and _`$ git pull`_ in a short form, another advantage of having tracking branches is that they show you when you are _ahead_ or _behind_ your remote branch when you run _`$ git status`_, meaning you need to push your changes, or pull someone else's changes.
+The following is a typical output of _`$ git status`_ from an unchaged local _master_ branch that **is not** a tracking one:
+
+```shell
+On branch master
+nothing to commit, working tree clean
+```
+
+But if that branch was a tracking one, you'd see something like:
+
+```shell
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+```
+
+Did you notice that extra line? It says your branch is up-to-date with your remote branch.
+But there's a gotcha here: if someone else updates your remote repo, you'll still get that message, because Git is looking at your local remote branch (_`remotes/origin/master`_), not going to your remote repo to look at that branch there.
+In that case, if you run _`$ git fetch`_ your local remote branch will be updated, then if you run _`$ git status`_ again, you should see something like:
+
+```shell
+On branch master
+Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+nothing to commit, working tree clean
+```
+
+Git tells you that you're behind _`origin/master`_, and that you can run _`$ git pull`_ to update your local branch.
+
+Now, when you make local changes, commit them, and run _`$ git status`_ _before_ pushing your changes, you should see a message like:
+
+```shell
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+```
+
+Git tells you that you're ahead of _`origin/master`_, and that you can run _`$ git push`_ to update your remote branch with your local changes.
+
+## A tracking branch for free when cloning
+
+One thing to note is that when you clone a repo, Git creates a remote branch on your new local repo for each branch that exists in that remote repo.
+It also creates your local default _master_ branch, as it does when we start a repo by running _`$ git init`_.
+But since it also adds a _`origin`_ remote for you (a reference to a remote repo), pointing to that remote repo you cloned, it goes even further and sets up your just created local _master_ branch to track your remote _master_ branch, which points to your _`origin`_ remote.
+Nice, isn't it?
+And how nice is getting to know some of the things Git does behind the scenes for us?
+
+## When you need to work on another person's branch
+
+Let's picture a scenario where you just cloned a repo that contains some branches created by some team members.
+When you clone a repo, Git creates remote branches for you automatically, remember?
+But it doesn't create _local_ branches for you except _master_.
+So, let's consider you have to do some work on one of those remote branches, say _`new-feature-a`_, started by another person.
+
+Let's pretend you see the following when you run _`$ git branch -a`_ in that hypothetical repo:
+
+```shell
+* master
+  remotes/origin/master
+  remotes/origin/new-feature-a
+  remotes/origin/new-feature-b
+```
+
+Ok, so you know there is a _`new-feature-a`_ branch created in your remote repo by someone else, and you need to work on it, but you don't have such local branch yet.
+In that case, what you want is kind of a clone of that remote branch as a local branch, and why not, having it as a tracking branch of that remote one.
+That looks like a few things to do, but you can do all of them with a single command:
+
+```shell
+$ git checkout -b [your-local-branch-name] [remote-name/branch-name]
+```
+
+Note that you can name your local branch anything you want, but most of the times you'll want to match your remote branch's name.
+In our hypothetical case, we do so by running:
+
+```shell
+$ git checkout -b new-feature-a origin/new-feature-a
+```
+
+You should see an output like:
+
+```shell
+Branch new-feature-a set up to track remote branch new-feature-a from origin.
+Switched to a new branch 'new-feature-a'
+```
+
+That command creates a local _`new-feature-a`_ branch with the same content of _`origin/new-feature-a`_, and makes it a tracking branch of _`origin/new-feature-a`_.
+
+## Conclusion
+
+That's it.
+You can now say that you know what remote and tracking branches are!
+Cool, right?
+But don't worry if things are still a little confusing.
+As a next step you should practice it a lot.
+Play with commands, create repositories, branches, merges, conflicts (and solve them!), and hopefully everything will look more natural in a few days.
+
+## Related posts
+
+- [How to install Git with Homebrew on macOS](/blog/how-to-install-git-with-homebrew-on-macos/)<br />
+- [Branching and merging with Git](/blog/git-branching-and-merging/)<br />
+- [Basic Git commands explained](/blog/git-basic-commands-explained/)<br />
+- [Git workflow](/blog/git-workflow/)<br />
+- [Tagging with Git](/blog/git-tagging/)<br />
+- [Introduction to Git](/blog/introducing-git/)
+
+## Interesting links
+
+- [Git](http://git-scm.com/)<br />
+- [Pro Git Book](https://git-scm.com/book/en/v2)
+
+## Bibliography
+
+- Chacon, Scott. _Pro Git_. Apress, 2009.

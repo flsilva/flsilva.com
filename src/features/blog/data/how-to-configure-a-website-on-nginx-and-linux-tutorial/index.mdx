@@ -1,0 +1,386 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2014-09-10T00:00:00";
+
+export const dateUpdated = "2023-04-06T00:00:00";
+
+export const description =
+  "Learn how to set up a website or web app using the ultra-fast Nginx HTTP Server on Linux in 6 steps.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by storyset on Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-vector/server-status-concept-illustration_7118840.htm#&position=9&from_view=undefined";
+
+export const heroImageHeight = 1047;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "how-to-configure-a-website-on-nginx-and-linux-tutorial";
+
+export const tags = ["linux", "nginx", "sysadmin"];
+
+export const title = "How to set up a website on Linux + Nginx";
+
+export const tweetText =
+  "Learn how to set up a website or web app using the ultra-fast Nginx HTTP Server on Linux in 6 steps.";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRunDollarSign.mdx";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+## Introduction
+
+[Nginx](http://en.wikipedia.org/wiki/Nginx) is becoming the new standard HTTP server for new websites and web apps, especially high-traffic ones.
+It's blazing fast, powerful, simple, and secure.
+The more we use it, the safer it becomes, as always (or almost always!).
+It can handle thousands of requests per second using only 512MB RAM.
+
+If you want to know how to install Nginx on Linux please read my article [How to install Nginx on Linux (Ubuntu & Debian)](/blog/how-to-install-nginx-tutorial-ubuntu-and-debian).
+
+<WarningBoxNoRunDollarSign />
+
+## Step 1. Creating directories for your websites' configuration files
+
+First, go to your Nginx directory.
+For Ubuntu and Debian, that's _`/etc/nginx`_:
+
+```shell
+$ cd /etc/nginx
+```
+
+Now, check if the directories for the configuration files already exist by running:
+
+```shell
+$ ls -la
+```
+
+If you can see two directories named _`sites-available`_ and _`sites-enabled`_ you're good to go.
+Otherwise create them by running:
+
+```shell
+$ sudo mkdir sites-available && sudo mkdir sites-enabled
+```
+
+_`sites-available`_ will contain configuration files for all websites you want to try at any time, preferably one file for each website / web app.
+But files in this folder will not be _enabled_ by default, i.e., they'll not be loaded into Nginx.
+That way you can safely create new files in this folder.
+Then we create symbolic links into _`sites-enabled`_ folder.
+
+That way, as a sysadmin, it's straightforward for you to enable and disable websites without having to duplicate files for backup purposes when disabling websites.
+To disable a website, you just delete its symlink file using the standard _`rm`_ linux command.
+
+Don't worry.
+That's pretty easy to manage, as we'll see next.
+
+If those directories were already there, you should see a file named _`default`_ into _`sites-available`_ and a [symlink](http://en.wikipedia.org/wiki/Symbolic_link) (symbolic link) into _`sites-enabled`_.
+You can look at that file if you want.
+It's a template configuration file.
+Anyway, I'm providing you with a fully functional one based on it below.
+
+## Step 2. Creating your website's configuration file
+
+Now, let's create your website's configuration file:
+
+(Replace _`flsilva.com.conf`_ by your domain name. Make sure your file ends with
+_`.conf`_)
+
+```shell
+$ sudo nano sites-available/flsilva.com.conf
+```
+
+Copy and paste the following content to your file:
+
+```nginx
+server {
+  listen       80;
+  server_name  www.flsilva.com;
+  rewrite ^/(.*) http://flsilva.com/$1 permanent;
+}
+
+server {
+  listen       80;
+  server_name  flsilva.com;
+
+  root   /var/www/flsilva.com/public;
+
+  error_log  /var/log/nginx/flsilva.com.error.log;
+  access_log  /var/log/nginx/flsilva.com.access.log;
+
+  location / {
+      index  index.html index.htm;
+  }
+
+  error_page  404              /404.html;
+
+  # redirect server error pages to the static page /50x.html
+  error_page   500 502 503 504  /50x.html;
+  location = /50x.html {
+      root   /var/www/flsilva.com/public;
+  }
+
+}
+```
+
+Do not forget to replace all occurences of _`flsilva.com`_ by your domain.
+
+Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
+
+It's a good practice to check for any common errors after changing your website config files. To do that, run the following command:
+
+```shell
+$ sudo nginx -t
+```
+
+You should get the following output:
+
+```bash
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+Otherwise, you'll see some errors.
+
+Next, you'll understand a little bit about this configuration file.
+
+## Canonical URL
+
+The first _server_ block is there for SEO purposes.
+It's a technique called canonical URL.
+Here we're redirecting all requests coming to _`www.flsilva.com`_ to just _`flsilva.com`_.
+If we don't take care of that, SEO ranking factors get split between more than one URL showing the same content.
+Doing that (using the _permanent_ keyword, which translates to HTTP 301 status code - "Moved Permanently") we're essentially communicating to search engines that they should _always_ consider our canonical _`flsilva.com`_ URL, and that's great for SEO.
+
+Note that you need to configure _`www`_ in your DNS service (_`www`_ is really a subdomain, like any other).
+You probably want to do that because you don't want your users to see an error page if they type _`www.yourdomain.com`_, right?
+
+But if you're creating a subdomain, you should remove this first _server_ block entirely, as your users shouldn't be typing _`www.yoursubdomain.yourdomain.com`_, but just _`yoursubdomain.yourdomain.com`_.
+
+## Standard port 80
+
+This is the first line of the _server_ block:
+
+```bash
+listen       80;
+```
+
+It defines that you're exposing your website through port 80.
+Port 80 is the default HTTP port.
+When you use your browser to navigate the web, it'll communicate to webservers through port 80.
+If you defined a different port, than you and your users would have to type the port ot access your website, like _`http://yourdomain.com:8123`_.
+That's commonly used for applications to communicate with each other, but not for your end users.
+
+## Your domain name
+
+The second line defines what's the URL that it handles:
+
+```bash
+server_name  flsilva.com;
+```
+
+## Root directory
+
+The next line defines the path for the root directory of your website:
+
+```bash
+root   /var/www/flsilva.com/public;
+```
+
+You're going to create that directory in the next step.
+
+## Log files
+
+The following two lines define where Nginx will create access and error log files.
+On Ubuntu and Debian, that directory is automatically created.
+So Nginx will be able to create log files there.
+You can look at those files to see how things are going on your website.
+
+## Default index file
+
+Next are the lines that define the index file (_`index.html`_ and _`index.html`_).
+You can change that if you want to use a different one.
+
+## 404 Error page
+
+Next is defined a custom 404 error page (_`404.html`_), located at the website's root.
+You can change the path, but if you don't have a custom error page, comment out that line, putting the _`#`_ character at the beginning of the line.
+
+## Internal error pages (50x status code)
+
+The last block defines the same for 50x errors, indicating that the files will be in the root of the website.
+
+## Step 3. Creating your website's root directory
+
+Now, let's create your website's root directory.
+But first, an important detail: if you're not logged in as a _root_ user, and you plan to deploy your website / web app using a different user, which I recommend in my [How to securely set up a VPS server on Linux (Ubuntu & Debian)](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/) article, you'll also have to run the _`chown`_ command that you see next (so don't forget to replace _`deploy`_ by the username you're going to use to deploy your website).
+But you shouldn't run that command if you're using your root user to log in and plan to use it to deploy.
+
+```shell
+$ cd /var
+$ sudo chown deploy:deploy www
+$ cd www
+$ mkdir flsilva.com
+$ cd flsilva.com
+$ mkdir public
+```
+
+Now you just have to deploy your website to that _`public`_ directory (i.e. put your index.html file in there).
+
+## Step 4. Enabling your website by creating a symlink
+
+You created your website's configuration file inside the _`sites-available`_ directory.
+To make it available, we will create a [symlink](http://en.wikipedia.org/wiki/Symbolic_link) for it.
+A symlink is a special file containing a reference to another file.
+In some situations, like this one, it's better than a simple copy & paste because you can change any file (the original one or the symlink), and both will keep in sync.
+But if you delete your symlink, nothing happens to the original file.
+
+Let's create your symlink now:
+
+```shell
+$ sudo ln -s /etc/nginx/sites-available/flsilva.com.conf /etc/nginx/sites-enabled/flsilva.com.conf
+```
+
+Don't forget to replace _`flsilva.com`_ by your domain.
+
+PS: In my tests, that didn't work with relative paths, so make sure to use absolute ones.
+
+That's it.
+Now you should be able to see your symlink file into _`sites-enabled`_ directory pointing to the original file, like this:
+
+```shell
+flsilva.com.conf -> /etc/nginx/sites-available/flsilva.com.conf
+```
+
+If you want to disable any website configured like that, delete the symlink file and reload the Nginx's configuration file (_`nginx.conf`_ - see next steps).
+You don't need to touch the files in _`sites-available`_.
+And if you need to get back a website, create a new symlink again!
+
+## Step 5. Removing the standard _`default`_ symlink configuration file
+
+Now remember that _`default`_ configuration file? Yep, it's working since there's a symlink created for it in the _`sites-enabled`_ folder.
+For our own website to work, we need to remove it since it's also listening to the standard 80 port.
+
+To do that run the following command:
+
+```shell
+$ sudo rm /etc/nginx/sites-enabled/default
+```
+
+## Step 6. Reloading Nginx
+
+Every time you make a change to some website configuration file or even add or remove a symlink, you need to reload Nginx so it can take those changes into account.
+To do that run the following command:
+
+```shell
+$ sudo systemctl reload nginx
+```
+
+You'll get an error message if there's an error in any configuration file.
+Otherwise, you won't get any feedback.
+
+And that's it.
+
+Now you can start serving your website using the ultra fast Nginx HTTP Server.
+If you have any problems or suggestions please let me know!
+
+Following are some common configurations that you probably want to do.
+
+## Some optimization
+
+_`multi_accept`_ is a configuration disabled by default.
+That means a worker process will accept only one new connection at a time.
+That's a waste of power, so it's useful to turn it _on_, then Nginx will accept as many connections as possible.
+
+To do so, first open Nginx' configuration file:
+
+```bash
+$ sudo nano /etc/nginx/nginx.conf
+```
+
+Now, inside the block _`events {}`_ you should find it commented out like this:
+
+```nginx
+# multi_accept on;
+```
+
+Uncomment it by deleting the _`#`_ character. You should have this instead:
+
+```nginx
+multi_accept on;
+```
+
+Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
+
+## Allow underscores in client's request header
+
+Another useful configuration is to allow the use of underscores by clients on _Request Headers_.
+That's disabled by default but is very simple to change, and will make it a little more flexible.
+To do that copy and paste the following line to your Nginx's configuration file (_`/etc/nginx/nginx.conf`_), inside the _`http{}`_ block, usually after the _`default_type    application/octet-stream;`_ line:
+
+```nginx
+underscores_in_headers   on;
+```
+
+Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
+
+## Avoiding the “increase server_names_hash_bucket_size error”
+
+To avoid the _`increase server_names_hash_bucket_size error`_, which occurs for long _`server_name`_ values, first open Nginx' configuration file (_`/etc/nginx/nginx.conf`_):
+
+```bash
+$ sudo nano /etc/nginx/nginx.conf
+```
+
+Now, inside the block _`http {}`_ you should find it commented out like this:
+
+```nginx
+# server_names_hash_bucket_size 64;
+```
+
+Uncomment it by deleting the _`#`_ character. You should have this instead:
+
+```nginx
+server_names_hash_bucket_size 64;
+```
+
+Save the changes by hitting **Control-X**, then **Y**, and then **Enter**.
+
+Do not forget to reload Nginx's configuration file after doing such changes:
+
+```shell
+$ sudo /etc/init.d/nginx reload
+```
+
+<br />
+That's it. Please let me know if you have any questions or problems.
+
+## Related posts
+
+- [How to password-protect content on Linux + Nginx](/blog/how-to-password-protect-file-directory-nginx/)<br />
+- [Wildcard HTTPS on Linux + Let's Encrypt + Nginx](/blog/how-to-wildcard-https-tls-linux-lets-encrypt-nginx/)<br />
+- [What are HTTPS, TLS certificates, and Let's Encrypt?](/blog/what-are-https-tls-certificates-and-lets-encrypt/)<br />
+- [How to install Nginx on Linux](/blog/how-to-install-nginx-tutorial-ubuntu-and-debian/)<br />
+- [How to set up a Linux VPS](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/)
+
+## Interesting links
+
+- [Nginx - Wikipedia](http://en.wikipedia.org/wiki/Nginx)
+
+## Bibliography
+
+- "Virtual Private Server - Wikipedia" _Wikipedia_ , n.d. Web. 06 May 2014 &#60;<A href="http://en.wikipedia.org/wiki/Virtual_private_server" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Virtual_private_server</A>&#62;
