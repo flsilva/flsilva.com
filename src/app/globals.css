@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+:root {
+  /* Light Mode Colors (defaults) */
+
+  /* primary color */
+  --color-primary-text: #050505;
+  --color-primary-link: #0465f0;
+  --color-primary-bg: #fafafa;
+
+  /* secondary color */
+  --color-secondary-text: #666666;
+  --color-secondary-bg: var(--color-primary-bg);
+
+  /* boxes colors */
+  --color-danger-bg: #fde8e8;
+  --color-danger-detail: #ff3b30;
+  --color-danger-text: var(--color-primary-text);
+
+  --color-info-bg: #dfebf6;
+  --color-info-detail: #4433ff;
+  --color-info-text: var(--color-primary-text);
+
+  --color-success-bg: #e6f4ea;
+  --color-success-detail: #34c759;
+  --color-success-text: var(--color-primary-text);
+
+  --color-warning-bg: #fff9db;
+  --color-warning-detail: #ffcc00;
+  --color-warning-text: var(--color-primary-text);
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Dark Mode Colors (defaults) */
+
+  :root {
+    /* primary color */
+    --color-primary-text: #ededed;
+    --color-primary-link: #52a8ff;
+    --color-primary-bg: #050505;
+    --color-primary-warning: #eed202;
+    --color-primary-warning-fg: #ffffc2;
+
+    /* secondary color */
+    --color-secondary-text: #a1a1a1;
+    --color-secondary-bg: #4433ff;
+
+    /* boxes colors */
+    --color-danger-bg: #660000;
+    --color-danger-detail: #fde8e8;
+    --color-danger-text: var(--color-primary-text);
+
+    --color-info-bg: #004f8a;
+    --color-info-detail: #dfebf6;
+    --color-info-text: var(--color-primary-text);
+
+    --color-success-bg: #004d29;
+    --color-success-detail: #e6f4ea;
+    --color-success-text: var(--color-primary-text);
+
+    --color-warning-bg: #665500;
+    --color-warning-detail: #fff9db;
+    --color-warning-text: var(--color-primary-text);
+  }
+}
+
+@theme {
+  /* typography */
+  --font-geist-mono: var(--font-geist-mono);
+  --font-geist-sans: var(--font-geist-sans);
+
+  /* primary color */
+  --color-primary-text: var(--color-primary-text);
+  --color-primary-link: var(--color-primary-link);
+  --color-primary-bg: var(--color-primary-bg);
+
+  /* secondary color */
+  --color-secondary-text: var(--color-secondary-text);
+  --color-secondary-bg: var(--color-secondary-bg);
+
+  /* boxes colors */
+  --color-info-bg: var(--color-info-bg);
+  --color-info-detail: var(--color-info-detail);
+  --color-info-text: var(--color-info-text);
+
+  --color-success-bg: var(--color-success-bg);
+  --color-success-detail: var(--color-success-detail);
+  --color-success-text: var(--color-success-text);
+
+  --color-warning-bg: var(--color-warning-bg);
+  --color-warning-detail: var(--color-warning-detail);
+  --color-warning-text: var(--color-warning-text);
+
+  --color-danger-bg: var(--color-danger-bg);
+  --color-danger-detail: var(--color-danger-detail);
+  --color-danger-text: var(--color-danger-text);
+
+  /* breakpoints */
+  --breakpoint-xxs: 20rem; /* 320px */
+  --breakpoint-xs: 23.4375rem; /* 375px */
+  --breakpoint-sm: 25.75rem; /* 412px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 75rem; /* 1200px */
+}
+
+/* https://github.com/code-hike/lighter/blob/main/lib/themes/github-from-css.css */
+:root {
+  /* Below is a possible port of github-from-css to dark-plus colors: */
+  --ch-0: dark; /* Theme identifier */
+  --ch-1: #6a9955; /* Comments OK */
+  --ch-2: #b5cea8; /* Keywords OK */
+  --ch-3: #d4d4d4; /* Numbers OK */
+  --ch-4: #d4d4d4; /* Default text OK */
+  --ch-5: #dcdcaa; /* Strings OK */
+  --ch-6: #4ec9b0; /* Function names OK */
+  --ch-7: #c586c0; /* Constants OK */
+  --ch-8: #ce9178; /* Types OK */
+  --ch-9: #d16969; /* Errors NOT OK */
+  --ch-10: #ffffff; /* Light foreground NOT OK */
+  --ch-11: #1e1e1e; /* Error background NOT OK */
+  --ch-12: #1e1e1e; /* Success background NOT OK */
+  --ch-13: #1e1e1e; /* Warning background NOT OK */
+  --ch-14: #252526; /* Code block background NOT OK */
+  --ch-15: #808080; /* Inactive text NOT OK */
+  --ch-16: #1e1e1e; /* Main background NOT OK */
+  --ch-17: #264f78; /* Line highlight NOT OK */
+  --ch-18: #000000; /* Transparent overlay NOT OK */
+  --ch-19: #569cd6; /* Links NOT OK */
+  --ch-20: #264f78; /* Selection background NOT OK */
+  --ch-21: #569cd6; /* Active elements NOT OK */
+  --ch-22: #1e1e1e; /* Editor background NOT OK */
+  --ch-23: #3e3e42; /* Border color NOT OK */
+  --ch-24: #d4d4d4; /* Sidebar text NOT OK */
+  --ch-25: #808080; /* Disabled text NOT OK */
+  --ch-26: #1e1e1e; /* Overlay background NOT OK */
+
+  /* Below is the original github-from-css.css: */
+  /*
+  --ch-0: dark;
+  --ch-1: #8b949e;
+  --ch-2: #79c0ff;
+  --ch-3: #ffa657;
+  --ch-4: #c9d1d9;
+  --ch-5: #d2a8ff;
+  --ch-6: #7ee787;
+  --ch-7: #ff7b72;
+  --ch-8: #a5d6ff;
+  --ch-9: #ffa198;
+  --ch-10: #f0f6fc;
+  --ch-11: #490202;
+  --ch-12: #04260f;
+  --ch-13: #5a1e02;
+  --ch-14: #161b22;
+  --ch-15: #8b949e;
+  --ch-16: #0d1117;
+  --ch-17: #6e76811a;
+  --ch-18: #ffffff0b;
+  --ch-19: #3794ff;
+  --ch-20: #264f78;
+  --ch-21: #1f6feb;
+  --ch-22: #010409;
+  --ch-23: #30363d;
+  --ch-24: #6e7681;
+  --ch-25: #6e768166;
+  --ch-26: #0d1117e6;
+  */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ch-0: light;
+    --ch-1: #6e7781;
+    --ch-2: #0550ae;
+    --ch-3: #953800;
+    --ch-4: #24292f;
+    --ch-5: #8250df;
+    --ch-6: #116329;
+    --ch-7: #cf222e;
+    --ch-8: #0a3069;
+    --ch-9: #82071e;
+    --ch-10: #f6f8fa;
+    --ch-11: #ffebe9;
+    --ch-12: #dafbe1;
+    --ch-13: #ffd8b5;
+    --ch-14: #eaeef2;
+    --ch-15: #57606a;
+    --ch-16: #ffffff;
+    --ch-17: #eaeef280;
+    --ch-18: #fdff0033;
+    --ch-19: #1a85ff;
+    --ch-20: #add6ff;
+    --ch-21: #0969da;
+    --ch-22: #f6f8fa;
+    --ch-23: #d0d7de;
+    --ch-24: #8c959f;
+    --ch-25: #afb8c133;
+    --ch-26: #ffffffe6;
+  }
+}
+
+pre * {
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+}
+
+.autolink-header-anchor {
+  text-decoration: none;
+  position: relative;
+}
+
+h1 .autolink-header-anchor svg,
+h2 .autolink-header-anchor svg,
+h3 .autolink-header-anchor svg,
+h4 .autolink-header-anchor svg,
+h5 .autolink-header-anchor svg,
+h6 .autolink-header-anchor svg {
+  opacity: 0;
+}
+
+h1 .autolink-header-anchor:hover svg,
+h2 .autolink-header-anchor:hover svg,
+h3 .autolink-header-anchor:hover svg,
+h4 .autolink-header-anchor:hover svg,
+h5 .autolink-header-anchor:hover svg,
+h6 .autolink-header-anchor:hover svg {
+  opacity: 1;
+}

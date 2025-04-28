@@ -1,0 +1,129 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2023-07-06T00:00:00";
+
+export const description =
+  "Learn what HTTPS and TLS are, what certification authorities (CAs) are, what Let's Encrypt is, and the difference between regular and wildcard certificates.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-vector/technology-secure-abstract-background_6071869.htm";
+
+export const heroImageHeight = 1334;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "what-are-https-tls-certificates-and-lets-encrypt";
+
+export const tags = ["https", "lets-encrypt", "security", "tls"];
+
+export const title = "What are HTTPS, TLS certificates, and Let's Encrypt?";
+
+export const tweetText =
+  "What are HTTPS, TLS certificates, Let's Encrypt, and the difference between regular and wildcard certificates?";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "hero.jpg";
+
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+## Introduction
+
+In this article, you'll learn what HTTPS and TLS are, what certification authorities (CAs) are, what Let's Encrypt is, the difference between regular and wildcard certificates, and more.
+
+## What is TLS?
+
+"Transport Layer Security (TLS) is a cryptographic protocol designed to provide communications security over a computer network. The protocol is widely used in applications such as email, instant messaging, and voice over IP, but its use in securing HTTPS remains the most publicly visible. [...] TLS is a proposed Internet Engineering Task Force (IETF) standard, first defined in 1999, and the current version is TLS 1.3, defined in August 2018. TLS builds on the now-deprecated SSL (Secure Sockets Layer) specifications (1994, 1995, 1996) developed by Netscape Communications for adding the HTTPS protocol to their Navigator web browser." (["Transport Layer Security"](https://en.wikipedia.org/wiki/Transport_Layer_Security))
+
+## What is HTTPS?
+
+[HTTPS](https://en.wikipedia.org/wiki/HTTPS) is a protocol that extends the original [HTTP](https://pt.wikipedia.org/wiki/Hypertext_Transfer_Protocol) standard protocol to support a more secure web, encrypting network traffic using the [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) protocol. Because of that, it's also referred to as HTTP over TLS.
+
+## What are some of the benefits of using HTTPS?
+
+HTTPS provides many benefits, including:
+
+1. When a website uses HTTPS, all communication between the website and the user's browser is encrypted. That's especially important for sensitive information such as login credentials, financial details, and personal data.
+2. It helps protect against threats like [data tampering](https://en.wikipedia.org/wiki/Computer_security#Tampering), [phishing attacks](https://en.wikipedia.org/wiki/Phishing), and [man-in-the-middle attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack).
+3. Search engines like Google prioritize HTTPS websites in their search results.
+
+## How to provide security through TLS?
+
+To provide security through TLS, like using HTTPS, you must obtain a TLS certificate from a [certificate authority](https://en.wikipedia.org/wiki/Certificate_authority) (CA).
+
+## What is a certificate authority (CA)?
+
+"A certificate authority or certification authority (CA) is an entity that stores, signs, and issues digital certificates. A digital certificate certifies the ownership of a public key by the named subject of the certificate." (["Certificate authority"](https://en.wikipedia.org/wiki/Certificate_authority))
+
+## What is Let's Encrypt?
+
+[Let's Encrypt](https://letsencrypt.org/) is a free (nonprofit) automated certificate authority (CA) providing TLS certificates to millions of websites. It is a service provided by the [Internet Security Research Group](https://www.abetterinternet.org/) (ISRG), sponsored by companies like Mozilla, Cisco, Meta, and Google. According to their website, it's run by a small team and relies on automation to keep costs down, not offering direct support.
+
+Is it good enough?
+
+Yes, it is, on pair of paid TLS certificates.
+
+## What is Certbot?
+
+We must use a client software tool to connect to Let's Encrypt API, and the most popular one is [EFF](https://www.eff.org/)'s [Certbot](https://certbot.eff.org/).
+
+"Certbot is a free, open source software tool for automatically using Let's Encrypt certificates on manually-administrated websites to enable HTTPS. Certbot is made by the Electronic Frontier Foundation (EFF), a 501(c)3 nonprofit based in San Francisco, CA, that defends digital privacy, free speech, and innovation." ("[About Certbot](https://certbot.eff.org/pages/about)")
+
+## What's the difference between regular certificates and wildcard certificates?
+
+A regular certificate, a.k.a. a single-domain certificate, is only valid for one domain or subdomain, whereas a wildcard certificate can secure all subdomains under a single domain.
+
+A wildcard certificate eliminates the need to obtain and manage individual certificates for every subdomain. That makes certificate management more convenient, especially when there are many subdomains to secure.
+
+Wildcard certificates use a wildcard character (_`*`_) in the domain name to match any subdomain, hence their name.
+
+It's important to note that a wildcard certificate cannot secure the root domain itself. For example, a wildcard certificate for _`*.example.com`_ will not cover _`example.com`_. You'll need a separate, single-domain certificate to secure the root _`example.com`_ domain.
+
+Also, a wildcard certificate can only secure one level of subdomains. For example, if you have a wildcard certificate for _`*.example.com`_, it will cover _`subdomain.example.com`_, but not _`sub.subdomain.example.com`_. If you have multiple subdomain levels, you need different wildcard certificates for each one.
+
+## Conclusion
+
+And that's it for this article. I hope you enjoyed it!
+
+Thank you for reading, and let me know if you have any issues or suggestions in the comments below.
+
+## Related posts
+
+- [Wildcard HTTPS on Linux + Let's Encrypt + Nginx](/blog/how-to-wildcard-https-tls-linux-lets-encrypt-nginx/)<br />
+- [How to set up a Linux VPS](/blog/how-to-securely-set-up-vps-server-tutorial-ubuntu-and-debian/)<br />
+- [How to install Nginx on Linux](/blog/how-to-install-nginx-tutorial-ubuntu-and-debian/)<br />
+- [How to set up a website on Linux + Nginx](/blog/how-to-configure-a-website-on-nginx-and-linux-tutorial/)<br />
+- [How to password-protect content on Linux + Nginx](/blog/how-to-password-protect-file-directory-nginx/)
+
+## Interesting links
+
+- [FAQ - Let's Encrypt](https://letsencrypt.org/docs/faq/)<br />
+- [User Guide - Certbot documentation](https://eff-certbot.readthedocs.io/en/stable/using.html)
+
+## Bibliography
+
+- "About Certbot" _Certbot_, n.d. Fri. 8 Jun 2023 &#60;<A href="https://certbot.eff.org/pages/about" style={{ lineBreak: 'anywhere' }}>ht<span />tps://certbot.eff.org/pages/about</A>&#62;
+
+- "Certificate authority" _Wikipedia_, n.d. Fri. 8 Jun 2023 &#60;<A href="https://en.wikipedia.org/wiki/Certificate_authority" style={{ lineBreak: 'anywhere' }}>ht<span />tps://en.wikipedia.org/wiki/Certificate_authority</A>&#62;
+
+- "Transport Layer Security" _Wikipedia_, n.d. Fri. 8 Jun 2023 &#60;<A href="https://en.wikipedia.org/wiki/Transport_Layer_Security" style={{ lineBreak: 'anywhere' }}>ht<span />tps://en.wikipedia.org/wiki/Transport_Layer_Security</A>&#62;
+
+<br />
+<br />
+
+<AITools />

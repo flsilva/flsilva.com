@@ -1,0 +1,447 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2023-12-20T00:00:00";
+
+export const dateUpdated = "2024-02-08T00:00:00";
+
+export const description =
+  "Learn what software architecture is, why it's important, and how components, modules, and layers help you modularize your applications.";
+
+export const heroImage = "hero.jpg";
+
+export const heroImageCreditText = "Image by Freepik";
+
+export const heroImageCreditUrl =
+  "https://www.freepik.com/free-photo/close-up-puzzle-background_22895058.htm";
+
+export const heroImageHeight = 1333;
+
+export const heroImageWidth = 2000;
+
+export const priority = 0.6;
+
+export const slug = "what-is-software-architecture";
+
+export const tags = ["software-architecture"];
+
+export const title = "What is software architecture?";
+
+export const tweetText =
+  "Learn what software architecture is, why it's important, and how components, modules, and layers help you modularize your applications.";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [What is software architecture?](#what-is-software-architecture)
+- [How is software design different than software architecture?](#how-is-software-design-different-than-software-architecture)
+- [Why software architecture is important?](#why-software-architecture-is-important)
+- [Components, modules, and layers](#components-modules-and-layers)
+- [What are components?](#what-are-components)
+  - [No mud](#no-mud)
+  - [A small ball of mud](#a-small-ball-of-mud)
+- [Modules and Modular Architectures](#modules-and-modular-architectures)
+  - [What are modules?](#what-are-modules)
+  - [Modular architectures](#modular-architectures)
+    - [Monolith applications](#monolith-applications)
+    - [Modular monolith architectures](#modular-monolith-architectures)
+    - [Microservices architectures](#microservices-architectures)
+    - [Plug-in architectures](#plug-in-architectures)
+- [Layers and layered architectures](#layers-and-layered-architectures)
+  - [Presentation Layer (UI layer)](#application-layer)
+  - [Application Layer](#application-layer)
+  - [Domain Layer](#domain-layer)
+  - [Data Access Layer](#data-access-layer)
+  - [Layered architecture downsides](#layered-architecture-downsides)
+- [Other types of software architectures](#other-types-of-software-architectures)
+- [Common questions about software architecture](#common-questions-about-software-architecture)
+  - [Is software architecture only relevant for large projects?](#is-software-architecture-only-relevant-for-large-projects)
+  - [Who architects a system?](#who-architects-a-system)
+  - [What artifacts make up a software architecture?](#what-artifacts-make-up-a-software-architecture)
+  - [Does software architecture restrict flexibility and agility?](#does-software-architecture-restrict-flexibility-and-agility)
+  - [Is software architecture a one-time activity?](#is-software-architecture-a-one-time-activity)
+  - [Does software architecture guarantee success?](#does-software-architecture-guarantee-success)
+- [Classic books about software architecture](#classic-books-about-software-architecture)
+- [Conclusion](#conclusion)
+
+## Introduction
+
+This short article is my brief take on the vast and complex subject of software architecture.
+
+There's no objective way to describe software architecture and its elements. Nonetheless, we must take on the task and use our best judgment to understand it as much as possible, aiming to build better software.
+
+The terms and definitions I use here are used differently elsewhere, as there's no consensus on most definitions of the elements of software architecture.
+
+That said, I hope the present article can help the reader better understand the basics of software architecture, some of its elements, and why it matters.
+
+## What is software architecture?
+
+Software architecture is the foundation of any software system.
+
+It is a conceptual framework defining the "what" (the system's high-level structure, components, and relationships) and the "why" (the strategic decisions) to translate functional and non-functional requirements into a roadmap to "how" we should successfully build the system.
+
+## How is software design different than software architecture?
+
+While software architecture acts as the blueprint, defining the high-level "what" and "why" of a system, software design delves deeper into "how" to translate that blueprint into working implementations of individual design principles, components, and algorithms.
+
+## Why software architecture is important?
+
+A well-defined architecture helps developers understand the system and their role in building it. It promotes effective communication, collaboration, and alignment with business goals across different teams while enforcing clear conventions.
+
+It ensures the system meets its functional requirements, i.e., what functions it must perform, and non-functional requirements, like performance, scalability, stability, modularity, reusability, security, and changeability, while reducing risks and costs.
+
+However, building a complex system is like building a giant puzzle. Imagine assembling a thousand-piece image without any organization or grouping of pieces. It would be chaotic and overwhelming.
+
+That's known as the [Big ball of mud](https://en.wikipedia.org/wiki/Anti-pattern#Big_ball_of_mud) in the software engineering world.
+
+The process becomes manageable and efficient by dividing the image into smaller sections based on color or theme.
+
+The same principle applies to software systems, and we use software architecture to break a complex system down into smaller, simpler subsystems.
+
+In this article, we'll see how we can do that with components, modules, and layers.
+
+## Components, modules, and layers
+
+Components, modules, and layers are the architectural building blocks of software architecture.
+
+When discussing software architecture at a higher level, we often use the terms components, modules, and layers interchangeably, referring to logical units that provide functionality.
+
+To illustrate, take these two sentences:
+
+- Software architecture is a conceptual framework defining the system's high-level structure, **components**, and relationships.
+
+- The system is built upon three main **components**: user management, music catalog, and recommendation engine.
+
+In those contexts, **components** mean coarse-grained logic units, like modules, layers, libraries, or services, instead of fine-grained logic units, like individual classes or functions.
+
+However, when discussing software architecture at a lower level, we distinguish those terms by their level of granularity, among other criteria, and that's what we'll see next.
+
+Most importantly, components, modules, and layers are communication mechanisms that tell a story about your system.
+
+## What are components?
+
+Components are the smallest units of architectural building blocks, the finest-grained units of functionality. That's where we typically write our lines of code to solve the actual problems.
+
+Components have the following attributes:
+
+- They are fine-grained, typically implemented as a single file with a single class, function, or a small set of tightly related functions.
+- They have a [single responsibility](https://en.wikipedia.org/wiki/Single_responsibility_principle), i.e., their internal implementation should have high-cohesion.
+- They are [loosely coupled](https://en.wikipedia.org/wiki/Loose_coupling) among them, i.e., fewer to no dependencies on other components.
+- They encapsulate their internal implementation details, e.g., through private methods/functions.
+- They expose [well-defined interfaces](https://en.wikipedia.org/wiki/Interface_segregation_principle) through which they communicate with other components, e.g., through public methods/functions.
+- They can be composed of other components, forming hierarchical structures.
+- They are easy to test.
+- They promote modularity, reusability, and [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns) at a fine-grained level.
+
+There are different types of components, including user interface, database access, and business logic components.
+
+### No mud
+
+Tiny applications have a handful of components.
+
+For example, a currency converter web application with a single page may have only two components: one for handling user input for the amount of money and currency selection and another for retrieving exchange rate data from a third-party service and performing the conversion.
+
+In such cases, breaking the application into two components is enough.
+
+That's a monolith application, and it's appropriate.
+
+### A small ball of mud
+
+Small applications have dozens of components.
+
+Imagine a simple task management web application where users can authenticate and create projects and tasks. The entire application could have about 20 components, each in a separate file. It's a simple application, but imagine all those 20 components in the same folder.
+
+I don't know about you, but it would bother me. Of course, if we know that's all we'll ever have for this application, and it won't grow in any way, that's fine. It'd still bother me, but I'd forget about it since I wouldn't touch it again.
+
+However, that's not how things work. In the real world, an application of that size would be a good [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product), with the next iteration adding features.
+
+Now, imagine that small ball of mud growing. You know where things are going.
+
+Issues with communication and work distribution among team members will also arise due to a lack of architecture as simple as it would be.
+
+That's a monolith application, but it's not appropriate.
+
+We broke down the application into proper components, just like we should. Yet, that's not enough; we need some organization among them. We need to break the system into meaningful subsystems to manage the complexity. We need modularization.
+
+## Modules and Modular Architectures
+
+### What are modules?
+
+Modules (a.k.a. packages) are both organizational and logical units.
+
+They cohesively organize the system's functionality by grouping related components and creating individual, coarse-grained logic units.
+
+That eases the cognitive load. Understanding one module at a time is more manageable than wrapping our heads around a whole system.
+
+We can think of components as individual paragraphs of our system's story. Individually, they tell very little. But when organized into chapters, they become much more meaningful. Modules are the chapters of a system, assembling components meaningfully.
+
+Each module operates independently and encapsulates a specific functionality, and we can develop, maintain, and reuse modules without affecting other modules in the system.
+
+Modules have the following attributes:
+
+- They are coarse-grained, typically implemented as a single folder containing several component files.
+- They have a single responsibility at a coarse-grained level. For example, a user management module is solely responsible for user management functionality.
+- They are [loosely coupled](https://en.wikipedia.org/wiki/Loose_coupling), i.e., fewer to no dependencies on other modules.
+- They encapsulate their internal implementation details, e.g., through private components not exported to outside modules.
+- They expose [well-defined interfaces](https://en.wikipedia.org/wiki/Interface_segregation_principle) through which they communicate with other modules, e.g., through public components exported to outside modules.
+- They may have submodules, forming hierarchical structures.
+- They are easy to test.
+- They promote modularity, reusability, and [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns) at a coarse-grained level.
+
+We can design modules after technical or business features.
+
+A data access module is a **technical feature module** that groups components interacting with a database. Technical feature modules are typically used as layers in layered architectures and are known as _package by layer_ (more next).
+
+A user management module is a **business feature module** that groups components managing user accounts and is known as _package by feature_.
+
+Modules are the foundation of modular software architectures.
+
+### Modular architectures
+
+A modular architecture is an architectural style that breaks the system into meaningful subsystems; each subsystem is a self-contained module. There are many modular architectures, each focusing on solving a particular set of problems.
+
+Some modular architectures allow for the independent deployment of individual modules.
+
+Large companies may assemble small engineering teams responsible for fewer modules. A particular team of business experts works with a specific team of engineers to build an application feature without unnecessary involvement, simplifying and speeding up the process.
+
+The advantages of modular architectures result from the characteristics of the individual modules discussed earlier.
+
+These are some popular modular architectures:
+
+#### Monolith applications
+
+Before addressing modular monolithic architectures, let's briefly overview monolithic applications.
+
+A monolith application is built as a single, tightly integrated unit. Components are interconnected and dependent on each other. Typically, the application runs as a single process and is deployed as a whole.
+
+That brings simplicity to development and deployment but makes it hard to change and scale. Changing one feature usually requires changing unrelated parts of the application.
+
+Monolithic applications don't scale well. As they grow with new features, they become big balls of mud.
+
+But monolithic applications don't have to be like that. They can be modular.
+
+#### Modular monolith architectures
+
+Modular monolithic applications are still built as single units that run in a single process and are deployed as a whole. That makes them easy to manage.
+
+However, they are modular, with most of the benefits of modular architectures.
+
+They're broken down into small, loosely coupled modules. Changing one feature usually requires changing only one module.
+
+Building on the task management app example we saw earlier, we could break it into three modules: user management, projects, and tasks, bringing many of the benefits of a modular architecture to a monolith application.
+
+Modular monolithic applications scale well for dozens of modules and might be an excellent solution for small to mid-sized applications. But for larger applications, we might need something else.
+
+#### Microservices architectures
+
+Microservices is an architectural style that breaks down an application into small, self-contained, and loosely coupled services (modules) that operate independently and communicate with each other through well-defined interfaces and do not have a strict hierarchical relationship. They are developed, deployed, and scaled independently. We can implement different services in different technologies and deploy them to varying infrastructures according to their needs.
+
+On the other hand, they introduce much complexity in managing, monitoring, and operating distributed systems. Microservices architectures are usually an answer to monolithic applications, and we should consider them for large systems.
+
+#### Plug-in architectures
+
+Plug-in architectures build upon the principles of modularity to support third-party modules (plug-ins) to be seamlessly plugged into the core of a system to extend its functionalities. Plug-ins interact with the system's core through well-defined interfaces, making them easier to develop, maintain, and replace.
+
+## Layers and layered architectures
+
+The layered architecture is one of the most common architectural patterns and is standard for most Java EE applications.
+
+In a layered architecture, we organize components into horizontal layers, each on top of the other. The communication between layers is typically unidirectional, with a higher layer only using the services of its lower layer.
+
+Although there are many variations of the layered architecture, the industry has converged to some variation of the following four layers:
+
+<div
+  style={{
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  }}
+>
+  <div style={{ maxWidth: "250px", height: "auto", flexGrow: 1 }}>
+    <ImageWithCaption
+      caption="Layered Architecture"
+      className="block dark:hidden"
+    >
+      ![Layered
+      Architecture](/images/blog/what-is-software-architecture/layered-architecture-01-light.png)
+    </ImageWithCaption>
+    <ImageWithCaption
+      caption="Layered Architecture"
+      className="hidden dark:block"
+    >
+      ![Layered
+      Architecture](/images/blog/what-is-software-architecture/layered-architecture-01-dark.png)
+    </ImageWithCaption>
+  </div>
+</div>
+
+### Presentation Layer (UI layer)
+
+The Presentation layer provides reusable UI components responsible for rendering data to the user and handling user interaction events like button clicks. Their components are stateless or have a minimal UI-related state.
+
+### Application Layer
+
+The Application layer is a thin layer that provides components responsible for business tasks, translating UI events, like button clicks, into application events and flows, like authenticating users. It coordinates and delegates work by implementing and reusing logic from other layers. It doesn't have a business-related state, but it might have an application-related state necessary to complete a multi-step task.
+
+### Domain Layer
+
+The domain layer is the heart of complex software. It provides components representing the concepts of the business responsible for executing business logic and rules. It might have a state related to the business and delegate data access tasks to the Data Access layer.
+
+### Data Access Layer
+
+The Data Access layer provides components to access data from different sources, abstracting away the specific details of data persistence.
+
+Layers have the following attributes:
+
+- They are coarse-grained, typically implemented as a single folder containing several component files.
+- They have a single responsibility at a coarse-grained level. For example, the domain layer is solely responsible for representing business concepts and executing business logic and rules.
+- They are [loosely coupled](https://en.wikipedia.org/wiki/Loose_coupling), i.e., they usually communicate only to the layer below it.
+- They encapsulate their internal implementation details, e.g., through private components not exported to other layers.
+- They expose [well-defined interfaces](https://en.wikipedia.org/wiki/Interface_segregation_principle) through which they communicate with other layers, e.g., through public components exported to other layers.
+- They are easy to test.
+- They promote modularity, reusability, and [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns) at a coarse-grained level.
+
+### Layered architecture downsides
+
+- In a layered architecture, code for each business feature is split into layers. Changing one feature might span multiple layers, making them more complicated and time-consuming.
+- Communication between layers adds overhead, especially in cases where data needs to pass through multiple layers.
+- Managing intricate interactions between layers can be challenging for large systems.
+- Tightly coupled layers can hinder maintenance and evolution if not appropriately designed.
+
+## Other types of software architectures
+
+Modular and layered architectures are just two styles of architecture, and most of the time, more than one architectural style is used on large applications.
+
+Other architectural styles include [Event-driven architecture (EDA)](https://en.wikipedia.org/wiki/Event-driven_architecture), [Service-oriented architecture (SOA)](https://en.wikipedia.org/wiki/Service-oriented_architecture), and [Client-server architecture](https://en.wikipedia.org/wiki/Client%E2%80%93server_model).
+
+## Common questions about software architecture
+
+### Is software architecture only relevant for large projects?
+
+Tiny applications and prototypes may not need an architecture.
+
+However, a suitable architecture is always beneficial. Even small teams building MVPs can benefit from a clear understanding of their system's structure and components to ensure efficient development, changeability, and scalability.
+
+### Who architects a system?
+
+The responsibility of architecting a system varies depending on the project's size and complexity, as well as the organizational structure and development methodology.
+
+In large organizations, dedicated software architects may design and oversee the system's architecture.
+
+The architecture might emerge collaboratively among developers and other team members in smaller teams or Agile environments.
+
+In small projects, the lead developer may architect the system.
+
+All stakeholders should understand the architecture and its rationale, regardless of who is responsible for the software architecture.
+
+### What artifacts make up a software architecture?
+
+Software architecture comprises architectural diagrams, high-level descriptions, decision rationales, design documents, and component specifications. These artifacts reveal the "what" (structure, components, relationships) and "why" (strategic decisions, rationale) of a system, serving as the blueprint for successful development.
+
+### Does software architecture restrict flexibility and agility?
+
+A well-defined architecture promotes flexibility and agility by providing a solid foundation for development. It establishes a shared understanding of the system, allows for modularity and independent development, and facilitates adaptation to changing requirements.
+
+### Is software architecture a one-time activity?
+
+Software architecture is an ongoing process that starts in the early stages of development and continues throughout the system's lifecycle. The architecture's continued review, adaptation, and communication are crucial to ensure its relevance and effectiveness.
+
+### Does software architecture guarantee success?
+
+While a well-designed architecture significantly increases the chances of project success, it's not a magical solution. A combination of skilled developers, effective project management, and continuous improvement is essential for ensuring a high-quality software system's successful development and deployment.
+
+## Classic books about software architecture
+
+Here's a list of some classic books on software architecture:
+
+- [_Software Architecture: Perspectives on an Emerging Discipline_](https://www.amazon.com/Software-Architecture-Perspectives-Emerging-Discipline/dp/0131829572/), by Mary Shaw and David Garlan.
+
+- [_Patterns of Enterprise Application Architecture_](https://www.amazon.com/Patterns-Enterprise-Application-Architecture-Martin/dp/0321127420/), by Martin Fowler.
+
+- [_Domain-Driven Design_](https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/), by Eric Evans.
+
+- [_Clean Architecture: A Craftsman's Guide to Software Structure and Design_](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164/), by Robert C. Martin (Uncle Bob).
+
+- [_Software Architecture in Practice_](https://www.amazon.com/Software-Architecture-Practice-SEI-Engineering/dp/0136886094/), by Len Bass, Paul Clements, and Rick Kazman.
+
+## Conclusion
+
+Components, modules, and layers are the architectural building blocks of software architecture. But software architecture is much more than that. It's about the important things in a software system that will define how straightforward or convoluted the development of a system will be.
+
+It's important to note that the architecture of software is not something apart from the software itself, the codebase. An architecture might have many non-code artifacts, like diagrams and written documents, but code is the ultimate expression of a software architecture. If the codebase is messy, nothing else matters.
+
+As the system evolves, we must refactor it at all levels: components, modules, layers, diagrams, documents, etc. Otherwise, we lose most of the benefits of software architecture and end up with a big ball of mud that happens to have some elements of architecture on it.
+
+<br />
+<br />
+
+<InfoBox>
+Does this article help you get a better understanding of what is software architecture?
+
+Share your insights in the [comments below](#post-comments). I'd love to hear your thoughts.
+
+I'm using [Giscus](https://giscus.app/), so you can comment and give a thumbs up with your GitHub account. 😉
+
+While you're here, please share this article. Your support means a lot to me!
+
+<br />
+
+<SocialMediaShareButtons
+  hashtags={["software-architecture", "modularity"]}
+  tweetText="Learn what software architecture is, why it's important, and how components, modules, and layers help you modularize your applications."
+  tweetVia="flsilva7"
+  url="https://flsilva.com/blog/what-is-software-architecture"
+/>
+
+<br />
+
+Thanks for reading!
+
+</InfoBox>
+
+<br />
+
+## Related posts
+
+- [Nexar: application architecture for Next.js App Router apps](/blog/nexar-application-architecture-for-nextjs-app-router-apps/)
+- [Building OpenTask with Next.js App Router and RSCs](/blog/building-opentask-nextjs-app-router-react-server-components/)
+- [Introduction to UML](/blog/introduction-to-uml-concepts/)
+- [What is software testing?](/blog/what-is-software-testing/)
+- [Software testing in the real world](/blog/software-testing-in-the-real-world/)
+- [Testing is not quality assurance (QA)](/blog/testing-is-not-quality-assurance-qa/)
+- [What is a product specification?](/blog/what-is-a-product-specification/)
+- [What is a software bug?](/blog/what-really-is-a-software-bug/)
+- [How to report bugs effectively?](/blog/how-to-report-bugs-effectively/)
+
+## Interesting links
+
+- [Software Architecture Guide (Martin Fowler)](https://martinfowler.com/architecture/)<br />
+
+## Bibliography
+
+- Evans, Eric. _Domain-Driven Design: Tackling Complexity in the Heart of Software_. Addison-Wesley Professional, 2003.
+
+- Fowler, Martin. _Patterns of Enterprise Application Architecture_. Addison-Wesley Professional, 2002.
+
+<br />
+<br />
+<br />
+
+<AITools />
