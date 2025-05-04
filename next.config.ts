@@ -12,7 +12,7 @@ const nextConfig = {
       {
         source: "/opentask",
         destination:
-          "/blog/https://flsilva.com/blog/building-opentask-nextjs-app-router-react-server-components",
+          "/blog/building-opentask-nextjs-app-router-react-server-components",
         permanent: true,
       },
     ];
