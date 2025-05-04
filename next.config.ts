@@ -7,7 +7,16 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 const nextConfig = {
   // Configure `pageExtensions`` to include MDX files
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  // Optionally, add any other Next.js config below
+  async redirects() {
+    return [
+      {
+        source: "/opentask",
+        destination:
+          "/blog/https://flsilva.com/blog/building-opentask-nextjs-app-router-react-server-components",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 /** @type {import('codehike/mdx').CodeHikeConfig} */
