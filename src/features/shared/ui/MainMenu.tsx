@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+
 import { textClassName } from "./typography/textClassName";
+import { A } from "./typography/Typography";
 
 interface MainMenuProps {
   readonly onItemClick?: () => void;
@@ -48,13 +50,13 @@ export const MainMenu = ({ onItemClick }: MainMenuProps) => {
           </Link>
         </li>
         <li className={menuItemClassName}>
-          <Link
+          <A
             href="/resume/Flavio-Silva-Resume-2024-12-10.pdf"
             className={twMerge(textClassName, menuItemLinkClassName)}
             {...dynamicProps}
           >
             Resume
-          </Link>
+          </A>
         </li>
         <li className={menuItemClassName}>
           <Link
