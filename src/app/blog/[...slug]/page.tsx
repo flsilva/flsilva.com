@@ -48,6 +48,9 @@ export async function generateMetadata({
       tag.charAt(0).toUpperCase() + tag.slice(1)
     } articles by Flavio Silva: full-stack engineer`,
     description: `Check out my articles about ${tag}.`,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
   };
 }
 

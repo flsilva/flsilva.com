@@ -47,6 +47,9 @@ export async function generateMetadata({
     return {
       title: postModule.name,
       description: postModule.description,
+      alternates: {
+        canonical: `/blog/${slug}`,
+      },
     };
   } catch {
     return {

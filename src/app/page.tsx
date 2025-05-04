@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "About Flavio Silva - Full-Stack Software Engineer",
   description:
     "I'm a Brazilian Full-Stack Software Engineer with 20 years of professional industry experience. Check out my website to learn more about my work.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function HomePage() {

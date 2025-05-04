@@ -42,6 +42,9 @@ export async function generateMetadata({
     return {
       title: `${postModule.name} | Portfolio of Flavio Silva`,
       description: postModule.description,
+      alternates: {
+        canonical: `/portfolio/${slug}`,
+      },
     };
   } catch {
     return {

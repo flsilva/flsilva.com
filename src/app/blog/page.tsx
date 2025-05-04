@@ -6,6 +6,9 @@ import { getBlogPosts } from "@/features/blog/data/blogData";
 export const metadata: Metadata = {
   title: "Blog by Flavio Silva: full-stack engineer",
   description: "Check out my blog and the articles I've been writing.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default async function BlogPage() {

@@ -6,6 +6,9 @@ import { A, H1, H2, P } from "@/features/shared/ui/typography/Typography";
 export const metadata: Metadata = {
   title: "Open Source Software by Flavio Silva: full-stack engineer",
   description: "Check out the open source software projects I've created.",
+  alternates: {
+    canonical: "/open-source",
+  },
 };
 
 export default function OpenSourcePage() {

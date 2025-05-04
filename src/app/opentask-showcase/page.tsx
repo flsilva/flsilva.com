@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "OpenTask: A Next.js App Router Showcase",
   description:
     "Discover how I leverage the new Next.js App Router to build successful products for startups in record time.",
+  alternates: {
+    canonical: "/opentask-showcase",
+  },
 };
 
 export default function OpenTaskShowcase() {

@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Portfolio of Flavio Silva: full-stack engineer",
   description:
     "Check out some of the commercial projects I've worked on and played a key role.",
+  alternates: {
+    canonical: "/portfolio",
+  },
 };
 
 export default async function PortfolioPage() {
