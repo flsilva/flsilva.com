@@ -150,7 +150,7 @@ export const BlogPostCard = ({
                 hashtags={tags}
                 tweetText={tweetText || ""}
                 tweetVia={tweetVia}
-                url={`https://flsilva.com/blog/${slug}`}
+                url={`https://www.flsilva.com/blog/${slug}`}
               />
             )}
             {tags && tagsLocation === "below-hero" && renderTags(tags)}

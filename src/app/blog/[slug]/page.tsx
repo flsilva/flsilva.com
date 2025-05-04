@@ -121,7 +121,7 @@ export default async function BlogPostPage({
         hashtags={tags}
         tweetText={tweetText}
         tweetVia={tweetVia}
-        url={`https://flsilva.com/blog/${slug}`}
+        url={`https://www.flsilva.com/blog/${slug}`}
       />
       {slug === "introduction-to-nodejs" && (
         <DiscussionEmbedClient slug={slug} title={title} />

@@ -9,25 +9,25 @@ import {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let map: MetadataRoute.Sitemap = [
     {
-      url: "https://flsilva.com",
+      url: "https://www.flsilva.com",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 1,
     },
     {
-      url: "https://flsilva.com/opentask-showcase",
+      url: "https://www.flsilva.com/opentask-showcase",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.5,
     },
     {
-      url: "https://flsilva.com/open-source",
+      url: "https://www.flsilva.com/open-source",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.5,
     },
     {
-      url: "https://flsilva.com/resume",
+      url: "https://www.flsilva.com/resume",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.5,
@@ -37,14 +37,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Portfolio
   const portfolioProjectSlugs = getAllProjectSlugs();
   map.push({
-    url: "https://flsilva.com/portfolio",
+    url: "https://www.flsilva.com/portfolio",
     lastModified: new Date(),
     changeFrequency: "yearly",
     priority: 0.5,
   });
   map = map.concat(
     portfolioProjectSlugs.map((slug) => ({
-      url: `https://flsilva.com/portfolio/${slug}`,
+      url: `https://www.flsilva.com/portfolio/${slug}`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 1,
@@ -54,14 +54,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Blog
   const blogPostSlugs = getAllBlogPostSlugs();
   map.push({
-    url: "https://flsilva.com/blog",
+    url: "https://www.flsilva.com/blog",
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 1,
   });
   map = map.concat(
     blogPostSlugs.map((slug) => ({
-      url: `https://flsilva.com/blog/${slug}`,
+      url: `https://www.flsilva.com/blog/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
@@ -77,7 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   map = map.concat(
     new Array(...tags).map((slug) => ({
-      url: `https://flsilva.com/blog/${slug}`,
+      url: `https://www.flsilva.com/blog/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
