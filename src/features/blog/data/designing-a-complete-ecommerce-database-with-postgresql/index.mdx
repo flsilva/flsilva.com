@@ -1,0 +1,1649 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-18T00:00:00";
+
+export const description =
+  "Explore a complete PostgreSQL database implementation for an ecommerce platform. This comprehensive case study integrates all key database design principles into a production-ready system.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "designing-a-complete-ecommerce-database-with-postgresql";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "Designing a complete ecommerce database with PostgreSQL";
+
+export const tweetText =
+  "Bring it all together! This final article in our database design series presents a complete implementation of an ecommerce database, showing how all the concepts—from entities and relationships to security and performance—work together in a real-world system. #DatabaseDesign #PostgreSQL #Ecommerce";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 15** of the "Mastering Relational Database Design" series. In
+  [Part 14](LINK_HERE), we learned comprehensive strategies for securing
+  PostgreSQL databases, including authentication mechanisms, role-based access
+  control, encryption options, audit logging, and other security features that
+  help protect data from various threats.
+</InfoBox>
+
+## Introduction
+
+Throughout this series, we've explored the fundamental concepts and advanced techniques of relational database design. We've examined each aspect individually, from entity identification to security implementation. Now it's time to bring everything together in a comprehensive case study of our ShopSmart ecommerce database.
+
+In this final article, we'll present a complete database implementation that integrates all the principles we've covered. We'll review the key decisions made at each stage of the design process, examine how different components work together, and provide the full SQL implementation for a production-ready ecommerce database.
+
+## The ShopSmart database: business requirements
+
+Let's begin by recalling the business requirements for our ShopSmart ecommerce platform:
+
+> "ShopSmart wants to build an online platform where customers can browse products organized by categories, add items to their shopping carts, create wish lists, complete orders, make payments, and leave reviews. The platform needs to track inventory levels, manage promotions, and store shipping addresses for delivery."
+
+From these requirements, we identified several core entities and use cases:
+
+1. **Customer management**: Registration, profile management, and address tracking
+2. **Product catalog**: Products with variations, categories, and inventory management
+3. **Order processing**: Shopping carts, checkout flow, and payment handling
+4. **Review system**: Product ratings and comments from verified purchasers
+5. **Promotion management**: Discounts, special offers, and marketing campaigns
+
+Let's see how our database design addresses each of these requirements while implementing best practices for performance, security, and maintainability.
+
+## Database Architecture Overview
+
+Our ShopSmart database follows a schema-based organization that aligns with functional areas:
+
+1. **`customers` schema**: Customer accounts, addresses, and wish lists
+2. **`products` schema**: Product catalog, categories, and related product information
+3. **`orders` schema**: Orders, order items, shopping carts, and payments
+4. **`inventory` schema**: Stock levels, inventory tracking, and warehouse management
+5. **`promotions` schema**: Discount rules, campaigns, and promotional codes
+6. **`analytics` schema**: Reporting views and aggregated data for business intelligence
+7. **`system` schema**: Administrative functions, audit logs, and system utilities
+
+This schema-based approach provides several benefits:
+
+- Logical organization along business domain boundaries
+- Clear separation of concerns for different functional areas
+- Simplified security management with schema-level permissions
+- Ability to delegate management of different areas to specialized teams
+
+<InfoBoxQuotation>
+  A well-structured database architecture provides a solid foundation for
+  growth. By organizing objects into functional schemas, we create natural
+  boundaries that align with business domains and simplify ongoing development
+  and maintenance.
+</InfoBoxQuotation>
+
+Now, let's examine each major component of our database design in detail.
+
+## Customer Domain Model
+
+The customer domain includes all tables related to user accounts and their interactions with the system:
+
+```sql
+CREATE SCHEMA customers;
+
+-- Core customer information
+CREATE TABLE customers.customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  email varchar(255) NOT NULL UNIQUE,
+  password_hash text NOT NULL,
+  first_name varchar(100) NOT NULL,
+  last_name varchar(100) NOT NULL,
+  phone varchar(20),
+  birth_date date,
+  has_marketing_subscription boolean NOT NULL DEFAULT false,
+  registered_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_login_at timestamptz,
+  inactivated_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_customers_age CHECK (
+    birth_date IS NULL OR
+    (birth_date <= CURRENT_DATE - INTERVAL '13 years' AND
+     birth_date > CURRENT_DATE - INTERVAL '120 years')
+  )
+);
+
+-- Customer addresses
+CREATE TABLE customers.addresses (
+  address_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  address_type varchar(20) NOT NULL DEFAULT 'shipping'
+    CHECK (address_type IN ('shipping', 'billing', 'both')),
+  street_address varchar(255) NOT NULL,
+  city varchar(100) NOT NULL,
+  state varchar(100),
+  postal_code varchar(20) NOT NULL,
+  country varchar(100) NOT NULL,
+  is_default boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Wish lists
+CREATE TABLE customers.wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  name varchar(100) NOT NULL DEFAULT 'My Wishlist',
+  is_public boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Wish list items
+CREATE TABLE customers.wish_list_items (
+  wish_list_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  wish_list_id uuid NOT NULL REFERENCES customers.wish_lists(wish_list_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  added_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  notes text,
+  CONSTRAINT unique_wishlist_product UNIQUE (wish_list_id, product_id)
+);
+
+-- Customer reviews
+CREATE TABLE customers.reviews (
+  review_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  rating integer NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  title varchar(255),
+  comment text,
+  is_verified_purchase boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes for customer tables
+CREATE INDEX idx_customers_name ON customers.customers(last_name, first_name);
+CREATE INDEX idx_customers_email ON customers.customers(email);
+CREATE INDEX idx_addresses_customer ON customers.addresses(customer_id);
+CREATE INDEX idx_addresses_customer_default ON customers.addresses(customer_id, is_default)
+  WHERE is_default = true;
+CREATE INDEX idx_wishlists_customer ON customers.wish_lists(customer_id);
+CREATE INDEX idx_reviews_product ON customers.reviews(product_id, rating DESC);
+CREATE INDEX idx_reviews_customer ON customers.reviews(customer_id);
+```
+
+**Key design decisions in the customer domain:**
+
+1. **Schema isolation**: All customer-related tables are in the `customers` schema.
+2. **Soft delete approach**: The `inactivated_at` timestamp allows for account deactivation without data loss.
+3. **Flexible address system**: Addresses can be shipping, billing, or both, with a default flag.
+4. **Wish list customization**: Customers can name wish lists and choose to make them public.
+5. **Review verification**: The `is_verified_purchase` flag distinguishes authentic reviews.
+6. **Strategic indexing**: Indexes support common query patterns like finding a customer's default address.
+
+## Product Domain Model
+
+The product domain encompasses the catalog, categories, and product attributes:
+
+```sql
+CREATE SCHEMA products;
+
+-- Product categories with hierarchical structure
+CREATE TABLE products.categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  description text,
+  parent_id uuid REFERENCES products.categories(category_id),
+  image_url varchar(255),
+  is_active boolean NOT NULL DEFAULT true,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Product types validation table
+CREATE TABLE products.product_types (
+  product_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize product types
+INSERT INTO products.product_types (name, description, display_order)
+VALUES
+  ('physical', 'Tangible products that require shipping', 10),
+  ('digital', 'Downloadable products', 20),
+  ('subscription', 'Recurring service products', 30);
+
+-- Base products table (supertype)
+CREATE TABLE products.products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_type_id uuid NOT NULL REFERENCES products.product_types(product_type_id),
+  category_id uuid NOT NULL REFERENCES products.categories(category_id),
+  name varchar(255) NOT NULL,
+  description text,
+  price decimal(10,2) NOT NULL CHECK (price >= 0),
+  cost decimal(10,2) CHECK (cost >= 0),
+  sku varchar(50) UNIQUE,
+  is_featured boolean NOT NULL DEFAULT false,
+  is_active boolean NOT NULL DEFAULT true,
+  stock_quantity integer NOT NULL DEFAULT 0 CHECK (stock_quantity >= 0),
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  inactivated_at timestamptz
+);
+
+-- Physical products subtype
+CREATE TABLE products.physical_products (
+  product_id uuid PRIMARY KEY REFERENCES products.products(product_id) ON DELETE CASCADE,
+  weight decimal(8,3) NOT NULL CHECK (weight > 0),
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL,
+  country_of_origin varchar(100),
+  is_fragile boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Digital products subtype
+CREATE TABLE products.digital_products (
+  product_id uuid PRIMARY KEY REFERENCES products.products(product_id) ON DELETE CASCADE,
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL CHECK (file_size > 0),
+  file_format varchar(20) NOT NULL,
+  download_limit integer,
+  license_type varchar(50) NOT NULL DEFAULT 'standard',
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Subscription products subtype
+CREATE TABLE products.subscription_products (
+  product_id uuid PRIMARY KEY REFERENCES products.products(product_id) ON DELETE CASCADE,
+  billing_period varchar(20) NOT NULL CHECK (billing_period IN ('monthly', 'quarterly', 'annual')),
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0,
+  auto_renew boolean NOT NULL DEFAULT true,
+  cancellation_policy text,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Product images
+CREATE TABLE products.product_images (
+  image_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  image_url varchar(255) NOT NULL,
+  alt_text varchar(255),
+  is_primary boolean NOT NULL DEFAULT false,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Product relationship types
+CREATE TABLE products.product_relationship_types (
+  product_relationship_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize relationship types
+INSERT INTO products.product_relationship_types (name, description, display_order)
+VALUES
+  ('accessory', 'Products that complement the main product', 10),
+  ('alternative', 'Similar products that could substitute the main product', 20),
+  ('frequently_bought_together', 'Products often purchased together with the main product', 30);
+
+-- Related products (self-referencing many-to-many relationship)
+CREATE TABLE products.related_products (
+  related_product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  related_to_product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  product_relationship_type_id uuid NOT NULL
+    REFERENCES products.product_relationship_types(product_relationship_type_id),
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_related_product UNIQUE (product_id, related_to_product_id),
+  CONSTRAINT chk_different_products CHECK (product_id <> related_to_product_id)
+);
+
+-- Indexes for product tables
+CREATE INDEX idx_products_category ON products.products(category_id);
+CREATE INDEX idx_products_type ON products.products(product_type_id);
+CREATE INDEX idx_products_name ON products.products(name);
+CREATE INDEX idx_products_price ON products.products(price);
+CREATE INDEX idx_products_active_featured ON products.products(is_active, is_featured)
+  WHERE is_active = true;
+CREATE INDEX idx_products_stock ON products.products(stock_quantity)
+  WHERE stock_quantity > 0;
+CREATE INDEX idx_product_images_product ON products.product_images(product_id, display_order);
+CREATE INDEX idx_related_products_product ON products.related_products(product_id);
+CREATE INDEX idx_related_products_related_to ON products.related_products(related_to_product_id);
+
+-- Full-text search index
+CREATE INDEX idx_products_fts ON products.products
+  USING GIN (to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '')));
+```
+
+**Key design decisions in the product domain:**
+
+1. **Category hierarchy**: Self-referencing `parent_id` enables a tree structure for categories.
+2. **Subtype tables**: Physical, digital, and subscription products each have their own tables.
+3. **Validation tables**: Product types and relationship types use validation tables for consistency.
+4. **Self-referencing relationship**: The `related_products` table implements product relationships.
+5. **Image management**: Multiple images per product with ordering and primary image designation.
+6. **Strategic indexing**: Includes a full-text search index for product search functionality.
+7. **Check constraints**: Business rules like non-negative prices and quantities are enforced at the database level.
+
+## Order Domain Model
+
+The order domain handles shopping carts, orders, and payment processing:
+
+```sql
+CREATE SCHEMA orders;
+
+-- Shopping carts
+CREATE TABLE orders.shopping_carts (
+  cart_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid UNIQUE REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Shopping cart items
+CREATE TABLE orders.cart_items (
+  cart_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  cart_id uuid NOT NULL REFERENCES orders.shopping_carts(cart_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  quantity integer NOT NULL CHECK (quantity > 0),
+  added_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_cart_product UNIQUE (cart_id, product_id)
+);
+
+-- Order statuses validation table
+CREATE TABLE orders.order_statuses (
+  order_status_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize order statuses
+INSERT INTO orders.order_statuses (name, description, display_order)
+VALUES
+  ('pending', 'Order has been placed but not yet processed', 10),
+  ('payment_processing', 'Payment is being processed', 20),
+  ('payment_failed', 'Payment processing failed', 30),
+  ('processing', 'Order is being prepared for shipment', 40),
+  ('shipped', 'Order has been shipped', 50),
+  ('delivered', 'Order has been delivered', 60),
+  ('cancelled', 'Order has been cancelled', 70),
+  ('refunded', 'Order has been refunded', 80);
+
+-- Orders table
+CREATE TABLE orders.orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id),
+  order_status_id uuid NOT NULL REFERENCES orders.order_statuses(order_status_id),
+  ordered_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  shipping_address_id uuid NOT NULL REFERENCES customers.addresses(address_id),
+  billing_address_id uuid REFERENCES customers.addresses(address_id),
+  shipping_cost decimal(10,2) NOT NULL DEFAULT 0 CHECK (shipping_cost >= 0),
+  tax_amount decimal(10,2) NOT NULL DEFAULT 0 CHECK (tax_amount >= 0),
+  promocode_id uuid REFERENCES promotions.promocodes(promocode_id),
+  notes text,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Order items
+CREATE TABLE orders.order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders.orders(order_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id),
+  quantity integer NOT NULL CHECK (quantity > 0),
+  unit_price decimal(10,2) NOT NULL CHECK (unit_price >= 0),
+  discount_amount decimal(10,2) NOT NULL DEFAULT 0 CHECK (discount_amount >= 0),
+  is_gift boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Payment methods validation table
+CREATE TABLE orders.payment_methods (
+  payment_method_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  is_active boolean NOT NULL DEFAULT true,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize payment methods
+INSERT INTO orders.payment_methods (name, description, display_order)
+VALUES
+  ('credit_card', 'Credit card payment', 10),
+  ('debit_card', 'Debit card payment', 20),
+  ('paypal', 'PayPal payment', 30),
+  ('bank_transfer', 'Direct bank transfer', 40),
+  ('gift_card', 'Gift card payment', 50);
+
+-- Payment statuses validation table
+CREATE TABLE orders.payment_statuses (
+  payment_status_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize payment statuses
+INSERT INTO orders.payment_statuses (name, description, display_order)
+VALUES
+  ('pending', 'Payment is pending processing', 10),
+  ('processing', 'Payment is being processed', 20),
+  ('completed', 'Payment has been completed successfully', 30),
+  ('failed', 'Payment processing failed', 40),
+  ('refunded', 'Payment has been refunded', 50),
+  ('partially_refunded', 'Payment has been partially refunded', 60);
+
+-- Payments table
+CREATE TABLE orders.payments (
+  payment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders.orders(order_id),
+  payment_method_id uuid NOT NULL REFERENCES orders.payment_methods(payment_method_id),
+  payment_status_id uuid NOT NULL REFERENCES orders.payment_statuses(payment_status_id),
+  amount decimal(10,2) NOT NULL CHECK (amount > 0),
+  transaction_id varchar(100) UNIQUE,
+  payment_details jsonb,
+  paid_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes for order tables
+CREATE INDEX idx_shopping_carts_customer ON orders.shopping_carts(customer_id);
+CREATE INDEX idx_cart_items_cart ON orders.cart_items(cart_id);
+CREATE INDEX idx_cart_items_product ON orders.cart_items(product_id);
+CREATE INDEX idx_orders_customer ON orders.orders(customer_id);
+CREATE INDEX idx_orders_status ON orders.orders(order_status_id);
+CREATE INDEX idx_orders_date ON orders.orders(ordered_at DESC);
+CREATE INDEX idx_order_items_order ON orders.order_items(order_id);
+CREATE INDEX idx_order_items_product ON orders.order_items(product_id);
+CREATE INDEX idx_payments_order ON orders.payments(order_id);
+CREATE INDEX idx_payments_status ON orders.payments(payment_status_id);
+CREATE INDEX idx_payments_transaction ON orders.payments(transaction_id);
+```
+
+**Key design decisions in the order domain:**
+
+1. **One-to-one relationship**: Each customer has exactly one shopping cart (identified by the UNIQUE constraint on `customer_id`).
+2. **Validation tables**: Order statuses and payment methods use validation tables for consistency.
+3. **Price capture**: Order items store the price at the time of purchase (`unit_price`), not the current product price.
+4. **Flexible payment handling**: The payments table supports multiple payment methods and partial payments.
+5. **JSON storage**: Payment details are stored in a flexible JSONB field to accommodate different payment methods.
+6. **Separation of concerns**: Orders are separate from payments, allowing for complex payment scenarios.
+7. **Strategic indexing**: Indexes support common queries like finding a customer's orders or recent orders.
+
+## Inventory Domain Model
+
+The inventory domain tracks stock levels and inventory changes:
+
+```sql
+CREATE SCHEMA inventory;
+
+-- Warehouses
+CREATE TABLE inventory.warehouses (
+  warehouse_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  address_line1 varchar(255) NOT NULL,
+  address_line2 varchar(255),
+  city varchar(100) NOT NULL,
+  state varchar(100),
+  postal_code varchar(20) NOT NULL,
+  country varchar(100) NOT NULL,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Stock levels
+CREATE TABLE inventory.stock_levels (
+  stock_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id),
+  warehouse_id uuid NOT NULL REFERENCES inventory.warehouses(warehouse_id),
+  quantity integer NOT NULL DEFAULT 0 CHECK (quantity >= 0),
+  reorder_threshold integer,
+  reorder_quantity integer,
+  last_counted_at timestamptz,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_product_warehouse UNIQUE (product_id, warehouse_id)
+);
+
+-- Inventory change reasons validation table
+CREATE TABLE inventory.inventory_change_reasons (
+  reason_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  affects_cost_basis boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize inventory change reasons
+INSERT INTO inventory.inventory_change_reasons (name, description, affects_cost_basis)
+VALUES
+  ('purchase', 'Inventory purchased from supplier', true),
+  ('sale', 'Product sold to customer', false),
+  ('return', 'Customer returned product', false),
+  ('damage', 'Product damaged in warehouse', true),
+  ('loss', 'Product lost or missing', true),
+  ('adjustment', 'Inventory count adjustment', true),
+  ('transfer', 'Transfer between warehouses', false);
+
+-- Inventory history
+CREATE TABLE inventory.inventory_history (
+  inventory_history_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id),
+  warehouse_id uuid NOT NULL REFERENCES inventory.warehouses(warehouse_id),
+  reason_id uuid NOT NULL REFERENCES inventory.inventory_change_reasons(reason_id),
+  quantity_change integer NOT NULL,
+  previous_quantity integer NOT NULL,
+  new_quantity integer NOT NULL,
+  reference_id uuid,
+  reference_type varchar(50),
+  notes text,
+  changed_by varchar(100) NOT NULL,
+  changed_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Inventory reservations (for order processing)
+CREATE TABLE inventory.reservations (
+  reservation_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id),
+  warehouse_id uuid NOT NULL REFERENCES inventory.warehouses(warehouse_id),
+  quantity integer NOT NULL CHECK (quantity > 0),
+  reserved_for_id uuid NOT NULL,
+  reserved_for_type varchar(50) NOT NULL,
+  reservation_expiry timestamptz NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes for inventory tables
+CREATE INDEX idx_stock_levels_product ON inventory.stock_levels(product_id);
+CREATE INDEX idx_stock_levels_warehouse ON inventory.stock_levels(warehouse_id);
+CREATE INDEX idx_stock_levels_low ON inventory.stock_levels(product_id)
+  WHERE quantity <= reorder_threshold;
+CREATE INDEX idx_inventory_history_product ON inventory.inventory_history(product_id);
+CREATE INDEX idx_inventory_history_date ON inventory.inventory_history(changed_at);
+CREATE INDEX idx_inventory_history_reason ON inventory.inventory_history(reason_id);
+CREATE INDEX idx_reservations_product ON inventory.reservations(product_id);
+CREATE INDEX idx_reservations_expiry ON inventory.reservations(reservation_expiry)
+  WHERE reservation_expiry > CURRENT_TIMESTAMP;
+```
+
+**Key design decisions in the inventory domain:**
+
+1. **Multi-warehouse support**: The system tracks inventory across multiple physical locations.
+2. **Inventory history**: All stock changes are recorded with reason codes for auditing.
+3. **Reservation system**: Temporary inventory holds support concurrent order processing.
+4. **Reordering system**: Reorder thresholds and quantities support automated purchasing.
+5. **Referential integrity**: Changes link to their source events (orders, returns, etc.).
+6. **Strategic indexing**: Includes an index specifically for identifying low stock items.
+
+## Promotions Domain Model
+
+The promotions domain manages discounts, campaigns, and promotional codes:
+
+```sql
+CREATE SCHEMA promotions;
+
+-- Promotion types validation table
+CREATE TABLE promotions.promotion_types (
+  promotion_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Initialize promotion types
+INSERT INTO promotions.promotion_types (name, description)
+VALUES
+  ('percentage_discount', 'Percentage off the product price'),
+  ('fixed_amount_discount', 'Fixed amount off the product price'),
+  ('buy_x_get_y_free', 'Buy a certain quantity, get additional items free'),
+  ('free_shipping', 'Free shipping on qualifying orders');
+
+-- Campaigns
+CREATE TABLE promotions.campaigns (
+  campaign_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  description text,
+  start_date timestamptz NOT NULL,
+  end_date timestamptz NOT NULL,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_campaign_dates CHECK (end_date > start_date)
+);
+
+-- Promotion rules
+CREATE TABLE promotions.promotion_rules (
+  promotion_rule_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  campaign_id uuid NOT NULL REFERENCES promotions.campaigns(campaign_id) ON DELETE CASCADE,
+  promotion_type_id uuid NOT NULL REFERENCES promotions.promotion_types(promotion_type_id),
+  name varchar(100) NOT NULL,
+  description text,
+  discount_value decimal(10,2),
+  minimum_order_amount decimal(10,2),
+  minimum_quantity integer,
+  maximum_discount decimal(10,2),
+  applies_to_products boolean NOT NULL DEFAULT false,
+  applies_to_categories boolean NOT NULL DEFAULT false,
+  is_combinable boolean NOT NULL DEFAULT false,
+  rule_conditions jsonb,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Product promotions (many-to-many)
+CREATE TABLE promotions.product_promotions (
+  product_promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  promotion_rule_id uuid NOT NULL REFERENCES promotions.promotion_rules(promotion_rule_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_product_promotion UNIQUE (promotion_rule_id, product_id)
+);
+
+-- Category promotions (many-to-many)
+CREATE TABLE promotions.category_promotions (
+  category_promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  promotion_rule_id uuid NOT NULL REFERENCES promotions.promotion_rules(promotion_rule_id) ON DELETE CASCADE,
+  category_id uuid NOT NULL REFERENCES products.categories(category_id) ON DELETE CASCADE,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_category_promotion UNIQUE (promotion_rule_id, category_id)
+);
+
+-- Promotion codes
+CREATE TABLE promotions.promocodes (
+  promocode_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  promotion_rule_id uuid NOT NULL REFERENCES promotions.promotion_rules(promotion_rule_id),
+  code varchar(50) NOT NULL UNIQUE,
+  description text,
+  is_single_use boolean NOT NULL DEFAULT false,
+  usage_limit integer,
+  usage_count integer NOT NULL DEFAULT 0,
+  start_date timestamptz NOT NULL,
+  end_date timestamptz NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_promocode_dates CHECK (end_date > start_date),
+  CONSTRAINT chk_promocode_usage CHECK (usage_limit IS NULL OR usage_count <= usage_limit)
+);
+
+-- Indexes for promotion tables
+CREATE INDEX idx_campaigns_active_dates ON promotions.campaigns(is_active, start_date, end_date);
+CREATE INDEX idx_promotion_rules_campaign ON promotions.promotion_rules(campaign_id);
+CREATE INDEX idx_promotion_rules_type ON promotions.promotion_rules(promotion_type_id);
+CREATE INDEX idx_product_promotions_product ON promotions.product_promotions(product_id);
+CREATE INDEX idx_category_promotions_category ON promotions.category_promotions(category_id);
+CREATE INDEX idx_promocodes_code ON promotions.promocodes(code);
+CREATE INDEX idx_promocodes_active_dates ON promotions.promocodes(start_date, end_date)
+  WHERE end_date > CURRENT_TIMESTAMP;
+```
+
+**Key design decisions in the promotions domain:**
+
+1. **Flexible promotion system**: Supports percentage discounts, fixed amounts, BOGO, and free shipping.
+2. **Campaign organization**: Promotions are organized into time-bound marketing campaigns.
+3. **Targeted promotions**: Promotions can apply to specific products, categories, or orders.
+4. **Promotion codes**: Support for unique codes with usage limits.
+5. **Rule conditions**: Complex promotion rules stored in a flexible JSONB field.
+6. **Strategic indexing**: Time-based indexes to quickly find active promotions.
+
+## Analytics and Reporting
+
+The analytics schema contains materialized views for reporting:
+
+```sql
+CREATE SCHEMA analytics;
+
+-- Sales summary by day
+CREATE MATERIALIZED VIEW analytics.daily_sales_summary AS
+SELECT
+  DATE_TRUNC('day', o.ordered_at) AS sale_date,
+  COUNT(DISTINCT o.order_id) AS order_count,
+  COUNT(DISTINCT o.customer_id) AS customer_count,
+  SUM(oi.quantity) AS total_items_sold,
+  SUM(oi.quantity * oi.unit_price) AS gross_sales,
+  SUM(oi.quantity * oi.unit_price - COALESCE(oi.discount_amount, 0)) AS net_sales,
+  SUM(o.shipping_cost) AS shipping_revenue,
+  SUM(o.tax_amount) AS tax_collected
+FROM
+  orders.orders o
+JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+JOIN
+  orders.order_statuses os ON o.order_status_id = os.order_status_id
+WHERE
+  os.name NOT IN ('cancelled', 'refunded')
+GROUP BY
+  DATE_TRUNC('day', o.ordered_at)
+ORDER BY
+  sale_date DESC;
+
+-- Product performance metrics
+CREATE MATERIALIZED VIEW analytics.product_performance AS
+SELECT
+  p.product_id,
+  p.name AS product_name,
+  c.name AS category_name,
+  pt.name AS product_type,
+  p.price,
+  COUNT(DISTINCT oi.order_id) AS order_count,
+  SUM(oi.quantity) AS units_sold,
+  SUM(oi.quantity * oi.unit_price) AS gross_revenue,
+  SUM(oi.quantity * oi.unit_price - COALESCE(oi.discount_amount, 0)) AS net_revenue,
+  COALESCE(AVG(r.rating), 0) AS average_rating,
+  COUNT(r.review_id) AS review_count,
+  p.stock_quantity
+FROM
+  products.products p
+JOIN
+  products.categories c ON p.category_id = c.category_id
+JOIN
+  products.product_types pt ON p.product_type_id = pt.product_type_id
+LEFT JOIN
+  orders.order_items oi ON p.product_id = oi.product_id
+LEFT JOIN
+  orders.orders o ON oi.order_id = o.order_id
+LEFT JOIN
+  orders.order_statuses os ON o.order_status_id = os.order_status_id
+LEFT JOIN
+  customers.reviews r ON p.product_id = r.product_id
+WHERE
+  os.name NOT IN ('cancelled', 'refunded') OR os.name IS NULL
+GROUP BY
+  p.product_id, p.name, c.name, pt.name, p.price, p.stock_quantity;
+
+-- Customer segmentation
+CREATE MATERIALIZED VIEW analytics.customer_segments AS
+SELECT
+  c.customer_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  -- Recency: days since last order
+  CASE
+    WHEN MAX(o.ordered_at) IS NULL THEN 999
+    ELSE EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at))
+  END AS days_since_last_order,
+  -- Frequency: number of orders
+  COUNT(DISTINCT o.order_id) AS order_count,
+  -- Monetary: total spend
+  COALESCE(SUM(oi.quantity * oi.unit_price), 0) AS total_spend,
+  -- Average order value
+  CASE
+    WHEN COUNT(DISTINCT o.order_id) = 0 THEN 0
+    ELSE COALESCE(SUM(oi.quantity * oi.unit_price), 0) / COUNT(DISTINCT o.order_id)
+  END AS average_order_value,
+  -- Segment classification
+  CASE
+    WHEN COUNT(DISTINCT o.order_id) = 0 THEN 'inactive'
+    WHEN EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at)) <= 30
+      AND COUNT(DISTINCT o.order_id) >= 3 THEN 'loyal'
+    WHEN EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at)) <= 30 THEN 'active'
+    WHEN EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at)) <= 90 THEN 'recent'
+    ELSE 'lapsed'
+  END AS customer_segment
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+LEFT JOIN
+  orders.order_statuses os ON o.order_status_id = os.order_status_id
+WHERE
+  os.name NOT IN ('cancelled', 'refunded') OR os.name IS NULL
+GROUP BY
+  c.customer_id, c.first_name, c.last_name, c.email;
+
+-- Indexes for analytics views
+CREATE UNIQUE INDEX idx_daily_sales_date ON analytics.daily_sales_summary(sale_date);
+CREATE UNIQUE INDEX idx_product_performance_id ON analytics.product_performance(product_id);
+CREATE INDEX idx_product_performance_category ON analytics.product_performance(category_name);
+CREATE INDEX idx_product_performance_revenue ON analytics.product_performance(net_revenue DESC);
+CREATE UNIQUE INDEX idx_customer_segments_id ON analytics.customer_segments(customer_id);
+CREATE INDEX idx_customer_segments_segment ON analytics.customer_segments(customer_segment);
+```
+
+**Key design decisions in the analytics domain:**
+
+1. **Materialized views**: Pre-computed aggregations improve reporting performance.
+2. **Customer segmentation**: RFM (Recency, Frequency, Monetary) analysis for targeted marketing.
+3. **Product performance metrics**: Comprehensive metrics for product management.
+4. **Sales summaries**: Time-based aggregations for trend analysis.
+5. **Strategic indexing**: Unique indexes enable concurrent view refreshes.
+
+## System Management
+
+The system schema contains administrative functions and audit logging:
+
+```sql
+CREATE SCHEMA system;
+
+-- Audit log
+CREATE TABLE system.audit_log (
+  audit_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  table_schema varchar(50) NOT NULL,
+  table_name varchar(50) NOT NULL,
+  operation varchar(10) NOT NULL CHECK (operation IN ('INSERT', 'UPDATE', 'DELETE')),
+  record_id uuid,
+  changed_by varchar(50) NOT NULL,
+  changed_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  client_ip inet,
+  application_name text,
+  old_values jsonb,
+  new_values jsonb
+);
+
+-- Audit trigger function
+CREATE OR REPLACE FUNCTION system.audit_trigger_function()
+RETURNS TRIGGER AS $$
+DECLARE
+  record_id uuid;
+BEGIN
+  -- Get the record identifier
+  IF TG_OP = 'DELETE' THEN
+    record_id := OLD.customer_id;
+    IF record_id IS NULL THEN
+      record_id := OLD.order_id;
+    END IF;
+    IF record_id IS NULL THEN
+      record_id := OLD.product_id;
+    END IF;
+  ELSE
+    record_id := NEW.customer_id;
+    IF record_id IS NULL THEN
+      record_id := NEW.order_id;
+    END IF;
+    IF record_id IS NULL THEN
+      record_id := NEW.product_id;
+    END IF;
+  END IF;
+
+  -- Create audit log entry
+  IF TG_OP = 'UPDATE' THEN
+    INSERT INTO system.audit_log (
+      table_schema, table_name, operation, record_id, changed_by,
+      client_ip, application_name, old_values, new_values
+    ) VALUES (
+      TG_TABLE_SCHEMA, TG_TABLE_NAME, TG_OP, record_id, current_user,
+      inet_client_addr(), current_setting('application_name'),
+      to_jsonb(OLD), to_jsonb(NEW)
+    );
+  ELSIF TG_OP = 'DELETE' THEN
+    INSERT INTO system.audit_log (
+      table_schema, table_name, operation, record_id, changed_by,
+      client_ip, application_name, old_values
+    ) VALUES (
+      TG_TABLE_SCHEMA, TG_TABLE_NAME, TG_OP, record_id, current_user,
+      inet_client_addr(), current_setting('application_name'),
+      to_jsonb(OLD)
+    );
+  ELSIF TG_OP = 'INSERT' THEN
+    INSERT INTO system.audit_log (
+      table_schema, table_name, operation, record_id, changed_by,
+      client_ip, application_name, new_values
+    ) VALUES (
+      TG_TABLE_SCHEMA, TG_TABLE_NAME, TG_OP, record_id, current_user,
+      inet_client_addr(), current_setting('application_name'),
+      to_jsonb(NEW)
+    );
+  END IF;
+
+  -- Return appropriate value
+  IF TG_OP = 'DELETE' THEN
+    RETURN OLD;
+  ELSE
+    RETURN NEW;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Apply audit triggers to key tables
+CREATE TRIGGER audit_customers
+AFTER INSERT OR UPDATE OR DELETE ON customers.customers
+FOR EACH ROW EXECUTE FUNCTION system.audit_trigger_function();
+
+CREATE TRIGGER audit_orders
+AFTER INSERT OR UPDATE OR DELETE ON orders.orders
+FOR EACH ROW EXECUTE FUNCTION system.audit_trigger_function();
+
+CREATE TRIGGER audit_products
+AFTER INSERT OR UPDATE OR DELETE ON products.products
+FOR EACH ROW EXECUTE FUNCTION system.audit_trigger_function();
+
+-- Database maintenance functions
+CREATE OR REPLACE FUNCTION system.refresh_materialized_views()
+RETURNS void AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY analytics.daily_sales_summary;
+  REFRESH MATERIALIZED VIEW CONCURRENTLY analytics.product_performance;
+  REFRESH MATERIALIZED VIEW CONCURRENTLY analytics.customer_segments;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Clean expired reservations
+CREATE OR REPLACE FUNCTION system.clean_expired_reservations()
+RETURNS integer AS $$
+DECLARE
+  cleaned_count integer;
+BEGIN
+  DELETE FROM inventory.reservations
+  WHERE reservation_expiry < CURRENT_TIMESTAMP
+  RETURNING COUNT(*) INTO cleaned_count;
+
+  RETURN cleaned_count;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+**Key design decisions in the system domain:**
+
+1. **Audit logging**: Comprehensive tracking of data changes for security and compliance.
+2. **Maintenance functions**: Automated routines for regular database maintenance.
+3. **Reservation cleanup**: Automatic removal of expired inventory reservations.
+4. **View refresh**: Coordinated refresh of all materialized views.
+
+## Role-Based Access Control
+
+Here's the security implementation for our ShopSmart database:
+
+```sql
+-- Create application roles
+CREATE ROLE customer_service;
+CREATE ROLE inventory_manager;
+CREATE ROLE order_processor;
+CREATE ROLE product_manager;
+CREATE ROLE analytics_user;
+CREATE ROLE api_user;
+
+-- Grant schema-level permissions
+GRANT USAGE ON SCHEMA customers TO customer_service, order_processor, analytics_user, api_user;
+GRANT USAGE ON SCHEMA products TO product_manager, inventory_manager, analytics_user, api_user;
+GRANT USAGE ON SCHEMA orders TO order_processor, customer_service, analytics_user, api_user;
+GRANT USAGE ON SCHEMA inventory TO inventory_manager, order_processor;
+GRANT USAGE ON SCHEMA promotions TO product_manager, order_processor, api_user;
+GRANT USAGE ON SCHEMA analytics TO analytics_user;
+
+-- Customer service permissions
+GRANT SELECT ON ALL TABLES IN SCHEMA customers TO customer_service;
+GRANT SELECT ON orders.orders, orders.order_items, orders.payments TO customer_service;
+GRANT UPDATE (email, phone, first_name, last_name) ON customers.customers TO customer_service;
+GRANT UPDATE (order_status_id, notes) ON orders.orders TO customer_service;
+
+-- Inventory manager permissions
+GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA inventory TO inventory_manager;
+GRANT SELECT ON products.products TO inventory_manager;
+
+-- Product manager permissions
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA products TO product_manager;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA promotions TO product_manager;
+
+-- Order processor permissions
+GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA orders TO order_processor;
+GRANT SELECT ON customers.customers, customers.addresses TO order_processor;
+GRANT SELECT, UPDATE ON inventory.stock_levels TO order_processor;
+GRANT SELECT, INSERT ON inventory.inventory_history TO order_processor;
+
+-- Analytics user permissions
+GRANT SELECT ON ALL TABLES IN SCHEMA analytics TO analytics_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA customers TO analytics_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA products TO analytics_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA orders TO analytics_user;
+
+-- API user permissions
+GRANT SELECT ON customers.customers, customers.addresses TO api_user;
+GRANT SELECT ON products.products, products.categories TO api_user;
+GRANT SELECT, INSERT, UPDATE ON orders.shopping_carts, orders.cart_items TO api_user;
+GRANT INSERT ON orders.orders, orders.order_items TO api_user;
+```
+
+**Key design decisions in the security implementation:**
+
+1. **Functional roles**: Permissions are organized by job function rather than individual users.
+2. **Schema-level security**: The schema structure provides natural security boundaries.
+3. **Column-level permissions**: Customer service can only update specific customer columns.
+4. **Least privilege principle**: Each role has only the permissions needed for its function.
+5. **Separation of duties**: Sensitive operations require multiple roles.
+
+## Views for Data Access
+
+Standard and materialized views provide simplified data access for various scenarios:
+
+```sql
+-- Customer profile view for customer service
+CREATE VIEW customers.customer_profiles AS
+SELECT
+  c.customer_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  c.phone,
+  c.created_at,
+  COUNT(o.order_id) AS total_orders,
+  MAX(o.ordered_at) AS last_order_date,
+  COALESCE(SUM(oi.quantity * oi.unit_price), 0) AS lifetime_value,
+  a.street_address,
+  a.city,
+  a.state,
+  a.postal_code,
+  a.country
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+LEFT JOIN
+  customers.addresses a ON c.customer_id = a.customer_id AND a.is_default = true
+GROUP BY
+  c.customer_id, c.first_name, c.last_name, c.email, c.phone, c.created_at,
+  a.street_address, a.city, a.state, a.postal_code, a.country;
+
+-- Order details view for customer service
+CREATE VIEW orders.order_details AS
+SELECT
+  o.order_id,
+  o.customer_id,
+  c.first_name || ' ' || c.last_name AS customer_name,
+  c.email AS customer_email,
+  os.name AS order_status,
+  o.ordered_at,
+  a.street_address || ', ' || a.city || ', ' || a.state || ' ' || a.postal_code AS shipping_address,
+  COUNT(oi.order_item_id) AS item_count,
+  SUM(oi.quantity) AS total_items,
+  SUM(oi.quantity * oi.unit_price) AS subtotal,
+  o.shipping_cost,
+  o.tax_amount,
+  SUM(oi.quantity * oi.unit_price) + o.shipping_cost + o.tax_amount AS total_amount,
+  ps.name AS payment_status
+FROM
+  orders.orders o
+JOIN
+  customers.customers c ON o.customer_id = c.customer_id
+JOIN
+  orders.order_statuses os ON o.order_status_id = os.order_status_id
+JOIN
+  customers.addresses a ON o.shipping_address_id = a.address_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+LEFT JOIN
+  orders.payments p ON o.order_id = p.order_id
+LEFT JOIN
+  orders.payment_statuses ps ON p.payment_status_id = ps.payment_status_id
+GROUP BY
+  o.order_id, o.customer_id, c.first_name, c.last_name, c.email,
+  os.name, o.ordered_at, a.street_address, a.city, a.state, a.postal_code,
+  o.shipping_cost, o.tax_amount, ps.name;
+
+-- Product catalog view for API
+CREATE VIEW products.product_catalog AS
+SELECT
+  p.product_id,
+  p.name,
+  p.description,
+  p.price,
+  c.name AS category_name,
+  p.is_featured,
+  p.stock_quantity > 0 AS in_stock,
+  COALESCE(AVG(r.rating), 0) AS average_rating,
+  COUNT(r.review_id) AS review_count,
+  pt.name AS product_type,
+  (
+    SELECT string_agg(pi.image_url, ',')
+    FROM products.product_images pi
+    WHERE pi.product_id = p.product_id
+    ORDER BY pi.is_primary DESC, pi.display_order
+    LIMIT 1
+  ) AS primary_image_url
+FROM
+  products.products p
+JOIN
+  products.categories c ON p.category_id = c.category_id
+JOIN
+  products.product_types pt ON p.product_type_id = pt.product_type_id
+LEFT JOIN
+  customers.reviews r ON p.product_id = r.product_id
+WHERE
+  p.is_active = true
+GROUP BY
+  p.product_id, p.name, p.description, p.price, c.name, p.is_featured, p.stock_quantity, pt.name;
+```
+
+**Key design decisions in the views implementation:**
+
+1. **Simplified interfaces**: Views hide the complexity of the underlying schema.
+2. **Security layer**: Views expose only the necessary data for each use case.
+3. **Aggregated data**: Views precompute common calculations like totals and counts.
+4. **Denormalized data**: Views combine data from multiple tables for easier consumption.
+
+## Transaction Procedures
+
+Here are transaction procedures for key business operations:
+
+```sql
+-- Place order procedure
+CREATE OR REPLACE PROCEDURE orders.place_order(
+  p_customer_id uuid,
+  p_cart_id uuid,
+  p_shipping_address_id uuid,
+  p_billing_address_id uuid,
+  p_promocode varchar(50) DEFAULT NULL,
+  OUT p_order_id uuid
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  v_order_status_id uuid;
+  v_promocode_id uuid;
+  v_insufficient_stock boolean := false;
+  v_low_stock_products text := '';
+BEGIN
+  -- Start transaction
+  BEGIN
+    -- Get order status ID for 'pending'
+    SELECT order_status_id INTO v_order_status_id
+    FROM orders.order_statuses
+    WHERE name = 'pending';
+
+    -- Get promocode ID if provided
+    IF p_promocode IS NOT NULL THEN
+      SELECT promocode_id INTO v_promocode_id
+      FROM promotions.promocodes
+      WHERE code = p_promocode
+        AND start_date <= CURRENT_TIMESTAMP
+        AND end_date > CURRENT_TIMESTAMP
+        AND (usage_limit IS NULL OR usage_count < usage_limit);
+
+      IF v_promocode_id IS NULL THEN
+        RAISE EXCEPTION 'Invalid or expired promotion code';
+      END IF;
+    END IF;
+
+    -- Check inventory availability
+    SELECT EXISTS (
+      SELECT 1
+      FROM orders.cart_items ci
+      JOIN products.products p ON ci.product_id = p.product_id
+      WHERE ci.cart_id = p_cart_id AND ci.quantity > p.stock_quantity
+    ) INTO v_insufficient_stock;
+
+    -- Get details of unavailable products if any
+    IF v_insufficient_stock THEN
+      SELECT string_agg(p.name || ' (requested: ' || ci.quantity || ', available: ' || p.stock_quantity || ')', ', ')
+      FROM orders.cart_items ci
+      JOIN products.products p ON ci.product_id = p.product_id
+      WHERE ci.cart_id = p_cart_id AND ci.quantity > p.stock_quantity
+      INTO v_low_stock_products;
+
+      RAISE EXCEPTION 'Insufficient inventory for products: %', v_low_stock_products;
+    END IF;
+
+    -- Create the order
+    INSERT INTO orders.orders (
+      customer_id,
+      order_status_id,
+      shipping_address_id,
+      billing_address_id,
+      promocode_id
+    ) VALUES (
+      p_customer_id,
+      v_order_status_id,
+      p_shipping_address_id,
+      COALESCE(p_billing_address_id, p_shipping_address_id),
+      v_promocode_id
+    ) RETURNING order_id INTO p_order_id;
+
+    -- Transfer items from cart to order
+    INSERT INTO orders.order_items (
+      order_id,
+      product_id,
+      quantity,
+      unit_price
+    )
+    SELECT
+      p_order_id,
+      ci.product_id,
+      ci.quantity,
+      p.price
+    FROM
+      orders.cart_items ci
+    JOIN
+      products.products p ON ci.product_id = p.product_id
+    WHERE
+      ci.cart_id = p_cart_id;
+
+    -- Apply applicable promotions
+    -- (Simplified implementation - real system would have more complex promotion logic)
+    IF v_promocode_id IS NOT NULL THEN
+      -- Increment usage count for the promocode
+      UPDATE promotions.promocodes
+      SET usage_count = usage_count + 1
+      WHERE promocode_id = v_promocode_id;
+    END IF;
+
+    -- Update inventory
+    UPDATE products.products p
+    SET
+      stock_quantity = p.stock_quantity - ci.quantity,
+      updated_at = CURRENT_TIMESTAMP
+    FROM
+      orders.cart_items ci
+    WHERE
+      ci.cart_id = p_cart_id AND p.product_id = ci.product_id;
+
+    -- Record inventory changes
+    INSERT INTO inventory.inventory_history (
+      product_id,
+      warehouse_id, -- Assuming a default warehouse for simplicity
+      reason_id,
+      quantity_change,
+      previous_quantity,
+      new_quantity,
+      reference_id,
+      reference_type,
+      changed_by
+    )
+    SELECT
+      p.product_id,
+      (SELECT warehouse_id FROM inventory.warehouses LIMIT 1), -- Simplified
+      (SELECT reason_id FROM inventory.inventory_change_reasons WHERE name = 'sale'),
+      -ci.quantity,
+      p.stock_quantity + ci.quantity,
+      p.stock_quantity,
+      p_order_id,
+      'order',
+      current_user
+    FROM
+      products.products p
+    JOIN
+      orders.cart_items ci ON p.product_id = ci.product_id
+    WHERE
+      ci.cart_id = p_cart_id;
+
+    -- Clear cart
+    DELETE FROM orders.cart_items
+    WHERE cart_id = p_cart_id;
+
+    -- Calculate shipping, tax, etc. and update order
+    -- (Simplified implementation)
+    UPDATE orders.orders
+    SET
+      shipping_cost = 10.00, -- Simplified flat rate
+      tax_amount = (
+        SELECT SUM(quantity * unit_price) * 0.08 -- Simplified 8% tax
+        FROM orders.order_items
+        WHERE order_id = p_order_id
+      )
+    WHERE order_id = p_order_id;
+
+    -- Commit transaction
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      -- Roll back the transaction on any error
+      ROLLBACK;
+      -- Re-raise the exception
+      RAISE;
+  END;
+END;
+$$;
+
+-- Process payment procedure
+CREATE OR REPLACE PROCEDURE orders.process_payment(
+  p_order_id uuid,
+  p_payment_method_id uuid,
+  p_amount decimal(10,2),
+  p_transaction_id varchar(100),
+  p_payment_details jsonb DEFAULT NULL
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  v_order_total decimal(10,2);
+  v_payment_status_id uuid;
+  v_order_status_id uuid;
+BEGIN
+  -- Start transaction
+  BEGIN
+    -- Get order total
+    SELECT
+      SUM(oi.quantity * oi.unit_price) + o.shipping_cost + o.tax_amount
+    INTO v_order_total
+    FROM orders.orders o
+    JOIN orders.order_items oi ON o.order_id = oi.order_id
+    WHERE o.order_id = p_order_id
+    GROUP BY o.order_id, o.shipping_cost, o.tax_amount;
+
+    -- Validate payment amount
+    IF p_amount < v_order_total THEN
+      RAISE EXCEPTION 'Payment amount (%) is less than order total (%)', p_amount, v_order_total;
+    END IF;
+
+    -- Get status IDs
+    SELECT payment_status_id INTO v_payment_status_id
+    FROM orders.payment_statuses
+    WHERE name = 'completed';
+
+    SELECT order_status_id INTO v_order_status_id
+    FROM orders.order_statuses
+    WHERE name = 'processing';
+
+    -- Record payment
+    INSERT INTO orders.payments (
+      order_id,
+      payment_method_id,
+      payment_status_id,
+      amount,
+      transaction_id,
+      payment_details,
+      paid_at
+    ) VALUES (
+      p_order_id,
+      p_payment_method_id,
+      v_payment_status_id,
+      p_amount,
+      p_transaction_id,
+      p_payment_details,
+      CURRENT_TIMESTAMP
+    );
+
+    -- Update order status
+    UPDATE orders.orders
+    SET
+      order_status_id = v_order_status_id,
+      updated_at = CURRENT_TIMESTAMP
+    WHERE order_id = p_order_id;
+
+    -- Commit transaction
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      -- Roll back the transaction on any error
+      ROLLBACK;
+      -- Re-raise the exception
+      RAISE;
+  END;
+END;
+$$;
+```
+
+**Key design decisions in the transaction procedures:**
+
+1. **Atomic operations**: Each procedure encapsulates a complete business operation.
+2. **Early validation**: Critical checks are performed before making any changes.
+3. **Error handling**: Structured exception handling with detailed error messages.
+4. **Audit trail**: Changes are recorded in the inventory history.
+5. **Transactional integrity**: All changes commit or roll back together.
+
+## Row-Level Security Implementation
+
+Here's the implementation of Row-Level Security for sensitive tables:
+
+```sql
+-- Enable RLS on customer tables
+ALTER TABLE customers.customers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE customers.addresses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE orders.orders ENABLE ROW LEVEL SECURITY;
+
+-- Create customer service assignments table
+CREATE TABLE customers.customer_assignments (
+  assignment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  agent_id uuid NOT NULL, -- References staff.agents in a real implementation
+  assigned_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_customer_agent UNIQUE (customer_id, agent_id)
+);
+
+-- Customer access policy for customer service agents
+CREATE POLICY customer_service_policy ON customers.customers
+FOR ALL
+USING (
+  customer_id IN (
+    SELECT customer_id
+    FROM customers.customer_assignments
+    WHERE agent_id::text = current_setting('app.current_agent_id', true)
+  )
+  OR current_setting('app.current_agent_id', true) IS NULL
+);
+
+-- Address access policy for customer service agents
+CREATE POLICY address_service_policy ON customers.addresses
+FOR ALL
+USING (
+  customer_id IN (
+    SELECT customer_id
+    FROM customers.customer_assignments
+    WHERE agent_id::text = current_setting('app.current_agent_id', true)
+  )
+  OR current_setting('app.current_agent_id', true) IS NULL
+);
+
+-- Order access policy for customer service agents
+CREATE POLICY order_service_policy ON orders.orders
+FOR ALL
+USING (
+  customer_id IN (
+    SELECT customer_id
+    FROM customers.customer_assignments
+    WHERE agent_id::text = current_setting('app.current_agent_id', true)
+  )
+  OR current_setting('app.current_agent_id', true) IS NULL
+);
+
+-- Admin bypass policy
+CREATE POLICY admin_bypass ON customers.customers
+FOR ALL
+USING (pg_has_role(current_user, 'admin_role', 'member'));
+
+CREATE POLICY admin_bypass ON customers.addresses
+FOR ALL
+USING (pg_has_role(current_user, 'admin_role', 'member'));
+
+CREATE POLICY admin_bypass ON orders.orders
+FOR ALL
+USING (pg_has_role(current_user, 'admin_role', 'member'));
+```
+
+**Key design decisions in the RLS implementation:**
+
+1. **Agent assignment**: Customer service agents can only access their assigned customers.
+2. **Context-based access**: Access is controlled by the application context (`app.current_agent_id`).
+3. **Admin bypass**: Administrators can access all records regardless of assignments.
+4. **Consistent policies**: Similar policies applied across related tables.
+
+## Integration Points and Technical Considerations
+
+Beyond the SQL implementation, here are key technical considerations for deploying this database in production:
+
+### Deployment Strategy
+
+1. **Database Migration Framework**: Use a tool like Flyway or Liquibase to manage schema changes.
+2. **Version Control**: Keep all SQL scripts in version control with the application code.
+3. **Environment Separation**: Maintain separate databases for development, testing, and production.
+4. **Continuous Integration**: Automate database schema tests as part of the CI pipeline.
+
+### Performance Optimization
+
+1. **Connection Pooling**: Use PgBouncer or similar for connection management.
+2. **Query Monitoring**: Implement pg_stat_statements for identifying slow queries.
+3. **Indexing Strategy**: Regularly review index usage and performance.
+4. **Partition Large Tables**: Consider table partitioning for orders and inventory history.
+
+### Scalability Considerations
+
+1. **Read Replicas**: Set up read replicas for reporting and analytics queries.
+2. **Vertical Scaling**: Allocate sufficient resources for database servers.
+3. **Horizontal Scaling**: Consider sharding strategies for multi-tenant deployments.
+4. **Caching Layer**: Implement application-level caching for frequent queries.
+
+### Backup and Recovery
+
+1. **Regular Backups**: Configure WAL archiving and regular full backups.
+2. **Point-in-Time Recovery**: Enable point-in-time recovery capabilities.
+3. **Disaster Recovery Plan**: Document and test procedures for database recovery.
+4. **Backup Verification**: Regularly restore backups to verify integrity.
+
+### Monitoring and Maintenance
+
+1. **Health Checks**: Monitor database health metrics (connections, disk space, etc.).
+2. **Automated Maintenance**: Schedule regular VACUUM and ANALYZE operations.
+3. **Log Analysis**: Monitor and analyze database logs for errors and warnings.
+4. **Performance Trending**: Track performance metrics over time to identify trends.
+
+## Lessons Learned and Best Practices
+
+Throughout this series, we've explored numerous concepts and techniques for relational database design. Here are the key lessons and best practices to take away:
+
+### 1. Start with a Solid Design Process
+
+- Begin with understanding business requirements
+- Identify entities and their relationships
+- Design a logical data model before implementation
+- Document design decisions and rationales
+
+### 2. Focus on Data Integrity
+
+- Implement appropriate constraints (NOT NULL, CHECK, UNIQUE)
+- Use foreign keys to enforce referential integrity
+- Apply normalization principles to eliminate redundancy
+- Design audit trails for critical data changes
+
+### 3. Think About Performance Early
+
+- Design appropriate indexes for common query patterns
+- Consider denormalization for read-heavy operations
+- Use materialized views for complex analytics queries
+- Monitor and optimize query performance regularly
+
+### 4. Build in Security from the Start
+
+- Implement schema-based access control
+- Apply the principle of least privilege
+- Use row-level security for multi-tenant or sensitive data
+- Encrypt sensitive information at rest and in transit
+
+### 5. Plan for Evolution and Maintenance
+
+- Design for schema extensibility
+- Implement versioned database migrations
+- Document maintenance procedures
+- Consider operational aspects of database management
+
+<InfoBoxQuotation>
+  A well-designed database is not just about storing data—it's about supporting
+  the business processes, ensuring data integrity, optimizing for performance,
+  and protecting sensitive information. Take the time to design thoughtfully, as
+  the database is the foundation upon which your entire application is built.
+</InfoBoxQuotation>
+
+## Further Learning Resources
+
+To continue developing your database design skills, here are some valuable resources:
+
+1. **Books**:
+
+   - "Database Design for Mere Mortals" by Michael J. Hernandez
+   - "SQL Antipatterns" by Bill Karwin
+   - "PostgreSQL 11 Administration Cookbook" by Simon Riggs, Gianni Ciolli
+
+2. **Online Resources**:
+
+   - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+   - [Use The Index, Luke](https://use-the-index-luke.com/) (for indexing)
+   - [PgCasts](https://www.pgcasts.com/) (video tutorials)
+
+3. **Communities**:
+   - [PostgreSQL Mailing Lists](https://www.postgresql.org/list/)
+   - [Database Administrators Stack Exchange](https://dba.stackexchange.com/)
+   - [PostgreSQL Slack Community](https://postgres-slack.herokuapp.com/)
+
+## Key Takeaways
+
+- **Schema organization** improves maintainability and security
+- **Validation tables** ensure data consistency across the system
+- **Subtype tables** elegantly handle different product types
+- **Transaction procedures** encapsulate complex business operations
+- **Materialized views** optimize reporting performance
+- **Row-level security** provides fine-grained access control
+- **Audit logging** tracks changes for security and compliance
+- **Role-based security** implements the principle of least privilege
+- **Structured foundation** supports business growth and evolution
+
+## In Conclusion
+
+Throughout this series, we've taken a comprehensive journey through relational database design, from fundamental concepts to advanced implementation techniques. We've explored how to identify entities and relationships, design appropriate table structures, implement constraints and security measures, optimize for performance, and ensure data integrity.
+
+The ShopSmart ecommerce database we've designed demonstrates how these principles apply in a real-world context. By applying the techniques and best practices covered in this series, you can design databases that not only meet current business requirements but also provide a solid foundation for future growth and evolution.
+
+Remember that database design is both an art and a science—while following best practices is important, the best design is ultimately the one that meets your specific requirements and constraints. As you apply these concepts to your own projects, adapt and extend them based on your unique circumstances.
+
+Thank you for joining me on this database design journey. I hope this series has provided valuable insights and practical techniques that you can apply in your own database projects.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- "PostgreSQL Documentation" _The PostgreSQL Global Development Group_ , n.d. Web. 16 April 2025 &#60;<a href="https://www.postgresql.org/docs/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.postgresql.org/docs/</a>&#62;
+
+<br />
+<br />
+<br />
+
+<AITools />

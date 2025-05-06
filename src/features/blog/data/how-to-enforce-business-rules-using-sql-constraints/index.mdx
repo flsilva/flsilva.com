@@ -1,0 +1,635 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-10T00:00:00";
+
+export const description =
+  "Learn how to enforce business rules in your database with SQL constraints and validation tables. Discover implementation strategies for check constraints, unique constraints, and lookup tables.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "how-to-enforce-business-rules-using-sql-constraints";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "How to enforce business rules using SQL constraints";
+
+export const tweetText =
+  "Discover how to embed business rules directly into your database with SQL constraints and validation tables. Learn practical techniques to enforce data integrity, validate inputs, and protect your data quality. #DatabaseDesign #SQLConstraints #DataIntegrity";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 7** of the "Mastering Relational Database Design" series. In
+  [Part 6](LINK_HERE), we learned how to model the various types of
+  relationships that exist in database systems using primary and foreign keys.
+</InfoBox>
+
+## Introduction
+
+Business rules define how an organization operates, establishing policies and procedures that govern its activities. In database design, these rules must be embedded in the system to ensure data integrity, consistency, and validity—no matter how the data is accessed or manipulated. Constraints and validation tables are two powerful mechanisms for implementing business rules directly in your database structure.
+
+In this article, we'll explore how to effectively implement business rules through database constraints and validation tables. We'll examine various constraint types and demonstrate how validation tables provide flexibility and maintainability when enforcing complex business rules.
+
+<InfoBoxQuotation>
+  Database constraints serve as guardrails that enforce business rules directly
+  at the data layer. This minimizes the risk of invalid data entering the system
+  and ensures consistent enforcement across all applications and users.
+</InfoBoxQuotation>
+
+Business rules examples for ShopSmart:
+
+- A product price must never be negative.
+- An order status must be one of a predefined set (e.g., 'pending', 'processing', 'shipped', 'delivered', 'cancelled').
+- A customer email address must be unique across all customers.
+- A product must belong to a valid category.
+- Inventory stock quantity cannot fall below zero.
+- Customers must be at least 13 years old to register.
+
+## Types of constraints
+
+While primary keys and foreign keys (which we covered in previous articles) are fundamental constraints, several other types of constraints can enhance your database design by implementing specific business rules.
+
+Let's explore the main types of constraints available in most relational database systems, with a focus on PostgreSQL implementation.
+
+### 1. Not Null constraint
+
+The _`NOT NULL`_ constraint ensures that a column cannot contain null values, forcing users to provide a value when inserting or updating records.
+
+```sql
+CREATE TABLE products (
+  name varchar(100) NOT NULL,
+  description text NOT NULL,
+  price numeric(10,2) NOT NULL,
+  -- other fields
+);
+```
+
+This constraint prevents products from being created without essential information like a name, description, or price.
+
+When to use `NOT NULL`:
+
+- For required fields that must always have a value.
+- For primary key columns.
+- For columns used in critical calculations or business operations.
+- When the absence of a value would make the record meaningless.
+
+<InfoBox>
+  When deciding whether a column should allow null values, consider what a null
+  actually means in that context. Does null mean "unknown," "not applicable,"
+  "not yet provided," or something else? Being explicit about this meaning helps
+  determine whether nulls should be allowed.
+</InfoBox>
+
+### 2. Unique constraints
+
+Unique constraints ensure the uniqueness of column values across rows. They're commonly used for alternate keys and business identifiers like SKUs, email addresses, or product codes.
+
+```sql
+CREATE TABLE products (
+  sku varchar(50) UNIQUE,
+  -- other fields
+);
+```
+
+This prevents duplicate SKUs within the products table.
+
+Unique constraints can also span multiple columns:
+
+```sql
+CREATE TABLE product_warehouse_inventory (
+  product_id uuid REFERENCES products(product_id),
+  warehouse_id uuid REFERENCES warehouses(warehouse_id),
+  quantity integer NOT NULL,
+  -- Composite unique constraint
+  CONSTRAINT unique_product_warehouse UNIQUE (product_id, warehouse_id)
+);
+```
+
+This ensures that a product appears only once per warehouse in the inventory table.
+
+When to use unique constraints:
+
+- For business identifiers like email addresses, SKUs, or account numbers.
+- For natural keys (identifiers that have meaning in the real world).
+- For columns or column combinations that should never contain duplicates.
+- For implementing alternate keys.
+
+### 3. Check constraints
+
+Check constraints validate column values against boolean conditions. They're extremely versatile and can implement a wide range of business rules.
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  price numeric(10,2) CHECK (price >= 0),
+  weight numeric(8,3) CHECK (weight > 0),
+  stock_quantity integer CHECK (stock_quantity >= 0)
+);
+```
+
+These constraints prevent invalid entries like negative prices, weights, or stock quantities.
+
+Check constraints can also reference multiple columns:
+
+```sql
+CREATE TABLE promotions (
+  promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  started_at timestamp NOT NULL,
+  ended_at timestamp NOT NULL,
+  -- Multi-column check constraint
+  CONSTRAINT check_promotion_dates CHECK (ended_at > started_at)
+);
+```
+
+This ensures the end date always comes after the start date.
+
+When to use check constraints:
+
+- For validating value ranges (e.g., positive numbers, age limits).
+- For enforcing data formats (e.g., pattern matching with _`LIKE`_ or regex).
+- For implementing business rules that can be expressed as boolean conditions.
+- For ensuring logical consistency between columns.
+
+<InfoBox>
+  Named constraints (like _`CONSTRAINT check_promotion_dates`_) make debugging
+  easier. When a constraint is violated, the error message includes the
+  constraint name, helping identify which business rule was broken.
+</InfoBox>
+
+### 4. Exclusion constraints
+
+PostgreSQL offers exclusion constraints, a powerful feature for enforcing more complex rules involving multiple rows:
+
+```sql
+CREATE TABLE room_bookings (
+  booking_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  room_id uuid NOT NULL REFERENCES rooms(room_id),
+  booked_from timestamp NOT NULL,
+  booked_until timestamp NOT NULL,
+  -- Prevent overlapping bookings for the same room
+  CONSTRAINT no_overlapping_bookings EXCLUDE USING gist (
+    room_id WITH =,
+    tsrange(booked_from, booked_until) WITH &&
+  )
+);
+```
+
+This constraint prevents booking the same room for overlapping time periods, using PostgreSQL's range types and GiST indexes.
+
+When to use exclusion constraints:
+
+- For time-based scheduling and reservation systems.
+- For spatial applications where objects cannot overlap.
+- For any scenario where certain combinations across rows are forbidden.
+- For implementing complex business rules involving ranges or sets.
+
+### 5. Deferred constraints
+
+Standard constraints are checked immediately when a statement executes. However, sometimes you need to temporarily violate a constraint during a transaction before fixing it later. PostgreSQL supports deferrable constraints for these scenarios:
+
+```sql
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  quantity integer NOT NULL,
+  -- Deferrable foreign key constraint
+  CONSTRAINT fk_order_items_order FOREIGN KEY (order_id)
+    REFERENCES orders(order_id) DEFERRABLE INITIALLY IMMEDIATE
+);
+```
+
+With this setup, you can defer constraint checking until the transaction commits:
+
+```sql
+BEGIN;
+SET CONSTRAINTS fk_order_items_order DEFERRED;
+
+-- This would normally violate the foreign key constraint
+-- because the order doesn't exist yet
+INSERT INTO order_items (order_id, product_id, quantity)
+VALUES ('new-order-id', 'product-123', 1);
+
+-- But now we can create the order with the matching ID
+INSERT INTO orders (order_id)
+VALUES ('new-order-id');
+
+-- At COMMIT time, the constraint will be checked and pass
+COMMIT;
+```
+
+When to use deferred constraints:
+
+- For mutual dependencies between tables.
+- For inserting parent and child records in arbitrary order.
+- For complex data migration scenarios.
+- For implementing circular references.
+
+### 6. Triggers for complex constraints
+
+For business rules that can't be expressed with standard constraints, database triggers provide a way to implement custom validation logic that runs automatically when data changes:
+
+```sql
+CREATE OR REPLACE FUNCTION check_order_amount()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- If the order total exceeds $10,000, require manager approval
+  IF (SELECT SUM(quantity * unit_price) FROM order_items WHERE order_id = NEW.order_id) > 10000
+    AND NEW.manager_approval_id IS NULL THEN
+    RAISE EXCEPTION 'Orders exceeding $10,000 require manager approval';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER enforce_manager_approval
+BEFORE UPDATE OF status ON orders
+FOR EACH ROW
+WHEN (NEW.status = 'processing')
+EXECUTE FUNCTION check_order_amount();
+```
+
+This trigger enforces a business rule that large orders require manager approval before they can be processed.
+
+<InfoBox theme="warning">
+  While triggers are powerful, they can make database behavior less transparent
+  and harder to debug. Use them sparingly, only when simpler constraints won't
+  suffice. Consider documenting them thoroughly in your schema documentation.
+</InfoBox>
+
+When to use triggers for constraints:
+
+- When the validation depends on data in other tables.
+- For constraints that need to perform calculations.
+- When you need to perform actions beyond just validation.
+- For enforcing complex temporal rules or state transitions.
+
+## Validation tables
+
+Validation tables—also called lookup tables or reference tables—store predefined sets of values that other tables can reference. They act as centralized repositories for standard codes, types, statuses, and classifications, helping enforce data consistency across your database while improving system maintainability.
+
+<InfoBoxQuotation>
+  Validation tables elevate data integrity from the field level to the domain
+  level by ensuring that certain fields only contain values from an approved
+  set.
+</InfoBoxQuotation>
+
+Common examples include tables for order statuses (e.g., _Pending_, _Shipped_, _Delivered_) or product categories (e.g., _Electronics_, _Clothing_, _Books_).
+
+Validation tables typically have at least two columns:
+
+- A primary key.
+- A name or description column (displayed to users).
+
+Optionally, they may also include metadata like display order, abbreviations, or an active/inactive flag.
+
+### Check constraints vs. validation tables
+
+For simple validation of a limited set of values, you could use a check constraint:
+
+```sql
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  status varchar(20) NOT NULL,
+  -- other fields
+  CONSTRAINT chk_order_status CHECK (status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled'))
+);
+```
+
+While simple, this method has several limitations:
+
+- It hard-codes allowed values into the schema.
+- Adding new status options requires changing the schema.
+- It doesn't support additional metadata about each status.
+- It doesn't facilitate translations or descriptions.
+- It can't be easily queried or referenced by applications.
+
+### Implementing a validation table
+
+Let's see how to implement a validation table for order statuses:
+
+```sql
+CREATE TABLE order_statuses (
+  order_status_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Populate with initial values
+INSERT INTO order_statuses (name, description, display_order)
+VALUES
+  ('pending', 'Order has been placed but not yet processed', 10),
+  ('processing', 'Order is being prepared for shipment', 20),
+  ('shipped', 'Order has been shipped', 30),
+  ('delivered', 'Order has been delivered', 40),
+  ('cancelled', 'Order has been cancelled', 50);
+
+-- Update orders table to reference the validation table
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_status_id uuid NOT NULL REFERENCES order_statuses(order_status_id),
+  -- other fields
+);
+```
+
+Now the _`orders`_ table has a foreign key to the _`order_statuses`_ table, ensuring that orders can only use status values that exist in the validation table.
+
+### Benefits of validation tables
+
+This approach offers several advantages over check constraints:
+
+1. **User interface integration**: The validation table can easily populate dropdown menus in application interfaces..
+2. **UI-driven updates**: Adding new status options no longer requires schema changes—you can simply insert new rows into the validation table through a user interface.
+3. **Extensibility**: You can include metadata like descriptions, display order, and status for each value.
+4. **Localization support**: You can add columns for translations or create related translation tables.
+5. **Performance**: Lookups using indexed foreign keys are faster and more efficient than repeated string comparisons.
+6. **Referential integrity**: Foreign key constraints ensure that invalid values cannot be used.
+
+### Real-world validation table example
+
+Let's implement a more comprehensive example for our ShopSmart ecommerce database. Earlier in the series, we introduced a self-referencing many-to-many relationship between products through a _`related_products`_ table, with a _`relationship_type`_ field to describe how products are related.
+
+We initially enforced this business rule:
+
+- Product relationships must be categorized as "accessory", "alternative", or "frequently bought together".
+
+Instead of using a check constraint, let's create a validation table:
+
+```sql
+-- Create the validation table
+CREATE TABLE product_relationship_types (
+  product_relationship_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Populate with valid values
+INSERT INTO product_relationship_types (name, description, display_order)
+VALUES
+  ('accessory', 'Products that complement the main product', 10),
+  ('alternative', 'Similar products that could substitute the main product', 20),
+  ('frequently_bought_together', 'Products often purchased together with the main product', 30);
+
+-- Create the related_products table with a foreign key to the validation table
+CREATE TABLE related_products (
+  related_product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  related_to_product_id uuid NOT NULL REFERENCES products(product_id),
+  product_relationship_type_id uuid NOT NULL REFERENCES product_relationship_types(product_relationship_type_id),
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_different_products CHECK (product_id <> related_to_product_id)
+);
+
+-- Create an index to improve lookup performance
+CREATE INDEX idx_related_products_type
+ON related_products(product_relationship_type_id);
+```
+
+### Common validation tables in an ecommerce system
+
+For our ShopSmart database, several validation tables would be valuable:
+
+1. **Order statuses**: The states an order can be in (pending, processing, shipped, etc.)
+2. **Payment methods**: Types of payment (credit card, PayPal, bank transfer, etc.)
+3. **Shipping methods**: Delivery options (standard, express, same-day, etc.)
+4. **Product categories**: Classifications for products
+5. **Address types**: Types of addresses (shipping, billing, both)
+6. **Product relationship types**: How products relate to each other
+7. **User roles**: Customer, administrator, support staff, etc.
+8. **Return reasons**: Reasons for returning products
+9. **Tax categories**: For different tax treatment of products
+10. **Countries and regions**: For shipping and tax calculations
+
+Each of these validation tables centralizes a set of valid values, making the system more maintainable and flexible.
+
+## Best practices for constraints and validation tables
+
+### For constraints
+
+1. **Name your constraints explicitly**: This helps with debugging and documentation.
+
+   ```sql
+   ALTER TABLE products ADD CONSTRAINT products_price_check CHECK (price >= 0);
+   ```
+
+2. **Balance database vs. application validation**: Implement critical business rules at the database level, but consider performance impacts for complex validations.
+
+3. **Test constraint behavior thoroughly**: Ensure constraints work as expected by testing boundary cases and error handling.
+
+4. **Document constraints**: Maintain clear documentation about what business rules each constraint enforces.
+
+5. **Consider deferrable constraints**: For complex transactions with interdependent inserts or updates.
+
+### For validation tables
+
+1. **Include audit columns**: Track when values were added and by whom.
+
+2. **Use soft deletes**: Instead of removing values, mark them as inactive to preserve referential integrity.
+
+3. **Consider internationalization needs**: Design validation tables to support multiple languages if needed.
+
+4. **Add display metadata**: Include fields like _`display_order`_ to help applications present values in a logical sequence.
+
+5. **Create common patterns**: Standardize your validation table structure across your database.
+
+<InfoBox>
+  A good pattern for validation tables includes:
+
+- A UUID primary key
+- A unique name/code (used programmatically)
+- A description (user-friendly explanation)
+- A display order field (for UI presentation)
+- An active/inactive flag (for soft deletes)
+- Audit fields (created_at, updated_at)
+  <br />
+</InfoBox>
+
+## Building a validation framework
+
+For larger systems with many validation tables, consider building a standardized framework:
+
+```sql
+-- Create a schema for validation tables
+CREATE SCHEMA validation;
+
+-- Create a base table definition
+CREATE TABLE validation.base_validation_type (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  created_by varchar(100) NOT NULL DEFAULT CURRENT_USER,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_by varchar(100) NOT NULL DEFAULT CURRENT_USER
+);
+
+-- Create specific validation tables that inherit from the base
+CREATE TABLE validation.order_statuses (
+  CONSTRAINT order_statuses_name_unique UNIQUE (name)
+) INHERITS (validation.base_validation_type);
+
+CREATE TABLE validation.payment_methods (
+  CONSTRAINT payment_methods_name_unique UNIQUE (name)
+) INHERITS (validation.base_validation_type);
+
+-- And so on for other validation types
+```
+
+This approach provides consistency across all validation tables while allowing for type-specific extensions when needed.
+
+## Enforcing complex business rules
+
+Some business rules require combinations of constraints and validation tables. Let's explore a few examples:
+
+### Example 1: product pricing rules
+
+Imagine we have a rule that subscription products can't have a price below $5.99:
+
+```sql
+-- First, create a product_types validation table
+CREATE TABLE product_types (
+  product_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true
+);
+
+INSERT INTO product_types (name, description)
+VALUES
+  ('physical', 'Tangible products that require shipping'),
+  ('digital', 'Downloadable products'),
+  ('subscription', 'Recurring service products');
+
+-- Then add a check constraint that references the validation table
+ALTER TABLE products
+ADD CONSTRAINT check_subscription_price
+CHECK (
+  product_type_id != (SELECT product_type_id FROM product_types WHERE name = 'subscription')
+  OR price >= 5.99
+);
+```
+
+### Example 2: restricted product categories
+
+Some product categories might have age restrictions:
+
+```sql
+-- Add an age_restriction field to the categories table
+ALTER TABLE categories ADD COLUMN minimum_age integer;
+
+-- Then use a trigger to enforce the rule
+CREATE OR REPLACE FUNCTION enforce_age_restriction()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM categories c
+    JOIN products p ON c.category_id = p.category_id
+    JOIN order_items oi ON p.product_id = oi.product_id
+    JOIN orders o ON oi.order_id = o.order_id
+    JOIN customers cust ON o.customer_id = cust.customer_id
+    WHERE oi.order_id = NEW.order_id
+    AND c.minimum_age IS NOT NULL
+    AND (
+      cust.birth_date IS NULL OR
+      cust.birth_date > CURRENT_DATE - (c.minimum_age * INTERVAL '1 year')
+    )
+  ) THEN
+    RAISE EXCEPTION 'Order contains age-restricted products that customer is not eligible to purchase';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_age_restrictions
+BEFORE INSERT OR UPDATE ON orders
+FOR EACH ROW
+WHEN (NEW.status = 'processing')
+EXECUTE FUNCTION enforce_age_restriction();
+```
+
+### Example 3: promotional rules
+
+For a "buy one, get one free" promotion, we might need a combination of validation tables and application logic:
+
+```sql
+CREATE TABLE promotion_types (
+  promotion_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true
+);
+
+INSERT INTO promotion_types (name, description)
+VALUES
+  ('percentage_discount', 'Percentage off the product price'),
+  ('fixed_amount_discount', 'Fixed amount off the product price'),
+  ('buy_x_get_y_free', 'Buy a certain quantity, get additional items free');
+
+-- This particular rule might be too complex for pure SQL constraints
+-- and would likely involve application logic along with these validation tables
+```
+
+## Key takeaways
+
+- **Database constraints** are the first line of defense for enforcing business rules.
+- **NOT NULL constraints** ensure required data is always provided.
+- **UNIQUE constraints** prevent duplicate values across records.
+- **CHECK constraints** validate field values against boolean conditions.
+- **Validation tables** centralize sets of allowed values for reference by other tables.
+- **Named constraints** improve error messages and maintainability.
+- **Triggers** can implement complex rules that span multiple tables or rows.
+- **Good validation table design** includes metadata beyond just the values themselves.
+- **A standardized approach** to constraints and validation tables improves consistency.
+- **Complex business rules** often require combinations of different constraint types.
+
+## Next up in the series
+
+In the next article, [Subtype Tables (Inheritance)](LINK_HERE) we'll explore how to implement inheritance-like structures in relational databases. We'll look at techniques for modeling entity subtypes, such as different types of products (physical, digital, subscription) with their own unique attributes, while maintaining a unified interface to the base entity type.

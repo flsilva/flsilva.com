@@ -1,0 +1,908 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-09T00:00:00";
+
+export const description =
+  "Master database relationship modeling with detailed implementations of one-to-one, one-to-many, and many-to-many relationships, plus self-referencing structures for hierarchies and networks.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug =
+  "how-to-model-table-relationships-with-foreign-keys-and-SQL";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title =
+  "How to model table relationships with foreign keys and SQL";
+
+export const tweetText =
+  "Discover how to implement all types of database relationships—from simple one-to-many to complex many-to-many and self-referencing hierarchies. Learn practical SQL patterns for modeling real-world connections in your database. #DatabaseDesign #SQL #DataModeling";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 6** of the "Mastering Relational Database Design" series. In
+  [Part 5](LINK_HERE), we learned the various types of keys used in relational
+  databases and how they maintain data integrity, as well as implementing them
+  in our ShopSmart ecommerce database.
+</InfoBox>
+
+## Introduction
+
+Relationships are the heart of relational database systems. They represent associations between entities and enable us to connect related data across tables, eliminating redundancy while maintaining access to all necessary information. The ability to model and implement these relationships effectively is a core skill for database designers.
+
+In this article, we'll explore the various types of relationships that exist in database systems, examine how they're implemented using primary and foreign keys, and look at techniques for traversing complex relationship paths. We'll apply these concepts to our ShopSmart ecommerce database, providing practical examples for each relationship type.
+
+## The nature of relationships
+
+Relationships in a database represent connections between entities that reflect real-world associations. For instance, customers place orders, products belong to categories, and orders contain products. These connections are implemented through shared keys that allow tables to reference each other.
+
+<InfoBoxQuotation>
+  Relationships transform isolated tables of data into an interconnected data
+  model that mirrors the complexity of real-world systems.
+</InfoBoxQuotation>
+
+## Foreign keys
+
+To implement relationships in relational databases, we use **foreign keys**. A foreign key is a column (or set of columns) in one table that refers to the primary key of another table. Foreign keys allow us to connect and query related data across tables.
+
+For example, in our ecommerce database, we store customer data in the _`customers`_ table and order data in the _`orders`_ table. To represent which customer placed a given order, we include a _`customer_id`_ field in the _`orders`_ table that references the _`customer_id`_ primary key in the _`customers`_ table. This relationship is defined using the _`REFERENCES`_ clause in SQL within the `CREATE TABLE` or `ALTER TABLE` statement.
+
+### Key characteristics of foreign keys
+
+- **Link tables:** They create an explicit link between rows in the child table and a specific row in the parent table.
+- **Enforce referential integrity:** This is a critical concept. A foreign key constraint ensures that a value entered in the FK column of the child table _must_ already exist in the PK column of the parent table (or be _`NULL`_ if allowed). This prevents "orphaned" records – child records that point to a non-existent parent. For example, you cannot create an \*order with a _`customer_id`_ that doesn't exist in the _`customers`_ table.
+- **Data type match:** The data type of the FK column must match the data type of the referenced PK column.
+- **Naming convention:** Often named _`<referenced_table_singular>_id`_ (e.g., in the _`orders`_ table, the FK referencing _`customers`_ would be _`customer_id`_).
+
+## Entity-Entity matrix technique
+
+Before diving into the different types of relationships, let's discuss a systematic approach to identifying relationships between entities: the Entity-Entity matrix.
+
+The Entity-Entity matrix is a methodical approach to identifying relationships between entities. It creates a grid with entities on both axes and examines each potential relationship pair.
+
+For our ShopSmart database, we would create a matrix with our identified entities on both axes. Let's start with a simple example focusing on just a few of our core entities:
+
+```
+               | customers | products | categories | orders | shopping_carts
+---------------|-----------|----------|------------|--------|---------------
+customers      |     -     |     ?    |     ?      |    ?   |        ?
+products       |     ?     |     -    |     ?      |    ?   |        ?
+categories     |     ?     |     ?    |     -      |    ?   |        ?
+orders         |     ?     |     ?    |     ?      |    -   |        ?
+shopping_carts |     ?     |     ?    |     ?      |    ?   |        -
+```
+
+For each cell marked with "?", we ask: _Does this entity relate to that entity?_ For example, at the intersection of _`customers`_ and _`shopping_carts`_, we'd ask: _Does a customer relate to a shopping cart?_ The answer is yes—each customer can have a shopping cart.
+
+Let's fill in this specific relationship:
+
+```
+                | customers | products | ...
+----------------|-----------|----------|-----------
+customers       |     -     |    ?     | ...
+shopping_carts  |  "has a"  |    ?     | ...
+...             |    ...    |   ...    | ...
+```
+
+We've identified that a customer _has a_ shopping cart. This methodical approach ensures no important relationships are overlooked. By systematically working through each cell in the matrix, we can identify all necessary relationships in our database.
+
+<InfoBox>
+  The Entity-Entity matrix helps discover non-obvious relationships and ensures
+  comprehensive coverage of your data model. It's particularly useful for
+  complex domains with many entities.
+</InfoBox>
+
+The matrix also helps us determine the cardinality of relationships—whether they're one-to-one, one-to-many, or many-to-many—which we'll discuss next.
+
+## Types of relationships (cardinality)
+
+Relationships in databases are categorized based on their cardinality—the numerical nature of the relationship between two entities. Let's explore each type in detail.
+
+### One-to-One (1:1) relationships
+
+In a **one-to-one relationship**, one record in the first table is related to one record in the second table, and vice versa. This type of relationship is relatively uncommon but serves specific purposes:
+
+- Splitting a large table with rarely used columns
+- Separating sensitive data into a secure table
+- Maintaining optional extensions to a core entity
+- Supporting inheritance-like structures
+
+In this type of relationship, one table serves as the _parent_ table and the other serves as the _child_ table. The foreign key is placed in the child table, referencing the primary key in the parent table.
+
+#### Implementation example
+
+In our ShopSmart database, we have a one-to-one relationship between _`customers`_ and _`shopping_carts`_. Each customer has exactly one shopping cart, and each shopping cart belongs to exactly one customer.
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE shopping_carts (
+  cart_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid UNIQUE NOT NULL REFERENCES customers(customer_id),
+);
+```
+
+The key elements that make this a one-to-one relationship are:
+
+1. The foreign key _`customer_id`_ in the _`shopping_carts`_ table references the primary key in the _`customers`_ table.
+2. The _`UNIQUE`_ constraint on _`customer_id`_ ensures that each customer can have at most one shopping cart.
+3. The _`NOT NULL`_ constraint on _`customer_id`_ ensures that every cart _must_ belong to a customer, making the customer side of the relationship mandatory. In other words, a shopping cart cannot exist without being associated with a customer, but a customer might exist without having a shopping cart.
+
+In an ER diagram, this relationship might be represented as:
+
+<ImageWithCaption caption="Figure 4. ER diagram showing a one-to-one (1:1) relationship between customers and shopping_carts. The '|' indicates 'one', the 'UNIQUE' on the FK enforces it.">
+  ![Figure 4. ER diagram showing a one-to-one relationship between customers and
+  shopping carts.](./ERD-one-to-one-example.png)
+</ImageWithCaption>
+*(Diagram simplified to show relevant tables and fields)*
+
+In Crow's Foot notation, a single perpendicular dash _`|`_ means "one". The uniqueness constraint on the FK ensures the 1:1 nature.
+
+<InfoBox>
+  One-to-one relationships often represent entities that are conceptually part
+  of the same object but are separated for technical or organizational reasons,
+  such as performance optimization or security concerns.
+</InfoBox>
+
+#### When to use one-to-one relationships
+
+Consider one-to-one relationships when:
+
+- An entity has optional attributes that are rarely used.
+- You need to restrict access to certain attributes.
+- You're reaching column limits in a large table.
+- You want to implement a type of inheritance structure.
+
+### One-to-Many (1:N) relationships
+
+**One-to-many relationships** are the most common type of relationships in relational databases. In this relationship, one record in the first table can be related to many records in the second table, but each record in the second table is related to only one record in the first table.
+
+<InfoBoxQuotation>
+  One-to-many relationships form the backbone of most relational database
+  designs, representing the natural hierarchical structures found in real-world
+  data.
+</InfoBoxQuotation>
+
+Our database contains several one-to-many relationships:
+
+- A customer can place many orders (a customer has many orders).
+- A category can contain many products (a category belongs to many products).
+- A product can have many reviews (a product has many reviews).
+
+These relationships are implemented by placing a foreign key in the _many_ side of the relationship (the child table) that references the primary key of the _one_ side (the parent table).
+
+#### Implementation example
+
+Let's implement the one-to-many relationship between customers and orders:
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id),
+  -- other fields
+);
+```
+
+The foreign key _`customer_id`_ in the _`orders`_ table creates the relationship. Each order is linked to exactly one customer, while a customer can be linked to multiple orders.
+
+Similarly, we can implement the one-to-many relationship between categories and products:
+
+```sql
+CREATE TABLE categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  category_id uuid NOT NULL REFERENCES categories(category_id),
+  -- other fields
+);
+```
+
+And between customers, products and reviews:
+
+```sql
+CREATE TABLE reviews (
+  review_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  customer_id uuid NOT NULL REFERENCES customers(customer_id)
+);
+```
+
+Here, a review belongs to a customer and a product.
+
+<InfoBox>
+  Note that the only implementation difference between these one-to-many
+  relationships and the previous one-to-one example is **the absence of a**
+  _`UNIQUE`_ **constraint** on the foreign key. By not enforcing uniqueness, we
+  allow multiple records in the child table to reference the same record in the
+  parent table.
+</InfoBox>
+
+In an ER diagram, these one-to-many relationships might be represented as:
+
+<ImageWithCaption caption="Figure 5. An ER diagram showing a few one-to-many relationships.">
+  ![Figure 5. An ER diagram showing a few one-to-many
+  relationships.](./ERD-one-to-many-example.png)
+</ImageWithCaption>
+
+The notation _`|`_ on one side and _`ɛ`_ (a crow's foot) on the _many_ side indicates one-to-many cardinality.
+
+#### When to use one-to-many relationships
+
+Use one-to-many relationships when:
+
+- A parent entity can have multiple related child entities.
+- Each child entity belongs to exactly one parent entity.
+- The relationship represents a hierarchical structure.
+- You need to model collection-like associations.
+
+### Many-to-Many (M:N) relationships
+
+In a **many-to-many relationship**, one record in the first table can be related to many records in the second table, and vice versa. In relational databases, these relationships are implemented using an **associative entity** (also called _associative table_ or _junction table_) that contains foreign keys to both related tables.
+
+<InfoBoxQuotation>
+  A many-to-many relationship is effectively implemented as two one-to-many
+  relationships: one between the first entity and the associative entity, and
+  another between the second entity and the associative entity.
+</InfoBoxQuotation>
+
+For ShopSmart, we have several many-to-many relationships:
+
+- _`products`_ and _`orders`_: A single order can contain multiple products (an order has many products), and a single product can appear in multiple orders (a product belongs to many orders).
+- _`products`_ and _`wish_lists`_: A customer can have multiple products in a wish list (a wish list has many products), and a product can appear in multiple customers' wish lists (a product belongs to many with lists).
+
+#### Implementation example
+
+To implement the many-to-many relationship between _`products`_ and _`orders`_, we create an associative table called _`order_items`_:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id),
+  -- other fields
+);
+
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  -- other fields
+);
+```
+
+The _`order_items`_ table has foreign keys to both the _`orders`_ table and the _`products`_ table, allowing each order to contain multiple products and each product to appear in multiple orders.
+
+Similarly, we can implement the many-to-many relationship between _`wish_lists`_ and _`products`_:
+
+```sql
+CREATE TABLE wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id),
+  -- other fields
+);
+
+CREATE TABLE wish_list_items (
+  wish_list_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  wish_list_id uuid NOT NULL REFERENCES wish_lists(wish_list_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  -- other fields
+);
+```
+
+In an ER diagram, these many-to-many relationships might be represented as:
+
+<ImageWithCaption caption="Figure 6. ER diagram showing a few many-to-many relationships.">
+  ![Figure 6. ER diagram showing a few many-to-many
+  relationships.](./ERD-many-to-many-example.png)
+</ImageWithCaption>
+
+<InfoBoxQuotation>
+  Associative tables help us model many-to-many relationships without
+  compromising data integrity.
+</InfoBoxQuotation>
+
+#### Enhancing associative tables with additional fields
+
+Associative tables often need additional fields beyond just foreign keys. These fields can store information specific to the relationship between the entities.
+
+<InfoBoxQuotation>
+  Associative tables are not just technical implementation details—they often
+  represent important business concepts in their own right.
+</InfoBoxQuotation>
+
+- For _`order_items`_: We absolutely need _`quantity`_ (how many of that product were ordered) and _`unit_price`_ (the price of the product _at the time the order was placed_, as product prices might change later).
+- For _`wish_list_items`_: We can add `added_at` to track when the item was added.
+
+Let's update our SQL implementation with these additional fields:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id),
+  -- other fields
+);
+
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  quantity integer NOT NULL,
+  unit_price numeric(10,2) NOT NULL,
+  -- other fields
+);
+
+CREATE TABLE wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id),
+  -- other fields
+);
+
+CREATE TABLE wish_list_items (
+  wish_list_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  wish_list_id uuid NOT NULL REFERENCES wish_lists(wish_list_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  added_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  -- other fields
+);
+```
+
+And here's the updated ER diagram:
+
+<ImageWithCaption caption="Figure 7. An ER diagram showing associative tables with additional fields.">
+  ![Figure 7. An ER diagram showing associative tables with additional
+  fields.](./ERD-associative-tables-with-fields.png)
+</ImageWithCaption>
+
+This approach ensures we maintain a complete record of the relationship, not just its existence.
+
+#### When to use many-to-many relationships
+
+Use many-to-many relationships when:
+
+- Entities have mutual multiple associations.
+- You need to track attributes of the relationship itself.
+- The relationship represents a "many of each" scenario.
+- Both entities exist independently of each other.
+
+### Self-Referencing relationships
+
+A self-referencing (or recursive) relationship occurs when records in a table are related to other records in the same table. These relationships are useful for representing hierarchical structures, such as organizational charts or category trees, as well as network relationships, like friend connections or products associated with other products.
+
+<InfoBox>
+  Self-referencing relationships allow you to model hierarchies, networks, and
+  graphs without creating redundant tables or complex schemas.
+</InfoBox>
+
+Implementation follows the same patterns as relationships between different tables, but with both foreign and primary keys in the same table. What makes these relationships unique is how they're traversed—often requiring recursive queries to process entire hierarchies.
+
+#### Self-referencing one-to-many relationships (hierarchy)
+
+Let's create a self-referencing relationship in our _`categories`_ table to represent the category hierarchy: each category (except top-level categories) has one parent category, and each category can have multiple subcategories. This creates a tree-like structure:
+
+```
+Electronics
+├── Computers
+│   ├── Laptops
+│   └── Desktops
+├── Phones
+│   ├── Smartphones
+│   └── Accessories
+└── Cameras
+```
+
+Each subcategory has one **parent category**, and each parent can have **many subcategories**—exactly what a self-referencing one-to-many relationship models.
+
+```sql
+CREATE TABLE categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  parent_id uuid REFERENCES categories(category_id),
+  -- other fields
+);
+```
+
+The _`parent_id`_ column is a foreign key that references the primary key _`category_id`_ of the same table. This allows us to create hierarchical relationships between categories. For top-level categories, _`parent_id`_ would be null.
+
+In an ER diagram, this self-referencing relationship might be represented as:
+
+<ImageWithCaption caption="Figure 8. ER diagram showing a self-referencing one-to-many relationship between categories.">
+  ![Figure 8. ER diagram showing a self-referencing one-to-many relationship
+  between categories.](./ERD-self-referencing-one-to-many-example.png)
+</ImageWithCaption>
+
+The arrow looping back to the same entity indicates a self-referencing relationship.
+
+#### Self-Referencing many-to-many relationships (network)
+
+Suppose we want to explicitly link products to other related products (e.g., "Product A is an accessory for Product B", "Product C is complementary to Product D", "Product E is an alternative to Product F").
+
+A product can be related to many others, and be related _by_ many others. This is a many-to-many relationship within the _`products`_ table.
+
+Like other many-to-many relationships, this requires an associative table:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+
+CREATE TABLE product_relationship_types (
+  product_relationship_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+);
+
+CREATE TABLE related_products (
+  related_product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  related_to_product_id uuid NOT NULL REFERENCES products(product_id),
+  product_relationship_type_id uuid NOT NULL REFERENCES product_relationship_types(product_relationship_type_id),
+);
+```
+
+The _`related_products`_ associative table contains foreign keys to the _`products`_ table twice: once for the main product and once for the related product. We've also added a _`product_relationship_type_id`_ foreign key to describe how the products are related (e.g., "accessory," "alternative," "frequently bought together").
+
+In an ER diagram, this self-referencing many-to-many relationship might be represented as:
+
+<ImageWithCaption caption="Figure 9. ER diagram showing a self-referencing M:N relationship for 'products' via the 'related_products' associative table.">
+  ![Figure 9. ER diagram showing a self-referencing many-to-many relationship
+  for related products.](./ERD-self-referencing-many-to-many-products.png)
+</ImageWithCaption>
+
+#### Querying self-referencing relationships
+
+Self-referencing relationships often require special query techniques, particularly when dealing with hierarchical data where you need to traverse multiple levels of relationships.
+
+With PostgreSQL, you can efficiently query hierarchical data using [Common Table Expressions (CTEs)](https://www.postgresql.org/docs/current/queries-with.html) with the _`RECURSIVE`_ keyword. For example, to retrieve all subcategories of a given category:
+
+```sql
+WITH RECURSIVE category_tree AS (
+  -- Base case: start with the specified category
+  SELECT
+    category_id,
+    name,
+    parent_id,
+    0 AS depth
+  FROM
+    categories
+  WHERE
+    category_id = target_category_uuid
+
+  UNION ALL
+
+  -- Recursive case: find all children of categories already in the CTE
+  SELECT
+    c.category_id,
+    c.name,
+    c.parent_id,
+    ct.depth + 1
+  FROM
+    categories c
+  JOIN
+    category_tree ct ON c.parent_id = ct.category_id
+)
+SELECT * FROM category_tree ORDER BY depth, name;
+```
+
+This query efficiently traverses the entire category hierarchy regardless of depth, starting from _`category_id = target_category_uuid`_.
+
+#### When to use self-referencing relationships
+
+Use self-referencing relationships when:
+
+- You need to represent hierarchical structures.
+- Entities can relate to other entities of the same type.
+- You're modeling networks or graphs.
+- You want to represent parent-child or peer-to-peer relationships.
+
+### Relationship-level integrity
+
+**Relationship-level integrity**, also known as **referential integrity**, ensures that relationships between tables are valid. This is typically enforced through **foreign keys**, which guarantees that a value in one table references a valid, existing value in another.
+
+<InfoBox>
+  {" "}
+  Referential integrity prevents orphaned records—records in a child table that reference
+  non-existent parent records. It's primarily enforced through foreign key constraints.{" "}
+</InfoBox>
+
+For example, in the _`orders`_ table, the _`customer_id`_ column should be defined as a foreign key referencing the primary key in the _`customers`_ table. This prevents orders from being created for non-existent customers, maintaining the integrity of the relationship between customers and orders.
+
+In a design allowing guest checkouts, the _`customer_id`_ could be nullable — but even then, any non-null value must still point to a valid customer.
+
+### Types of participation
+
+The type of participation describes whether an entity's involvement in a relationship is optional or mandatory:
+
+- **Mandatory participation**: An entity instance must participate in the relationship. For example, in our database, every product must belong to a category (mandatory participation of _`products`_ in the _`products-categories`_ relationship). In implementation terms, this means the _`category_id`_ in the _`products`_ table cannot be _`null`_, which we enforce with a _`NOT NULL`_ constraint.
+
+- **Optional participation**: An entity instance may or may not participate in the relationship. For example, in our database, a category doesn't necessarily need to have products assigned (optional participation of _`categories`_ in the products-categories relationship). In implementation terms, this means a category can exist without any products referring to it.
+
+Participation rules apply to self-referencing relationships as well. For instance, in our _`categories`_ table, a category may have a parent category (top-level categories don't), making the participation of _`categories`_ in the parent-child relationship optional on the child side.
+
+### Cascade update and delete rules
+
+Cascade update and delete rules help ensure referential integrity by defining what happens to related (child) records when a referenced (parent) record is deleted or when its primary key is updated.
+
+<InfoBoxQuotation>
+  Deletion rules are always set from the perspective of the parent table, since
+  the parent table is typically the more important of the two tables within the
+  relationship.
+</InfoBoxQuotation>
+
+Common options include:
+
+- _`RESTRICT`_: Prevents changes to the parent record if related child records exist.
+- _`CASCADE`_: Propagates changes to related child records.
+- _`SET NULL`_: Sets foreign key values to NULL when the referenced parent record changes.
+- _`SET DEFAULT`_: Sets foreign key values to a default value when the referenced parent record changes.
+
+These rules are implemented through foreign key constraints and are crucial to relationship-level integrity because they help guard against **orphaned records**—child records that no longer have a corresponding parent record.
+
+```sql
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid REFERENCES orders(order_id) ON DELETE CASCADE,
+  product_id uuid REFERENCES products(product_id) ON DELETE RESTRICT,
+  quantity integer,
+  unit_price decimal(10,2)
+);
+```
+
+In this example:
+
+- If an order is deleted, all associated order items will also be deleted (_`ON DELETE CASCADE`_).
+- Attempts to delete a product that appears in any order item will be prevented (_`ON DELETE RESTRICT`_), preserving order history integrity.
+
+<InfoBox>
+  While we can set rules for both updates and deletes, in practice we rarely
+  need ON UPDATE rules for primary key references. This is because surrogate
+  keys should never change—their sole purpose is stable identification.
+</InfoBox>
+
+When implementing delete rules, consider the complete chain of cascading effects, especially with multi-level relationships. For example, if _`orders`_ cascade delete to _`order_items`_, and _`customers`_ cascade delete to _`orders`_, then deleting a customer would trigger deletion of all their orders and associated order items. This may or may not be the intended behavior.
+
+Best practices generally recommend:
+
+- Using _`RESTRICT`_ when deleting referenced records would lose valuable historical data.
+- Using _`CASCADE`_ when child records don't make sense without their parents.
+- Using _`SET NULL`_ when the relationship is optional and orphaned records can exist meaningfully.
+- Using _`SET DEFAULT`_ when you want orphaned child records to fall back to a predefined default parent record.
+
+#### Soft deletes
+
+A common pattern for business applications is to use _soft deletes_ rather than physical row deletion. This involves adding a field like _`deleted_at timestamp`_ to mark records as deleted (inactive) without actually removing them:
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  deleted_at timestamp,
+  -- other fields
+);
+```
+
+Then, instead of permanently deleting data, we set _`deleted_at`_ to the deletion timestamp:
+
+```sql
+-- Instead of: DELETE FROM customers WHERE customer_id = 'abc123';
+UPDATE customers SET deleted_at = CURRENT_TIMESTAMP WHERE customer_id = 'abc123';
+```
+
+To query only active customers:
+
+```sql
+SELECT * FROM customers WHERE deleted_at IS NULL;
+```
+
+<InfoBox>
+  Soft deletes preserve historical data while allowing applications to filter
+  out "deleted" records. They also sidestep complex cascade delete rules, as the
+  relationships remain intact in the database.
+</InfoBox>
+
+## Traversing the data model through indirect relationships
+
+One of the most powerful aspects of relational databases is the ability to access related data across multiple levels of relationships—**even when there's no direct relationship between two tables**. By traversing the relationship paths through intermediary tables, we can answer complex business questions without modifying our database structure.
+
+<InfoBoxQuotation>
+  The true power of the relational model comes from its ability to establish
+  connections across the entire database, allowing queries to traverse complex
+  relationship networks.
+</InfoBoxQuotation>
+
+For example, in our ShopSmart database, we don't have a direct relationship between _`customers`_ and _`products`_. However, through the order system, we can easily identify all products that a specific customer has purchased. This is possible because we can follow the relationship path:
+
+1. From _`customers`_ to _`orders`_ (via _`customer_id`_)
+2. From _`orders`_ to _`order_items`_ (via _`order_id`_)
+3. From _`order_items`_ to _`products`_ (via _`product_id`_)
+
+This query retrieves all products purchased by a specific customer:
+
+```sql
+SELECT DISTINCT
+  p.product_id,
+  p.name,
+  p.price
+FROM
+  customers c
+JOIN
+  orders o ON c.customer_id = o.customer_id
+JOIN
+  order_items oi ON o.order_id = oi.order_id
+JOIN
+  products p ON oi.product_id = p.product_id
+WHERE
+  c.customer_id = 'abc123'
+ORDER BY
+  p.name;
+```
+
+We could extend this further to answer questions like:
+
+- _Which categories are most popular among customers in a certain age group?_
+
+```sql
+SELECT
+  cat.name AS category_name,
+  COUNT(DISTINCT c.customer_id) AS customer_count
+FROM
+  customers c
+JOIN
+  orders o ON c.customer_id = o.customer_id
+JOIN
+  order_items oi ON o.order_id = oi.order_id
+JOIN
+  products p ON oi.product_id = p.product_id
+JOIN
+  categories cat ON p.category_id = cat.category_id
+WHERE
+  c.birth_date BETWEEN CURRENT_DATE - INTERVAL '30 years' AND CURRENT_DATE - INTERVAL '20 years'
+GROUP BY
+  cat.category_id, cat.name
+ORDER BY
+  customer_count DESC;
+```
+
+- _What products are frequently purchased together with products from a specific category?_
+
+```sql
+SELECT
+  p2.name AS frequently_bought_product,
+  COUNT(*) AS purchase_count
+FROM
+  orders o
+JOIN
+  order_items oi1 ON o.order_id = oi1.order_id
+JOIN
+  products p1 ON oi1.product_id = p1.product_id
+JOIN
+  categories c ON p1.category_id = c.category_id
+JOIN
+  order_items oi2 ON o.order_id = oi2.order_id
+JOIN
+  products p2 ON oi2.product_id = p2.product_id
+WHERE
+  c.name = 'Smartphones'
+  AND p2.category_id <> c.category_id
+  AND oi1.product_id <> oi2.product_id
+GROUP BY
+  p2.product_id, p2.name
+ORDER BY
+  purchase_count DESC
+LIMIT 10;
+```
+
+These indirect relationships demonstrate the flexibility of the relational model. By properly modeling the core entities and their immediate relationships, we create **a network of connected data** that can answer a wide range of business questions through SQL joins—a key advantage of the relational model.
+
+<InfoBox>
+  When designing your database, consider not only the direct relationships
+  between entities but also the potential paths through intermediary tables that
+  might be valuable for business intelligence and reporting.
+</InfoBox>
+
+## Advanced relationship patterns
+
+Beyond the basic relationship types, there are several advanced patterns worth understanding:
+
+### Identifying vs. non-identifying relationships
+
+- **Identifying relationship**: The foreign key in the child table is part of its primary key (often seen in associative tables with composite primary keys).
+- **Non-identifying relationship**: The foreign key in the child table is not part of its primary key (the more common scenario).
+
+Example of an identifying relationship:
+
+```sql
+CREATE TABLE order_items (
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  quantity integer NOT NULL,
+  -- Making the foreign keys part of the primary key
+  PRIMARY KEY (order_id, product_id)
+);
+```
+
+### Exclusive arc relationships
+
+An exclusive arc (also called an exclusive OR or XOR relationship) represents a situation where an entity can be related to one of several potential entities, but only one at a time.
+
+For example, in an ecommerce system, a payment might be associated with a credit card payment _or_ a bank transfer _or_ a digital wallet transaction, but not more than one of these.
+
+Implementation typically involves:
+
+1. A general table for the common attributes
+2. Specialized tables for each exclusive option
+3. Constraints ensuring only one relationship exists
+
+```sql
+CREATE TABLE payments (
+  payment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  amount numeric(10,2) NOT NULL,
+  payment_type varchar(20) NOT NULL, -- 'credit_card', 'bank_transfer', or 'digital_wallet'
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE credit_card_payments (
+  payment_id uuid PRIMARY KEY REFERENCES payments(payment_id),
+  card_last_four varchar(4) NOT NULL,
+  card_type varchar(20) NOT NULL,
+  -- other credit card specific fields
+);
+
+CREATE TABLE bank_transfer_payments (
+  payment_id uuid PRIMARY KEY REFERENCES payments(payment_id),
+  bank_name varchar(100) NOT NULL,
+  account_last_four varchar(4) NOT NULL,
+  -- other bank transfer specific fields
+);
+
+CREATE TABLE digital_wallet_payments (
+  payment_id uuid PRIMARY KEY REFERENCES payments(payment_id),
+  wallet_provider varchar(50) NOT NULL,
+  wallet_email varchar(255) NOT NULL,
+  -- other digital wallet specific fields
+);
+
+-- Trigger to enforce exclusivity (simplified example)
+CREATE OR REPLACE FUNCTION check_payment_exclusivity()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.payment_type = 'credit_card' THEN
+    -- Ensure no bank transfer or digital wallet entry exists
+    IF EXISTS (SELECT 1 FROM bank_transfer_payments WHERE payment_id = NEW.payment_id) OR
+       EXISTS (SELECT 1 FROM digital_wallet_payments WHERE payment_id = NEW.payment_id) THEN
+      RAISE EXCEPTION 'Payment already associated with another payment method';
+    END IF;
+  -- Similar checks for other payment types
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER enforce_payment_exclusivity
+BEFORE INSERT OR UPDATE ON payments
+FOR EACH ROW EXECUTE FUNCTION check_payment_exclusivity();
+```
+
+### Unary, binary, and ternary relationships
+
+- **Unary relationship**: Involves a single entity (self-referencing)
+- **Binary relationship**: Involves two entities (the most common type)
+- **Ternary relationship**: Involves three entities
+
+Ternary relationships are less common but can be important for modeling complex scenarios. They are typically implemented with an associative table that has foreign keys to all three participating entities.
+
+For example, a ternary relationship might connect a product, a warehouse, and a supplier to indicate which suppliers provide which products to which warehouses:
+
+```sql
+CREATE TABLE product_warehouse_supplier (
+  product_warehouse_supplier_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  warehouse_id uuid NOT NULL REFERENCES warehouses(warehouse_id),
+  supplier_id uuid NOT NULL REFERENCES suppliers(supplier_id),
+  unit_price numeric(10,2) NOT NULL,
+  lead_time_days integer NOT NULL,
+);
+```
+
+This structure allows us to capture relationship attributes (like price and lead time) that depend on all three entities together.
+
+## Relationship design best practices
+
+Based on our exploration of relationship types and implementations, here are some best practices:
+
+1. **Choose the right relationship type** for each connection between entities (one-to-one, one-to-many, many-to-many).
+2. **Consider participation requirements** when implementing relationships (mandatory vs. optional).
+3. **Identify potential indirect relationships** that might be valuable for reporting.
+4. **Use associative tables properly** for many-to-many relationships.
+5. **Add meaningful attributes** to associative tables when they provide valuable context.
+6. **Design for data integrity** with appropriate foreign key constraints and cascade rules.
+7. **Think about query patterns** when designing relationships.
+8. **Document relationships clearly** in your database documentation.
+9. **Use consistent naming conventions** for foreign keys.
+10. **Create appropriate indexes** on foreign key columns to improve join performance (we'll explore indexes in a later article).
+
+By following these practices, you'll create a database schema that accurately represents the domain's relationships while supporting efficient queries and maintaining data integrity.
+
+## Key takeaways
+
+- **Relationships enable connections** between related data across different tables.
+- **One-to-one relationships** connect exactly one record to exactly one record.
+- **One-to-many relationships** connect one record to multiple related records.
+- **Many-to-many relationships** require associative tables to implement properly.
+- **Self-referencing relationships** connect records within the same table.
+- **Entity-Entity matrices** systematically identify potential relationships.
+- **Associative tables** often need additional fields beyond just foreign keys.
+- **Indirect relationships** allow traversing multiple tables to answer complex questions.
+- **Participation requirements** dictate whether relationships are mandatory or optional.
+- **Advanced relationship patterns** like exclusive arcs handle more complex scenarios.
+
+## Next up in the series
+
+In the next article, [Constraints & Validation Tables](LINK_HERE), we'll explore how to enforce business rules directly in the database through constraints and validation tables. We'll examine check constraints, unique constraints, foreign key constraints, and how to use validation tables (lookup tables) to maintain data consistency and integrity.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- Captain, Fidel A. (2013). _Six-Step Relational Database Design_. 2nd Edition.
+
+- Hernandez, Michael J. (2020). _Database Design for Mere Mortals_. 4th Edition. Addison-Wesley Professional.
+
+<br />
+<br />
+<br />
+
+<AITools />

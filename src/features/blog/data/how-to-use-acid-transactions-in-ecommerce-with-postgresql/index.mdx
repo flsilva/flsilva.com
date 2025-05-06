@@ -1,0 +1,980 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-16T00:00:00";
+
+export const description =
+  "Master database transaction management to ensure data reliability. Learn ACID properties, isolation levels, and practical implementation techniques for handling complex transactions in PostgreSQL.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "how-to-use-acid-transactions-in-ecommerce-with-postgresql";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title =
+  "How to use ACID transactions in ecommerce with PostgreSQL";
+
+export const tweetText =
+  "Discover how to implement bulletproof database transactions that protect your data integrity even during system failures. Learn the practical techniques for implementing ACID-compliant transactions and choosing the right isolation level for your specific needs. #PostgreSQL #DatabaseDesign #Transactions";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 13** of the "Mastering Relational Database Design" series. In
+  [Part 12](LINK_HERE), we learned how views can add flexibility, security, and
+  simplicity to database designs.
+</InfoBox>
+
+## Introduction
+
+Transaction management is a cornerstone of database integrity, particularly in complex systems like ecommerce platforms where multiple related operations must succeed or fail as a cohesive unit. Properly implemented transactions ensure that your database remains in a consistent state even when faced with concurrent operations, system failures, or unexpected errors.
+
+In this article, we'll explore how transactions work, the ACID properties that define reliable transactions, and practical implementation strategies for maintaining data integrity in our ShopSmart ecommerce system. We'll examine various transaction scenarios, isolation levels, and techniques for handling complex business operations.
+
+## Understanding database transactions
+
+A **transaction** is a logical unit of work that consists of one or more database operations (such as inserts, updates, or deletes) that must be treated as an indivisible unit. Either all operations in the transaction succeed, or none of them take effect.
+
+<InfoBoxQuotation>
+  Transactions transform a series of individual operations into a single, atomic
+  unit of work that either completely succeeds or completely fails, leaving no
+  partial changes.
+</InfoBoxQuotation>
+
+In PostgreSQL, transactions are started with the _`BEGIN`_ statement and ended with either _`COMMIT`_ to save the changes or _`ROLLBACK`_ to discard them:
+
+```sql
+-- Start a transaction
+BEGIN;
+
+-- Perform operations
+INSERT INTO customers.customers (email, first_name, last_name)
+VALUES ('johndoe@example.com', 'John', 'Doe');
+
+-- Commit the changes
+COMMIT;
+
+-- Or to discard changes
+-- ROLLBACK;
+```
+
+## The ACID properties of transactions
+
+The reliability of database transactions is defined by the ACID properties—Atomicity, Consistency, Isolation, and Durability:
+
+### Atomicity
+
+**Atomicity** guarantees that all operations within a transaction are treated as a single, indivisible unit. Either all operations succeed, or the entire transaction fails and the database remains unchanged.
+
+For example, when processing an order in ShopSmart, multiple operations occur:
+
+1. Create an order record
+2. Create order item records
+3. Reduce product inventory
+4. Record payment information
+
+Atomicity ensures that if any of these steps fail (e.g., payment processing fails), all previous steps are rolled back, and no partial order is created.
+
+```sql
+BEGIN;
+
+-- Step 1: Create order
+INSERT INTO orders.orders (customer_id, shipping_address_id, status)
+VALUES ('customer123', 'address456', 'pending')
+RETURNING order_id INTO v_order_id;
+
+-- Step 2: Create order items
+INSERT INTO orders.order_items (order_id, product_id, quantity, unit_price)
+VALUES (v_order_id, 'product789', 2, 29.99);
+
+-- Step 3: Update inventory
+UPDATE products.products
+SET stock_quantity = stock_quantity - 2
+WHERE product_id = 'product789';
+
+-- Step 4: Record payment
+INSERT INTO orders.payments (order_id, amount, payment_method, status)
+VALUES (v_order_id, 59.98, 'credit_card', 'completed');
+
+-- If any step fails, the entire transaction is rolled back
+-- If all steps succeed, commit the transaction
+COMMIT;
+```
+
+### Consistency
+
+**Consistency** ensures that a transaction can only transition the database from one valid state to another valid state, preserving all predefined rules, constraints, and triggers.
+
+For our ShopSmart database, consistency guarantees that:
+
+- Foreign key constraints are maintained.
+- Check constraints (like non-negative inventory) are enforced.
+- Unique constraints (like email addresses) are preserved.
+- Custom business rules implemented as triggers or constraints are satisfied.
+
+For example, our database should prevent inventory from becoming negative:
+
+```sql
+BEGIN;
+
+-- This update will fail if it would violate a check constraint
+UPDATE products.products
+SET stock_quantity = stock_quantity - 100
+WHERE product_id = 'product789';
+
+-- The transaction fails if the constraint is violated
+COMMIT;
+```
+
+### Isolation
+
+**Isolation** determines how and when changes made by one transaction become visible to others running concurrently. It prevents transactions from interfering with each other, avoiding issues like dirty reads, non-repeatable reads, and phantom reads.
+
+PostgreSQL offers four isolation levels that balance consistency and performance:
+
+- **Read Uncommitted**: (Behaves like Read Committed in PostgreSQL).
+- **Read Committed**: Prevents dirty reads.
+- **Repeatable Read**: Prevents dirty reads and non-repeatable reads.
+- **Serializable**: Prevents all concurrency anomalies.
+
+We'll explore these isolation levels in more detail later in the article.
+
+### Durability
+
+**Durability** guarantees that once a transaction is committed, its changes are permanent and will survive system failures, including crashes or power outages.
+
+In PostgreSQL, durability is achieved through:
+
+- Write-Ahead Logging (WAL)
+- Checkpoint processing
+- Proper storage configuration
+- Backup and recovery procedures
+
+<InfoBox>
+  PostgreSQL's durability guarantees depend on proper system configuration. To
+  ensure maximum durability: - Configure _`synchronous_commit = on`_ (the
+  default). - Ensure WAL files are stored on reliable storage. - Set up regular
+  backups and test recovery procedures. - Consider replication for
+  mission-critical systems.
+</InfoBox>
+
+## Transaction isolation levels in PostgreSQL
+
+The isolation level determines how transactions interact with each other when running concurrently. PostgreSQL supports four isolation levels, each with different guarantees and performance characteristics:
+
+### 1. Read Committed
+
+The default isolation level in PostgreSQL is **Read Committed**. At this level:
+
+- A transaction only sees data committed before it began.
+- The transaction sees changes committed by concurrent transactions that complete during its execution.
+- It prevents dirty reads (reading uncommitted changes) but allows non-repeatable reads and phantom reads.
+
+```sql
+-- Set transaction isolation level
+BEGIN TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+-- Perform operations
+SELECT * FROM products.products WHERE category_id = 'category123';
+
+-- Other transactions might commit changes to these products here
+
+-- If you query again, you might see different results
+SELECT * FROM products.products WHERE category_id = 'category123';
+
+COMMIT;
+```
+
+Read Committed is appropriate for general transaction processing where complete isolation isn't critical, such as displaying product information or processing separate orders.
+
+### 2. Repeatable Read
+
+The **Repeatable Read** isolation level provides stronger guarantees:
+
+- A transaction only sees data committed before it began.
+- The transaction never sees changes made by concurrent transactions, even if they commit during its execution.
+- It prevents dirty reads and non-repeatable reads but may still allow phantom reads in some cases (though PostgreSQL's implementation largely prevents them).
+
+```sql
+BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+-- First query establishes the snapshot
+SELECT * FROM products.products WHERE price < 100;
+
+-- Other transactions might add or modify products here
+
+-- This query will see the same rows with the same data as the first query
+SELECT * FROM products.products WHERE price < 100;
+
+COMMIT;
+```
+
+Repeatable Read is suitable for transactions that need consistency when querying the same data multiple times, such as generating reports or processing an order where prices shouldn't change midway.
+
+### 3. Serializable
+
+The **Serializable** isolation level provides the strictest guarantees:
+
+- Transactions execute as if they were run one after another (serially), rather than concurrently.
+- It prevents all concurrency anomalies: dirty reads, non-repeatable reads, and phantom reads.
+- PostgreSQL implements this using Serializable Snapshot Isolation (SSI), which tracks conflicts between transactions.
+
+```sql
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+-- Check and update inventory
+SELECT stock_quantity FROM products.products WHERE product_id = 'product123';
+
+UPDATE products.products SET stock_quantity = stock_quantity - 1 WHERE product_id = 'product123';
+
+-- If a concurrent transaction conflicts with this one, either this transaction
+-- or the other will fail with a serialization error
+COMMIT;
+```
+
+Serializable is appropriate for the most critical transactions where absolute consistency is required, such as financial transfers or inventory management. However, it comes with performance costs and the possibility of serialization failures that require transaction retries.
+
+<InfoBox>
+  When using SERIALIZABLE isolation, applications must be prepared to handle
+  serialization failures by retrying transactions. This is typically implemented
+  with a retry loop in the application code.
+</InfoBox>
+
+### 4. Read Uncommitted
+
+PostgreSQL also supports **Read Uncommitted** isolation level syntactically, but it behaves exactly like Read Committed. This is because PostgreSQL's architecture doesn't allow reading uncommitted data, so this level doesn't provide weaker guarantees than Read Committed.
+
+### Choosing the right isolation level
+
+The appropriate isolation level depends on your specific requirements:
+
+1. **Read Committed**: Use for general operations where some inconsistency is acceptable
+
+   - Browsing products
+   - Viewing non-critical reports
+   - General read operations
+
+2. **Repeatable Read**: Use when consistency during a transaction is important
+
+   - Order processing
+   - Financial calculations
+   - Report generation
+
+3. **Serializable**: Use for critical operations that cannot tolerate any inconsistency
+   - Inventory management for limited stock items
+   - Financial transfers
+   - Concurrent operations on the same data
+
+Remember that higher isolation levels generally result in:
+
+- More consistent data
+- Lower concurrency
+- Higher likelihood of serialization failures
+- Potentially lower performance
+
+## Common transaction patterns
+
+Let's explore some common transaction patterns for our ShopSmart ecommerce database:
+
+### Basic order processing transaction
+
+The most common transaction in an ecommerce system is order processing. This involves multiple operations that must succeed or fail together:
+
+```sql
+BEGIN;
+
+-- Declare variables
+DO $$
+DECLARE
+    v_order_id uuid;
+    v_cart_id uuid := 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
+    v_customer_id uuid := '98765432-abcd-efgh-ijkl-1234567890ab';
+    v_shipping_address_id uuid := 'abc12345-1234-5678-90ab-cdef12345678';
+    v_insufficient_stock boolean := FALSE;
+    v_low_stock_products text := '';
+BEGIN
+    -- Check inventory availability first
+    SELECT EXISTS (
+        SELECT 1
+        FROM orders.cart_items ci
+        JOIN products.products p ON ci.product_id = p.product_id
+        WHERE ci.cart_id = v_cart_id AND ci.quantity > p.stock_quantity
+    ) INTO v_insufficient_stock;
+
+    -- Identify products with low stock
+    SELECT string_agg(p.name || ' (requested: ' || ci.quantity || ', available: ' || p.stock_quantity || ')', ', ')
+    FROM orders.cart_items ci
+    JOIN products.products p ON ci.product_id = p.product_id
+    WHERE ci.cart_id = v_cart_id AND ci.quantity > p.stock_quantity
+    INTO v_low_stock_products;
+
+    -- Fail early if inventory is insufficient
+    IF v_insufficient_stock THEN
+        RAISE EXCEPTION 'Insufficient inventory for products: %', v_low_stock_products;
+    END IF;
+
+    -- Create order
+    INSERT INTO orders.orders (
+        customer_id,
+        shipping_address_id,
+        status
+    ) VALUES (
+        v_customer_id,
+        v_shipping_address_id,
+        'pending'
+    ) RETURNING order_id INTO v_order_id;
+
+    -- Add order items from cart
+    INSERT INTO orders.order_items (
+        order_id,
+        product_id,
+        quantity,
+        unit_price
+    )
+    SELECT
+        v_order_id,
+        ci.product_id,
+        ci.quantity,
+        p.price
+    FROM orders.cart_items ci
+    JOIN products.products p ON ci.product_id = p.product_id
+    WHERE ci.cart_id = v_cart_id;
+
+    -- Update inventory
+    UPDATE products.products p
+    SET
+        stock_quantity = p.stock_quantity - ci.quantity,
+        updated_at = CURRENT_TIMESTAMP
+    FROM orders.cart_items ci
+    WHERE ci.cart_id = v_cart_id AND p.product_id = ci.product_id;
+
+    -- Record inventory changes
+    INSERT INTO inventory.inventory_history (
+        product_id,
+        quantity_change,
+        previous_quantity,
+        new_quantity,
+        reason,
+        changed_by
+    )
+    SELECT
+        p.product_id,
+        -ci.quantity,
+        p.stock_quantity + ci.quantity,
+        p.stock_quantity,
+        'sale',
+        'order_system'
+    FROM products.products p
+    JOIN orders.cart_items ci ON p.product_id = ci.product_id
+    WHERE ci.cart_id = v_cart_id;
+
+    -- Clear cart
+    DELETE FROM orders.cart_items WHERE cart_id = v_cart_id;
+END $$;
+
+COMMIT;
+```
+
+This transaction demonstrates several best practices:
+
+1. **Early validation**: Checking inventory availability before making any changes.
+2. **Proper error handling**: Using exceptions to trigger rollbacks.
+3. **Complete transaction**: Including all related operations (order creation, inventory updates, cart clearing).
+4. **Maintaining history**: Recording inventory changes for audit purposes.
+
+### Handling concurrent orders
+
+A common challenge in ecommerce systems is handling concurrent orders for the same product. Consider two customers attempting to purchase the last available unit simultaneously:
+
+```sql
+-- For Customer A
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+-- Check and update inventory with row locks
+UPDATE products.products
+SET stock_quantity = stock_quantity - 1
+WHERE product_id = 'product123' AND stock_quantity >= 1
+RETURNING product_id, stock_quantity;
+
+-- If no rows affected, the product is out of stock
+-- Continue with order creation if successful
+-- ...
+
+COMMIT;
+
+-- For Customer B (running concurrently)
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+-- This will either succeed or wait until Customer A's transaction completes
+-- If Customer A took the last item, this will return no rows
+UPDATE products.products
+SET stock_quantity = stock_quantity - 1
+WHERE product_id = 'product123' AND stock_quantity >= 1
+RETURNING product_id, stock_quantity;
+
+-- Handle the case where no rows were affected (out of stock)
+-- ...
+
+COMMIT;
+```
+
+This approach uses:
+
+- **SERIALIZABLE isolation**: Prevents phantom reads and other anomalies.
+- **Pessimistic locking**: The UPDATE statement acquires row locks.
+- **Check-and-act pattern**: Verifying stock and decrementing it in one atomic operation.
+
+### Handling distributed transactions
+
+For complex operations involving external systems (like payment gateways), consider using a two-phase approach:
+
+```sql
+-- Phase 1: Validate and reserve inventory
+BEGIN;
+
+-- Reserve inventory with status "reserved"
+INSERT INTO inventory.reservations (
+    product_id,
+    quantity,
+    reservation_expiry,
+    session_id
+)
+SELECT
+    ci.product_id,
+    ci.quantity,
+    CURRENT_TIMESTAMP + INTERVAL '15 minutes',
+    'session123'
+FROM orders.cart_items ci
+WHERE ci.cart_id = 'cart123';
+
+-- Create pending order
+INSERT INTO orders.orders (
+    customer_id,
+    status,
+    -- other fields
+) VALUES (
+    'customer123',
+    'pending',
+    -- other values
+) RETURNING order_id INTO v_order_id;
+
+COMMIT;
+
+-- External payment processing happens here
+
+-- Phase 2: Complete the order or release inventory
+BEGIN;
+
+IF payment_succeeded THEN
+    -- Update inventory
+    UPDATE products.products p
+    SET stock_quantity = p.stock_quantity - r.quantity
+    FROM inventory.reservations r
+    WHERE r.session_id = 'session123' AND r.product_id = p.product_id;
+
+    -- Update order status
+    UPDATE orders.orders
+    SET status = 'processing'
+    WHERE order_id = v_order_id;
+
+    -- Delete reservations
+    DELETE FROM inventory.reservations
+    WHERE session_id = 'session123';
+ELSE
+    -- Just delete reservations (inventory not affected)
+    DELETE FROM inventory.reservations
+    WHERE session_id = 'session123';
+
+    -- Update order status
+    UPDATE orders.orders
+    SET status = 'payment_failed'
+    WHERE order_id = v_order_id;
+END IF;
+
+COMMIT;
+```
+
+This pattern:
+
+- Separates inventory reservation from actual deduction
+- Handles external system failures gracefully
+- Uses time-limited reservations to prevent indefinite holds
+
+## Advanced transaction management
+
+Beyond basic transaction patterns, PostgreSQL offers advanced transaction management features:
+
+### Advisory locks for application-level exclusion
+
+For operations that span multiple transactions or require coordinated access:
+
+```sql
+-- Acquire an advisory lock (application-level lock not tied to a specific table)
+SELECT pg_advisory_xact_lock(hashtext('process_order_12345'));
+
+-- Perform exclusive operations
+-- The lock is automatically released when the transaction ends
+```
+
+Advisory locks allow you to implement custom locking schemes at the application level, beyond what database locks provide. They're useful for:
+
+- Coordinating access to shared resources.
+- Implementing distributed locking protocols.
+- Preventing concurrent execution of specific operations.
+
+### Optimistic concurrency control
+
+For scenarios with low contention:
+
+```sql
+BEGIN;
+
+-- Read the current version/timestamp
+SELECT version FROM products.products WHERE product_id = 'product123' INTO v_current_version;
+
+-- Perform business logic
+
+-- Update with version check
+UPDATE products.products
+SET price = 29.99, version = version + 1
+WHERE product_id = 'product123' AND version = v_current_version;
+
+-- Check if our update succeeded
+IF NOT FOUND THEN
+    -- Handle concurrency conflict
+    ROLLBACK;
+    RAISE EXCEPTION 'Concurrent update detected';
+END IF;
+
+COMMIT;
+```
+
+Optimistic concurrency control assumes conflicts are rare and handles them when they occur, rather than preventing them with locks. This approach:
+
+- Improves concurrency for low-contention scenarios
+- Avoids deadlocks
+- Reduces lock overhead
+- Requires conflict resolution strategies
+
+### Deferred constraints
+
+For cases where referential integrity must be maintained but the order of operations is flexible:
+
+```sql
+BEGIN;
+
+-- Defer foreign key constraints until commit time
+SET CONSTRAINTS ALL DEFERRED;
+
+-- Operations can now be performed in any order
+INSERT INTO orders.order_items (order_id, product_id, quantity, unit_price)
+VALUES ('new_order_id', 'product123', 1, 19.99);
+
+-- The related order doesn't exist yet, but that's OK with deferred constraints
+INSERT INTO orders.orders (order_id, customer_id, status)
+VALUES ('new_order_id', 'customer456', 'pending');
+
+-- At COMMIT time, all constraints will be checked
+COMMIT;
+```
+
+Deferred constraints are useful when:
+
+- You need to insert records with circular dependencies
+- The order of operations would otherwise violate constraints
+- You're migrating or importing data
+
+### Savepoints for complex transactions
+
+Savepoints establish markers within a transaction to which you can return (roll back) without aborting the entire transaction:
+
+```sql
+BEGIN;
+
+-- Process main credit card payment
+INSERT INTO orders.payments (order_id, payment_method, amount, status)
+VALUES ('order123', 'credit_card', 80.00, 'completed');
+
+-- Create a savepoint
+SAVEPOINT after_main_payment;
+
+-- Try to process gift card portion
+-- If this fails, we can roll back to the savepoint
+BEGIN;
+    INSERT INTO orders.payments (order_id, payment_method, amount, status)
+    VALUES ('order123', 'gift_card', 20.00, 'completed');
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Roll back to the savepoint, not the entire transaction
+        ROLLBACK TO SAVEPOINT after_main_payment;
+
+        -- Continue with an alternative approach
+        INSERT INTO orders.payments (order_id, payment_method, amount, status)
+        VALUES ('order123', 'store_credit', 20.00, 'completed');
+END;
+
+COMMIT;
+```
+
+Savepoints are valuable for:
+
+- Implementing complex workflows with error recovery
+- Handling partial failures within a transaction
+- Creating transaction branches with different execution paths
+
+## Transaction design best practices
+
+Based on our exploration of transaction management, here are key best practices to follow:
+
+### 1. Keep transactions short and focused
+
+Transactions should encompass only logically related operations that must succeed or fail together. Long-running transactions increase the risk of locks and deadlocks, which occur when two or more transactions are waiting for each other to release resources. This situation reduces concurrency—the database's ability to process multiple transactions simultaneously—and degrades overall system performance.
+
+<InfoBox>
+Long-running transactions can significantly impact database performance by:
+- Holding locks for extended periods
+- Preventing VACUUM from reclaiming space
+- Increasing the likelihood of conflicts
+- Consuming database resources
+
+Keep transactions as short as possible while ensuring they encompass the necessary atomic operations.
+
+</InfoBox>
+
+In our ShopSmart ecommerce system, customer browsing operations (which don't require transactions) should be separated from the actual order submission. For example, calculating shipping costs, checking product availability, or retrieving product information should happen outside transactions, while the actual order creation, inventory update, and payment recording should be within a single transaction.
+
+### 2. Use appropriate isolation levels
+
+Different isolation levels offer varying trade-offs between data consistency and system concurrency. Higher isolation levels provide stronger consistency guarantees but may reduce performance by limiting concurrent operations.
+
+Match isolation levels to the requirements of the operation:
+
+- Use **READ COMMITTED** for viewing product information.
+- Use **REPEATABLE READ** for order processing.
+- Use **SERIALIZABLE** for inventory management of limited-stock items.
+
+### 3. Handle errors properly
+
+Comprehensive error handling should exist at both the database and application levels:
+
+1. **Database level**: SQL code should include explicit _`ROLLBACK`_ statements when errors occur.
+2. **Application level**: Use programming language constructs like try-catch blocks to catch exceptions and ensure transactions are properly ended.
+
+For example, when processing an order in ShopSmart, the application code might look like:
+
+```python
+try:
+    # Begin database transaction
+    db.execute("BEGIN;")
+
+    # Execute transaction operations
+    # ...
+
+    # Commit if all operations succeed
+    db.execute("COMMIT;")
+except Exception as e:
+    # Roll back the transaction on any error
+    db.execute("ROLLBACK;")
+    # Log the error
+    log_error(f"Order processing failed: {str(e)}")
+    # Handle the error appropriately
+    raise OrderProcessingError(str(e))
+```
+
+This dual-layer approach ensures that both application and database errors are properly managed, preventing partial transactions from being committed.
+
+### 4. Consider performance impact
+
+Lock contention occurs when multiple transactions compete for the same database resources, causing some transactions to wait. Highly contested locks—those frequently sought by many transactions—can severely impact performance.
+
+To manage this:
+
+1. Monitor lock wait times using PostgreSQL's built-in views like _`pg_locks`_ and _`pg_stat_activity`_.
+2. Identify frequently locked tables or rows.
+3. Consider optimistic concurrency control for high-contention resources.
+4. Use appropriate indexes to reduce lock duration.
+5. Structure transactions to acquire locks in a consistent order to prevent deadlocks.
+
+In the ShopSmart database, product inventory updates might be a source of contention. Consider strategies like:
+
+- Using optimistic concurrency with version numbers.
+- Implementing row-level locks only when necessary.
+- Batching inventory updates during off-peak hours.
+- Sharding high-contention products across multiple tables.
+
+### 5. Implement retry logic for serializable transactions
+
+When using _`SERIALIZABLE`_ isolation, transactions may fail with serialization errors when concurrent transactions conflict. Implement retry logic to handle these failures:
+
+```python
+max_retries = 3
+retry_count = 0
+
+while retry_count < max_retries:
+    try:
+        # Begin serializable transaction
+        db.execute("BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;")
+
+        # Execute transaction operations
+        # ...
+
+        # Commit if successful
+        db.execute("COMMIT;")
+
+        # Exit loop if successful
+        break
+
+    except SerializationError:
+        # Roll back the transaction
+        db.execute("ROLLBACK;")
+
+        # Increment retry counter
+        retry_count += 1
+
+        # Optional exponential backoff
+        sleep(0.1 * (2 ** retry_count))
+
+        # Continue to retry
+        continue
+
+    except OtherException as e:
+        # Roll back the transaction for other errors
+        db.execute("ROLLBACK;")
+
+        # Log and handle the error
+        log_error(f"Transaction failed: {str(e)}")
+        raise
+
+if retry_count >= max_retries:
+    # Handle the case where all retries failed
+    log_error("Maximum retries exceeded for serializable transaction")
+    raise MaxRetriesExceededException()
+```
+
+This pattern allows serializable transactions to succeed even in the presence of concurrent operations, by automatically retrying when conflicts occur.
+
+## Common transaction anti-patterns
+
+Avoid these common transaction-related mistakes:
+
+### 1. Transaction splitting
+
+**Problem:** Breaking a logical unit of work across multiple transactions can leave the database in an inconsistent state if some transactions succeed while others fail. For instance, in ShopSmart, creating an order in one transaction and updating inventory in another could result in orders without corresponding inventory changes if the second transaction fails.
+
+**Solution:** Design transactions to encompass complete business operations. For order processing, include order creation, inventory updates, and payment recording in a single transaction to ensure all-or-nothing execution.
+
+### 2. Unbounded transactions
+
+**Problem:** Transactions that contain user interactions, external API calls, or long-running processes hold database locks for extended periods, reducing concurrency and increasing deadlock probability. For example, initiating a transaction, calling a payment gateway API, and then completing the transaction could lock order records while waiting for external responses.
+
+**Solution:** Perform preparation work before beginning the transaction. For payment processing:
+
+1. Collect and validate all order information.
+2. Pre-authorize the payment with the payment processor.
+3. Only then begin a database transaction to record the order and update inventory.
+4. Complete with payment capture after the database transaction succeeds.
+
+This approach minimizes the transaction duration to only include database operations.
+
+### 3. Nested transactions misuse
+
+**Problem:** Misunderstanding how nested transactions commit or roll back can lead to unexpected behavior. In PostgreSQL, nested transactions using _`SAVEPOINT`_ don't truly create independent transactions—a _`ROLLBACK`_ of the outer transaction will rollback everything, regardless of inner transaction _commits_.
+
+**Solution:** Use savepoints to create rollback points within a transaction, but understand that they don't provide true nested transaction isolation. In ShopSmart's order processing, use savepoints to mark phases of the order process, but don't rely on them to commit partial work if the main transaction aborts.
+
+### 4. Isolation level mismatch
+
+**Problem:** Using isolation levels that don't match the application's requirements can cause either data inconsistencies or unnecessary performance penalties. For example, using _`READ COMMITTED`_ isolation when processing concurrent orders could allow inventory to become negative if two customers order the last item simultaneously.
+
+**Solution:** Carefully assess the consistency requirements of each operation. For inventory-critical operations in ShopSmart, use _`SERIALIZABLE`_ isolation to prevent concurrent modifications from creating inconsistencies. For read-heavy operations like browsing products, use _`READ COMMITTED`_ for better performance.
+
+### 5. Inadequate error handling
+
+**Problem:** Missing or improper handling of transaction failures can lead to inconsistent data or silent failures. If a ShopSmart order process fails to roll back properly when inventory updates fail, customers might receive confirmations for orders that cannot be fulfilled.
+
+**Solution:** Implement comprehensive error handling with appropriate logging. Every transaction should have clear success and failure paths, with explicit _`COMMIT`_ or _`ROLLBACK`_ actions and detailed error logging that includes the transaction context.
+
+## Transaction monitoring and management
+
+For production systems, implement transaction monitoring and management strategies:
+
+### Creating a transaction log
+
+```sql
+-- Create a transaction log table
+CREATE TABLE system.transaction_log (
+    log_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    transaction_type varchar(50) NOT NULL,
+    started_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    completed_at timestamp,
+    success boolean,
+    error_message text,
+    details jsonb
+);
+
+-- Example usage in a transaction
+BEGIN;
+
+-- Log transaction start
+INSERT INTO system.transaction_log (transaction_type, details)
+VALUES ('order_placement', '{"order_ref": "ORD-12345", "customer_id": "cust789"}')
+RETURNING log_id INTO v_log_id;
+
+-- Transaction operations...
+
+-- On success:
+UPDATE system.transaction_log
+SET completed_at = CURRENT_TIMESTAMP, success = TRUE
+WHERE log_id = v_log_id;
+
+COMMIT;
+
+-- On error (in exception handler):
+UPDATE system.transaction_log
+SET completed_at = CURRENT_TIMESTAMP, success = FALSE, error_message = v_error_text
+WHERE log_id = v_log_id;
+```
+
+This approach provides:
+
+- Transaction audit trail
+- Performance monitoring capabilities
+- Debugging information for failed transactions
+
+### Monitoring active transactions
+
+Use PostgreSQL's system views to monitor active transactions:
+
+```sql
+-- View active transactions
+SELECT
+    pid,
+    usename,
+    application_name,
+    client_addr,
+    state,
+    query_start,
+    NOW() - query_start AS duration,
+    wait_event_type,
+    wait_event,
+    query
+FROM
+    pg_stat_activity
+WHERE
+    state = 'active'
+    AND pid <> pg_backend_pid()
+ORDER BY
+    query_start;
+```
+
+This query helps identify long-running transactions that might be blocking other operations.
+
+### Identifying locks and blocked queries
+
+Detect lock contentions with this query:
+
+```sql
+-- Find blocked queries and their blockers
+SELECT
+    blocked_locks.pid AS blocked_pid,
+    blocked_activity.usename AS blocked_user,
+    blocking_locks.pid AS blocking_pid,
+    blocking_activity.usename AS blocking_user,
+    blocked_activity.query AS blocked_query,
+    blocking_activity.query AS blocking_query,
+    NOW() - blocked_activity.query_start AS blocked_duration
+FROM
+    pg_catalog.pg_locks blocked_locks
+JOIN
+    pg_catalog.pg_stat_activity blocked_activity ON blocked_locks.pid = blocked_activity.pid
+JOIN
+    pg_catalog.pg_locks blocking_locks ON blocked_locks.transactionid = blocking_locks.transactionid AND blocked_locks.pid != blocking_locks.pid
+JOIN
+    pg_catalog.pg_stat_activity blocking_activity ON blocking_locks.pid = blocking_activity.pid
+WHERE
+    NOT blocked_locks.granted;
+```
+
+This information helps identify and resolve lock contentions in production environments.
+
+## Implementing two-phase commit
+
+For distributed transactions that must maintain consistency across multiple database systems, PostgreSQL supports two-phase commit:
+
+```sql
+-- Prepare the transaction
+BEGIN;
+-- Perform operations
+PREPARE TRANSACTION 'transaction-id-123';
+
+-- Later, commit the prepared transaction
+COMMIT PREPARED 'transaction-id-123';
+-- Or roll it back
+ROLLBACK PREPARED 'transaction-id-123';
+```
+
+Two-phase commits should be used carefully, as prepared transactions hold locks until they're resolved. Always implement monitoring and recovery mechanisms for prepared transactions.
+
+## Key takeaways
+
+- **Transactions ensure data integrity** by making multiple operations atomic.
+- **ACID properties** define the reliability guarantees of database transactions.
+- **Isolation levels** balance consistency and concurrency for different needs.
+- **Transaction design** should focus on keeping transactions short and focused.
+- **Error handling** at both database and application levels is critical.
+- **Optimistic concurrency control** helps manage high-contention scenarios.
+- **Savepoints** provide flexibility for complex transaction workflows.
+- **Advisory locks** enable application-level coordination.
+- **Transaction monitoring** is essential for production systems.
+- **Common anti-patterns** like transaction splitting and unbounded transactions should be avoided.
+
+## Next up in the series
+
+In the next article, [Securing Your Database](LINK_HERE), we'll explore techniques for protecting your database from unauthorized access and data breaches. We'll examine authentication, authorization, encryption, and auditing mechanisms in PostgreSQL, focusing on implementing a comprehensive security strategy for our ShopSmart ecommerce database.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- "PostgreSQL Documentation" _The PostgreSQL Global Development Group_ , n.d. Web. 16 April 2025 &#60;<a href="https://www.postgresql.org/docs/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.postgresql.org/docs/</a>&#62;
+
+<br />
+<br />
+<br />
+
+<AITools />

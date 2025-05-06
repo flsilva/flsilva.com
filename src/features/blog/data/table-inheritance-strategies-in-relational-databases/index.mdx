@@ -1,0 +1,738 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-11T00:00:00";
+
+export const description =
+  "Learn how to implement inheritance-like relationships in relational databases using subtype tables. Model specialized entities while maintaining a unified parent entity interface.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "table-inheritance-strategies-in-relational-databases";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "Table inheritance strategies in relational databases";
+
+export const tweetText =
+  "Discover how to model OOP-style inheritance in relational databases with subtype tables. Learn practical techniques to organize specialized entity types like physical, digital, and subscription products while keeping your database structure clean and flexible. #DatabaseDesign #SQL #DataModeling";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 8** of the "Mastering Relational Database Design" series. In
+  [Part 7](LINK_HERE), we learned how to implement business rules through
+  database constraints and validation tables.
+</InfoBox>
+
+## Introduction
+
+Relational databases traditionally struggle with implementing inheritance—a core concept in object-oriented programming. However, with careful design, we can model inheritance-like relationships using subtype tables. This approach allows us to represent specialized entities that share common attributes while also having their own unique properties.
+
+In this article, we'll explore how to implement entity inheritance in relational databases using subtype tables. We'll examine different implementation strategies, their trade-offs, and apply these concepts to our ShopSmart ecommerce database.
+
+## Understanding entity inheritance in databases
+
+In object-oriented programming, inheritance allows a class to inherit attributes and behaviors from a parent class. Similarly, in database design, entity inheritance represents a relationship where a specialized entity (subtype) inherits attributes from a more general entity (supertype), while potentially adding its own unique attributes.
+
+<InfoBoxQuotation>
+  Subtype tables allow us to model "is-a" relationships in relational databases,
+  bringing object-oriented inheritance concepts to relational data structures.
+</InfoBoxQuotation>
+
+For example, in our ecommerce system:
+
+- A **product** is the general entity (supertype).
+- A **physical product**, **digital product**, and **subscription product** are specialized entities (subtypes).
+- All subtypes share common attributes like name, price, and description.
+- Each subtype has unique attributes like weight (physical), download URL (digital), or billing period (subscription).
+
+## When to use subtype tables
+
+Consider using subtype tables when:
+
+1. **Specialized attributes**: A subset of entities requires additional attributes that don't apply to all instances.
+2. **Specialized behavior**: Different types of the same entity need different business rules.
+3. **Avoiding sparse tables**: You want to avoid tables with many nullable columns.
+4. **Implementing polymorphism**: You need to treat different entity types uniformly in some contexts and distinctly in others.
+5. **Logical grouping**: You want to maintain a clean separation between common and specialized attributes.
+
+<InfoBox>
+  Subtype tables are particularly valuable when you have entities that share a
+  common core but diverge significantly in their specialized attributes. They
+  help maintain both conceptual clarity and storage efficiency.
+</InfoBox>
+
+## Implementation strategies
+
+There are several approaches to implementing inheritance in relational databases. We'll examine three common strategies:
+
+### 1. Single Table Inheritance
+
+In this approach, all attributes—both common and subtype-specific—are stored in a single table. A "type" column distinguishes between different subtypes.
+
+**Advantages:**
+
+- Simple to query (no joins needed)
+- Easy to implement and understand
+- CRUD operations affect only one table
+
+**Disadvantages:**
+
+- Many nullable columns for subtype-specific attributes
+- Table can become very wide
+- Subtype-specific constraints are difficult to enforce
+- Wasted space for NULL values
+
+**Example implementation:**
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_type varchar(20) NOT NULL,
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL,
+
+  -- Physical product attributes
+  weight numeric(8,3),
+  dimensions varchar(50),
+  shipping_class varchar(50),
+
+  -- Digital product attributes
+  download_url varchar(255),
+  file_size integer,
+  file_format varchar(20),
+
+  -- Subscription product attributes
+  billing_period varchar(20),
+  subscription_length integer,
+  trial_period_days integer,
+
+  CONSTRAINT chk_products_type CHECK (product_type IN ('physical', 'digital', 'subscription')),
+  CONSTRAINT chk_physical_products_weight CHECK (
+    product_type != 'physical' OR weight IS NOT NULL
+  )
+  -- Additional constraints for other required subtype fields
+);
+```
+
+### 2. Table Per Type (TPT)
+
+This strategy uses separate tables for the supertype and each subtype. The supertype table contains common attributes, while each subtype table contains only type-specific attributes and a foreign key to the supertype.
+
+**Advantages:**
+
+- Clean separation of common and specialized attributes
+- No nullable columns for subtype-specific attributes
+- Type-specific constraints can be easily enforced
+- Normalized design with minimal redundancy
+
+**Disadvantages:**
+
+- Queries often require joins
+- CRUD operations may affect multiple tables
+- More complex to implement and maintain
+
+**Example implementation:**
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_type varchar(20) NOT NULL,
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL,
+  CONSTRAINT chk_products_type CHECK (product_type IN ('physical', 'digital', 'subscription'))
+);
+
+CREATE TABLE physical_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id),
+  weight numeric(8,3) NOT NULL,
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL
+);
+
+CREATE TABLE digital_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id),
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL,
+  file_format varchar(20) NOT NULL
+);
+
+CREATE TABLE subscription_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id),
+  billing_period varchar(20) NOT NULL,
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0
+);
+```
+
+### 3. Table Per Concrete Type (TPCT)
+
+In this approach, each concrete subtype gets its own complete table, including both the common attributes and subtype-specific attributes. There is no separate table for the supertype.
+
+**Advantages:**
+
+- No joins needed to query a specific subtype
+- Type-specific constraints can be easily enforced
+- No nullable columns
+
+**Disadvantages:**
+
+- Common attributes are duplicated across tables
+- Querying across all types is complex
+- Schema changes to common attributes affect multiple tables
+- Enforcing uniqueness across all types is challenging
+
+**Example implementation:**
+
+```sql
+CREATE TABLE physical_products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL,
+  weight numeric(8,3) NOT NULL,
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL
+);
+
+CREATE TABLE digital_products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL,
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL,
+  file_format varchar(20) NOT NULL
+);
+
+CREATE TABLE subscription_products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL,
+  billing_period varchar(20) NOT NULL,
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0
+);
+
+-- View to unify all product types
+CREATE VIEW all_products AS
+  SELECT product_id, 'physical' AS product_type, name, description, price
+  FROM physical_products
+UNION ALL
+  SELECT product_id, 'digital' AS product_type, name, description, price
+  FROM digital_products
+UNION ALL
+  SELECT product_id, 'subscription' AS product_type, name, description, price
+  FROM subscription_products;
+```
+
+## Implementing subtype tables for ShopSmart
+
+For our ShopSmart ecommerce database, we'll use the Table Per Type (TPT) approach, which offers the best balance of normalization, flexibility, and query performance for our needs.
+
+### Step 1: Create a product types validation table
+
+First, let's create a validation table for product types:
+
+```sql
+CREATE TABLE product_types (
+  product_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  is_active boolean NOT NULL DEFAULT true,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO product_types (name, description)
+VALUES
+  ('physical', 'Tangible products that require shipping'),
+  ('digital', 'Downloadable products'),
+  ('subscription', 'Recurring service products');
+```
+
+### Step 2: Create the products table (supertype)
+
+Next, let's create the main products table with common attributes:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_type_id uuid NOT NULL REFERENCES product_types(product_type_id),
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL CHECK (price >= 0),
+  sku varchar(50) UNIQUE,
+  stock_quantity integer NOT NULL DEFAULT 0 CHECK (stock_quantity >= 0),
+  is_featured boolean NOT NULL DEFAULT false,
+  category_id uuid NOT NULL REFERENCES categories(category_id),
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_products_type ON products(product_type_id);
+CREATE INDEX idx_products_category ON products(category_id);
+```
+
+### Step 3: Create subtype tables
+
+Now, let's create the tables for each product subtype:
+
+```sql
+-- Physical products subtype
+CREATE TABLE physical_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+  weight numeric(8,3) NOT NULL CHECK (weight > 0),
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL,
+  country_of_origin varchar(100),
+  is_fragile boolean NOT NULL DEFAULT false,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Digital products subtype
+CREATE TABLE digital_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL CHECK (file_size > 0),
+  file_format varchar(20) NOT NULL,
+  download_limit integer,
+  license_type varchar(50) NOT NULL DEFAULT 'standard',
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Subscription products subtype
+CREATE TABLE subscription_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+  billing_period varchar(20) NOT NULL CHECK (billing_period IN ('monthly', 'quarterly', 'annual')),
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0,
+  auto_renew boolean NOT NULL DEFAULT true,
+  cancellation_policy text,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Step 4: Create enforcing triggers
+
+To ensure data integrity, we should add triggers that enforce the correct product type when inserting into subtype tables:
+
+```sql
+-- Trigger function to ensure only physical products are inserted into physical_products
+CREATE OR REPLACE FUNCTION enforce_physical_product_type()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM products p
+    JOIN product_types pt ON p.product_type_id = pt.product_type_id
+    WHERE p.product_id = NEW.product_id AND pt.name = 'physical'
+  ) THEN
+    RAISE EXCEPTION 'Product is not a physical product type';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_physical_product_type
+BEFORE INSERT OR UPDATE ON physical_products
+FOR EACH ROW EXECUTE FUNCTION enforce_physical_product_type();
+
+-- Similar triggers for digital and subscription products
+-- (code omitted for brevity but follows the same pattern)
+```
+
+### Step 5: Create convenience views
+
+To simplify querying, we can create views that join the supertype and subtype tables:
+
+```sql
+-- View for physical products with all attributes
+CREATE VIEW physical_product_details AS
+SELECT
+  p.*,
+  pp.weight,
+  pp.dimensions,
+  pp.shipping_class,
+  pp.country_of_origin,
+  pp.is_fragile
+FROM
+  products p
+JOIN
+  physical_products pp ON p.product_id = pp.product_id
+JOIN
+  product_types pt ON p.product_type_id = pt.product_type_id
+WHERE
+  pt.name = 'physical';
+
+-- Similar views for digital and subscription products
+```
+
+<InfoBox>
+  Using views can simplify application code by providing a unified interface for
+  each product type. Instead of writing complex joins in your application, you
+  can query these views directly.
+</InfoBox>
+
+## Visual representation
+
+In an ER diagram, this subtype tables structure might be represented as:
+
+<ImageWithCaption caption="Figure 12. Subtype tables for different product types.">
+  ![Figure 12. Subtype tables for different product
+  types.](./subtype-tables-diagram.png)
+</ImageWithCaption>
+
+## Querying subtype tables
+
+With our structure in place, let's look at how to perform common operations:
+
+### Inserting data
+
+Inserting a new product requires inserting into both the supertype and appropriate subtype table:
+
+```sql
+-- Begin transaction
+BEGIN;
+
+-- Insert into the common products table
+INSERT INTO products (product_type_id, name, description, price, category_id)
+VALUES
+  ((SELECT product_type_id FROM product_types WHERE name = 'physical'),
+   'Ergonomic Office Chair',
+   'Comfortable chair with lumbar support',
+   299.99,
+   (SELECT category_id FROM categories WHERE name = 'Furniture'));
+
+-- Get the generated product_id
+WITH new_product AS (
+  SELECT product_id
+  FROM products
+  WHERE name = 'Ergonomic Office Chair'
+  ORDER BY created_at DESC
+  LIMIT 1
+)
+-- Insert into the physical_products table
+INSERT INTO physical_products (product_id, weight, dimensions, shipping_class)
+VALUES (
+  (SELECT product_id FROM new_product),
+  15.5,
+  '30x28x45 inches',
+  'oversize'
+);
+
+-- Commit transaction
+COMMIT;
+```
+
+<InfoBox theme="warning">
+  Always use transactions when inserting or updating records that span multiple
+  tables in a subtype relationship. This ensures that the operation either
+  completes entirely or fails entirely, maintaining data integrity.
+</InfoBox>
+
+### Querying specific product types
+
+To query only physical products:
+
+```sql
+-- Using the view we created
+SELECT * FROM physical_product_details;
+
+-- Or with a direct join
+SELECT
+  p.*,
+  pp.weight,
+  pp.dimensions,
+  pp.shipping_class
+FROM
+  products p
+JOIN
+  physical_products pp ON p.product_id = pp.product_id
+JOIN
+  product_types pt ON p.product_type_id = pt.product_type_id
+WHERE
+  pt.name = 'physical';
+```
+
+### Querying all products
+
+To query all products regardless of type:
+
+```sql
+-- For common attributes only
+SELECT * FROM products;
+
+-- For type-specific attributes (with LEFT JOINs to handle nulls)
+SELECT
+  p.*,
+  pt.name AS product_type,
+  pp.weight,
+  pp.dimensions,
+  dp.download_url,
+  dp.file_size,
+  sp.billing_period,
+  sp.subscription_length
+FROM
+  products p
+JOIN
+  product_types pt ON p.product_type_id = pt.product_type_id
+LEFT JOIN
+  physical_products pp ON p.product_id = pp.product_id AND pt.name = 'physical'
+LEFT JOIN
+  digital_products dp ON p.product_id = dp.product_id AND pt.name = 'digital'
+LEFT JOIN
+  subscription_products sp ON p.product_id = sp.product_id AND pt.name = 'subscription';
+```
+
+## Polymorphic relationships
+
+One challenge with subtype tables is handling polymorphic relationships—relationships where entities can be associated with different types of another entity. For example, in our ecommerce system, a discount might apply to any product type.
+
+There are two main approaches to handling polymorphic relationships:
+
+### 1. Relate to the supertype
+
+The simplest approach is to relate to the supertype table:
+
+```sql
+CREATE TABLE product_discounts (
+  discount_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  discount_percent numeric(5,2) NOT NULL,
+  started_at timestamptz NOT NULL,
+  ended_at timestamptz NOT NULL
+);
+```
+
+This works because all subtypes are represented in the supertype table, so we can relate to any product regardless of its type.
+
+### 2. Type discriminator pattern
+
+For more complex cases, we might use a type discriminator pattern:
+
+```sql
+CREATE TABLE discountable_items (
+  item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  item_type varchar(50) NOT NULL,
+  item_reference_id uuid NOT NULL,
+  discount_percent numeric(5,2) NOT NULL,
+  started_at timestamptz NOT NULL,
+  ended_at timestamptz NOT NULL,
+  CONSTRAINT unique_item_discount UNIQUE (item_type, item_reference_id)
+);
+```
+
+This allows discounts to apply to any entity type, not just products. The `item_type` specifies the type of entity, and `item_reference_id` holds the ID of that entity.
+
+## Limitations and alternatives
+
+While subtype tables offer many benefits, they also have limitations:
+
+1. **Query complexity**: Joining subtype tables can make queries more complex.
+2. **Transaction overhead**: Operations spanning multiple tables require transactions.
+3. **Referential integrity overhead**: Cascading deletes must be carefully managed.
+4. **Schema evolution challenges**: Adding new subtypes requires schema changes.
+
+### PostgreSQL-specific alternative: table inheritance
+
+PostgreSQL offers a native table inheritance feature that can simplify some aspects of subtyping:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(255) NOT NULL,
+  description text,
+  price numeric(10,2) NOT NULL,
+  -- other common fields
+);
+
+CREATE TABLE physical_products (
+  weight numeric(8,3) NOT NULL,
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL
+) INHERITS (products);
+
+CREATE TABLE digital_products (
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL,
+  file_format varchar(20) NOT NULL
+) INHERITS (products);
+
+CREATE TABLE subscription_products (
+  billing_period varchar(20) NOT NULL,
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0
+) INHERITS (products);
+```
+
+With this approach, the child tables automatically inherit all columns from the parent table, and queries on the parent table can optionally include data from all child tables.
+
+<InfoBox>
+  While PostgreSQL's table inheritance is powerful, it has some limitations
+  compared to object-oriented inheritance, particularly around constraints and
+  indexing. It also isn't portable to other database systems. For these reasons,
+  the subtype table approach described earlier is often preferred for production
+  systems.
+</InfoBox>
+
+## Real-world patterns and examples
+
+The subtype pattern appears in many domains beyond our ecommerce example:
+
+### Payment methods
+
+Different payment methods (credit card, bank transfer, digital wallet) share common attributes but also have unique ones:
+
+```sql
+CREATE TABLE payments (
+  payment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  payment_type_id uuid NOT NULL REFERENCES payment_types(payment_type_id),
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  amount numeric(10,2) NOT NULL,
+  status varchar(20) NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE credit_card_payments (
+  payment_id uuid PRIMARY KEY REFERENCES payments(payment_id) ON DELETE CASCADE,
+  card_type varchar(20) NOT NULL,
+  last_four_digits varchar(4) NOT NULL,
+  expiry_month smallint NOT NULL,
+  expiry_year smallint NOT NULL
+);
+
+CREATE TABLE bank_transfer_payments (
+  payment_id uuid PRIMARY KEY REFERENCES payments(payment_id) ON DELETE CASCADE,
+  bank_name varchar(100) NOT NULL,
+  account_last_four varchar(4) NOT NULL,
+  reference_number varchar(50) NOT NULL
+);
+```
+
+### Content management
+
+Different types of content (articles, videos, podcasts) share metadata but have type-specific attributes:
+
+```sql
+CREATE TABLE content_items (
+  content_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  content_type_id uuid NOT NULL REFERENCES content_types(content_type_id),
+  title varchar(255) NOT NULL,
+  description text,
+  published_at timestamptz,
+  author_id uuid NOT NULL REFERENCES users(user_id)
+);
+
+CREATE TABLE articles (
+  content_id uuid PRIMARY KEY REFERENCES content_items(content_id) ON DELETE CASCADE,
+  body_content text NOT NULL,
+  word_count integer NOT NULL,
+  reading_time_minutes integer NOT NULL
+);
+
+CREATE TABLE videos (
+  content_id uuid PRIMARY KEY REFERENCES content_items(content_id) ON DELETE CASCADE,
+  video_url varchar(255) NOT NULL,
+  duration_seconds integer NOT NULL,
+  thumbnail_url varchar(255) NOT NULL
+);
+```
+
+### User types
+
+Different types of users (customers, employees, vendors) share authentication data but have different roles and attributes:
+
+```sql
+CREATE TABLE users (
+  user_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_type_id uuid NOT NULL REFERENCES user_types(user_type_id),
+  email varchar(255) NOT NULL UNIQUE,
+  password_hash text NOT NULL,
+  first_name varchar(100) NOT NULL,
+  last_name varchar(100) NOT NULL
+);
+
+CREATE TABLE customers (
+  user_id uuid PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+  shipping_address_id uuid REFERENCES addresses(address_id),
+  billing_address_id uuid REFERENCES addresses(address_id),
+  loyalty_points integer NOT NULL DEFAULT 0
+);
+
+CREATE TABLE employees (
+  user_id uuid PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+  department_id uuid NOT NULL REFERENCES departments(department_id),
+  hire_date date NOT NULL,
+  manager_id uuid REFERENCES employees(user_id)
+);
+```
+
+## Object-relational mapping considerations
+
+When using subtype tables with Object-Relational Mapping (ORM) frameworks like Hibernate, Entity Framework, or Sequelize, different strategies are available:
+
+1. **Single Table Inheritance (STI)**: Maps all subtypes to a single table with a discriminator column.
+2. **Class Table Inheritance (CTI)**: Maps each subtype to its own table, similar to our TPT approach.
+3. **Concrete Table Inheritance (CTI)**: Maps each concrete class to its own table, similar to our TPCT approach.
+
+Most ORMs provide built-in support for these inheritance strategies, making it easier to work with subtype tables from your application code.
+
+<InfoBoxQuotation>
+  The gap between object-oriented thinking and relational databases, often
+  called the [object-relational impedance
+  mismatch](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch),
+  is most apparent when dealing with inheritance. Subtype tables bridge this
+  gap, allowing relational databases to model inheritance-like structures.
+</InfoBoxQuotation>
+
+## Key takeaways
+
+- **Subtype tables** implement inheritance-like structures in relational databases and appear in many domains beyond ecommerce, including payments, content management, and user types.
+- **Table Per Type (TPT)** provides a good balance of normalization and query performance.
+- **Common attributes** go in the supertype table, while **specialized attributes** go in subtype tables.
+- **Validation tables** help track entity types and enforce data integrity.
+- **Transactions** are essential when operations span multiple tables.
+- **Views** can simplify querying by providing unified interfaces to subtype data.
+- **PostgreSQL inheritance** offers a native alternative but has limitations.
+- **Polymorphic relationships** can be handled by relating to the supertype or using discriminator patterns.
+
+## Next up in the series
+
+In the next article, [Normalization & Denormalization](LINK_HERE), we'll explore the formal process of organizing database tables to minimize redundancy and improve data integrity. We'll examine the various normal forms, from first normal form (1NF) to third normal form (3NF), and discuss when and how to strategically denormalize for performance optimization.

@@ -1,0 +1,619 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-12T00:00:00";
+
+export const description =
+  "Master database normalization techniques from 1NF to 3NF and learn when strategic denormalization improves performance. Balance data integrity with query efficiency in real-world systems.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "normalization-vs-denormalization-striking-the-balance";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "Normalization vs denormalization: striking the balance";
+
+export const tweetText =
+  "Discover the art of database normalization and denormalization! Learn how to organize your database tables for maximum integrity while knowing exactly when to break the rules for performance. A must-read for anyone designing data-intensive applications. #DatabaseDesign #Normalization #SQL";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 9** of the "Mastering Relational Database Design" series. In
+  [Part 8](LINK_HERE), we learned how to implement entity inheritance in
+  relational databases.
+</InfoBox>
+
+## Introduction
+
+Database normalization is a systematic approach to organizing database tables to minimize redundancy and improve data integrity. While normalization offers significant benefits for data consistency, there are situations where strategic denormalization can improve performance. Understanding both concepts is crucial for designing efficient and reliable database systems.
+
+In this article, we'll explore the principles of normalization, examine the different normal forms, and discuss when and how to apply denormalization for performance optimization. We'll see how to balance theoretical purity with practical requirements in real-world database design.
+
+## Understanding normalization
+
+**Normalization** is a design technique that reduces data redundancy and eliminates undesirable characteristics like insertion, update, and deletion anomalies. It divides larger tables into smaller ones and defines relationships between them according to established rules.
+
+<InfoBoxQuotation>
+  Normalization is not about creating more tables. It's about organizing data
+  more effectively to eliminate redundancy and ensure dependencies make sense.
+</InfoBoxQuotation>
+
+Developed by Edgar F. Codd, the inventor of the relational model, normalization follows a series of rules called normal forms. Each normal form addresses specific types of anomalies and builds upon the previous forms.
+
+### Why normalize?
+
+Before diving into the normal forms, let's understand why normalization is essential:
+
+1. **Reduces data redundancy**: By eliminating duplicate data, normalized databases use storage more efficiently and reduce the risk of inconsistencies.
+
+2. **Improves data integrity**: When data is stored in only one place, updates need to happen in only one place, reducing the risk of errors.
+
+3. **Eliminates anomalies**: Properly normalized databases avoid insertion, update, and deletion anomalies that can corrupt data.
+
+4. **Simplifies queries**: Many types of queries become simpler when data is properly normalized, especially those involving data modifications.
+
+5. **Provides flexibility**: A well-normalized database can more easily adapt to new requirements without major restructuring.
+
+### Types of anomalies
+
+Normalization helps prevent several types of anomalies:
+
+**Insertion anomalies**: These occur when you cannot insert data because other unrelated data is missing. For example, if order details and customer information are stored in the same table, you might not be able to store information about a new customer until they place an order.
+
+**Update anomalies**: These happen when the same data exists in multiple places, and updates to one instance aren't applied to others. For instance, if a customer's address is stored redundantly across multiple order records, changing it in one place but not others leads to inconsistency.
+
+**Deletion anomalies**: These arise when deleting some data unintentionally removes other unrelated data. For example, if you delete the last order for a customer, you might inadvertently lose all information about that customer if both are stored in the same table.
+
+## Normal forms
+
+The process of normalization involves moving through a series of states called normal forms. Each normal form represents a progressively stricter set of rules about how data should be organized.
+
+### First normal form (1NF)
+
+First normal form focuses on **atomicity** of data—ensuring that each column contains only single, indivisible values. A table is in 1NF when:
+
+1. It has a primary key (a column or set of columns that uniquely identifies each row).
+2. All columns contain only atomic (indivisible) values.
+3. There are no repeating groups or arrays.
+
+**Example of a table NOT in 1NF:**
+
+```
+| OrderID | Products                        |
+|---------|---------------------------------|
+| 1001    | Laptop, Keyboard, Mouse         |
+| 1002    | Headphones, Webcam              |
+```
+
+In this example, the Products column contains multiple values, violating 1NF.
+
+**Conversion to 1NF:**
+
+```
+| OrderID | Product    |
+|---------|------------|
+| 1001    | Laptop     |
+| 1001    | Keyboard   |
+| 1001    | Mouse      |
+| 1002    | Headphones |
+| 1002    | Webcam     |
+```
+
+Now the table satisfies 1NF because each cell contains only one value, and a composite key of OrderID and Product can uniquely identify each row.
+
+<InfoBox>
+  Common violations of 1NF include storing comma-separated lists, arrays, or
+  JSON structures in a single column. While modern databases like PostgreSQL
+  support JSON and array data types, using them means you're explicitly choosing
+  to deviate from strict relational principles for specific reasons.
+</InfoBox>
+
+### Second normal form (2NF)
+
+Second normal form builds on 1NF by eliminating **partial dependencies**. A table is in 2NF when:
+
+1. It is already in 1NF.
+2. All non-key attributes are fully dependent on the entire primary key, not just part of it.
+
+This form is only relevant for tables with composite primary keys. If a table has a single-column primary key, it's automatically in 2NF if it's already in 1NF.
+
+**Example of a table in 1NF but NOT in 2NF:**
+
+```
+| OrderID | Product    | Quantity | CustomerName | CustomerEmail      |
+|---------|------------|----------|--------------|-------------------|
+| 1001    | Laptop     | 1        | John Smith   | john@example.com  |
+| 1001    | Keyboard   | 1        | John Smith   | john@example.com  |
+| 1002    | Headphones | 2        | Alice Jones  | alice@example.com |
+```
+
+Here, the composite primary key is (OrderID, Product). However, CustomerName and CustomerEmail depend only on OrderID, not on the entire key. This is a partial dependency.
+
+**Conversion to 2NF:**
+
+First, create a table for orders and customers:
+
+```
+| OrderID | CustomerName | CustomerEmail      |
+|---------|--------------|-------------------|
+| 1001    | John Smith   | john@example.com  |
+| 1002    | Alice Jones  | alice@example.com |
+```
+
+Then, create a table for order items:
+
+```
+| OrderID | Product    | Quantity |
+|---------|------------|----------|
+| 1001    | Laptop     | 1        |
+| 1001    | Keyboard   | 1        |
+| 1002    | Headphones | 2        |
+```
+
+Now both tables are in 2NF because all non-key attributes in each table are fully dependent on that table's primary key.
+
+### Third normal form (3NF)
+
+Third normal form eliminates **transitive dependencies**. A table is in 3NF when:
+
+1. It is already in 2NF.
+2. All non-key attributes are directly dependent on the primary key and not on other non-key attributes.
+
+**Example of a table in 2NF but NOT in 3NF:**
+
+```
+| OrderID | CustomerID | CustomerZIP | ShippingCost |
+|---------|------------|-------------|--------------|
+| 1001    | C1         | 10001       | 5.99         |
+| 1002    | C2         | 20002       | 7.99         |
+| 1003    | C3         | 10001       | 5.99         |
+```
+
+In this table, ShippingCost depends on CustomerZIP, which itself depends on OrderID through CustomerID. This is a transitive dependency.
+
+**Conversion to 3NF:**
+
+First table for orders:
+
+```
+| OrderID | CustomerID | CustomerZIP |
+|---------|------------|-------------|
+| 1001    | C1         | 10001       |
+| 1002    | C2         | 20002       |
+| 1003    | C3         | 10001       |
+```
+
+Second table for shipping costs by ZIP code:
+
+```
+| CustomerZIP | ShippingCost |
+|-------------|--------------|
+| 10001       | 5.99         |
+| 20002       | 7.99         |
+```
+
+Now both tables are in 3NF because all non-key attributes depend only on the primary key.
+
+### Beyond third normal form
+
+While 3NF is sufficient for most applications, there are higher normal forms for special cases:
+
+- **Boyce-Codd normal form (BCNF)**: A stricter version of 3NF that deals with certain types of anomalies when multiple candidate keys overlap.
+- **Fourth normal form (4NF)**: Addresses multivalued dependencies.
+- **Fifth normal form (5NF)**: Handles join dependencies.
+- **Sixth normal form (6NF)**: Deals with temporal data and is particularly relevant for data warehousing.
+
+In practice, most database designs aim for 3NF, with occasional deviations for performance or practicality. The higher normal forms are rarely used in operational databases but may be considered for analytical systems with complex relationships.
+
+## Normalization in practice
+
+While normalization theory provides clear guidelines, applying it in practice requires judgment. Here are some practical considerations:
+
+### Identifying functional dependencies
+
+The key to effective normalization is identifying **functional dependencies**—relationships where one attribute determines another. For example, in an order system:
+
+- CustomerID → CustomerName, CustomerEmail (a customer ID determines the customer's name and email).
+- OrderID → OrderDate, CustomerID (an order ID determines the order date and customer).
+- ProductID → ProductName, ProductPrice (a product ID determines the product's name and price).
+
+These dependencies guide how you divide your data into normalized tables.
+
+### Common normalization patterns
+
+Several patterns emerge when normalizing databases:
+
+1. **Master-detail pattern**: Separating header records (like orders) from detail records (like order items).
+2. **Lookup table pattern**: Moving code-description pairs into separate tables.
+3. **Subtype pattern**: Breaking out specialized entity attributes (as we saw in the previous article).
+4. **Association pattern**: Using junction tables for many-to-many relationships.
+
+### Applying normalization to ShopSmart
+
+Let's look at how normalization applies to our ShopSmart database. We've already applied normalization principles in previous articles, but let's highlight a few examples:
+
+**1NF application**: We separated product attributes into individual columns instead of storing them as a JSON or comma-separated list:
+
+```sql
+-- Unnormalized approach (violates 1NF)
+CREATE TABLE products_poor_design (
+  product_id uuid PRIMARY KEY,
+  name varchar(255),
+  attributes text -- Stores "color:red,size:XL,material:cotton"
+);
+
+-- 1NF approach (what we used)
+CREATE TABLE products (
+  product_id uuid PRIMARY KEY,
+  name varchar(255),
+  color varchar(50),
+  size varchar(10),
+  material varchar(50)
+);
+```
+
+**2NF application**: We separated orders from order items, since items have a composite dependency on both order and product:
+
+```sql
+CREATE TABLE orders (
+  order_id uuid PRIMARY KEY,
+  customer_id uuid REFERENCES customers(customer_id),
+  ordered_at timestamptz,
+  -- other order-level attributes
+);
+
+CREATE TABLE order_items (
+  order_id uuid REFERENCES orders(order_id),
+  product_id uuid REFERENCES products(product_id),
+  quantity integer,
+  unit_price numeric(10,2),
+  -- other item-level attributes
+);
+```
+
+**3NF application**: We created a separate table for product categories instead of storing category details redundantly with each product:
+
+```sql
+CREATE TABLE categories (
+  category_id uuid PRIMARY KEY,
+  name varchar(100),
+  description text
+);
+
+CREATE TABLE products (
+  product_id uuid PRIMARY KEY,
+  category_id uuid REFERENCES categories(category_id),
+  name varchar(255),
+  -- other fields
+);
+```
+
+These examples show how normalization leads naturally to the kind of database structure we've been developing throughout this series.
+
+## Normalization built into the design process
+
+Interestingly, by following the design approach presented in this series—based on the book [_Database Design for Mere Mortals_](https://www.amazon.com/Database-Design-Mere-Mortals-Anniversary/dp/0136788041/), by Michael J. Hernandez, which is focused on systematically identifying entities, attributes, and relationships—we naturally build reasonably normalized database structures, even without explicitly working through the formal normalization process.
+
+<InfoBoxQuotation>
+  Good entity-relationship modeling inherently leads to normalized database
+  designs. The principles are built into the process of identifying entities and
+  their relationships.
+</InfoBoxQuotation>
+
+The entity-relationship modeling approach inherently leads to a reasonably normalized database design because:
+
+1. It separates distinct entities into their own tables.
+2. It identifies primary keys for unique identification.
+3. It establishes relationships between entities using foreign keys.
+4. It places attributes with the entities they describe.
+
+This natural alignment between ER modeling and normalization is why many database designers don't explicitly perform formal normalization analysis unless specific anomalies are discovered.
+
+## Denormalization
+
+While normalization improves data integrity and reduces redundancy, it can sometimes lead to performance issues, particularly with complex queries that require joining multiple tables. **Denormalization** is the process of intentionally introducing redundancy into a database design to improve read performance.
+
+### When to consider denormalization
+
+Denormalization might be appropriate when:
+
+1. **Read performance is critical**: When most operations are reads rather than writes.
+2. **Joins become a bottleneck**: When frequently executed queries join many tables.
+3. **Query complexity becomes unwieldy**: When queries become too complex due to normalization.
+4. **Reporting and analytics are primary uses**: When the database supports primarily analytical workloads.
+
+### Denormalization techniques
+
+There are several approaches to denormalization:
+
+#### 1. Duplicate data
+
+The most straightforward technique is to store the same data in multiple places to avoid joins:
+
+```sql
+-- Normalized approach (3NF)
+CREATE TABLE orders (
+  order_id uuid PRIMARY KEY,
+  customer_id uuid REFERENCES customers(customer_id)
+);
+
+-- Denormalized approach
+CREATE TABLE orders_denormalized (
+  order_id uuid PRIMARY KEY,
+  customer_id uuid REFERENCES customers(customer_id),
+  customer_name varchar(255),
+  customer_email varchar(255)
+);
+```
+
+The denormalized approach stores customer name and email directly in the orders table, eliminating the need to join with the customers table for basic queries.
+
+#### 2. Pre-aggregate Data
+
+Another technique is to store calculated values instead of computing them on the fly:
+
+```sql
+-- Normalized approach
+-- Calculate totals on-demand
+SELECT
+order_id,
+SUM(quantity * unit_price) AS total_amount
+FROM order_items
+GROUP BY order_id;
+
+-- Denormalized approach
+ALTER TABLE orders ADD COLUMN total_amount numeric(10,2);
+-- Keep this column updated via triggers or application logic
+```
+
+#### 3. Create summary tables
+
+For analytical queries, creating dedicated summary tables can dramatically improve performance:
+
+```sql
+CREATE TABLE daily_sales_summary (
+  date date PRIMARY KEY,
+  total_orders integer,
+  total_revenue numeric(14,2),
+  average_order_value numeric(10,2)
+);
+```
+
+These summary tables can be updated periodically through batch processes or triggers.
+
+#### 4. Add redundant foreign keys
+
+Sometimes adding redundant foreign keys can eliminate joins in common query paths:
+
+```sql
+-- Normalized approach
+CREATE TABLE order_items (
+  order_item_id uuid PRIMARY KEY,
+  order_id uuid REFERENCES orders(order_id),
+  product_id uuid REFERENCES products(product_id)
+);
+
+-- Denormalized approach
+CREATE TABLE order_items_denormalized (
+  order_item_id uuid PRIMARY KEY,
+  order_id uuid REFERENCES orders(order_id),
+  product_id uuid REFERENCES products(product_id),
+  customer_id uuid REFERENCES customers(customer_id) -- Redundant FK from orders table
+);
+```
+
+This allows querying order items by customer without joining through the orders table.
+
+### Implementing denormalization in ShopSmart
+
+Let's apply some denormalization to our ShopSmart database to optimize for common query patterns.
+
+#### Example 1: product category denormalization
+
+For product listing pages that display category names:
+
+```sql
+-- Add category_name to products table
+ALTER TABLE products ADD COLUMN category_name varchar(100);
+
+-- Create a trigger to keep it in sync
+CREATE OR REPLACE FUNCTION update_product_category_name()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.category_name := (SELECT name FROM categories WHERE category_id = NEW.category_id);
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER sync_product_category_name
+BEFORE INSERT OR UPDATE OF category_id ON products
+FOR EACH ROW EXECUTE FUNCTION update_product_category_name();
+```
+
+#### Example 2: order summary denormalization
+
+For order history pages that need order totals:
+
+```sql
+-- Add summary fields to orders table
+ALTER TABLE orders
+ADD COLUMN item_count integer,
+ADD COLUMN total_amount numeric(10,2);
+
+-- Create a trigger to maintain these values
+CREATE OR REPLACE FUNCTION update_order_summary()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Update the summary fields when order items change
+  UPDATE orders
+  SET
+    item_count = (SELECT SUM(quantity) FROM order_items WHERE order_id = NEW.order_id),
+    total_amount = (SELECT SUM(quantity * unit_price) FROM order_items WHERE order_id = NEW.order_id)
+  WHERE order_id = NEW.order_id;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER maintain_order_summary
+AFTER INSERT OR UPDATE OR DELETE ON order_items
+FOR EACH ROW EXECUTE FUNCTION update_order_summary();
+```
+
+#### Example 3: review statistics materialization
+
+For product pages that display review statistics:
+
+```sql
+-- Add review statistics to products table
+ALTER TABLE products
+ADD COLUMN review_count integer DEFAULT 0,
+ADD COLUMN average_rating numeric(3,2) DEFAULT 0;
+
+-- Create a trigger to update these whenever reviews change
+CREATE OR REPLACE FUNCTION update_product_review_stats()
+RETURNS TRIGGER AS $$
+DECLARE
+  product_id_to_update uuid;
+BEGIN
+  -- Determine which product_id needs updating
+  IF TG_OP = 'DELETE' THEN
+    product_id_to_update := OLD.product_id;
+  ELSE
+    product_id_to_update := NEW.product_id;
+  END IF;
+
+  -- Update the denormalized columns in the products table
+  UPDATE products
+  SET
+    review_count = (SELECT COUNT(*) FROM reviews WHERE product_id = product_id_to_update),
+    average_rating = (SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE product_id = product_id_to_update)
+  WHERE product_id = product_id_to_update;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_review_change
+AFTER INSERT OR UPDATE OR DELETE ON reviews
+FOR EACH ROW EXECUTE FUNCTION update_product_review_stats();
+```
+
+### Materialized views for denormalization
+
+PostgreSQL offers materialized views, which provide a powerful mechanism for denormalization:
+
+```sql
+CREATE MATERIALIZED VIEW product_sales_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  p.category_id,
+  c.name AS category_name,
+  COUNT(DISTINCT o.order_id) AS orders_count,
+  SUM(oi.quantity) AS total_quantity_sold,
+  SUM(oi.quantity * oi.unit_price) AS total_revenue
+FROM
+  products p
+LEFT JOIN
+  categories c ON p.category_id = c.category_id
+LEFT JOIN
+  order_items oi ON p.product_id = oi.product_id
+LEFT JOIN
+  orders o ON oi.order_id = o.order_id
+WHERE
+  o.status = 'completed' OR o.status IS NULL
+GROUP BY
+  p.product_id, p.name, p.category_id, c.name;
+```
+
+Materialized views cache the results of a query, making them ideal for expensive aggregations or complex joins. Unlike regular views, they store the result set physically. They can be refreshed periodically:
+
+```sql
+REFRESH MATERIALIZED VIEW product_sales_summary;
+```
+
+<InfoBox>
+  Materialized views are an excellent compromise between normalization and
+  denormalization. They maintain a normalized base schema while providing the
+  performance benefits of denormalized data for specific query patterns.
+</InfoBox>
+
+### The costs of denormalization
+
+While denormalization can improve read performance, it comes with costs:
+
+1. **Increased storage requirements**: Redundant data consumes more space.
+2. **Write performance overhead**: Updates must maintain all copies of redundant data.
+3. **Increased complexity**: Triggers and application logic must ensure data consistency.
+4. **Risk of inconsistencies**: If synchronization fails, data can become inconsistent.
+
+Before denormalizing, consider alternatives like:
+
+- Improving indexes
+- Optimizing queries
+- Using database features like materialized views
+- Implementing caching at the application level
+
+## Balancing normalization and denormalization
+
+The key to effective database design is finding the right balance between normalization and denormalization:
+
+1. **Start with normalized design**: Begin with a properly normalized database structure.
+2. **Identify performance bottlenecks**: Use testing and monitoring to find specific issues.
+3. **Apply targeted denormalization**: Denormalize only where necessary to address specific problems.
+4. **Document design decisions**: Clearly document where and why you've denormalized.
+5. **Monitor and refine**: Continuously assess whether denormalization is providing the expected benefits.
+
+<InfoBoxQuotation>
+  The goal is not perfect normalization or aggressive denormalization, but
+  rather the optimal balance that meets your specific application's requirements
+  for data integrity, maintainability, and performance.
+</InfoBoxQuotation>
+
+## Key takeaways
+
+- **Normalization** reduces redundancy and ensures data integrity through a systematic process.
+- **First normal form (1NF)** focuses on atomicity, eliminating repeating groups.
+- **Second normal form (2NF)** eliminates partial dependencies on composite keys.
+- **Third normal form (3NF)** eliminates transitive dependencies.
+- **Entity-relationship modeling** naturally leads to reasonably normalized designs.
+- **Denormalization** introduces controlled redundancy to improve read performance.
+- **Denormalization techniques** include duplicating data, pre-aggregating values, and creating summary tables.
+- **Materialized views** offer a powerful compromise between normalization and denormalization.
+- **The optimal design** balances integrity and performance based on specific application needs.
+
+## Next up in the series
+
+In the next article, [Schemas (Namespaces)](LINK_HERE), we'll explore how to organize database objects into logical containers using schemas. We'll look at how schemas can improve security, maintainability, and organization in larger database systems, with specific emphasis on implementing schemas for our ShopSmart ecommerce database.

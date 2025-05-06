@@ -1,0 +1,1002 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-15T00:00:00";
+
+export const description =
+  "Learn how database views can simplify access to complex data structures while enhancing security. Understand standard and materialized views in PostgreSQL and their implementation strategies.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "top-5-benefits-of-views-in-postgresql";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "Top 5 benefits of views in PostgreSQL";
+
+export const tweetText =
+  "Discover how database views can transform your complex queries into clean, reusable interfaces while adding a powerful security layer to your data. Learn when to use standard views vs. materialized views for the perfect balance of flexibility and performance. #PostgreSQL #DatabaseDesign #SQLViews";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 12** of the "Mastering Relational Database Design" series. In
+  [Part 11](LINK_HERE), we learned how indexes work, examined the various types
+  of indexes available in PostgreSQL, and learned how to implement indexing
+  strategies that balance performance improvement with the overhead of index
+  maintenance.
+</InfoBox>
+
+## Introduction
+
+A **view** is essentially a **stored query** that acts like a **virtual table**. It doesn't store data itself (except in the case of materialized views); instead, when you query the view, the database executes the underlying query against the base tables—the **underlying tables** where data is physically stored—and returns the results as if they came from a real table.
+
+In this article, we'll explore how views can add flexibility, security, and simplicity to your database design. We'll examine standard views and materialized views in PostgreSQL, demonstrate practical implementation strategies, and show how views can serve as a powerful abstraction layer between your physical data model and application code.
+
+## Understanding database views
+
+A view is essentially a stored query that you can reference like a table in subsequent SQL statements. While it appears and behaves like a table when queried, it doesn't store data physically (except in the case of materialized views). Views are a crucial abstraction layer between the physical database schema and the various applications that access the data.
+
+<InfoBoxQuotation>
+  Views transform complex join queries into simple, logical tables that match
+  how applications and users think about data, bridging the gap between physical
+  storage and business concepts.
+</InfoBoxQuotation>
+
+When you query a view, the database executes the underlying SQL statement that defines the view and returns the results as if you were querying a table directly. This provides a powerful abstraction mechanism that can simplify applications and provide an additional layer of security.
+
+## Key benefits of views
+
+Views offer numerous advantages that make them essential tools in database design:
+
+### 1. Simplify complex queries
+
+Views can simplify complex data access patterns by encapsulating joins, filters, and calculations in a single, reusable definition:
+
+```sql
+-- Complex query involving multiple joins and calculations
+SELECT
+  c.first_name,
+  c.last_name,
+  COUNT(o.order_id) AS order_count,
+  SUM(oi.quantity * oi.unit_price) AS total_spent
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+GROUP BY
+  c.customer_id, c.first_name, c.last_name;
+
+-- Simplified as a view
+CREATE VIEW customer_order_summary AS
+-- Same query as above
+SELECT
+  c.first_name,
+  c.last_name,
+  COUNT(o.order_id) AS order_count,
+  SUM(oi.quantity * oi.unit_price) AS total_spent
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+GROUP BY
+  c.customer_id, c.first_name, c.last_name;
+
+-- Simple query against the view
+SELECT * FROM customer_order_summary WHERE total_spent > 1000;
+```
+
+This simplification makes application code cleaner and more maintainable by moving complex query logic to the database layer.
+
+### 2. Encapsulate business logic
+
+Views enforce consistent logic across different applications or queries:
+
+```sql
+-- View that enforces business logic for active products
+CREATE VIEW active_products AS
+SELECT *
+FROM products.products
+WHERE
+  inactivated_at IS NULL
+  AND stock_quantity > 0;
+```
+
+This ensures all applications use the same definition of _active products_ without duplicating logic.
+
+### 3. Data security
+
+Views can restrict access to sensitive data by exposing only selected columns or rows:
+
+```sql
+-- View that limits access to non-sensitive customer data
+CREATE VIEW customer_public_info AS
+SELECT
+  customer_id,
+  first_name,
+  last_name,
+  city,
+  state
+FROM
+  customers.customers;
+```
+
+Applications or users with access only to this view cannot see sensitive information like email addresses, birth dates, or phone numbers.
+
+<InfoBox>
+  Views provide a powerful security mechanism when combined with PostgreSQL's
+  permission system. You can grant access to views while restricting access to
+  the underlying tables, giving users only the data they need for their specific
+  role.
+</InfoBox>
+
+### 4. Backward compatibility
+
+When schema changes occur in base tables, views can often be updated to preserve existing interfaces for consuming applications:
+
+```sql
+-- Original table structure
+CREATE TABLE old_customers (
+  customer_id uuid PRIMARY KEY,
+  full_name varchar(255),
+  -- other fields
+);
+
+-- After schema change to split name fields
+CREATE TABLE customers (
+  customer_id uuid PRIMARY KEY,
+  first_name varchar(100),
+  last_name varchar(100),
+  -- other fields
+);
+
+-- Compatibility view for existing applications
+CREATE VIEW old_customers AS
+SELECT
+  customer_id,
+  first_name || ' ' || last_name AS full_name,
+  -- other fields
+FROM
+  customers;
+```
+
+This approach allows the physical schema to evolve while maintaining backward compatibility with existing applications.
+
+### 5. Performance optimization (materialized views)
+
+Materialized views (discussed in detail below) can improve performance for complex queries by precomputing and storing results:
+
+```sql
+CREATE MATERIALIZED VIEW product_sales_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  p.category_id,
+  c.name AS category_name,
+  COUNT(oi.order_item_id) AS times_ordered,
+  SUM(oi.quantity) AS total_quantity_sold,
+  SUM(oi.quantity * oi.unit_price) AS total_revenue
+FROM
+  products.products p
+JOIN
+  products.categories c ON p.category_id = c.category_id
+LEFT JOIN
+  orders.order_items oi ON p.product_id = oi.product_id
+GROUP BY
+  p.product_id, p.name, p.category_id, c.name;
+```
+
+This materialized view precomputes sales aggregations, allowing reports to access this information without performing expensive joins and calculations on the fly.
+
+## Types of views in PostgreSQL
+
+PostgreSQL supports two primary types of views, each with different characteristics and use cases.
+
+### Standard views
+
+**Standard views** (also called _regular views_ or _virtual views_) do not store data themselves. Instead, the view's SQL query is executed on demand every time the view is queried.
+
+**Characteristics:**
+
+- Do not consume storage beyond their metadata definition.
+- Always reflect the current state of the underlying tables.
+- Can encapsulate arbitrarily complex SQL logic.
+- May impact performance if based on complex or unindexed queries.
+
+#### Implementation examples
+
+##### Example 1: Filtering active products
+
+```sql
+CREATE VIEW active_products AS
+SELECT *
+FROM products.products
+WHERE stock_quantity > 0 AND inactivated_at IS NULL;
+```
+
+This view simplifies querying only currently available products, reducing the need for repetitive filtering logic in application code.
+
+##### Example 2: Limiting access to sensitive data
+
+```sql
+CREATE VIEW customer_public_info AS
+SELECT
+  customer_id,
+  first_name,
+  last_name
+FROM
+  customers.customers;
+```
+
+Applications or users with access only to this view cannot see sensitive information like email addresses or birth dates.
+
+##### Example 3: Summarizing product reviews
+
+```sql
+CREATE VIEW product_review_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  COUNT(r.review_id) AS review_count,
+  COALESCE(AVG(r.rating), 0) AS average_rating,
+  MIN(r.rating) AS lowest_rating,
+  MAX(r.rating) AS highest_rating
+FROM
+  products.products p
+LEFT JOIN
+  customers.reviews r ON p.product_id = r.product_id
+GROUP BY
+  p.product_id,
+  p.name;
+```
+
+This view provides a concise summary of product review data for UI display or analytics.
+
+### Materialized views
+
+**Materialized views** physically store their **query results**, making them ideal for optimizing performance in scenarios involving read-heavy workloads or complex computations, such as reporting and data warehousing.
+
+**Characteristics:**
+
+- Store query results physically on disk.
+- Require storage space similar to tables.
+- Must be refreshed periodically to remain in sync with the base data.
+- Offer significantly improved performance for complex aggregations or joins.
+
+In PostgreSQL, materialized views must be refreshed manually or via scheduled jobs.
+
+#### Implementation examples
+
+##### Example 1: Monthly sales summary
+
+```sql
+CREATE MATERIALIZED VIEW monthly_sales AS
+SELECT
+  p.category_id,
+  c.name AS category_name,
+  DATE_TRUNC('month', o.ordered_at) AS month,
+  SUM(oi.quantity * oi.unit_price) AS total_sales
+FROM
+  orders.order_items oi
+JOIN
+  orders.orders o ON oi.order_id = o.order_id
+JOIN
+  products.products p ON oi.product_id = p.product_id
+JOIN
+  products.categories c ON p.category_id = c.category_id
+GROUP BY
+  p.category_id, c.name, DATE_TRUNC('month', o.ordered_at);
+```
+
+This example demonstrates how a materialized view can be used to precompute and store monthly sales aggregates by category, enabling fast and efficient access to sales summaries for reporting and analytics.
+
+To refresh this materialized view and keep the data up to date:
+
+```sql
+REFRESH MATERIALIZED VIEW monthly_sales;
+```
+
+##### Example 2: Product sales summary
+
+```sql
+CREATE MATERIALIZED VIEW product_sales_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  COUNT(DISTINCT o.order_id) AS orders_count,
+  SUM(oi.quantity) AS total_quantity_sold,
+  SUM(oi.quantity * oi.unit_price) AS total_revenue
+FROM
+  products.products p
+LEFT JOIN
+  orders.order_items oi ON p.product_id = oi.product_id
+LEFT JOIN
+  orders.orders o ON oi.order_id = o.order_id
+WHERE
+  o.status = 'completed' OR o.status IS NULL
+GROUP BY
+  p.product_id,
+  p.name;
+```
+
+This materialized view supports analytics and dashboards by precomputing aggregate metrics on sales data. Depending on business requirements, it can be refreshed nightly or hourly.
+
+##### Example 3: Customer purchase history
+
+```sql
+CREATE MATERIALIZED VIEW customer_purchase_history AS
+SELECT
+  c.customer_id,
+  c.email,
+  c.first_name,
+  c.last_name,
+  p.category_id,
+  cat.name AS category_name,
+  COUNT(DISTINCT o.order_id) AS orders_in_category,
+  SUM(oi.quantity) AS items_purchased,
+  SUM(oi.quantity * oi.unit_price) AS amount_spent
+FROM
+  customers.customers c
+JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+JOIN
+  products.products p ON oi.product_id = p.product_id
+JOIN
+  products.categories cat ON p.category_id = cat.category_id
+GROUP BY
+  c.customer_id, c.email, c.first_name, c.last_name, p.category_id, cat.name;
+```
+
+This materialized view provides a detailed breakdown of customer purchasing patterns by product category, supporting personalized marketing and recommendation engines.
+
+### Creating indexes on materialized views
+
+A key advantage of materialized views is that they can be indexed, further improving query performance:
+
+```sql
+-- Create an index on the materialized view
+CREATE INDEX idx_monthly_sales_category ON monthly_sales(category_id);
+
+-- Create a compound index for date range queries
+CREATE INDEX idx_monthly_sales_date_range ON monthly_sales(month, category_id);
+```
+
+These indexes work just like table indexes, accelerating queries against the materialized view.
+
+<InfoBox>
+  Unlike standard views, materialized views allow you to create indexes on their
+  columns, which can dramatically improve query performance. This is
+  particularly valuable for reporting and analytics use cases where the same
+  aggregated data is queried repeatedly.
+</InfoBox>
+
+### Refreshing materialized views
+
+PostgreSQL provides two methods for refreshing materialized views:
+
+```sql
+-- Complete refresh (rebuilds the entire view)
+REFRESH MATERIALIZED VIEW monthly_sales;
+
+-- Concurrent refresh (allows reads during refresh)
+REFRESH MATERIALIZED VIEW CONCURRENTLY monthly_sales;
+```
+
+The `CONCURRENTLY` option allows the view to be queried while it's being refreshed, but it requires a unique index on the materialized view:
+
+```sql
+-- Create a unique index to support concurrent refresh
+CREATE UNIQUE INDEX idx_monthly_sales_unique
+ON monthly_sales(category_id, month);
+
+-- Now we can refresh concurrently
+REFRESH MATERIALIZED VIEW CONCURRENTLY monthly_sales;
+```
+
+Refreshing materialized views can be automated through scheduled database jobs or application-triggered events.
+
+## Views in database design
+
+Views are typically not included in traditional ER diagrams, as ER diagrams focus on the persistent data structures and relationships of base tables. However, in more comprehensive data modeling or documentation efforts, views may be represented in logical or derived diagrams, often using different notations or shapes to distinguish them from base entities.
+
+Including views in documentation is beneficial when:
+
+- They encapsulate important business logic.
+- They serve as a public interface to the database.
+- They are used across multiple teams or applications.
+
+## Implementing views in ShopSmart
+
+Let's implement a suite of views for our ShopSmart ecommerce database to demonstrate various view use cases and patterns.
+
+### Standard views for data access
+
+#### Customer profile view
+
+```sql
+CREATE VIEW customers.customer_profiles AS
+SELECT
+  c.customer_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  c.phone,
+  c.birth_date,
+  c.registered_at,
+  c.has_marketing_subscription,
+  COUNT(o.order_id) AS total_orders,
+  COALESCE(MAX(o.ordered_at), c.registered_at) AS last_activity,
+  (
+    SELECT a.street_address || ', ' || a.city || ', ' || a.state || ' ' || a.postal_code
+    FROM customers.addresses a
+    WHERE a.customer_id = c.customer_id AND a.is_default = true
+    LIMIT 1
+  ) AS default_address
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+GROUP BY
+  c.customer_id, c.first_name, c.last_name, c.email, c.phone, c.birth_date,
+  c.registered_at, c.has_marketing_subscription;
+```
+
+This view combines customer information with summary order data and their default address, providing a consolidated profile for customer service or the user account dashboard.
+
+#### Product details view
+
+```sql
+CREATE VIEW products.product_details AS
+SELECT
+  p.product_id,
+  p.name,
+  p.description,
+  p.price,
+  p.stock_quantity,
+  p.is_featured,
+  c.category_id,
+  c.name AS category_name,
+  COALESCE(r.review_count, 0) AS review_count,
+  COALESCE(r.average_rating, 0) AS average_rating
+FROM
+  products.products p
+JOIN
+  products.categories c ON p.category_id = c.category_id
+LEFT JOIN (
+  SELECT
+    product_id,
+    COUNT(*) AS review_count,
+    AVG(rating) AS average_rating
+  FROM
+    customers.reviews
+  GROUP BY
+    product_id
+) r ON p.product_id = r.product_id
+WHERE
+  p.inactivated_at IS NULL;
+```
+
+This view enriches basic product data with category information and review statistics, providing a complete dataset for product listing pages.
+
+#### Order summary view
+
+```sql
+CREATE VIEW orders.order_summary AS
+SELECT
+  o.order_id,
+  o.customer_id,
+  c.first_name || ' ' || c.last_name AS customer_name,
+  o.ordered_at,
+  o.status,
+  COUNT(oi.order_item_id) AS item_count,
+  SUM(oi.quantity) AS total_items,
+  SUM(oi.quantity * oi.unit_price) AS subtotal,
+  o.shipping_cost,
+  o.tax_amount,
+  SUM(oi.quantity * oi.unit_price) + o.shipping_cost + o.tax_amount AS total_amount,
+  a.street_address || ', ' || a.city || ', ' || a.state || ' ' || a.postal_code AS shipping_address
+FROM
+  orders.orders o
+JOIN
+  customers.customers c ON o.customer_id = c.customer_id
+JOIN
+  customers.addresses a ON o.shipping_address_id = a.address_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+GROUP BY
+  o.order_id, o.customer_id, c.first_name, c.last_name, o.ordered_at, o.status,
+  o.shipping_cost, o.tax_amount, a.street_address, a.city, a.state, a.postal_code;
+```
+
+This view provides a complete summary of each order, including customer information, shipping address, and order totals, perfect for order history displays and order management interfaces.
+
+### Security views
+
+#### Limited customer data for service representatives
+
+```sql
+CREATE VIEW security.customer_service_view AS
+SELECT
+  c.customer_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  c.phone,
+  EXTRACT(YEAR FROM AGE(CURRENT_DATE, c.birth_date)) AS age,
+  c.registered_at,
+  COUNT(o.order_id) AS order_count,
+  COALESCE(MAX(o.ordered_at), c.registered_at) AS last_order_date
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+GROUP BY
+  c.customer_id, c.first_name, c.last_name, c.email, c.phone, c.birth_date, c.registered_at;
+```
+
+This view provides essential customer information for customer service representatives without exposing sensitive details like password hashes or full birth dates.
+
+#### Product catalog for public API
+
+```sql
+CREATE VIEW security.public_product_catalog AS
+SELECT
+  p.product_id,
+  p.name,
+  p.price,
+  c.name AS category,
+  p.is_featured,
+  COALESCE(r.average_rating, 0) AS average_rating,
+  COALESCE(r.review_count, 0) AS review_count,
+  CASE WHEN p.stock_quantity > 0 THEN true ELSE false END AS in_stock
+FROM
+  products.products p
+JOIN
+  products.categories c ON p.category_id = c.category_id
+LEFT JOIN (
+  SELECT
+    product_id,
+    COUNT(*) AS review_count,
+    AVG(rating) AS average_rating
+  FROM
+    customers.reviews
+  GROUP BY
+    product_id
+) r ON p.product_id = r.product_id
+WHERE
+  p.inactivated_at IS NULL;
+```
+
+This view provides a limited product catalog suitable for public API exposure, hiding internal details like exact stock quantities and creation timestamps.
+
+### Materialized views for analytics
+
+#### Monthly sales trends
+
+```sql
+CREATE MATERIALIZED VIEW analytics.monthly_sales_trends AS
+SELECT
+  DATE_TRUNC('month', o.ordered_at) AS month,
+  c.category_id,
+  c.name AS category_name,
+  COUNT(DISTINCT o.order_id) AS order_count,
+  COUNT(DISTINCT o.customer_id) AS customer_count,
+  SUM(oi.quantity) AS items_sold,
+  SUM(oi.quantity * oi.unit_price) AS revenue
+FROM
+  orders.orders o
+JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+JOIN
+  products.products p ON oi.product_id = p.product_id
+JOIN
+  products.categories c ON p.category_id = c.category_id
+WHERE
+  o.status = 'completed'
+GROUP BY
+  DATE_TRUNC('month', o.ordered_at), c.category_id, c.name
+ORDER BY
+  month DESC, revenue DESC;
+
+-- Create indexes for faster querying
+CREATE INDEX idx_monthly_sales_trends_month
+ON analytics.monthly_sales_trends(month);
+
+CREATE INDEX idx_monthly_sales_trends_category
+ON analytics.monthly_sales_trends(category_id);
+```
+
+This materialized view aggregates sales data by month and category, providing a foundation for trend analysis and reporting.
+
+#### Customer segmentation
+
+```sql
+CREATE MATERIALIZED VIEW analytics.customer_segments AS
+SELECT
+  c.customer_id,
+  c.first_name,
+  c.last_name,
+  c.email,
+  -- Recency: days since last order
+  CASE
+    WHEN MAX(o.ordered_at) IS NULL THEN 999
+    ELSE EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at))
+  END AS days_since_last_order,
+  -- Frequency: number of orders
+  COUNT(DISTINCT o.order_id) AS order_count,
+  -- Monetary: total spend
+  COALESCE(SUM(oi.quantity * oi.unit_price), 0) AS total_spend,
+  -- Segment classification
+  CASE
+    WHEN COUNT(DISTINCT o.order_id) = 0 THEN 'inactive'
+    WHEN EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at)) <= 30
+      AND COUNT(DISTINCT o.order_id) >= 3 THEN 'loyal'
+    WHEN EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at)) <= 30 THEN 'active'
+    WHEN EXTRACT(DAY FROM CURRENT_TIMESTAMP - MAX(o.ordered_at)) <= 90 THEN 'recent'
+    ELSE 'lapsed'
+  END AS customer_segment
+FROM
+  customers.customers c
+LEFT JOIN
+  orders.orders o ON c.customer_id = o.customer_id
+LEFT JOIN
+  orders.order_items oi ON o.order_id = oi.order_id
+GROUP BY
+  c.customer_id, c.first_name, c.last_name, c.email;
+
+-- Create indexes for faster segmentation queries
+CREATE INDEX idx_customer_segments_segment
+ON analytics.customer_segments(customer_segment);
+
+CREATE INDEX idx_customer_segments_spend
+ON analytics.customer_segments(total_spend DESC);
+```
+
+This materialized view segments customers based on their ordering behavior, supporting targeted marketing campaigns and customer retention efforts.
+
+#### Product performance metrics
+
+```sql
+CREATE MATERIALIZED VIEW analytics.product_performance AS
+SELECT
+  p.product_id,
+  p.name,
+  c.name AS category_name,
+  p.price,
+  COUNT(DISTINCT oi.order_id) AS order_count,
+  SUM(oi.quantity) AS units_sold,
+  SUM(oi.quantity * oi.unit_price) AS revenue,
+  COALESCE(AVG(r.rating), 0) AS average_rating,
+  COUNT(r.review_id) AS review_count,
+  CASE
+    WHEN p.stock_quantity = 0 THEN 'out_of_stock'
+    WHEN p.stock_quantity < 10 THEN 'low_stock'
+    ELSE 'in_stock'
+  END AS inventory_status,
+  -- Calculate days of inventory based on sales velocity
+  CASE
+    WHEN SUM(oi.quantity) = 0 THEN 999
+    ELSE ROUND(
+      p.stock_quantity / (SUM(oi.quantity) /
+        NULLIF(EXTRACT(DAY FROM CURRENT_DATE - MIN(o.ordered_at)), 0))
+    )
+  END AS estimated_days_of_inventory
+FROM
+  products.products p
+LEFT JOIN
+  orders.order_items oi ON p.product_id = oi.product_id
+LEFT JOIN
+  orders.orders o ON oi.order_id = o.order_id
+LEFT JOIN
+  customers.reviews r ON p.product_id = r.product_id
+JOIN
+  products.categories c ON p.category_id = c.category_id
+WHERE
+  p.inactivated_at IS NULL
+GROUP BY
+  p.product_id, p.name, c.name, p.price, p.stock_quantity;
+
+-- Create indexes for performance reporting
+CREATE INDEX idx_product_performance_revenue
+ON analytics.product_performance(revenue DESC);
+
+CREATE INDEX idx_product_performance_category
+ON analytics.product_performance(category_name, revenue DESC);
+```
+
+This materialized view provides comprehensive performance metrics for each product, including sales data, ratings, and inventory status, supporting product management and merchandising decisions.
+
+## Advanced view techniques
+
+Beyond basic view creation, PostgreSQL offers several advanced techniques for working with views.
+
+### Updatable views
+
+Standard views are read-only by default if they involve joins, aggregations, or certain other operations. However, simple views that reference a single table can be updatable:
+
+```sql
+-- A simple updatable view
+CREATE VIEW customers.basic_customer_info AS
+SELECT
+  customer_id,
+  email,
+  first_name,
+  last_name,
+  phone
+FROM
+  customers.customers;
+
+-- Updates to this view affect the underlying table
+UPDATE customers.basic_customer_info
+SET phone = '555-123-4567'
+WHERE customer_id = 'abc123';
+```
+
+For more complex views, you can make them updatable using _`INSTEAD OF`_ triggers:
+
+```sql
+CREATE VIEW products.product_stock_management AS
+SELECT
+  p.product_id,
+  p.name,
+  p.stock_quantity,
+  p.inactivated_at
+FROM
+  products.products p;
+
+-- Create a trigger to handle updates to the view
+CREATE OR REPLACE FUNCTION products.update_product_stock()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Update the underlying table
+  UPDATE products.products
+  SET
+    stock_quantity = NEW.stock_quantity,
+    inactivated_at = NEW.inactivated_at,
+    updated_at = CURRENT_TIMESTAMP
+  WHERE product_id = NEW.product_id;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER product_stock_update
+INSTEAD OF UPDATE ON products.product_stock_management
+FOR EACH ROW EXECUTE FUNCTION products.update_product_stock();
+```
+
+This technique allows you to create views that present a simplified interface for updates while implementing custom logic for how those updates should be applied to the underlying tables.
+
+### Views with parameters
+
+While PostgreSQL doesn't directly support parameterized views, you can create functions that return table results:
+
+```sql
+-- Function that returns a table result
+CREATE OR REPLACE FUNCTION orders.get_customer_orders(customer_uuid uuid)
+RETURNS TABLE (
+  order_id uuid,
+  ordered_at timestamptz,
+  status varchar,
+  item_count bigint,
+  total_amount numeric
+) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    o.order_id,
+    o.ordered_at,
+    o.status,
+    COUNT(oi.order_item_id) AS item_count,
+    SUM(oi.quantity * oi.unit_price) AS total_amount
+  FROM
+    orders.orders o
+  LEFT JOIN
+    orders.order_items oi ON o.order_id = oi.order_id
+  WHERE
+    o.customer_id = customer_uuid
+  GROUP BY
+    o.order_id, o.ordered_at, o.status
+  ORDER BY
+    o.ordered_at DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Usage
+SELECT * FROM orders.get_customer_orders('abc123');
+```
+
+This approach provides a view-like interface that can accept parameters, making it more flexible for application use.
+
+### Recursive views
+
+PostgreSQL supports recursive [common table expressions (CTEs)](https://www.postgresql.org/docs/current/queries-with.html), which can be used to create recursive views for working with hierarchical data:
+
+```sql
+-- Recursive view for category hierarchy
+CREATE VIEW products.category_hierarchy AS
+WITH RECURSIVE category_tree AS (
+  -- Base case: top-level categories
+  SELECT
+    category_id,
+    name,
+    parent_id,
+    name AS path,
+    0 AS level
+  FROM
+    products.categories
+  WHERE
+    parent_id IS NULL
+
+  UNION ALL
+
+  -- Recursive case: child categories
+  SELECT
+    c.category_id,
+    c.name,
+    c.parent_id,
+    ct.path || ' > ' || c.name AS path,
+    ct.level + 1 AS level
+  FROM
+    products.categories c
+  JOIN
+    category_tree ct ON c.parent_id = ct.category_id
+)
+SELECT * FROM category_tree
+ORDER BY path;
+```
+
+This view displays the complete category hierarchy, including a formatted path string and depth level for each category, making it easier to work with the nested structure.
+
+## Best practices for using views
+
+Based on our exploration of views, here are some best practices to follow:
+
+### 1. Use views as a stable interface
+
+Create views that provide a stable interface for applications, isolating them from changes in the underlying tables:
+
+```sql
+-- Stable interface view for product listings
+CREATE VIEW products.catalog_interface AS
+SELECT
+  product_id,
+  name,
+  price,
+  category_id,
+  stock_quantity > 0 AS available
+FROM
+  products.products
+WHERE
+  inactivated_at IS NULL;
+```
+
+When the underlying table schema changes, you can update the view definition while keeping the same interface for applications.
+
+### 2. Document view purpose and usage
+
+Include comments that explain the purpose and intended usage of each view:
+
+```sql
+COMMENT ON VIEW products.catalog_interface IS
+'Public interface for the product catalog. Used by the website and mobile app for product listings.';
+```
+
+This documentation helps other developers understand when and how to use the view appropriately.
+
+### 3. Consider performance implications
+
+Standard views don't improve performance on their own; they're just stored queries. For performance-critical scenarios, consider:
+
+- Using materialized views with appropriate refresh schedules.
+- Creating indexes on frequently queried columns in materialized views.
+- Analyzing query execution plans to identify bottlenecks.
+
+### 4. Balance materialized view freshness and performance
+
+For materialized views, find the right balance between data freshness and performance:
+
+```sql
+-- For views that need to be very current
+CREATE OR REPLACE PROCEDURE refresh_critical_views()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY analytics.product_inventory_status;
+END;
+$$;
+
+-- For views that can tolerate some staleness
+CREATE OR REPLACE PROCEDURE refresh_analytics_views()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW analytics.monthly_sales_trends;
+  REFRESH MATERIALIZED VIEW analytics.customer_segments;
+  REFRESH MATERIALIZED VIEW analytics.product_performance;
+END;
+$$;
+```
+
+Schedule these procedures to run at appropriate intervals—critical views might refresh hourly, while analytics views might refresh nightly.
+
+### 5. Use naming conventions for views
+
+Adopt consistent naming conventions that indicate the type and purpose of each view:
+
+- Prefix materialized views with _`mv_`_ or include _`_materialized`_ in the name.
+- Use suffixes that indicate purpose, like _`_summary`_, _`_details`_, or _`_report`_.
+- Place views in the schema where they're most logically related.
+
+### 6. Avoid deeply nested views
+
+While views can reference other views, deep nesting can lead to performance issues and make it difficult to understand query execution. Try to limit nesting to one or two levels when possible.
+
+## Key takeaways
+
+- **Views provide abstraction** between physical data storage and logical data access
+- **Standard views execute their query** each time they're accessed, reflecting current data
+- **Materialized views store results physically** and must be refreshed to update
+- **Views can simplify complex queries** by encapsulating joins, calculations, and filters
+- **Views enhance security** by restricting access to sensitive columns or rows
+- **Materialized views improve performance** for complex analytical queries
+- **Views can provide stable interfaces** that isolate applications from schema changes
+- **Updatable views** can simplify data manipulation while enforcing business rules
+- **View design should balance** flexibility, performance, and maintainability
+- **Documenting views** helps other developers understand their purpose and appropriate usage
+
+## Next up in the series
+
+In the next article, [Transactions & Reliability](LINK_HERE), we'll explore how database transactions ensure data consistency and reliability. We'll examine ACID properties, transaction isolation levels, and techniques for implementing robust transaction handling in an ecommerce context, including handling concurrent operations and resolving potential conflicts.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- "PostgreSQL Documentation" _The PostgreSQL Global Development Group_ , n.d. Web. 16 April 2025 &#60;<a href="https://www.postgresql.org/docs/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.postgresql.org/docs/</a>&#62;
+
+<br />
+<br />
+<br />
+
+<AITools />
