@@ -15,6 +15,12 @@ const nextConfig = {
           "/blog/building-opentask-nextjs-app-router-react-server-components",
         permanent: true,
       },
+      {
+        source: "/blog/opentask-nextjs-app-router-case-study",
+        destination:
+          "/blog/building-opentask-nextjs-app-router-react-server-components",
+        permanent: true,
+      },
     ];
   },
 };
