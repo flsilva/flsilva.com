@@ -1,0 +1,526 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-07T00:00:00";
+
+export const description =
+  "Master PostgreSQL's data type system to improve database performance and data integrity. Learn when to use numeric, character, date/time, and specialized types for your specific use cases.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug =
+  "best-practices-for-choosing-the-right-data-types-in-postgresql";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title =
+  "Best practices for choosing the right data types in PostgreSQL";
+
+export const tweetText =
+  "Choosing the right PostgreSQL data types can dramatically improve your database's performance, storage efficiency, and data integrity. Learn the complete type system from integers to JSON, and discover when to use each type. #PostgreSQL #DatabaseDesign #SQL #DataTypes";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 4** of the "Mastering Relational Database Design" series. In
+  [Part 3](LINK_HERE), we learned techniques to identify database entities and
+  attributes from business requirements.
+</InfoBox>
+
+## Introduction
+
+Data types are fundamental components of database design that determine what kind of data can be stored in each field and how the database will process and store that data. Selecting appropriate data types is a critical decision that impacts storage efficiency, query performance, and data integrity.
+
+In this article, we'll explore PostgreSQL's rich type system and provide guidance on choosing the optimal data type for different scenarios. We'll also examine how PostgreSQL enables hybrid approaches that combine the structure of relational databases with the flexibility of document databases.
+
+## The importance of data types
+
+Data types serve several crucial purposes in a database:
+
+1. **Data validation**: They establish the first line of defense against invalid data by enforcing the kind of values a column can store.
+
+2. **Storage optimization**: Different data types consume different amounts of storage space, directly affecting database size and performance.
+
+3. **Processing efficiency**: Operations on appropriate data types are faster and more reliable than on inappropriately typed data.
+
+4. **Semantic clarity**: Types communicate the intended use and meaning of data fields to developers and database users.
+
+<InfoBoxQuotation>
+  Choosing appropriate data types is one of the most important early decisions
+  in database design. These choices affect everything from storage requirements
+  to query performance to application compatibility.
+</InfoBoxQuotation>
+
+## PostgreSQL data types
+
+PostgreSQL offers one of the most extensive type systems among relational databases, including standard SQL types and specialized types for various use cases. Let's explore the most commonly used data types.
+
+### Numeric types
+
+#### Integer types
+
+[Integer types](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-INT) store whole numbers—numbers without any decimal or fractional parts—and are available in various size ranges:
+
+- **_`smallint`_**: A 2-byte integer ranging from -32,768 to +32,767. Good for small ranges like product ratings (1-5).
+- **_`integer`_**: A 4-byte integer ranging from -2,147,483,648 to +2,147,483,647. The most common choice for counts, quantities, and non-key IDs.
+- **_`bigint`_**: An 8-byte integer for very large numbers, ranging from -9,223,372,036,854,775,808 to +9,223,372,036,854,775,807. Use if _`integer`_ might be insufficient (e.g., global event counters, high-volume transaction IDs if using integers).
+
+#### Auto-incrementing identifiers
+
+For automatically generated sequential identifiers, PostgreSQL offers:
+
+- Traditional [serial types](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-SERIAL): _`smallserial`_, _`serial`_, and _`bigserial`_.
+- [Standards-compliant identity](https://www.postgresql.org/docs/current/ddl-identity-columns.html): _`GENERATED AS IDENTITY`_ (PostgreSQL 10+).
+
+The newer identity approach is preferred for better standards compliance and functionality:
+
+```sql
+-- Old approach
+customer_id serial PRIMARY KEY
+
+-- Modern approach (recommended)
+customer_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+```
+
+**Best for**: Primary keys when you want sequential numeric IDs.
+
+#### Arbitrary Precision Numbers
+
+Use [arbitrary precision numbers](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-NUMERIC-DECIMAL) for exact numeric calculations, particularly with financial data:
+
+- _`numeric(precision, scale)`_ or _`decimal(precision, scale)`_: Exact numeric type with user-defined precision _`(p)`_ (the total number of digits) and scale _`(s)`_ (the number of digits after the decimal point).
+
+**Best for**: Financial calculations, prices, rates, or any values requiring exact decimal representation. Use _`decimal(10, 2)`_ for typical currency values (up to _`9,999,999.99`_), e.g., _`products.price`_, _`payments.amount`_, and _`orders.shipping_cost`_.
+
+**Example usage**:
+
+```sql
+-- Prices with up to 8 digits and 2 decimal places
+price decimal(10,2) NOT NULL
+```
+
+#### Floating-Point Types
+
+Use [floating-point types](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-FLOAT) for inexact, variable-precision numeric calculations:
+
+- _`real`_: 4-byte, single-precision floating-point number.
+- _`double precision`_: 8-byte, double-precision floating-point number.
+
+**Best for**: Scientific or statistical calculations where exact precision isn't required.
+
+<InfoBox theme="warning">
+  **Warning:** Never use floating-point types for monetary values! The inexact
+  nature of floating-point representation can lead to rounding errors that
+  compound over time. Always use numeric/decimal for money.
+</InfoBox>
+
+To illustrate why this matters:
+
+```sql
+SELECT 0.1 + 0.2 = 0.3 AS using_float;
+-- Returns: false (because 0.1 + 0.2 = 0.30000000000000004 in floating point)
+
+SELECT 0.1::numeric + 0.2::numeric = 0.3::numeric AS using_numeric;
+-- Returns: true (decimal arithmetic is exact)
+```
+
+### Character types
+
+Use [character types](https://www.postgresql.org/docs/current/datatype-character.html) for storing text data:
+
+- _`char(n)`_: Fixed-length character string padded with spaces. Rarely used in modern design unless required for compatibility with legacy systems or specific fixed-width formats. _`varchar`_ or _`text`_ are usually preferred.
+- _`varchar(n)`_: Variable-length character string with a limit. Use for text where you know a reasonable upper limit (names, codes, emails).
+- _`text`_: Variable-length character string without specific limit. Use for long descriptions, comments, or any text where the length is unknown or potentially large.
+
+**Example usage**:
+
+```sql
+-- For limited-length fields with validation
+email varchar(255) NOT NULL
+
+-- For content without a clear upper bound
+product_description text
+```
+
+While _`varchar`_ allows you to specify a maximum length, _`text`_ has no practical length restriction. In modern PostgreSQL, there's no performance difference between `varchar` and `text`, so many developers default to `text` for simplicity when exact length limits aren't required for data validation.
+
+### Date and time types
+
+PostgreSQL offers comprehensive support for [temporal data](https://www.postgresql.org/docs/current/datatype-datetime.html):
+
+- _`date`_: Calendar date (year, month, day). Good for birth dates, registration dates, and promotion start/end dates.
+
+* _`time`_ (or _`time without time zone`_): Time of day without timezone. Good for store opening hours or scheduled events.
+
+- _`timestamptz`_ (or _`timestamp with time zone`_): Stores both date and time, **including time zone information**. Generally the **recommended type** for timestamps in applications that might operate across different time zones, as it stores the point in time unambiguously in UTC and converts it to the session's time zone on retrieval. Ideal for order placement times, review submission times, and other event timestamps.
+- _`timestamp`_ (or _`timestamp without time zone`_): Stores date and time **without** time zone information. Use with caution; interpretation depends on the server or session time zone settings. Can lead to ambiguity.<br /><br />
+  {" "}
+  <InfoBox>
+    **Best practice:** Use _`timestamptz`_ for most timestamp needs
+    (_`orders.ordered_at`_, _`customers.registered_at`_,
+    _`reviews.reviewed_at`_) to avoid time zone ambiguity, especially in web
+    applications.
+  </InfoBox>
+  <br />
+- _`interval`_: Stores a duration or period of time (e.g., _`2 hours`_, _`3 days`_). Useful for calculating shipping times or return windows.
+
+**Example usage**:
+
+```sql
+-- Use timestamptz to handle timezone issues correctly
+created_at timestamptz DEFAULT CURRENT_TIMESTAMP
+
+-- For date only, without time components
+birth_date date
+
+-- For tracking durations
+subscription_period interval
+```
+
+<InfoBoxQuotation>
+  When working with timestamps, use _`timestamptz`_ whenever possible. It stores
+  the time in UTC internally and handles timezone conversions automatically,
+  preventing many common temporal bugs.
+</InfoBoxQuotation>
+
+### Boolean type
+
+Use the [boolean type](https://www.postgresql.org/docs/current/datatype-boolean.html) for _`true/false`_ values:
+
+- _`boolean`_: Stores _`true`_ or _`false`_ (can also accept _`'yes'`_, _`'no'`_, _`'1'`_, _`'0'`_). Ideal for flags like _`products.is_featured`_ and _`customers.has_marketing_subscription`_.
+
+**Example usage**:
+
+```sql
+is_featured boolean DEFAULT false
+has_marketing_subscription boolean NOT NULL DEFAULT false
+```
+
+### UUID type
+
+For [globally unique identifiers](https://www.postgresql.org/docs/current/datatype-uuid.html):
+
+- _`uuid`_: Universally Unique Identifier (128-bit value).
+
+**Best for**: Primary keys in distributed systems, public-facing IDs.
+
+**Example usage**:
+
+```sql
+product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+```
+
+UUIDs offer several advantages over sequential IDs:
+
+- They're globally unique across systems.
+- They don't reveal information about record counts or creation rates.
+- They allow client-side ID generation, enabling offline-first applications.
+- They facilitate easier database merging and sharding.
+
+The main trade-offs are larger storage requirements (16 bytes versus 4 bytes for integers) and potentially slower index operations.
+
+### JSON types
+
+PostgreSQL provides robust support for [semi-structured data](https://www.postgresql.org/docs/current/datatype-json.html):
+
+- [_`json`_](https://www.postgresql.org/docs/current/datatype-json.html): Stores JSON data with original formatting and whitespace.
+- [_`jsonb`_](https://www.postgresql.org/docs/current/datatype-json.html): Stores JSON data in a decomposed binary format that's slightly slower to input but much faster to process and allows indexing. Use _`jsonb`_ for storing flexible, semi-structured data like varying product attributes.
+
+**Best for:**
+
+- Schemaless data requirements
+- Document storage within a relational context
+- Rapidly evolving data structures
+- Multi-value fields that don't need individual querying
+
+We'll soon explore how to implement a [hybrid relational-document storage system](#hybrid-relational-document-storage) with _`jsonb`_.
+
+### Other specialized types
+
+PostgreSQL offers many specialized types for specific use cases:
+
+- [_`bytea`_](https://www.postgresql.org/docs/current/datatype-binary.html): Stores binary data (byte array). Useful for storing small images, file attachments, or serialized objects directly in the database (though often storing files externally and linking via URL is preferred for large files).
+- _`inet`_, _`cidr`_: [Network addresses](https://www.postgresql.org/docs/current/datatype-net-types.html).
+- _`point`_, _`line`_, _`polygon`_: [Geometric data](https://www.postgresql.org/docs/current/datatype-geometric.html).
+- _`tsquery`_, _`tsvector`_: [Full-text search](https://www.postgresql.org/docs/current/datatype-textsearch.html).
+- [Array types](https://www.postgresql.org/docs/current/arrays.html): Store arrays of any data type.
+- [Custom types](https://www.postgresql.org/docs/current/xtypes.html): User-defined composite types.
+
+These specialized types can significantly enhance your database's capabilities for specific applications.
+
+## Selecting appropriate data types
+
+When choosing data types, consider these factors:
+
+### Storage requirements
+
+Smaller data types generally lead to better performance:
+
+- They require less disk space.
+- They allow more rows per page, improving cache efficiency.
+- They reduce I/O operations during queries.
+
+For example, if you know a numeric column will never exceed 32,767, using `smallint` (2 bytes) instead of `integer` (4 bytes) can save significant space in large tables.
+
+### Range requirements
+
+Ensure the type can handle all possible values:
+
+- Will _`smallint`_ (-32,768 to +32,767) be sufficient for order quantities?
+- Is _`varchar(50)`_ enough for customer names?
+- Will _`timestamptz`_ precision be adequate for transaction logging?
+
+Always allow some margin for future growth.
+
+### Precision requirements
+
+For numeric data, determine if you need:
+
+- Exact precision (use _`numeric/decimal`_).
+- Approximate values (use _`real/double precision`_).
+
+For timestamps, decide if microsecond precision is necessary.
+
+### Performance considerations
+
+Different types have different performance characteristics:
+
+- Integer comparisons are faster than string comparisons.
+- _`jsonb`_ operations are faster than _`json`_ for most queries.
+- Fixed-width types can sometimes offer performance advantages over variable-width types.
+
+### Application compatibility
+
+Consider how your application will interact with the data:
+
+- Some ORMs have specific type mapping requirements.
+- Client applications might expect certain formats.
+- Internationalization needs might influence character types.
+
+## Data types in our ShopSmart database
+
+Let's apply these principles to map data types for our ShopSmart ecommerce database:
+
+_(Note: We'll add constraints like *`NOT NULL`* and *`UNIQUE`* in a later article.)_
+
+### Customers Table
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  email varchar(255),
+  password_hash text,
+  first_name varchar(100),
+  last_name varchar(100),
+  phone varchar(20),
+  birth_date date,
+  registered_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+  has_marketing_subscription boolean DEFAULT false,
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Note the deliberate choices:
+
+- _`uuid`_ for the primary key (better for distributed systems).
+- _`varchar`_ with limits for text fields that have a reasonable maximum length.
+- _`text`_ for the password hash since hash lengths can vary by algorithm.
+- _`date`_ for birth_date (we don't need time components).
+- _`timestamptz`_ for all timestamps to handle timezone issues properly.
+
+### Products table
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(255),
+  description text,
+  price numeric(10,2),
+  weight numeric(8,3),
+  stock_quantity integer DEFAULT 0,
+  sku varchar(50),
+  is_featured boolean DEFAULT false,
+  category_id uuid,
+  attributes jsonb,
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Key choices:
+
+- _`numeric(10,2)`_ for _`price`_ to ensure exact decimal representation.
+- _`numeric(8,3)`_ for _`weight`_ to handle three decimal places (e.g., 1.234 kg).
+- _`integer`_ for _`stock_quantity`_ (unlikely to exceed integer limits).
+- _`jsonb`_ for _`attributes`_ to handle varying product characteristics.
+
+### Orders table
+
+```sql
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid,
+  ordered_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+  status varchar(20) DEFAULT 'pending',
+  shipping_address_id uuid,
+  shipping_cost numeric(10,2) DEFAULT 0,
+  tax_amount numeric(10,2) DEFAULT 0,
+  created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamptz DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Important choices:
+
+- _`timestamptz`_ for _`ordered_at`_ to handle timezone considerations.
+- _`numeric(10,2)`_ for all monetary values.
+- _`varchar(20)`_ for status as it has a limited set of possible values.
+
+## Hybrid relational-document storage
+
+Modern relational databases like PostgreSQL offer JSON data types that combine the schema flexibility of NoSQL with the ACID guarantees of relational databases. This approach is particularly valuable for:
+
+1. **Variable attribute sets**: When different records need different fields
+2. **Rapid schema evolution**: When fields need to be added frequently
+3. **Semi-structured data**: When some data doesn't fit neatly into columns
+4. **Denormalized aggregates**: When you want to store denormalized data for performance
+
+### Implementing hybrid storage with _`jsonb`_
+
+Consider our products table, where different product types might have different attributes:
+
+```sql
+-- Add a jsonb column for flexible attributes
+ALTER TABLE products ADD COLUMN attributes jsonb;
+
+-- Electronics might track these attributes
+UPDATE products
+SET attributes = '{"color": "black", "voltage": "110V", "warranty_months": 24}'
+WHERE product_id = '123e4567-e89b-12d3-a456-426614174000';
+
+-- Clothing might track different attributes
+UPDATE products
+SET attributes = '{"color": "red", "size": "XL", "material": "cotton", "care": "machine wash cold"}'
+WHERE product_id = '123e4567-e89b-12d3-a456-426614174001';
+```
+
+### Querying _`jsonb`_ data
+
+PostgreSQL provides powerful operators for querying JSON data:
+
+```sql
+-- Find all red products
+SELECT * FROM products WHERE attributes @> '{"color": "red"}';
+
+-- Find products with specific sizes
+SELECT * FROM products WHERE attributes ->> 'size' = 'XL';
+
+-- Find electronics with warranty information
+SELECT * FROM products
+WHERE attributes ? 'warranty_months'
+AND (attributes ->> 'warranty_months')::int > 12;
+```
+
+### Indexing _`jsonb`_
+
+To optimize \_`jsonb`\_queries, PostgreSQL offers specialized index types:
+
+```sql
+-- GIN index for containment operators (@>)
+CREATE INDEX idx_products_attributes ON products USING GIN (attributes);
+
+-- For specific JSON paths
+CREATE INDEX idx_products_color ON products ((attributes ->> 'color'));
+```
+
+<InfoBox>
+  This hybrid approach provides the "best of both worlds" for specific
+  scenarios: the flexibility of document storage embedded within the robust,
+  structured environment of a relational database. Use it judiciously where
+  schema flexibility offers significant advantages.
+</InfoBox>
+
+### Best practices for hybrid approaches
+
+1. **Store stable, queryable data in columns**: Keep frequently queried, stable attributes as regular columns.
+2. **Use \_`jsonb`\_for variable attributes**: Move variable or type-specific attributes to JSONB.
+3. **Create appropriate indexes**: Index JSON paths that are frequently queried.
+4. **Consider validation**: Implement application-level or trigger-based validation for JSON structures.
+5. **Document expected structures**: Maintain documentation about expected JSON schemas.
+
+## Data type migration considerations
+
+Changing data types after a database is in production can be challenging. Here are some considerations:
+
+1. **Data loss risk**: Converting to a more restrictive type might truncate or round values.
+2. **Performance impact**: Type conversions on large tables can be time-consuming.
+3. **Application compatibility**: Applications might expect specific types.
+4. **Lock requirements**: Some alterations require exclusive locks.
+
+When possible, choose the most appropriate type from the beginning, allowing some room for growth.
+
+## Key takeaways
+
+- **Data types affect more than storage**: They impact validation, performance, and functionality.
+- **Choose numeric types carefully**: Use _`integer`_ for whole numbers, _`numeric`_ for financial data.
+- **Never use floating-point (_`real`_ or `double precision`) for money**: Always use _`numeric`_ or _`decimal`_ for exact calculations.
+- **Consider \_`uuid`\_for distributed systems**: They offer advantages for sharding and privacy.
+- **Use _`timestamptz`_ for most timestamps**: Avoid timezone issues by default
+- **Leverage \_`jsonb`\_for flexible attributes**: Combine relational structure with document flexibility.
+- **Optimize storage**: Choose the smallest type that meets your requirements.
+- **Plan for the future**: Allow some room for growth in your type selections.
+
+## Next Up in the Series
+
+In the next article, [Database Keys & Integrity](LINK_HERE), we'll explore how to establish and enforce data integrity through various types of keys. We'll examine primary keys, foreign keys, unique constraints, and how they work together to ensure your database maintains consistent, accurate data.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- Captain, Fidel A. (2013). _Six-Step Relational Database Design_. 2nd Edition.
+
+- Hernandez, Michael J. (2020). _Database Design for Mere Mortals_. 4th Edition. Addison-Wesley Professional.
+
+- "PostgreSQL Documentation" _The PostgreSQL Global Development Group_ , n.d. Web. 16 April 2025 &#60;<a href="https://www.postgresql.org/docs/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.postgresql.org/docs/</a>&#62;
+
+<br />
+<br />
+<br />
+
+<AITools />

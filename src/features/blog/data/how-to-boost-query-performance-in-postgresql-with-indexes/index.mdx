@@ -1,0 +1,654 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-14T00:00:00";
+
+export const description =
+  "Learn how to optimize database performance with strategic indexing. This comprehensive guide covers PostgreSQL index types, index-only scans, partial indexes, and best practices for balancing read and write performance.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "how-to-boost-query-performance-in-postgresql-with-indexes";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title =
+  "How to boost query performance in PostgreSQL with indexes";
+
+export const tweetText =
+  "Dramatically improve your database query performance with strategic indexing! This comprehensive guide explains all PostgreSQL index types, when to use each one, and how to implement them without compromising write operations. Essential reading for database developers! #PostgreSQL #DatabasePerformance #Indexing";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 11** of the "Mastering Relational Database Design" series. In
+  [Part 10](LINK_HERE), we learned how schemas improve security,
+  maintainability, and organization in larger database systems, and implemented
+  a schema-based organization for our ShopSmart ecommerce database.
+</InfoBox>
+
+## Introduction
+
+Indexes are special data structures that improve the speed of data retrieval operations on database tables. They work similarly to an index in a book, providing a quick way to look up information without scanning every row in a table. While indexes greatly enhance query performance, they come with trade-offs that database designers must consider.
+
+In this article, we'll explore how indexes work, examine the various types of indexes available in PostgreSQL, and learn how to implement indexing strategies that balance performance improvement with the overhead of index maintenance.
+
+## Understanding database indexes
+
+At their core, indexes are auxiliary data structures that provide a fast path to locate rows in a table based on the values in specific columns. Without indexes, the database must perform a sequential scan, reading every row in a table to find the ones that match a query condition.
+
+<InfoBoxQuotation>
+  Indexes transform *O(n)* sequential scan operations into *O(log n)* lookups,
+  often reducing query times from seconds or minutes to milliseconds.
+</InfoBoxQuotation>
+
+### How indexes work
+
+When you create an index on a column (or set of columns), the database management system creates and maintains a separate data structure that contains the indexed column's values and pointers to the corresponding rows in the table. When a query includes a condition on an indexed column, the database can use the index to quickly locate the relevant rows instead of scanning the entire table.
+
+For example, consider a query to find customers with a specific last name:
+
+```sql
+SELECT * FROM customers WHERE last_name = 'Smith';
+```
+
+Without an index on the `last_name` column, the database would need to check every row in the customers table to find matches. With an index, the database can quickly locate all rows with the last name 'Smith' using the index structure.
+
+### The trade-offs of indexing
+
+While indexes dramatically improve query performance, they come with trade-offs:
+
+1. **Storage space**: Indexes consume additional disk space.
+2. **Write performance**: When data in an indexed column changes, the index must be updated.
+3. **Maintenance overhead**: Indexes require periodic maintenance (rebuilding, reorganizing).
+
+<InfoBox>
+  Indexing is about balance. Index too little, and queries run slowly. Index too
+  much, and write operations suffer while storage needs increase. The goal is to
+  index the columns that will provide the greatest performance benefit with the
+  least overhead.
+</InfoBox>
+
+## When to use indexes
+
+Consider creating indexes for:
+
+1. **Primary keys**: Automatically indexed in most database systems, including PostgreSQL.
+2. **Foreign keys**: Improves JOIN performance.
+3. **Columns used in JOIN conditions** (any column, not only foreign keys).
+4. **Columns frequently used in WHERE clauses**.
+5. **Columns used in ORDER BY or GROUP BY operations**.
+6. **Columns used in aggregate functions** (like MIN, MAX).
+
+PostgreSQL automatically creates indexes for columns with _`PRIMARY KEY`_ and _`UNIQUE`_ constraints, so there's no need to add them manually.
+
+## PostgreSQL index types
+
+PostgreSQL offers several index types, each optimized for different data and query patterns:
+
+### B-tree indexes
+
+B-tree indexes are the default and most common index type in PostgreSQL. They're well-suited for equality and range queries on sortable data.
+
+```sql
+-- Standard B-tree index (the default type)
+CREATE INDEX idx_customers_last_name ON customers(last_name);
+```
+
+B-tree indexes work well for comparisons using _`=`_, _`<`_, _`>`_, _`<=`_, _`>=`_, and _`BETWEEN`_ operators. They're also effective for _`LIKE`_ queries with a prefix pattern (e.g., _`'Smi%'`_), but not for suffix or contains patterns (e.g., _`'%mith'`_ or _`'%mit%'`_).
+
+<InfoBox>
+  B-tree is the default index type in PostgreSQL, and it's a good
+  general-purpose choice for most scenarios. When in doubt, start with a B-tree
+  index.
+</InfoBox>
+
+### Hash indexes
+
+Hash indexes are optimized for equality comparisons only. They can be faster than B-tree indexes for simple equality checks but don't support range queries or sorting.
+
+```sql
+-- Hash index for exact equality comparisons
+CREATE INDEX idx_products_sku_hash ON products USING HASH (sku);
+```
+
+Hash indexes work best when:
+
+- You only need to check for exact matches (=).
+- The indexed column has high cardinality (many unique values).
+- Range queries aren't needed.
+
+### GIN (Generalized Inverted Index)
+
+GIN indexes are designed for composite values where you need to search for elements within the composite. They're particularly useful for full-text search, array columns, and JSONB data.
+
+```sql
+-- GIN index for JSONB data
+CREATE INDEX idx_products_attributes ON products USING GIN (attributes);
+
+-- GIN index for array data
+CREATE INDEX idx_products_tags ON products USING GIN (tags);
+
+-- GIN index for full-text search
+CREATE INDEX idx_products_fts ON products USING GIN (to_tsvector('english', name || ' ' || description));
+```
+
+GIN indexes excel at queries that need to find values within composite structures, like:
+
+- Finding products with specific attributes in a JSONB column.
+- Searching for products with a specific tag in an array.
+- Full-text search across product names and descriptions.
+
+### GiST (Generalized Search Tree)
+
+GiST indexes support a wide range of queries, including geometric data, full-text search, and custom data types.
+
+```sql
+-- GiST index for geometric data
+CREATE INDEX idx_stores_location ON stores USING GIST (location);
+
+-- GiST index for text search (less precise but faster to build than GIN)
+CREATE INDEX idx_products_description_gist ON products USING GIST (to_tsvector('english', description));
+```
+
+GiST indexes are versatile and work well for:
+
+- Spatial data and geometric operations.
+- "Fuzzy" matching and similarity searches.
+- Custom data types with complex comparison logic.
+
+### BRIN (Block Range Index)
+
+BRIN indexes are designed for very large tables where data has a natural correlation with physical storage order. They're extremely space-efficient but less precise than other index types.
+
+```sql
+-- BRIN index for timestamp data
+CREATE INDEX idx_orders_created_at_brin ON orders USING BRIN (created_at);
+
+-- BRIN index for sequential IDs
+CREATE INDEX idx_large_table_id_brin ON large_table USING BRIN (id);
+```
+
+BRIN indexes work best when:
+
+- Tables are very large (millions of rows).
+- The indexed column correlates with physical storage order (like timestamps or sequential IDs).
+- Queries typically retrieve many adjacent rows.
+- You can tolerate less precise indexing in exchange for minimal storage overhead.
+
+### SP-GiST (Space-Partitioned GiST)
+
+SP-GiST indexes support partitioned search trees and are useful for data that can be naturally divided into non-overlapping regions.
+
+```sql
+-- SP-GiST index for IP addresses
+CREATE INDEX idx_access_logs_ip ON access_logs USING SPGIST (ip_address inet_ops);
+```
+
+SP-GiST indexes are specialized but valuable for:
+
+- IP address ranges.
+- Geometric data with non-overlapping partitions.
+- Hierarchical data like quadtrees.
+
+## Advanced indexing techniques
+
+Beyond basic index types, PostgreSQL offers several advanced indexing techniques to further optimize performance:
+
+### Multicolumn indexes
+
+Multicolumn (or composite) indexes include multiple columns in a single index. They're useful when queries frequently filter or sort by the same combination of columns.
+
+```sql
+-- Multicolumn index for queries that filter on both columns
+CREATE INDEX idx_customers_name ON customers(last_name, first_name);
+```
+
+Multicolumn indexes can significantly improve performance, but there are important considerations:
+
+1. **Column order matters**: The leftmost columns are most effective for filtering. In the example above, the index is useful for queries that filter by _`last_name`_ alone or by _`last_name`_ and _`first_name`_, but not for queries that filter only by _`first_name`_.
+
+2. **Balance specificity with reuse**: More columns make the index more specific but potentially less reusable across different queries.
+
+For example, with the index above:
+
+```sql
+-- Uses the index effectively (filters on leftmost column)
+SELECT * FROM customers WHERE last_name = 'Smith';
+
+-- Uses the index most effectively (filters on both columns)
+SELECT * FROM customers WHERE last_name = 'Smith' AND first_name = 'John';
+
+-- Cannot use the index (skips the leftmost column)
+SELECT * FROM customers WHERE first_name = 'John'; -- No index used!
+```
+
+<InfoBox>
+  When creating multicolumn indexes, place the most selective columns (those
+  with the highest cardinality) first, followed by columns that provide
+  additional filtering. This order typically provides the best performance for a
+  wide range of queries.
+</InfoBox>
+
+### Partial indexes
+
+Partial indexes include only a subset of the rows in a table, based on a _`WHERE`_ condition. They're smaller and more efficient when queries consistently filter on the same condition.
+
+```sql
+-- Partial index for active products only
+CREATE INDEX idx_products_active ON products(name) WHERE is_active = true;
+```
+
+This index only includes active products, making it smaller and more efficient for queries that only need to search active products:
+
+```sql
+-- Can use the partial index
+SELECT * FROM products WHERE is_active = true AND name LIKE 'Wireless%';
+```
+
+Partial indexes are particularly valuable when:
+
+- A large percentage of queries target a specific subset of data.
+- The condition consistently appears in WHERE clauses.
+- The total table size is large, but the subset of interest is relatively small.
+
+### Functional indexes
+
+Functional indexes store the results of function calls or expressions rather than the column values themselves. They're useful when queries frequently filter or sort by the result of a function.
+
+```sql
+-- Index on lowercase version of email for case-insensitive searches
+CREATE INDEX idx_customers_email_lower ON customers(lower(email));
+
+-- Index on the year extracted from a date
+CREATE INDEX idx_orders_year ON orders(EXTRACT(YEAR FROM created_at));
+```
+
+With a functional index, queries that use the same function can leverage the index:
+
+```sql
+-- Uses the functional index
+SELECT * FROM customers WHERE lower(email) = 'john.doe@example.com';
+
+-- Uses the year extraction index
+SELECT COUNT(*) FROM orders WHERE EXTRACT(YEAR FROM created_at) = 2023;
+```
+
+Functional indexes are powerful but should be used judiciously, as they can be less intuitive and may not be reused by queries that express the same logic differently.
+
+### Index-only scans and covering indexes
+
+An [index-only scan](https://www.postgresql.org/docs/current/indexes-index-only-scans.html) is a highly efficient operation where the database can satisfy a query using only the information in the index, without accessing the table data. This is possible when all columns needed by the query are included in the index.
+
+In PostgreSQL, you can create covering indexes using the INCLUDE clause, which adds non-key columns to the index:
+
+```sql
+-- Covering index for product listing queries
+CREATE INDEX idx_products_category_covering
+ON products(category_id) INCLUDE (name, price);
+```
+
+With this index, a query like the following can be satisfied entirely from the index without accessing the table:
+
+```sql
+SELECT name, price FROM products WHERE category_id = 123;
+```
+
+<InfoBoxQuotation>
+  Index-only scans can be dramatically faster than regular index scans because
+  they eliminate the need to access the table data pages, reducing I/O
+  operations considerably.
+</InfoBoxQuotation>
+
+### Operator classes and collations
+
+PostgreSQL allows you to specify how indexes compare and sort values using operator classes and collations:
+
+```sql
+-- Case-insensitive index using a specific collation
+CREATE INDEX idx_customers_name_case_insensitive
+ON customers(last_name COLLATE "en_US.utf8" varchar_pattern_ops);
+```
+
+This customization is particularly useful for text data where you need specific comparison behaviors, such as case-insensitive matching or language-specific sorting.
+
+## Implementing indexes for ShopSmart
+
+Let's apply these indexing concepts to our ShopSmart ecommerce database. We'll design a comprehensive indexing strategy based on common query patterns and performance considerations.
+
+### Customer-related indexes
+
+```sql
+-- Primary and unique keys are automatically indexed
+-- CREATE TABLE customers.customers (
+--   customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+--   email varchar(255) NOT NULL UNIQUE,
+--   ...
+-- );
+
+-- Index for customer name searches
+CREATE INDEX idx_customers_name ON customers.customers(last_name, first_name);
+
+-- Functional index for case-insensitive email searches
+CREATE INDEX idx_customers_email_lower ON customers.customers(lower(email));
+
+-- Partial index for active customers only
+CREATE INDEX idx_customers_active_phone ON customers.customers(phone)
+WHERE inactivated_at IS NULL;
+```
+
+### Product-related indexes
+
+```sql
+-- Category filter with included columns for category browsing
+CREATE INDEX idx_products_category_covering ON products.products(category_id)
+INCLUDE (name, price, is_featured);
+
+-- Partial index for featured products
+CREATE INDEX idx_products_featured ON products.products(name, price)
+WHERE is_featured = true;
+
+-- Full-text search index
+CREATE INDEX idx_products_fts ON products.products USING GIN
+(to_tsvector('english', name || ' ' || coalesce(description, '')));
+
+-- JSONB attributes index (if using JSONB for variable attributes)
+CREATE INDEX idx_products_attributes ON products.products USING GIN (attributes);
+
+-- Range search index for price
+CREATE INDEX idx_products_price ON products.products(price);
+
+-- Index for inventory queries
+CREATE INDEX idx_products_stock ON products.products(stock_quantity)
+WHERE stock_quantity > 0;
+```
+
+### Order-related indexes
+
+```sql
+-- Customer's order history
+CREATE INDEX idx_orders_customer ON orders.orders(customer_id);
+
+-- Order status queries
+CREATE INDEX idx_orders_status ON orders.orders(status);
+
+-- Date range queries with composite index
+CREATE INDEX idx_orders_date_status ON orders.orders(ordered_at, status);
+
+-- BRIN index for time-series data (efficient for large tables)
+CREATE INDEX idx_orders_brin_date ON orders.orders USING BRIN (ordered_at);
+```
+
+### Review-related indexes
+
+```sql
+-- Finding reviews for a product
+CREATE INDEX idx_reviews_product ON customers.reviews(product_id);
+
+-- Sorting reviews by rating
+CREATE INDEX idx_reviews_product_rating ON customers.reviews(product_id, rating);
+
+-- Finding a customer's reviews
+CREATE INDEX idx_reviews_customer ON customers.reviews(customer_id);
+```
+
+### Address-related indexes
+
+```sql
+-- Finding addresses by customer
+CREATE INDEX idx_addresses_customer ON customers.addresses(customer_id);
+
+-- Partial index for default addresses
+CREATE INDEX idx_addresses_default ON customers.addresses(customer_id)
+WHERE is_default = true;
+```
+
+<InfoBox>
+  This indexing strategy balances comprehensive coverage of query patterns with
+  controlled index overhead. Each index serves a specific query pattern or
+  performance need, while avoiding unnecessary duplication or overlap.
+</InfoBox>
+
+## Maintaining indexes
+
+Creating indexes is just the first step. Ongoing maintenance is necessary to ensure they continue to perform optimally:
+
+### Monitoring index usage
+
+PostgreSQL provides views to monitor how indexes are being used:
+
+```sql
+-- Find unused indexes
+SELECT
+  schemaname || '.' || relname AS table,
+  indexrelname AS index,
+  pg_size_pretty(pg_relation_size(i.indexrelid)) AS index_size,
+  idx_scan AS scans
+FROM
+  pg_stat_user_indexes ui
+JOIN
+  pg_index i ON ui.indexrelid = i.indexrelid
+WHERE
+  idx_scan = 0      -- no scans
+  AND 0 != (idx_scan + idx_tup_read + idx_tup_fetch) -- not just been created
+ORDER BY
+  pg_relation_size(i.indexrelid) DESC;
+
+-- Find the most used indexes
+SELECT
+  schemaname || '.' || relname AS table,
+  indexrelname AS index,
+  pg_size_pretty(pg_relation_size(i.indexrelid)) AS index_size,
+  idx_scan AS scans
+FROM
+  pg_stat_user_indexes ui
+JOIN
+  pg_index i ON ui.indexrelid = i.indexrelid
+ORDER BY
+  idx_scan DESC
+LIMIT 10;
+```
+
+Regularly reviewing these metrics helps identify indexes that aren't providing value and might be candidates for removal.
+
+### VACUUM and ANALYZE
+
+PostgreSQL's VACUUM process reclaims storage from dead tuples, while ANALYZE updates statistics that the query planner uses to generate efficient execution plans:
+
+```sql
+-- Perform maintenance on specific tables
+VACUUM ANALYZE customers.customers;
+VACUUM ANALYZE products.products;
+
+-- Or on the entire database
+VACUUM ANALYZE;
+```
+
+Regular maintenance improves both index and overall database performance.
+
+### Index rebuilding
+
+Over time, indexes can become fragmented or bloated, especially in tables with frequent updates. Rebuilding indexes can restore optimal performance:
+
+```sql
+-- Rebuild an index without blocking operations
+REINDEX TABLE CONCURRENTLY products.products;
+
+-- Rebuild a specific index
+REINDEX INDEX CONCURRENTLY idx_products_category_covering;
+```
+
+The CONCURRENTLY option allows index rebuilding without blocking read or write operations, though it takes longer to complete.
+
+## Indexing strategies and best practices
+
+Based on our exploration of indexes, here are key strategies and best practices:
+
+### 1. Index for actual query patterns
+
+Base your indexing decisions on real query patterns rather than theoretical possibilities. Tools like _`pg_stat_statements`_ help identify the most common and expensive queries:
+
+```sql
+-- Find the most time-consuming queries
+SELECT
+  query,
+  calls,
+  total_time,
+  mean_time,
+  rows
+FROM
+  pg_stat_statements
+ORDER BY
+  total_time DESC
+LIMIT 10;
+```
+
+Create indexes that target these specific patterns for maximum impact.
+
+### 2. Balance read and write performance
+
+Every index improves read performance at the cost of write performance. Consider the read/write ratio of your application:
+
+- **Read-heavy applications** (like reporting systems) benefit from more extensive indexing.
+- **Write-heavy applications** (like logging systems) should be more selective with indexes.
+
+### 3. Consider index size and maintenance
+
+Indexes consume storage space and require maintenance. For large tables, consider:
+
+- Partial indexes to reduce size.
+- BRIN indexes for time-series or sequential data.
+- Index compression for string data.
+
+### 4. Use the right index type for the data and query
+
+Match index types to your data characteristics and query patterns:
+
+- B-tree for general-purpose equality and range queries.
+- Hash for equality-only comparisons.
+- GIN for JSONB, arrays, and full-text search.
+- GiST for spatial data and complex structures.
+- BRIN for large tables with ordered data.
+
+### 5. Avoid over-indexing
+
+More isn't always better with indexes. Each additional index:
+
+- Increases storage requirements.
+- Slows down writes.
+- Adds maintenance overhead.
+- Complicates query planning.
+
+Remove unused indexes and consolidate overlapping ones.
+
+### 6. Index small tables judiciously
+
+For very small tables (hundreds or few thousands of rows), indexes might not improve performance significantly, as sequential scans can be efficient. Focus indexing efforts on larger tables where the performance impact will be more substantial.
+
+### 7. Consider index-only scans
+
+Covering indexes that support index-only scans can dramatically improve performance for frequently executed queries. Use the INCLUDE clause to add columns needed for query results but not for the index search.
+
+### 8. Monitor and evolve your indexing strategy
+
+Database usage patterns change over time. Regularly review index usage, query performance, and storage requirements to evolve your indexing strategy:
+
+- Add indexes for new query patterns.
+- Remove indexes that aren't providing value.
+- Adjust existing indexes based on changing data distributions.
+
+## Common indexing anti-patterns
+
+Avoid these common indexing mistakes:
+
+### 1. Indexing everything
+
+Creating indexes on every column _just in case_ leads to bloated storage, slower writes, and can even confuse the query planner.
+
+### 2. Redundant indexes
+
+Multiple indexes that serve similar purposes (like _`idx_last_name`_ and _`idx_last_name_first_name`_) waste resources. The more specific index can often handle queries that the less specific one would cover.
+
+### 3. Indexing low-cardinality columns
+
+Columns with few unique values (like boolean flags or status codes with a handful of options) often don't benefit from indexes. The query planner may choose not to use them anyway if a significant percentage of rows would match.
+
+### 4. Creating indexes during peak load
+
+Index creation requires significant I/O and can lock tables. Schedule index creation during off-peak hours or use the CONCURRENTLY option.
+
+### 5. Forgetting to index foreign keys
+
+Unindexed foreign keys can lead to poor JOIN performance and slow CASCADE deletion operations.
+
+### 6. Ignoring composite query conditions
+
+If queries frequently filter on multiple columns together (like _`WHERE status = 'active' AND category_id = 123`_), a composite index will usually outperform separate indexes on each column.
+
+## Performance testing and validation
+
+Always validate the performance impact of indexing changes:
+
+1. **Benchmark before changes**: Establish baseline performance metrics.
+2. **Use _`EXPLAIN ANALYZE`_**: Verify that queries are using the expected indexes.
+3. **Test realistic workloads**: Include a mix of queries representative of actual use.
+4. **Measure write performance**: Ensure index benefits outweigh any write overhead.
+5. **Monitor in production**: Validate performance in real-world conditions.
+
+Example of using _`EXPLAIN ANALYZE`_ to check index usage:
+
+```sql
+EXPLAIN ANALYZE
+SELECT * FROM products.products
+WHERE category_id = 123 AND price < 100;
+```
+
+The output will show whether and how indexes are being used, helping validate your indexing strategy.
+
+## Key takeaways
+
+- **Indexes dramatically improve query performance** by providing fast access paths to data.
+- **PostgreSQL offers multiple index types**, each optimized for different data and query patterns.
+- **B-tree indexes** work well for most equality and range queries.
+- **GIN indexes** excel at full-text search and JSONB data.
+- **Multicolumn indexes** optimize queries that filter on multiple columns.
+- **Partial indexes** improve performance for frequently queried subsets of data.
+- **Functional indexes** support queries that filter on computed values.
+- **Covering indexes** enable highly efficient index-only scans.
+- **Index maintenance** is crucial for sustained performance.
+- **Balance comprehensive indexing** with controlled overhead.
+- **Monitor index usage** and evolve your strategy over time.
+- **Test and validate** indexing changes with realistic workloads.
+
+## Next up in the series
+
+In the next article, [Views for Flexibility](LINK_HERE), we'll explore how database views can provide abstraction, simplification, and security in your database design. We'll examine different types of views, including standard views and materialized views, and show how they can be used to simplify complex queries and implement data access controls.

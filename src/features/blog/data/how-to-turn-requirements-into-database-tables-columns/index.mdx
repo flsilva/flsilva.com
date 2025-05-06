@@ -1,0 +1,403 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-06T00:00:00";
+
+export const description =
+  "Learn systematic techniques to identify database entities and attributes from business requirements. Master the subject-identification and characteristic-identification methods to design effective database tables.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "how-to-turn-requirements-into-database-tables-columns";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "How to turn requirements into database tables & columns";
+
+export const tweetText =
+  "Discover how to transform business requirements into database tables and fields with proven systematic techniques. Learn to identify entities and attributes that form the foundation of a well-designed database. #DatabaseDesign #SQL #EntityRelationship";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 3** of the "Mastering Relational Database Design" series. In
+  [Part 2](LINK_HERE), we established a solid understanding of the fundamentals
+  of database design.
+</InfoBox>
+
+## Introduction
+
+After establishing a solid understanding of database design fundamentals, we're ready to begin the practical design process. The first crucial step is identifying the entities and attributes that will form the foundation of our database structure. This process transforms business requirements into concrete database components.
+
+In this article, we'll explore systematic techniques for identifying entities (which will become tables) and attributes (which will become fields) for our ShopSmart ecommerce database. We'll demonstrate how to apply the subject-identification and characteristic-identification methods to create a well-structured database design.
+
+## Understanding business requirements
+
+Before we can identify entities and attributes, we need to understand the business domain and requirements of the system we're designing. For our ShopSmart ecommerce platform, this means understanding what information the platform needs to store and process to function effectively.
+
+Let's imagine we're having a conversation with stakeholders to gather requirements:
+
+> "ShopSmart needs to build an online platform where customers can browse products organized by categories, add items to their shopping carts, create wish lists, complete orders, make payments, and leave reviews. The platform needs to track inventory levels, manage promotions, and store shipping addresses for delivery."
+
+This seemingly simple statement contains a wealth of information about the entities, attributes, and relationships our database needs to support. Our task is to systematically extract and organize this information.
+
+<InfoBoxQuotation>
+  The quality of your database design is directly proportional to your
+  understanding of the business domain. Take time to analyze requirements before
+  writing a single line of SQL.
+</InfoBoxQuotation>
+
+## The subject-identification technique
+
+After gathering business requirements, our first step is to identify potential entities using the **subject-identification technique**. This method involves scanning requirement statements for key nouns, which often represent core concepts in the domain—and eventually become tables in the database.
+
+### What is an entity?
+
+An **entity** is a distinct concept represented by a table. It can be either an **object** or an **event**:
+
+- An **object** is a tangible or relatively stable thing, such as a **person**, **place**, or **item**. It has identifiable characteristics that can be stored as data and later processed as information. In our ecommerce domain, examples of objects include **customers**, **products**, and **categories**.
+
+- An **event**, on the other hand, is something that occurs at a specific point in time and often triggers a change or transaction. Events typically involve objects and require tracking for historical or business logic purposes. Examples of events include **orders**, **payments**, and **reviews**.
+
+### Applying the subject-identification technique
+
+Let's revisit our simplified business requirement and identify potential subjects (entities) by highlighting the nouns:
+
+> "ShopSmart wants to build an online platform where **customers** can browse **products** organized by **categories**, add items to their **shopping carts**, create **wish lists**, complete **orders**, make **payments**, and leave **reviews**. The platform needs to track **inventory** levels, manage **promotions**, and store **shipping addresses** for delivery."
+
+By identifying the nouns (in bold), we've discovered potential subjects (entities) for our database. Not all nouns will become entities—some may be attributes, some may be combined with other entities, and others might be irrelevant to the data model. But this technique gives us a solid starting point.
+
+Based on our analysis, we've identified the following main subjects for our database:
+
+- Customer (object)
+- Product (object)
+- Category (object)
+- Order (event)
+- Shopping Cart (object)
+- Wish List (object)
+- Payment (event)
+- Review (event)
+- Promotion (object)
+- Shipping Address (object)
+
+In our design, we'll consider inventory as part of the products rather than a separate entity, as it's essentially an attribute (stock quantity) of products.
+
+### Creating our initial Entity-Relationship diagram
+
+With our initial entities identified, we can create a basic Entity-Relationship (ER) diagram. For now, our diagram is a simple collection of entity boxes without attributes or relationships:
+
+_(Note: dbdiagram.io requires at least one field per table, so I'll add a placeholder *`test`* field for diagram generation purposes only. Ignore it for now.)_
+
+<ImageWithCaption caption="Figure 1. Conceptual ER diagram showing initial ShopSmart entities (tables).">
+  ![Figure 1. Conceptual ER diagram showing initial ShopSmart entities
+  (tables).](/images/blog/mastering-relational-database-design-the-design-process-identifying-entities/ERD-tables.png)
+</ImageWithCaption>
+
+This diagram represents a **conceptual model** of our core entities identified through the subject-identification technique. As we progress, we'll refine this structure by adding attributes, keys, and relationships, transforming these entities into complete database tables, and this conceptual model into a **logical one**.
+
+### SQL code
+
+Here’s the SQL code used to generate the diagram above:
+
+```sql
+CREATE TABLE customers (
+  test varchar(1)
+);
+
+CREATE TABLE products (
+  test varchar(1)
+);
+
+CREATE TABLE categories (
+  test varchar(1)
+);
+
+CREATE TABLE orders (
+  test varchar(1)
+);
+
+CREATE TABLE shopping_carts (
+  test varchar(1)
+);
+
+CREATE TABLE wish_lists (
+  test varchar(1)
+);
+
+CREATE TABLE payments (
+  test varchar(1)
+);
+
+CREATE TABLE reviews (
+  test varchar(1)
+);
+
+CREATE TABLE promotions (
+  test varchar(1)
+);
+
+CREATE TABLE addresses (
+  test varchar(1)
+);
+```
+
+## Designing tables
+
+Now that we've identified our main entities, let's establish some principles for designing the corresponding database tables:
+
+1. **Single concept**: Each table should represent one well-defined entity type.
+2. **Descriptive names**: Use names that clearly indicate the entity's purpose.
+3. **Avoid abbreviations**: Unless they're universally understood in your domain.
+4. **Avoid reserved words**: Don't use SQL reserved words like `order`, `user`, or `group`. If necessary, use plural forms (_`orders`_, _`users`_) or prefixes.
+5. **Completeness**: Tables should contain all necessary attributes of the entity.
+6. **Primary key strategy**: Tables should have a clear primary key approach (we'll discuss keys in detail in a later article).
+7. **Naming consistency**: Whether you choose singular or plural names, be consistent throughout your design.
+8. **Naming case**: Use either snake_case or camelCase for naming tables and columns—consistency is more important than the specific style.
+
+For our ShopSmart database, we'll use:
+
+- Plural names for tables (e.g., _`customers`_ rather than _`customer`_)
+- snake*case for all identifiers (e.g., *`first_name`_ rather than _`firstName`\_)
+- Lower case for all identifiers
+- Full words rather than abbreviations
+- UUID primary keys for strong security and distribution capabilities
+
+<InfoBoxQuotation>
+  Consistent naming conventions make your database self-documenting and easier
+  to maintain.
+</InfoBoxQuotation>
+
+## The characteristic-identification technique
+
+Once we've identified our entities, we need to determine their **attributes**—the characteristics or properties that describe each entity. Just as we used nouns to identify entities, we now use adjectives, descriptive phrases, and related nouns in requirements to identify potential attributes.
+
+### What are Attributes?
+
+Attributes are the specific pieces of information we need to store about each entity. They become fields (columns) in our database tables. Good attributes should be:
+
+1. **Atomic**: Representing a single characteristic that cannot be meaningfully subdivided.
+2. **Relevant**: Directly related to the entity they describe.
+3. **Non-derived**: Not calculable from other attributes (in most cases).
+
+### Applying the characteristic-identification technique
+
+Let's imagine we've asked stakeholders to describe what information they need to store about products:
+
+> "For each product, we need to track its **unique identifier**, **name**, **description**, **price**, **weight**, **dimensions**, **brand**, **current stock quantity**, **SKU** (Stock Keeping Unit), whether it's **featured** on the homepage, and which **category** it belongs to."
+
+Similarly, we might ask about customers:
+
+> "We need to store each customer's **first name**, **last name**, **email address**, **phone number**, **registration date**, **birth date**, and whether they've **subscribed to marketing emails**."
+
+We repeat this process for each entity identified in the previous article.
+
+### Adding attributes to our Entity Relationship diagram
+
+Now, we can enhance our ER diagram by adding these attributes to each entity:
+
+<ImageWithCaption caption="Figure 2. ER diagram showing ShopSmart tables with fields (attributes) and initial data type ideas.">
+  ![Figure 2. ER diagram showing ShopSmart tables with
+  fields.](/images/blog/mastering-relational-database-design-defining-structure-attributes-data-types-keys/ERD-tables-fields.png)
+</ImageWithCaption>
+
+This ER diagram is evolving towards a **logical model**. It shows not just _what_ entities exist, but _what information_ (attributes) each contains. The inclusion of data types pushes it further towards physical design specifics, necessary here because we generate diagrams from SQL.
+
+### SQL code (reflecting added attributes)
+
+```sql
+-- Adding attributes (fields/columns) to our tables
+
+CREATE TABLE customers (
+  email varchar(255),
+  first_name varchar(100),
+  last_name varchar(100),
+  phone varchar(20),
+  birth_date date,
+  registered_at timestamp,
+  has_marketing_subscription boolean
+);
+
+CREATE TABLE products (
+  name varchar(255),
+  description text,
+  price decimal(10,2),
+  weight decimal(8,2),
+  dimensions varchar(50),
+  brand varchar(100),
+  stock_quantity integer,
+  sku varchar(50),
+  is_featured boolean
+);
+
+CREATE TABLE categories (
+  name varchar(100),
+  description text
+);
+
+CREATE TABLE orders (
+  ordered_at timestamp,
+  status varchar(50)
+);
+
+CREATE TABLE shopping_carts (
+  created_at timestamp
+);
+
+CREATE TABLE wish_lists (
+  name varchar(100),
+);
+
+CREATE TABLE payments (
+  amount decimal(10,2),
+  paid_at timestamp,
+  payment_method varchar(50),
+  status varchar(50)
+);
+
+CREATE TABLE reviews (
+  rating integer,
+  comment text,
+  reviewed_at timestamp
+);
+
+CREATE TABLE promotions (
+  name varchar(100),
+  description text,
+  discount_type varchar(20),
+  discount_value decimal(10,2),
+  started_at date,
+  ended_at date
+);
+
+CREATE TABLE addresses (
+  street varchar(255),
+  city varchar(100),
+  state varchar(100),
+  postal_code varchar(20),
+  country varchar(100)
+);
+```
+
+## Designing fields
+
+Fields (columns) define the structure of tables and determine what data can be stored. When designing fields, consider these factors:
+
+1. **Naming consistency**: Use clear, descriptive names that follow your conventions.
+2. **Foreign key naming**: Include the referenced table and column, e.g., _`category_id`_ for a reference to _`categories.category_id`_.
+3. **Boolean field naming**: Use _`is_`_, _`has*`*, or _`can_`_ prefixes (e.g., _`is*active`*, _`has_subscription`_).
+4. **Appropriate data type**: Choose types that match the data's nature and expected range.
+5. **Constraints**: Apply rules that enforce business requirements (e.g., non-null fields, value ranges).
+6. **Default values**: Consider whether fields should have defaults when records are created.
+
+### Problematic field types to avoid
+
+Certain field designs can cause problems in relational databases:
+
+#### Multivalued fields
+
+**Multivalued fields** contain multiple distinct values in a single field (e.g., storing _`phone1, phone2, phone3`_ in one column). This approach breaks normalization rules and makes it difficult to:
+
+- Query individual values
+- Enforce validation on each value
+- Create indexes for efficient searching
+
+**Solution**: Create separate tables to store multiple values (e.g., a _`customer_phones`_ table) or separate fields if the number is fixed and small (e.g., _`home_phone`_, _`mobile_phone`_).
+
+#### Multipart fields
+
+**Multipart fields** contain several distinct data elements (e.g., storing full name instead of separate first and last name fields). This makes it difficult to:
+
+- Sort or filter by individual components
+- Update individual parts
+- Standardize formatting
+
+**Solution**: Split into atomic components (e.g., separate _`first_name`_ and _`last_name`_ fields).
+
+#### Calculated fields (derived data)
+
+**Calculated fields** store values that can be computed (derived) from other fields (e.g., storing _`total_price`_ when it could be calculated from item prices and quantities). This creates:
+
+- Data redundancy
+- Potential inconsistencies when source data changes
+- Update complexities
+
+**Solution**: In most cases, calculate these values on-demand using SQL queries or views. Store them only if calculation is extremely expensive and frequently needed (a form of denormalization, discussed later).
+
+<InfoBoxQuotation>
+  Design principle: Fields should be atomic, single-valued, and generally store
+  base data, not derived data.
+</InfoBoxQuotation>
+
+## Building the foundation
+
+We've now identified the main entities for our ShopSmart database and designed their attributes. This forms the foundation upon which we'll build the rest of our database design. In subsequent articles, we'll:
+
+1. Define appropriate data types for all our fields.
+2. Establish keys and integrity constraints.
+3. Design relationships between entities.
+4. Implement business rules through database constraints.
+5. Develop a complete physical database design.
+
+The entity and attribute identification process may seem straightforward, but it's one of the most critical steps in database design. Getting this foundation right will make the rest of the design process smoother and result in a more robust, maintainable database.
+
+## Key Takeaways
+
+- **Subject-identification technique** helps identify entities by looking for nouns in business requirements.
+- **Characteristic-identification technique** helps identify attributes by looking for descriptive phrases and properties.
+- **Entities can be objects** (stable things like customers or products) or **events** (time-based occurrences like orders or payments).
+- **Attributes should be atomic**, representing single characteristics that cannot be meaningfully subdivided.
+- **Avoid problematic field types** like multivalued fields, multipart fields, and calculated fields.
+- **Consistent naming conventions** are crucial for database maintainability and usability.
+- **The quality of your database design** depends heavily on your understanding of the business domain.
+
+## Next up in the series
+
+In the next article, [SQL data types (PostgreSQL)](LINK_HERE), we'll dive deeper into selecting the appropriate data types for our attributes. We'll explore PostgreSQL's rich type system and learn how to choose types that balance storage efficiency with functional requirements. We'll also examine hybrid approaches that combine relational structure with document-style flexibility.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- Captain, Fidel A. (2013). _Six-Step Relational Database Design_. 2nd Edition.
+
+- Hernandez, Michael J. (2020). _Database Design for Mere Mortals_. 4th Edition. Addison-Wesley Professional.
+
+<br />
+<br />
+<br />
+
+<AITools />

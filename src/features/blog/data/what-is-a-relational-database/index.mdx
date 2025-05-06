@@ -1,0 +1,344 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-04T00:00:00";
+
+export const description =
+  "Learn the foundations of relational database design, from data and information to tables and keys. Understand why RDBMS are still critical for modern apps.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "relational-databases-explained-use-cases-and-key-concepts";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "What is a relational database and what is it used for?";
+
+export const tweetText =
+  "Kickstart your database journey! Learn about the relational model, data vs. information, tables, keys, and more. Essential for any dev! #DatabaseDesign #PostgreSQL #SQL";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 1** of the [Mastering relational database design: the complete
+  guide](/blog/mastering-relational-database-design-complete-guide) series.
+</InfoBox>
+
+## Introduction
+
+Understanding what databases are and how they work is fundamental to building robust applications. While many developers interact with databases daily, fewer truly understand the principles that make these systems so powerful and ubiquitous. This article explores the evolution of data storage from simple file systems to sophisticated relational database management systems, providing the foundation you need to understand modern database design.
+
+You'll discover what distinguishes databases from simpler storage methods, learn about the revolutionary relational model that transformed how we think about data, and understand the different types of database systems and their appropriate use cases. This knowledge forms the bedrock for making informed decisions about data architecture and sets the stage for deeper exploration of database design principles.
+
+## What is a database?
+
+A [database](https://en.wikipedia.org/wiki/Database) is an organized collection of structured data stored electronically in a computer system. It allows data to be easily accessed, managed, modified, updated, and organized to produce meaningful information. Modern databases are designed to handle vast amounts of data efficiently while ensuring data consistency and integrity.
+
+Unlike simple file storage, databases provide sophisticated mechanisms for data organization, retrieval, and manipulation. They offer structured ways to store information that enable complex queries, ensure data integrity through constraints and relationships, and provide concurrent access for multiple users while maintaining consistency.
+
+## Database evolution
+
+To fully appreciate modern database systems, it helps to understand their evolution from simpler file-based storage:
+
+- **File-based systems:** Early applications often stored data in simple flat files (like text files or spreadsheets). This approach suffered from significant drawbacks:
+  - **Data redundancy:** The same data was often duplicated across multiple files.
+  - **Data inconsistency:** Duplicated data could easily become out of sync.
+  - **Difficult data sharing:** Sharing data between different applications was complex and error-prone.
+  - **Data dependence:** Applications were tightly coupled to the specific file structure.
+- **Database systems:** Emerged to overcome these limitations by providing:
+  - **Centralized data management:** A single source of truth for data.
+  - **Reduced redundancy:** Techniques like normalization minimize data duplication.
+  - **Data integrity & consistency:** Mechanisms to enforce rules and ensure data accuracy.
+  - **Standardized access:** Query languages like SQL provide a uniform way to interact with data.
+  - **Data independence:** Applications interact with the database system, not the raw files, decoupling them from physical storage details.
+
+The concept of databases dates back to the 1960s when [navigational databases](https://en.wikipedia.org/wiki/Navigational_database) emerged. These early systems evolved through hierarchical databases in the late 1960s, leading to the revolution of [relational databases](https://en.wikipedia.org/wiki/Relational_database) in the 1970s, which remain the dominant database paradigm today despite newer [NoSQL](/blog/introduction-to-nosql/) alternatives.
+
+This evolution continues today with specialized database types designed for different use cases, from traditional relational systems to NoSQL variants optimized for specific data patterns and scale requirements.
+
+## What is the relational model?
+
+The [relational model](https://en.wikipedia.org/wiki/Relational_model) is an approach to organizing data in relations (tables). Each table consists of tuples (rows) and attributes (columns), with each row representing a single entity and each column representing an attribute of that entity. The relational model was introduced by [Edgar F. Codd](https://en.wikipedia.org/wiki/Edgar_F._Codd), an IBM computer scientist, in his seminal 1970 paper ["A Relational Model of Data for Large Shared Data Banks."](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf)
+
+<InfoBoxQuotation>
+  The power of the relational model comes from its mathematical foundation and
+  its ability to represent complex relationships between data entities.
+</InfoBoxQuotation>
+
+Relationships between tables are established through primary and foreign keys, allowing data to be connected and queried efficiently. The model also introduced key principles such as logical data independence, integrity constraints, and a formal mathematical foundation for querying data using [relational algebra](https://en.wikipedia.org/wiki/Relational_algebra)—a set of well-defined operations (like selection, projection, join, and union) used to manipulate and retrieve data from relations (tables).
+
+This theoretical framework laid the groundwork for modern query languages like SQL (Structured Query Language) and shaped how relational databases are structured and operated today.
+
+## What is a relational database?
+
+A [relational database (RDB)](https://en.wikipedia.org/wiki/Relational_database) implements the relational model by organizing data into tables with rows and columns.
+
+For example, in an ecommerce system, you might have separate tables for customers, orders, and products, with relationships that allow you to determine which customer placed which order and which products were included in each order.
+
+The relational approach provides several key advantages:
+
+- **Flexibility:** Data can be accessed and combined in numerous ways without changing the database structure.
+- **Integrity:** Relationships and constraints ensure data accuracy and consistency.
+- **Standardization:** SQL provides a common language for interacting with relational databases.
+- **Maturity:** Decades of development have produced robust tools and best practices.
+
+## Key concepts in relational databases
+
+Let's establish some foundational concepts that will appear throughout this series:
+
+### Tables, rows, and columns
+
+In a relational database, data is organized into tables. Each table represents a specific type of entity, such as customers, products, or orders. Tables are structured in rows and columns:
+
+- **Rows** (also called records or tuples) represent individual instances of the entity.
+- **Columns** (also called fields or attributes) represent characteristics of the entity.
+
+For example, in a _`customers`_ table, each row represents one customer, while columns might include _`customer_id`_, _`first_name`_, _`last_name`_, and _`email`_.
+
+### Keys
+
+Keys are special columns that uniquely identify records and establish relationships between tables:
+
+- **Primary keys** uniquely identify each record in a table.
+- **Foreign keys** reference primary keys in other tables, creating relationships.
+- **Composite keys** consist of multiple columns that together uniquely identify a record.
+
+We'll explore keys on [How to use primary keys for database integrity](LINK_HERE).
+
+### Relationships
+
+Relationships are like links, connecting data across tables:
+
+- **One-to-one**: A record in one table relates to exactly one record in another table.
+- **One-to-many**: A record in one table relates to multiple records in another table.
+- **Many-to-many**: Multiple records in one table relate to multiple records in another table.
+
+We'll explore table relationships on [How to model table relationships with foreign keys and SQL](LINK_HERE).
+
+### Constraints
+
+Constraints enforce rules on data to maintain integrity:
+
+- _`NOT NULL`_: Ensures a column cannot contain null values.
+- _`UNIQUE`_: Ensures all values in a column are different.
+- _`CHECK`_: Ensures all values in a column satisfy a specific condition.
+- _`PRIMARY KEY`_: Uniquely identifies each record in a table.
+- _`REFERENCES`_: Ensures referential integrity between tables.
+
+### Normalization
+
+Normalization is the process of organizing data to reduce redundancy and improve data integrity. It involves dividing larger tables into smaller ones and defining relationships between them according to specific normal forms.
+
+Normalization is built into the design process followed in this series, but we dedicate an article to it on [Normalization vs denormalization: striking the balance](LINK_HERE).
+
+## What is a relational database management system (RDBMS)?
+
+A [Relational Database Management System (RDBMS)](https://en.wikipedia.org/wiki/Database#Database_management_system) is software that manages relational databases, controlling data storage, retrieval, and manipulation while enforcing integrity rules. Modern RDBMSs provide comprehensive features including:
+
+- **Schema definition:** Defining the structure of tables, columns, keys, and relationships (often using SQL's [Data Definition Language - DDL](https://en.wikipedia.org/wiki/Data_definition_language)).
+- **Data manipulation:** Inserting, updating, deleting, and querying data (using SQL's [Data Manipulation Language - DML](https://en.wikipedia.org/wiki/Data_manipulation_language)).
+- **Query optimization:** Analyzing queries and determining the most efficient execution plan.
+- **Transaction management:** Ensuring database operations are atomic, consistent, isolated, and durable ([ACID](https://en.wikipedia.org/wiki/ACID) compliance).
+- **Concurrency control:** Managing simultaneous access by multiple users to prevent conflicts.
+- **Backup and Recovery:** Providing mechanisms to back up data and recover from failures.
+- **Security enforcement:** Controlling user access and permissions.
+
+The first commercial RDBMS was [Oracle](https://en.wikipedia.org/wiki/Oracle_Database), released in 1979, followed by IBM's [DB2](https://en.wikipedia.org/wiki/IBM_Db2). Throughout the 1980s and 1990s, relational databases became the standard for business data processing. Today's popular RDBMSs include open-source options like [MySQL](https://www.mysql.com/) and [PostgreSQL](https://www.postgresql.org/), commercial giants like [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server) and [Oracle Database](https://www.oracle.com/database/), and embedded databases like [SQLite](https://www.sqlite.org/). While each has unique capabilities, all implement the core principles of the relational model.
+
+## Benefits of relational databases
+
+The enduring popularity of relational databases stems from several key advantages:
+
+- **Data integrity:** Through constraints, keys, and relationships, relational databases enforce data integrity and consistency.
+- **Flexibility:** Data can be accessed and combined in numerous ways without changing the database structure.
+- **Security:** RDBMSs provide robust access control mechanisms to protect sensitive data.
+- **Standardization:** SQL provides a standardized way to interact with nearly all relational databases.
+- **Mature ecosystem:** Decades of development have produced robust tools, best practices, and a large pool of skilled professionals.
+- **ACID compliance:** Transactions in relational databases adhere to **A**tomicity, **C**onsistency, **I**solation, and **D**urability. This ensures that database operations are reliable and maintain data integrity, even in the event of system failures or errors.
+- **Data independence:** Applications can interact with data without needing to know the physical storage details.
+
+## Limitations of relational databases
+
+Despite their strengths, relational databases are not without limitations:
+
+- **Horizontal scalability challenges:** Traditionally, scaling an RDBMS to handle massive datasets across many distributed servers (scaling _out_) can be complex and expensive compared to some NoSQL alternatives. However, modern RDBMSs and architectural patterns (like [sharding](<https://en.wikipedia.org/wiki/Shard_(database_architecture)>)) offer solutions.
+- **Schema rigidity:** Altering the structure of a relational database in production can be complex and time-consuming, especially for tables with significant data volume.
+- [**Object-Relational Impedance Mismatch**](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch): The conceptual gap between object-oriented programming models (using objects and classes) and the relational model (using tables and rows) introduces complexity in application development. While [Object-Relational Mappers (ORMs)](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) help bridge this gap, they also introduce their own layer of abstraction and complexity.
+- **Performance overhead:** Operations like complex joins and enforcement of referential integrity can impact performance, requiring careful optimization strategies (e.g., using indexes effectively).
+
+## Use cases for relational databases
+
+Relational databases excel in scenarios involving:
+
+- **Structured data:** Data that fits neatly into tables with well-defined columns and data types.
+- **Interconnected data:** Systems where relationships between different pieces of data are crucial (e.g., customers, products, orders).
+- **High data integrity requirements:** Applications where data accuracy and consistency are paramount (e.g., financial systems, inventory management).
+- **Complex querying:** Scenarios requiring sophisticated queries, aggregation, and reporting across multiple data dimensions.
+- **Transaction-heavy applications:** Systems processing frequent, small updates that demand ACID guarantees (e.g., banking transactions, ecommerce checkouts, booking systems).
+
+<InfoBox>
+  Ecommerce systems, like the *ShopSmart* example we'll develop in this series,
+  are prime candidates for relational databases due to their structured and
+  interconnected data (customers, products, categories, orders, payments,
+  addresses, etc), and the critical need for transactional integrity during
+  payments and inventory updates.
+</InfoBox>
+
+## OLTP vs. OLAP systems
+
+Relational databases typically support two main types of processing systems: [Online Transaction Processing (OLTP)](https://en.wikipedia.org/wiki/Online_transaction_processing) and [Online Analytical Processing (OLAP)](https://en.wikipedia.org/wiki/Online_analytical_processing). Understanding their differences is key to effective database design.
+
+### OLTP systems
+
+**OLTP systems** drive day-to-day business operations. They are optimized for managing numerous small, concurrent transactions in real-time. Think of placing an order, updating customer information, or checking inventory. The e-commerce database we will design in this series is an OLTP system. Key characteristics include:
+
+- **High transaction throughput:** Efficiently processing many discrete actions (inserts, updates, deletes).
+- **Operational focus:** Supporting core, real-time business functions.
+- **Data consistency:** Prioritizing data integrity and accuracy during frequent modifications.
+- **Quick response times:** Providing rapid feedback for operational tasks.
+- **Highly normalized**: Typically uses a highly normalized data structure to ensure consistency and minimize redundancy.
+
+<InfoBoxQuotation>
+  OLTP: Optimized for many small, fast transactions supporting daily operations.
+</InfoBoxQuotation>
+
+### OLAP systems
+
+**OLAP systems**, on the other hand, are optimized for complex data analysis and business intelligence. They deal with large volumes of historical data and are optimized for querying, aggregation, and reporting, rather than transaction processing. Think of analyzing sales trends over the past five years or identifying customer segments. Key characteristics include:
+
+- **Complex queries:** Handling sophisticated analytical queries on large datasets.
+- **Read-heavy:** Primarily involves data retrieval and aggregation.
+- **Historical data:** Often consolidates data from multiple OLTP systems and other sources.
+- **Denormalized or specialized schemas:** Frequently use denormalized structures like [star](https://en.wikipedia.org/wiki/Star_schema) or [snowflake schemas](https://en.wikipedia.org/wiki/Snowflake_schema) to optimize analytical query performance.
+
+<InfoBoxQuotation>
+  OLAP: Optimized for complex analytical queries on large historical datasets.
+</InfoBoxQuotation>
+
+While both OLTP and OLAP are crucial, this series will focus on the design principles for **OLTP databases** that power essential business operations, though many concepts apply to both system types.
+
+## Relational vs. non-relational databases
+
+As we've seen, relational databases organize data in structured tables with predefined schemas, where each table consists of rows and columns with established relationships between tables through foreign keys. They use SQL for querying and enforce ACID properties (Atomicity, Consistency, Isolation, Durability) to ensure data integrity and reliability. This structured approach makes relational databases ideal for applications requiring complex queries, transactions, and data consistency, such as financial systems, e-commerce platforms, and enterprise applications.
+
+Non-relational databases, also known as NoSQL databases, offer more flexible data models that don't require fixed table structures. Each type of NoSQL database is specifically tailored for a specific data model: document databases ([MongoDB](https://www.mongodb.com/)) for JSON-like data, key-value stores ([Redis](https://redis.io/)) for simple lookups, wide-column databases ([Cassandra](https://cassandra.apache.org/)) for time-series data, and graph databases ([Neo4j](https://neo4j.com/product/neo4j-graph-database/)) for interconnected relationships. The choice between relational and non-relational databases should be guided by your specific data model and use case requirements. While NoSQL databases may sacrifice some consistency guarantees for performance and scalability, they excel in handling large volumes of unstructured or semi-structured data, real-time applications, and scenarios where rapid horizontal scaling is essential, such as social media platforms, IoT applications, and content management systems.
+
+## What is a cloud database?
+
+A cloud database is a database service that runs on cloud computing platforms rather than on-premise. Often referred to as [database-as-a-service (DBaaS)](https://www.ibm.com/think/topics/dbaas), these databases are hosted, managed, and maintained by cloud service providers like [Amazon Web Services (AWS)](https://aws.amazon.com/), [Microsoft Azure](https://azure.microsoft.com/en-us/), or [Google Cloud Platform](https://cloud.google.com/), allowing users to access their data over the internet without needing to install, configure, or maintain physical database infrastructure. Cloud databases can be either relational (like [Amazon RDS](https://aws.amazon.com/rds/) or [Azure SQL Database](https://azure.microsoft.com/en-us/products/azure-sql/database)) or non-relational (like [Amazon DynamoDB](https://aws.amazon.com/dynamodb/) or [Azure Cosmos DB](https://azure.microsoft.com/en-us/products/cosmos-db)).
+
+The primary advantages of cloud databases include automatic scaling to handle varying workloads, built-in backup and disaster recovery, reduced maintenance overhead, and pay-as-you-use pricing models. Organizations can quickly deploy databases without significant upfront hardware investments and benefit from enterprise-grade security, high availability, and global accessibility. This makes cloud databases particularly attractive for startups, growing businesses, and enterprises looking to reduce IT complexity while maintaining reliable, scalable data storage solutions.
+
+## ShopSmart: an ecommerce database
+
+Throughout this series, we'll build a database for "ShopSmart," a fictional ecommerce platform. This practical approach will help illustrate how theoretical concepts translate to real-world implementations.
+
+Our ecommerce platform will need to manage:
+
+- Customers and their information
+- Products, categories, and inventory
+- Orders, payments, and shipping
+- Reviews, promotions, and wish lists
+
+For instance, in our ShopSmart database, we'll create tables for customers, products, orders, and more. We'll define relationships that allow us to track which customers placed which orders, which products are included in each order, and how inventory levels change as orders are processed.
+
+By the end of this series, you'll have a complete understanding of how to design and implement a robust relational database that can support complex business operations.
+
+## Key takeaways
+
+- **Databases** evolved from file systems to provide centralized, consistent data management.
+- **The relational model** provides a mathematical foundation for organizing and querying data efficiently.
+- **Relational databases** implements the relational model by organizing data into tables with rows and columns, with relationships between tables established through keys.
+- **Relational databases** excel at handling structured data with well-defined relationships, making them perfect for applications like ecommerce platforms.
+- **RDBMS software** manages relational databases, enforcing integrity and providing features like SQL access and transaction management.
+- **ACID compliance** ensures transaction reliability and data integrity, making relational databases ideal for systems where data accuracy is critical.
+- **OLTP systems** focus on operational transactions, while **OLAP systems** support analysis and reporting.
+
+## Frequently asked questions (FAQ)
+
+### What is the difference between a database and a file system?
+
+A database is an organized collection of structured data with sophisticated management capabilities, while a file system simply stores files on a storage device. Databases provide data integrity mechanisms, concurrent access control, query optimization, and standardized access methods like SQL. File systems lack these advanced features and can lead to data redundancy, inconsistency, and difficult data sharing between applications. Databases also offer better security, backup and recovery options, and performance optimization for data retrieval operations.
+
+### What is the difference between a database and a relational database?
+
+A database is any organized collection of data. A relational database is a specific type of database that organizes data into tables with rows and columns, where relationships between tables are established through keys. Relational databases follow specific rules (like ACID properties) and use SQL for queries, while databases can include other types like document, graph, or key-value stores.
+
+### What is the difference between a relational database and a relational database management system (RDBMS)?
+
+A relational database is the actual collection of structured data organized in tables with defined relationships between them. An RDBMS (Relational Database Management System) is the software that creates, manages, and provides access to relational databases. The RDBMS handles tasks like data storage, retrieval, security, backup, and query processing. Think of it this way: the relational database is the structured data itself, while the RDBMS is the engine that manages that data.
+
+### What are the most popular relational database management systems (RDBMSs)?
+
+The most popular RDBMSs include MySQL, PostgreSQL, Oracle Database, Microsoft SQL Server, SQLite, and MariaDB. MySQL and PostgreSQL are widely used open-source options, while Oracle and SQL Server are enterprise-focused commercial solutions. SQLite is popular for lightweight applications and embedded systems.
+
+### Why are relational databases still popular despite NoSQL alternatives?
+
+Relational databases remain popular because they provide proven ACID transaction guarantees, mature tooling ecosystems, standardized SQL interfaces, and strong data integrity enforcement. They excel at handling complex relationships between structured data and offer sophisticated query capabilities. While NoSQL databases solve specific scalability and flexibility challenges, relational databases are still the best choice for applications requiring strict consistency, complex transactions, and well-defined data relationships—which covers the majority of business applications.
+
+### Is SQL a relational database?
+
+No, SQL is not a relational database. SQL (Structured Query Language) is a programming language used to manage and query relational databases. It's the standard language for interacting with relational database management systems, but the language itself is not a database.
+
+### Is MongoDB a relational database?
+
+No, MongoDB is not a relational database. It's a NoSQL document database that stores data in flexible, JSON-like documents rather than tables with fixed schemas. MongoDB doesn't use SQL as its primary query language and doesn't enforce the same relational constraints as traditional relational databases.
+
+### When should I use OLTP versus OLAP database systems?
+
+Use OLTP (Online Transaction Processing) systems for day-to-day operational applications that require real-time data processing, frequent small transactions, and immediate consistency—like ecommerce platforms, banking systems, or inventory management. Use OLAP (Online Analytical Processing) systems for business intelligence, reporting, and data analysis that involves complex queries on large historical datasets. OLTP systems are optimized for speed and consistency of individual transactions, while OLAP systems are optimized for complex analytical queries and data aggregation across time periods.
+
+### How do primary keys and foreign keys work together in relational databases?
+
+Primary keys uniquely identify each record in a table and ensure no duplicate rows exist, while foreign keys create relationships by referencing primary keys in other tables. For example, a _`customers`_ table might have a _`customer_id`_ primary key, and an _`orders`_ table would have a _`customer_id`_ foreign key that references the customers table. This relationship ensures referential integrity—you cannot create an order for a non-existent customer. Foreign keys also enable joining tables in queries to retrieve related data across multiple tables, forming the foundation of relational database functionality.
+
+## Next up in the series
+
+In the next article, [What is database design and why does it matter?](LINK_HERE), we'll explore the different levels of database design (conceptual, logical, and physical), discuss the Entity-Relationship model, and examine various database design approaches. We'll also introduce the techniques for database diagramming that we'll use throughout the series as we develop our ShopSmart ecommerce database.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- "A brief history of databases: From relational, to NoSQL, to distributed SQL" _Cockroach Labs_ , n.d. Web. 2 April 2025 &#60;<a href="https://www.cockroachlabs.com/blog/history-of-databases-distributed-sql/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.cockroachlabs.com/blog/history-of-databases-distributed-sql/</a>&#62;
+
+- "The History Of Databases" _ThinkAutomation_ , n.d. Web. 2 April 2025 &#60;<a href="https://www.thinkautomation.com/histories/the-history-of-databases/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.thinkautomation.com/histories/the-history-of-databases/</a>&#62;
+
+<br />
+<br />
+
+<AITools />

@@ -1,0 +1,3369 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-02T00:00:00";
+
+export const description =
+  "Unlock the art and science of database design and implementation in this in-depth article that covers both fundamental and advanced concepts as you build a robust ecommerce database from the ground up. From identifying entities and relationships to creating ER diagrams and writing real SQL code, this hands-on resource bridges theory and practice. Whether you're new to databases or looking to sharpen your design and implementation skills, you'll turn complex concepts into clear, actionable steps.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "mastering-relational-database-design-and-implementation";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "Mastering Relational Database Design and Implementation";
+
+export const tweetText =
+  "Learn fundamental and advanced relational database design and implementation concepts—including entities, relationships, ER diagrams, indexes, views, SQL, and more—as you build a robust ecommerce database from the ground up. #Database #DatabaseDesign #PostgreSQL #SQL";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+## Introduction
+
+[Database design](https://en.wikipedia.org/wiki/Database_design) is both an art and a science that forms the foundation of most modern applications. Whether you're building a simple mobile app or an enterprise system, a well-designed database can mean the difference between a high-performing, reliable, and maintainable solution and a problematic one plagued with inconsistencies and performance issues.
+
+This in-depth article will walk you through both fundamental and advanced concepts of relational database design and implementation using SQL. We’ll start with the core principles of databases and data modeling, explore proven design techniques and best practices, and build a complete database design and implementation for a fictional ecommerce business from the ground up. By the end, you'll be equipped to approach database design methodically and implement robust, long-lasting structures with confidence.
+
+## Data & Database
+
+### Data vs. Information
+
+Data consists of raw, unprocessed facts and figures that, on their own, may not have much meaning. Think of data as individual puzzle pieces—numbers, text, dates, or binary values—stored in a database. For example, the number "29.99" alone is just a piece of data. Without context it’s meaningless.
+
+Information, on the other hand, is processed data that has been organized, structured, or presented in a given context to make it meaningful and valuable to the recipient. When we know that "29.99" represents the price of a specific product in our ecommerce store, it becomes information. Understanding this distinction is crucial for effective database design because we're not just storing data; we're organizing it to produce meaningful information.
+
+### What is a Database?
+
+A [database](https://en.wikipedia.org/wiki/Database) is an organized collection of structured data stored electronically in a computer system. It allows data to be easily accessed, managed, modified, updated, and organized to produce meaningful information. Modern databases are designed to handle vast amounts of data efficiently while ensuring data consistency and integrity.
+
+The concept of databases dates back to the 1960s when [navigational databases](https://en.wikipedia.org/wiki/Navigational_database) emerged. These early systems evolved through hierarchical databases in the late 1960s, leading to the revolution of [relational databases](https://en.wikipedia.org/wiki/Relational_database) in the 1970s, which remain the dominant database paradigm today despite newer [NoSQL](/blog/introduction-to-nosql/) alternatives.
+
+### Database Evolution
+
+Before databases became commonplace, applications typically stored data in file systems. Understanding this evolution helps appreciate why database systems were developed:
+
+- **File-based systems**: Early applications stored data in flat files, which led to data redundancy, inconsistency, and difficult data sharing between applications.
+- **Database systems**: Emerged to address these limitations by providing centralized data management, reduced redundancy, data independence, and standardized access.
+
+This evolution continues today with specialized database types designed for different use cases, from traditional relational systems to NoSQL variants optimized for specific data patterns and scale requirements.
+
+## The Relational Database Model
+
+The [relational model](https://en.wikipedia.org/wiki/Relational_model) was introduced by [Edgar F. Codd](https://en.wikipedia.org/wiki/Edgar_F._Codd), an IBM computer scientist, in his seminal 1970 paper ["A Relational Model of Data for Large Shared Data Banks."](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf) This revolutionary concept proposed organizing data in relations (tables). Each table consists of tuples (rows or records) and attributes (columns or fields), with each row representing a single entity and each column representing an attribute of that entity. Relationships between tables are established through primary and foreign keys, allowing data to be connected and queried efficiently.
+
+The model also introduced key principles such as logical data independence, integrity constraints, and a formal mathematical foundation for querying data using [relational algebra](https://en.wikipedia.org/wiki/Relational_algebra)—a set of well-defined operations (like selection, projection, join, and union) used to manipulate and retrieve data from relations (tables). This theoretical framework laid the groundwork for modern query languages like [SQL (Structured Query Language)](https://en.wikipedia.org/wiki/SQL) and shaped how relational databases are structured and operated today.
+
+### Relational Database Management System (RDBMS)
+
+A [Relational Database Management System (RDBMS)](https://en.wikipedia.org/wiki/Database#Database_management_system) is software that manages relational databases, controlling data storage, retrieval, and manipulation while enforcing integrity rules. Modern RDBMSs provide comprehensive features including schema definition, query optimization, transaction management, concurrency control, backup and recovery, and security enforcement.
+
+The first commercial RDBMS was [Oracle](https://en.wikipedia.org/wiki/Oracle_Database), released in 1979, followed by IBM's [DB2](https://en.wikipedia.org/wiki/IBM_Db2). Throughout the 1980s and 1990s, relational databases became the dominant database technology. Today's popular RDBMSs include [MySQL](https://www.mysql.com/), [PostgreSQL](https://www.postgresql.org/), [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server), [Oracle Database](https://www.oracle.com/database/), and [SQLite](https://www.sqlite.org/). While each has unique capabilities, all implement the core principles of the relational model.
+
+### Advantages of Relational Databases
+
+Relational databases offer numerous benefits that have contributed to their enduring popularity:
+
+- **Data integrity**: Through constraints, keys, and relationships, relational databases enforce data integrity and consistency.
+- [**ACID**](https://en.wikipedia.org/wiki/ACID) **compliance**: Transactions in relational databases adhere to **Atomicity**, **Consistency**, **Isolation**, and **Durability** principles. This ensures that database operations are reliable and maintain data integrity, even in the event of system failures or errors, making transactions crucial for ensuring correctness and consistency in complex applications.
+- **Flexibility**: Data can be accessed and combined in numerous ways without changing the database structure.
+- **Security**: RDBMSs provide robust access control mechanisms to protect sensitive data.
+- **Standardization**: SQL provides a standardized way to interact with nearly all relational databases.
+- **Mature ecosystem**: Decades of development have produced robust tools, best practices, and a large pool of skilled professionals.
+- **Data independence**: Applications can interact with data without needing to know the physical storage details.
+
+### Disadvantages of Relational Databases
+
+Despite their strengths, relational databases have limitations:
+
+- **Horizontal scalability challenges**: Traditional RDBMSs can face performance issues with extremely large datasets distributed across multiple servers, though modern solutions offer various approaches to address this.
+- **Schema rigidity**: Altering the structure of a relational database in production can be complex and time-consuming, especially for tables with significant data volume.
+- [**Object-relational impedance mismatch**](https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch): The conceptual gap between object-oriented programming models and relational tables introduces complexity in application development, though [ORMs (Object-Relational Mappers)](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) help bridge this gap.
+- **Performance overhead**: Operations like complex joins and enforcement of referential integrity can impact performance, requiring careful optimization strategies.
+
+### Use Cases for Relational Databases
+
+Relational databases excel in scenarios that require:
+
+- **Structured data** with well-defined relationships.
+- **Systems with interconnected data** that benefit from normalization.
+- **Applications where data integrity** is paramount.
+- **Complex queries** and reporting.
+- **Transaction-heavy applications** like banking, ecommerce, and inventory management.
+
+<InfoBox>
+  Ecommerce systems are perfect candidates for relational databases due to their
+  structured nature, interconnected data (e.g. _`customers`_, _`products`_, and
+  _`orders`_), and critical need for transactional integrity when processing
+  payments and managing inventory.
+</InfoBox>
+
+### OLTP vs. OLAP Systems
+
+Relational databases typically support two main types of processing systems: [Online Transaction Processing (OLTP)](https://en.wikipedia.org/wiki/Online_transaction_processing) and [Online Analytical Processing (OLAP)](https://en.wikipedia.org/wiki/Online_analytical_processing). Understanding their differences is key to effective database design.
+
+**OLTP systems** drive day-to-day business operations. They are optimized for **managing many small transactions in real-time**, ensuring data integrity even with concurrent users. Key characteristics of OLTP systems, such as the ecommerce database example in this article, include:
+
+- **High Transaction Throughput:** Efficiently processing many discrete actions (e.g., inserts, updates, deletes).
+- **Operational Focus:** Supporting core business functions like processing orders or updating inventory.
+- **Data Consistency:** Prioritizing integrity and accuracy during frequent data modifications.
+- **Quick Response Times:** Providing rapid feedback for operational tasks.
+
+**OLAP systems**, on the other hand, are optimized for **complex data analysis and business intelligence**. They handle large volumes of historical data and are optimized for querying and reporting, rather than transaction processing.
+
+While both system types are important, this article focuses specifically on the design principles for **OLTP databases** that support essential business operations.
+
+## Foundations of Database Design
+
+### Basic Concepts of Relational Database Design
+
+Before diving deeper, let's establish some of the foundational concepts of relational databases that will serve as building blocks throughout this article.
+
+#### Entities
+
+An **entity** is a distinct concept represented by a table, such as a **customer**, **product**, or **payment**. In database design, the terms _entity_ and _table_ are often used interchangeably.
+
+#### Tables
+
+Also called **relations**, **tables** are the primary storage structures in relational databases. Tables are organized in a **row-and-column format**, similar to a spreadsheet. Throughout the design process, you'll work with four distinct types of database tables, each serving different purposes:
+
+**Data Tables**: The **core tables** in your database, storing your primary business entities (like _`customers`_, _`products`_, and _`orders`_). These tables represent the fundamental objects in your system and hold most of your application data.
+
+**Validation Tables**: Also known as _lookup tables_, these tables store **a fixed set of values** that other tables can reference, ensuring data consistency. They're particularly useful for implementing business rules that restrict field values, for example the categories of a product.
+
+**Associative Tables**: Tables that implement **many-to-many relationships** between entities. These tables connect records from two or more data tables, allowing for complex relationships.
+
+**Supertype and Subtype Tables**: Tables used to represent **inheritance-like relationships** in relational databases, allowing you to model entities that share common attributes but also have unique properties:
+
+- A **supertype table** contains the shared attributes for a **general entity**.
+- A **subtype table** stores additional attributes specific to **specialized versions** (subtypes) of that entity.
+
+#### Fields
+
+Also known as _columns_ or _attributes_, **fields** are the **smallest structures** within a database and represent specific attributes of the entity represented by the table. Fields are where data is actually stored within the database. Each field stores one type of data (text, numbers, dates, etc.) about the entity. For instance, in our _`customers`_ table, fields might include _`customer_id`_, _`first_name`_, _`last_name`_, and _`email`_.
+
+#### Records
+
+Also called _rows_ or _tuples_, **records** contain all the data about **one instance of the entity**. A record consists of values for each field defined in the table. Each record is uniquely identified throughout the database by a value in the primary key field of that record. For example, a single record in our _`customers`_ table would contain the complete information about one specific customer, uniquely identified by its _`customer_id`_ primary key.
+
+#### Keys
+
+Keys are special fields—or combinations of fields—used to **uniquely identify records** and **define relationships between tables**. Common types include **candidate keys**, **natural keys**, **composite keys**, **surrogate keys**, **alternate keys**, and **primary keys**.
+
+#### Constraints
+
+Constraints are rules that enforce **data integrity** within the database, such as _`NOT NULL`_ constraints that prevent empty values in important fields, _`CHECK`_ constraints that validate data against specified conditions, and _`UNIQUE`_ constraints that ensure no duplicate values exist in specified columns.
+
+#### Relationships
+
+Relationships are logical connections between entities (tables) that reflect **real-world associations between them**. These relationships are implemented through primary and foreign keys and come in three main types: **one-to-one**, where a record in one table corresponds to a single record in another table; **one-to-many**, where a single record in one table relates to multiple records in another table; and **many-to-many**, where multiple records in one table relate to multiple records in another table.
+
+#### Indexes
+
+Indexes are data structures that improve the **speed of data retrieval operations** by providing faster access to rows in a table—much like an index in a book helps you quickly find a topic. Indexes are especially useful for queries involving search conditions, sorting, and joins.
+
+#### Schemas
+
+In database terminology, a _schema_ most commonly refers to the **structural blueprint** or organization of a database. However, this term can can also refer to a **logical container (namespace)** depending on the context:
+
+##### Database Structure
+
+When database professionals talk about a _schema_, they're typically referring to the **complete structural definition of a database**—including tables, fields, relationships, constraints, and other elements that define how data is organized and related. This structural blueprint serves as the foundation for how data is stored and accessed.
+A database schema defines:
+
+- What tables exist in the database.
+- What fields (columns) each table contains.
+- The data type of each field.
+- The relationships between tables.
+- Constraints that enforce data integrity.
+- Indexes, views, stored procedures, and other database objects.
+
+This structural schema can exist in different forms:
+
+- As conceptual, logical, or physical models during the design phase (e.g., ER diagrams).
+- As SQL scripts that define the structure of the database (DDL statements like _`CREATE TABLE`_).
+- As the actual implemented structure within the database system.
+
+##### Logical Container (Namespace)
+
+A _schema_ also refers to a concrete organizational unit within many database management systems—essentially a **logical container** or **namespace** that contains database objects. In PostgreSQL, for example, schemas function as logical containers that group related tables, indexes, views, and other objects together.
+PostgreSQL automatically creates a schema named "public" for each new database, which serves as the default location for objects unless specified otherwise. This organization allows database designers to:
+
+- Create more organized database architectures by separating objects from different applications or modules.
+- Avoid naming conflicts between objects.
+- Control access permissions at the schema level.
+
+When someone mentions _database schema_, they could be referring to either the overall structural design of the database or these specific organizational containers, so it's important to understand the context of the discussion.
+
+For our ecommerce database design example, we'll work within the default schema, though in production environments multiple schemas often help organize complex applications—such as separate schemas for _`customers`_, _`products`_, and _`analytics`_, each containing their own relevant tables, indexes, views, etc.
+
+### What is Database Design?
+
+**Database design** is the process of creating a structured blueprint for how data will be stored, organized, and accessed in a database system to meet specific business requirements. It involves defining the data models, relationships, constraints, and rules that shape the database’s structure and behavior, often represented using different types of diagrams
+
+The design process acts as a bridge between the real-world needs of a business and the technical realities of database systems. It translates the way humans naturally think about information — such as customers, orders, or inventory — into a format that computers can efficiently store, retrieve, and manipulate.
+
+In this article, we’ll design an ecommerce database from scratch.
+
+### Why is Database Design Important?
+
+A well-designed database is the backbone of reliable, efficient, and scalable software systems. It ensures **data integrity**, **consistency**, and **performance**, while **minimizing redundancy** and supporting **security**, **scalability**, and **maintainability**. Thoughtful design choices enable **efficient querying** and **easier long-term maintenance**, whereas poor design can lead to **data anomalies**, **inaccurate information**, **slow queries**, and **mounting technical debt** as the system grows.
+
+Think of database design as the architectural planning phase of building construction—getting the foundation wrong early on can result in costly, disruptive repairs down the line. Similarly, fixing fundamental flaws in a database often involves **painful data migrations**, **code rewrites**, and **system downtime**.
+
+### Data Integrity and Consistency
+
+[**Data integrity**](https://en.wikipedia.org/wiki/Data_integrity) refers to the **accuracy**, **consistency**, and **reliability** of data throughout its entire lifecycle. It ensures that data remains trustworthy and hasn't been improperly altered or corrupted by adhering to defined rules and constraints—such as correct formats, valid references, and required fields. In short, **it means your data is correct and dependable.**
+
+[**Data consistency**](https://en.wikipedia.org/wiki/Data_consistency) ensures that changes to the data are accurately and uniformly reflected across the system—that is, **identical copies of the same data remain in sync across different locations.**
+
+In an ecommerce platform, for example, data integrity ensures that each order correctly links to a valid customer and includes the right products and prices. Consistency ensures that when inventory is reduced due to a purchase, both the **order record** and the **inventory count** reflect the same change. Poor design can compromise both, leading to problems like **double-charging customers** or **selling products that are out of stock**—issues that can directly impact revenue and customer trust.
+
+### Database Design Levels
+
+Database design is typically structured into three levels of abstraction: **conceptual**, **logical**, and **physical**. Each level serves a different audience and purpose, from high-level business understanding to technical implementation.
+
+#### Conceptual Design
+
+This is the highest level of abstraction. It focuses on **what data exists** and **how entities relate** from a **business perspective**, without any concern for how the data will be stored or implemented.
+
+- It identifies **entities**, **relationships**, and **attributes** that are important to stakeholders.
+- It's **independent of any database system or technology**.
+- It's often represented with an **Entity-Relationship model (ER model)**.
+
+Think of it as a shared understanding between business and technical teams — a visual map of what the organization cares about.
+
+#### Logical Design
+
+The logical model translates the conceptual design into a structure that can be implemented in a database — but still without considering physical storage or RDBMS-specific syntax.
+
+- It typically defines **tables**, **columns (including data types)**, **primary, and foreign keys**.
+- It remains **platform-independent**, meaning it could apply to any RDBMS.
+- It’s also often represented with an **Entity-Relationship model (ER model)**.
+
+This is where business concepts are formalized as normalized database tables.
+
+#### Physical Design
+
+The physical design takes the logical model and adapts it for a specific RDBMS, focusing on **performance**, **storage**, and **technical constraints**.
+
+- It defines **how data is stored**, **indexed**, **partitioned**, and **accessed**.
+- It’s platform-dependent, meaning it relies on features specific to a particular RDBMS.
+- It includes **SQL files**, **migration scripts**, and **RDBMS-specific configurations**.
+
+Think of it as the blueprint turned into real construction — optimized for how the actual database system will run.
+
+It's worth noting that not every project follows all three design levels, nor do they need to. Some teams may skip the conceptual model and move straight to logical or physical design, depending on project size, team structure, or business needs. Each organization approaches database design differently—there’s no one-size-fits-all method, just a range of tools and models to help you make informed design decisions.
+
+<InfoBox>
+  In this article, we’ll design data models using **Entity-Relationship diagrams
+  (ER diagrams)**, starting with a **conceptual model**, quickly evolving it
+  into a **logical model**, and delivering a **physical design** with
+  **PostgreSQL-compatible SQL code**. This step-by-step approach bridges the gap
+  between theory and practice, clearly demonstrating how design decisions
+  translate into real-world implementation.
+</InfoBox>
+
+### Entity-Relationship Model (ER Model)
+
+The [Entity-Relationship model (ER model)](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model) is a conceptual representation of data that visualizes the relationships between entities within a domain. Introduced by Peter Chen in his 1976 paper, [_The Entity-Relationship Model—Toward a Unified View of Data_](https://www.csc.lsu.edu/~chen/pdf/erd-5-pages.pdf), it offers a clear and structured language to communicate database design between technical and non-technical stakeholders.
+
+Typically, it represents business entities and events that are monitored and directed by business processes. These are depicted graphically, with boxes representing entities and lines illustrating the relationships between them.
+
+### Entity-Relationship Diagram (ER Diagram)
+
+ER models are typically visualized using [Entity-Relationship diagrams (ER diagrams)](https://miro.com/diagramming/what-is-an-er-diagram/), which employ standardized symbols to represent entities (rectangles) and relationships (diamonds or lines). Various notation styles exist, including:
+
+- **Chen notation**: The original notation using diamonds for relationships.
+- **[Crow's Foot notation](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model#Crow's_foot_notation)**: Uses "crow's feet" symbols to indicate the "many" side of relationships.
+- **UML notation**: Uses the Unified Modeling Language [class diagram](https://en.wikipedia.org/wiki/Class_diagram) notation.
+
+ER diagrams serve as a blueprint for database implementation, facilitating communication between business stakeholders and database developers throughout the design process.
+
+### ER Diagrams and SQL Code Synchronization
+
+A critical but often overlooked aspect of database design is maintaining synchronization between ER diagrams and the actual SQL implementation. When these artifacts become disconnected, several problems can emerge:
+
+- Developers may reference outdated diagrams when making changes.
+- The database structure may evolve without proper documentation.
+- New team members struggle to understand the system architecture.
+
+Modern database design tools like [dbdiagram.io](https://dbdiagram.io/), [Vertabelo](https://www.vertabelo.com/), and [DrawSQL](https://drawsql.app/) address this issue by allowing developers to generate ER diagrams directly from SQL code or vice versa. This approach offers several advantages:
+
+- **Single source of truth**: Changes to the database structure are automatically reflected in the visual documentation, eliminating discrepancies between code and diagrams.
+- **Better alignment with Agile methodologies**: Documentation evolves naturally alongside the codebase.
+- **Collaborative design facilitation**: Team members can discuss database changes using the visual representation while being confident it accurately reflects the actual implementation.
+- **Streamlined onboarding and knowledge transfer**: New developers can quickly understand the database architecture through up-to-date visual representations that precisely match the codebase.
+
+In this article, I’m writing PostgreSQL-compatible SQL code first and then using dbdiagram.io to generate ER diagrams directly from it.
+
+For production-grade projects, consider implementing this synchronization as part of your continuous integration pipeline, automatically updating ER diagrams whenever database schema changes are committed to version control.
+
+### Database Design vs. Implementation
+
+**Database design** defines **what data should exist and how it should be organized** to meet business and application requirements. As we’ve seen, it involves planning at three levels — conceptual, logical, and physical — moving from abstract understanding to implementation-ready structures.
+
+**Database implementation**, by contrast, is the act of turning conceptual, logical, and physical models into a **working database** within a specific RDBMS. This includes writing and running SQL code to build database objects, setting up permissions, configuring indexes, optimizing for performance, etc.
+
+### Database Design Approaches
+
+#### Traditional Database Design
+
+Traditional database design follows a sequential approach: requirements gathering, conceptual design, logical design, physical design, and database implementation. This methodology works well for projects with stable, well-understood requirements, producing comprehensive designs before any implementation begins.
+
+Documentation artifacts produced in traditional database design typically include:
+
+- Detailed requirements specifications.
+- ER diagrams.
+- Data dictionaries describing all entities and attributes.
+- Normalization worksheets.
+- Physical schema diagrams.
+- Database security plans.
+- Query optimization strategies.
+
+#### Agile Database Design
+
+Agile database design, by contrast, works iteratively. It might start with a minimal viable conceptual or logical model that meets core requirements, then quickly moves to physical implementation so the database can support the application, which is also being built iteratively. Both the database and application then evolve together through continuous refinement as understanding deepens and requirements change.
+
+For an ecommerce site, an agile approach might begin with basic customer, product, and order entities in a conceptual or logical model, implement them as physical tables in the chosen RDBMS, and then incrementally add features like product reviews or loyalty programs as the business grows.
+
+Documentation artifacts in agile database design are typically lighter and might include:
+
+- Simple ER diagrams for core entities.
+- User stories with database implications.
+- SQL scripts implementing the current schema.
+- Migration scripts for schema evolution.
+- Automated tests verifying database functionality.
+
+#### Hybrid Approaches to Database Design
+
+In practice, many organizations adopt hybrid approaches that combine elements of both traditional and agile methodologies. These hybrid approaches recognize that database design isn't one-size-fits-all:
+
+##### Domain-Driven Design (DDD) for Databases
+
+When applying Domain-Driven Design principles to database design, teams focus on modeling the database structure to reflect the core business domain. This approach:
+
+- Emphasizes understanding the business domain before designing database structures.
+- Creates a ubiquitous language shared between business experts and developers.
+- Identifies bounded contexts that may translate to separate database schemas or services.
+
+##### Evolutionary Database Design
+
+Popularized by [Martin Fowler and Pramod Sadalage](https://martinfowler.com/articles/evodb.html), this approach embraces continuous change through:
+
+- Database version control (treating schema as code).
+- Automated migrations for schema changes.
+- Test-driven database development.
+- Incremental changes rather than big-bang redesigns.
+
+The key to successful hybrid approaches is maintaining alignment between database design and application architecture while allowing both to evolve in response to changing requirements and growing understanding of the domain.
+
+<InfoBox>
+  While I typically follow Agile practices, this article focuses solely on
+  **database design and implementation**, not application development. We’ll
+  cover the full design process using **logical models with ER diagrams**, and
+  implement the **physical design with PostgreSQL-compatible SQL code**.
+</InfoBox>
+
+## Understanding Business Requirements
+
+Now that we’ve explored the fundamentals of database design, let’s apply them in practice. Effective database design starts with a deep understanding of the business domain, which lays the foundation for our data models. For our example, we’ll design a database for _ShopSmart_, a fictional ecommerce platform. The process begins by gathering and analyzing requirements through stakeholder interviews, process reviews, and user stories.
+
+## Identifying Entities & Attributes
+
+### Subject-Identification Technique
+
+After gathering business requirements, we can begin identifying potential entities using the **subject-identification technique**. This method involves scanning requirement statements for key nouns, which often represent core concepts in the domain — and eventually become tables in the database. In this context, the terms _subject_ and _entity_ are used interchangeably.
+
+An **entity** is a distinct concept represented by a table. It can be either an **object** or an **event**:
+
+- An **object** is a tangible or relatively stable thing, such as a **person**, **place**, or **item**. It has identifiable characteristics that can be stored as data and later processed as information. In our ecommerce domain, examples of objects include **customers**, **products**, and **categories**.
+- An **event**, on the other hand, is something that occurs at a specific point in time and often triggers a change or transaction. Events typically involve objects and require tracking for historical or business logic purposes. Examples of events include **orders**, **payments**, and **reviews**.
+
+Consider this simplified business requirement:
+
+> "_ShopSmart_ wants to build an online platform where **customers** can browse **products** organized by **categories**, add items to their **shopping carts**, create **wish lists**, complete **orders**, make **payments**, and leave **reviews**. The platform needs to track **inventory** levels, manage **promotions**, and store **shipping addresses** for delivery."
+
+By identifying the nouns (in bold), we've discovered potential subjects (entities) for our database. Not all nouns will become entities—some may be attributes, some may be combined with other entities, and others might be irrelevant to the data model. But this technique gives us a solid starting point.
+
+Based on our analysis, we've identified the following main subjects for our database:
+
+- Customer _(object)_
+- Product _(object)_
+- Category _(object)_
+- Order _(event)_
+- Shopping Cart _(object)_
+- Wish List _(object)_
+- Payment _(event)_
+- Review _(event)_
+- Inventory _(object)_
+- Promotion _(object)_
+- Shipping Address _(object)_
+
+### Designing our First ER Diagram
+
+Let's now create our first ER diagram with the subjects (entities) we've identified. Please, ignore the **test** fields in the diagram below. I'm generating these diagrams with dbdiagram.io and it doesn't allow us to have tables with no fields. We'll consider inventory as part of the products rather than a separate entity.
+
+<ImageWithCaption caption="Figure 1. ER diagram showing ShopSmart tables.">
+  ![Figure 1. ER diagram showing ShopSmart
+  tables.](/images/blog/mastering-relational-database-design-and-implementation/ERD-tables.png)
+</ImageWithCaption>
+
+This diagram is a **conceptual model** representing our core entities identified through the subject-identification technique. As we progress, we'll refine this structure by adding attributes, keys, and relationships, transforming these entities into complete database tables, and this conceptual model into a **logical one**.
+
+#### SQL Code
+
+Here’s the SQL code used to generate the diagram above:
+
+```sql
+CREATE TABLE customers (
+  test varchar(1)
+);
+
+CREATE TABLE products (
+  test varchar(1)
+);
+
+CREATE TABLE categories (
+  test varchar(1)
+);
+
+CREATE TABLE orders (
+  test varchar(1)
+);
+
+CREATE TABLE shopping_carts (
+  test varchar(1)
+);
+
+CREATE TABLE wish_lists (
+  test varchar(1)
+);
+
+CREATE TABLE payments (
+  test varchar(1)
+);
+
+CREATE TABLE reviews (
+  test varchar(1)
+);
+
+CREATE TABLE promotions (
+  test varchar(1)
+);
+
+CREATE TABLE addresses (
+  test varchar(1)
+);
+```
+
+### Designing Tables
+
+Tables should be designed with careful consideration of their purpose, relationships, and the data they'll store. When creating tables, consider these principles:
+
+- Each table should represent a single concept or entity type.
+- Tables should contain all necessary attributes of the entity, except calculated fields, multipart fields, and multivalued fields (more on them later).
+- Tables should have a clear primary key strategy, typically using surrogate keys for flexibility (more on keys later).
+- Table names can be singular or plural—there’s no clear standard, so choose one and apply it consistently.
+- Use **snake_case** or **camelCase** for naming tables and columns—**snake_case** is more common in SQL and widely used across the industry, but consistency is more important than style.
+
+### Characteristic-Identification Technique
+
+Once entities are identified, we need to determine their **attributes**—the characteristics or properties that describe each entity. Just as we used nouns to identify entities, we can use nouns, adjectives, and descriptive phrases in requirements to identify potential attributes.
+
+Let's imagine we asked the client to describe what information they need to store about products:
+
+> "For each product, we need to track its **unique identifier**, **name**, **description**, **price**, **weight**, **dimensions**, **brand**, **current stock quantity**, **SKU** (Stock Keeping Unit), whether it's **featured** on the homepage, and which **category** it belongs to."
+
+From this description, we can identify several attributes (in bold) for the _`products`_ entity (table).
+
+Similarly, we might ask about customers:
+
+> "We need to store each **customer's** **first name**, **last name**, **email address**, **phone number**, **registration date**, **birth date**, and whether they've **subscribed to marketing emails**."
+
+Through this process, we identify attributes for each entity in our database.
+
+### Adding Attributes to the ER Diagram
+
+Let’s update our ER diagram to include these attributes:
+
+<ImageWithCaption caption="Figure 2. ER diagram showing ShopSmart tables with fields.">
+  ![Figure 2. ER diagram showing ShopSmart tables with
+  fields.](/images/blog/mastering-relational-database-design-and-implementation/ERD-tables-fields.png)
+</ImageWithCaption>
+
+This updated ER diagram includes attributes for each entity, giving us a clearer picture of what data we will store. It's important to note that we don't need to include every single field in conceptual and logical diagrams. The purpose is to capture the most significant attributes that define each entity while keeping the diagram readable and focused on the overall structure.
+
+Even though this model includes data types like _`varchar`_ and _`integer`_, it still reflects a conceptual model at its core — focused on entities rather than implementation details. In fact, conceptual models are often data type–agnostic and can be used for purposes beyond databases, such as general domain modeling. (The data types appear here because the diagram was generated from SQL code.)
+
+#### SQL Code
+
+Here's the SQL code used to generate the diagram above:
+
+```sql
+CREATE TABLE customers (
+  email varchar(255),
+  first_name varchar(100),
+  last_name varchar(100),
+  phone varchar(20),
+  birth_date date,
+  registered_at timestamp,
+  has_marketing_subscription boolean
+);
+
+CREATE TABLE products (
+  name varchar(255),
+  description text,
+  price decimal(10,2),
+  weight decimal(8,2),
+  dimensions varchar(50),
+  brand varchar(100),
+  stock_quantity integer,
+  sku varchar(50),
+  is_featured boolean
+);
+
+CREATE TABLE categories (
+  name varchar(100),
+  description text
+);
+
+CREATE TABLE orders (
+  ordered_at timestamp,
+  status varchar(50)
+);
+
+CREATE TABLE shopping_carts (
+  created_at timestamp
+);
+
+CREATE TABLE wish_lists (
+  name varchar(100)
+);
+
+CREATE TABLE payments (
+  amount decimal(10,2),
+  paid_at timestamp,
+  payment_method varchar(50),
+  status varchar(50)
+);
+
+CREATE TABLE reviews (
+  rating integer,
+  comment text,
+  reviewed_at timestamp
+);
+
+CREATE TABLE promotions (
+  name varchar(100),
+  description text,
+  discount_type varchar(20),
+  discount_value decimal(10,2),
+  started_at date,
+  ended_at date
+);
+
+CREATE TABLE addresses (
+  street varchar(255),
+  city varchar(100),
+  state varchar(100),
+  postal_code varchar(20),
+  country varchar(100)
+);
+```
+
+### Designing Fields
+
+Fields (columns) define the structure of tables and determine what data can be stored. When designing fields:
+
+- Choose appropriate data types that balance storage efficiency with application needs.
+- Apply constraints that enforce business rules (e.g., a price field might have a _`CHECK`_ constraint ensuring it's positive). We’ll explore business rules and constraints later.
+- Consider nullability carefully—whether a field can contain _`NULL`_ values affects both data integrity and query performance.
+
+## Data Types
+
+Data types are fundamental components of database design that determine what kind of data can be stored in each field and how the database will process and store that data. While conceptual design focuses on identifying entities, attributes, and relationships, selecting appropriate data types is a critical aspect of logical and physical database designs.
+
+Data types are generally vendor-specific, meaning they can vary between different database management systems (DBMS). For our examples, we'll use PostgreSQL data types, which share similarities with other popular RDBMS like MySQL, MS SQL Server, and Oracle.
+
+### Common PostgreSQL Data Types
+
+Here's a summary of the most frequently used data types in PostgreSQL:
+
+#### Numeric Types
+
+- [**Integer Types**](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-INT): Store whole numbers—numbers without any decimal or fractional parts—and are available in various size ranges:
+  - _`integer`_: A 4-byte integer (whole number without decimal places) ranging from -2147483648 to +2147483647. Ideal for most counters, IDs, and whole numbers in our ecommerce system, such as product quantities or customer IDs.
+  - _`smallint`_: A 2-byte integer ranging from -32768 to +32767. Useful for small value ranges like ratings (1-5) in our product reviews.
+  - _`bigint`_: An 8-byte integer for very large numbers, ranging from -9223372036854775808 to +9223372036854775807. Useful for values that might exceed _`integer`_ limits, like view counts for popular products or system-wide order counts.
+- [**Serial Types**](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-SERIAL): The data types _`serial`_, _`smallserial`_ and _`bigserial`_ are not true types, but merely a notational convenience based on _`integer`_, _`smallint`_, and _`bigint`_ for creating auto-incrementing unique identifier columns (similar to the _`AUTO_INCREMENT`_ property supported by some other databases). While still commonly used, these serial types are not part of the official SQL standard and are gradually being replaced by a more modern, flexible, and standards-compliant alternative: _`GENERATED AS IDENTITY`_. This approach pairs _`integer`_, _`smallint`_, or _`bigint`_ with identity generation to offer more control and cleaner behavior—for example, instead of writing _`customer_id serial PRIMARY KEY`_, we can write _`customer_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY`_. This not only improves standards compliance but also provides better control over sequence behavior and automatic cleanup when dropping columns. It's the recommended method for defining primary keys in new database designs (supported on PostgreSQL 10 and later).
+- [**Floating-Point Types**](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-FLOAT): The data types _`real`_, _`double precision`_, and _`float`_ are inexact numeric types for when exact precision isn't required. Inexact means that some values cannot be converted exactly to the internal format and are stored as approximations, so that storing and retrieving a value might show slight discrepancies. Not recommended for monetary values but could be used for statistical calculations.
+- [**Arbitrary Precision Numbers**](https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-NUMERIC-DECIMAL): The type _`numeric(p, s)`_ is an exact numeric type with user-defined precision _`(p)`_ (the number of digits to both sides of the decimal point) and scale _`(s)`_ (the count of decimal digits in the fractional part, to the right of the decimal point), ideal for storing values where accuracy is critical—such as prices, weights, or taxes. It can store numbers with a very large number of digits. _`decimal(p, s)`_ is an alias for _`numeric(p, s)`_ and equally valid. For consistency and familiarity, I'll use _`decimal`_ throughout this article.
+
+For fields like _`products.price`_ and other monetary values, it's important to emphasize that _`numeric(10,2)`_ (10 digits, 2 of which are decimal places) is strongly preferred over floating-point types to ensure accurate and reliable financial calculations without rounding errors:
+
+```sql
+SELECT 0.1 + 0.2 = 0.3 AS using_float;
+-- Returns: false (because 0.1 + 0.2 = 0.30000000000000004 in floating point)
+
+SELECT 0.1::numeric + 0.2::numeric = 0.3::numeric AS using_numeric;
+-- Returns: true (decimal arithmetic is exact)
+```
+
+This precision difference is critical for financial calculations. Even small rounding errors can accumulate in high-volume transactional systems, potentially leading to significant discrepancies in financial reports and customer billing.
+
+#### Character Types
+
+- [_`char(n)`_](https://www.postgresql.org/docs/current/datatype-character.html): The type name _`char(n)`_ is an alias for the SQL-standard type _`character(n)`_. _`char`_ is a fixed-length character string. Rarely used in modern designs unless fixed-width is required for compatibility reasons.
+- [_`varchar(n)`_](https://www.postgresql.org/docs/current/datatype-character.html): The type name _`varchar(n)`_ is an alias for the SQL-standard type _`character varying(n)`_. _`varchar`_ is a variable-length character string with a limit. Ideal for most text fields with known maximum lengths like product SKUs, customer names, and email addresses.
+- [_`text`_](https://www.postgresql.org/docs/current/datatype-character.html): Although the _`text`_ type is not in the SQL standard, several other SQL databases have it as well. _`text`_ is a variable-length character string without specific limit. Suitable for product descriptions, review comments, and other large text content.
+
+#### Date and Time Types
+
+- _`date`_: Calendar date (year, month, day). Good for birth dates, registration dates, and promotion start/end dates.
+- _`time`_: Time of day. Could be used for store opening hours or scheduled events.
+- _`timestamp`_: Date and time. Ideal for order placement times, review submission times, and other event timestamps.
+- _`interval`_: Period of time. Useful for calculating shipping times or return windows.
+
+#### Boolean Type
+
+- _`boolean`_: _`true`_ or _`false`_ values. Perfect for flags like _`is_featured`_ for products or _`has_marketing_subscription`_ for customers.
+
+#### Other Common Types
+
+- [_`UUID`_](https://www.postgresql.org/docs/current/datatype-uuid.html): A universally unique identifier, commonly used as an alternative to _`serial`_ or _`GENERATED AS IDENTITY`_ for primary keys—especially in distributed systems. For example, in PostgreSQL, we can define the primary key of the _`customers`_ table like this: _`customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY`_.
+- [_`json`_](https://www.postgresql.org/docs/current/datatype-json.html) and [_`jsonb`_](https://www.postgresql.org/docs/current/datatype-json.html): JSON data with text and binary storage formats, respectively. Useful for storing flexible, schema-less data like product attributes that vary by category.
+- [_`bytea`_](https://www.postgresql.org/docs/current/datatype-binary.html): Stores binary data (_byte array_). Useful for storing products’ images directly in the database or to save digital receipts or invoices associated with customer orders.
+
+For our ecommerce database, we primarily use _`uuid DEFAULT gen_random_uuid() PRIMARY KEY`_ for IDs, _`varchar`_ for text with known limits, _`text`_ for unlimited text, _`decimal(10,2)`_ for monetary values, _`timestamp`_ for events, and _`boolean`_ for flags.
+
+### Data Types in Our Ecommerce Database
+
+Let's map some of these data types to fields in our ShopSmart ecommerce database:
+
+#### _`customers`_
+
+- _`customer_id`_: _`uuid`_ (primary key).
+- _`email`_: _`varchar(255)`_ (unique identifier for login).
+- _`password_hash`_: _`text`_ (storing password hash, not the actual password).
+- _`first_name`_, _`last_name`_: _`varchar(100)`_.
+- _`phone`_: _`varchar(20)`_.
+- _`birth_date`_: _`date`_.
+- _`created_at`_: _`timestamp`_.
+- _`inactivated_at`_: _`timestamp`_.
+
+#### _`products`_
+
+- _`product_id`_: _`uuid`_ (primary key).
+- _`name`_: _`varchar(255)`_.
+- _`description`_: _`text`_ (for longer product descriptions).
+- _`price`_: _`decimal(10,2)`_ (allowing for precise decimal representation of currency).
+- _`weight`_: _`decimal(8,3)`_ (for shipping calculations).
+- _`stock_quantity`_: _`integer`_ (quantity available).
+- _`is_featured`_: _`boolean`_.
+
+#### _`orders`_
+
+- _`order_id`_: _`uuid`_ (primary key).
+- _`customer_id`_: _`uuid`_ (foreign key).
+- _`ordered_at`_: _`timestamp`_.
+- _`status`_: _`varchar(20)`_ or _`ENUM`_ (possible values: _`pending`_, _`processing`_, _`shipped`_, _`delivered`_), or even better, a validation table. We’ll explore validation tables later.
+
+#### _`addresses`_
+
+- _`address_id`_: _`uuid`_ (primary key).
+- _`customer_id`_: _`uuid`_ (foreign key).
+- _`street_address`_: _`varchar(255)`_.
+- _`city`_: _`varchar(100)`_.
+- _`state`_: _`varchar(100)`_.
+- _`postal_code`_: _`varchar(20)`_ (using _`varchar`_ for postal codes, as they may contain letters in some countries).
+- _`country`_: _`varchar(100)`_.
+- _`is_default`_: _`boolean`_.
+
+### Choosing Appropriate Data Types
+
+When selecting data types, consider these factors:
+
+- **Storage requirements**: Choose the smallest data type that can handle your expected data range.
+- **Performance implications**: Smaller data types generally lead to better performance.
+- **Precision requirements**: For numerical data, determine if you need exact precision (_`decimal`_) or if approximate values (_`real`_) are acceptable.
+- **Range requirements**: Ensure the type can handle the expected minimum and maximum values.
+- **Functionality needs**: Some data types offer special operators or functions that may be useful.
+
+For example, when deciding on a data type for product prices, we chose _`decimal(10,2)`_ rather than _`float`_ because:
+
+- We need exact decimal precision for currency values to avoid rounding errors.
+- We anticipate needing up to 10 total digits with 2 decimal places.
+- Financial calculations require precision that floating-point types don't guarantee.
+
+By carefully selecting appropriate data types for each field, we ensure data integrity, optimize storage space, and improve database performance.
+
+## Hybrid Relational-Document Storage
+
+Modern relational databases like PostgreSQL offer JSON data types that combine the schema flexibility of NoSQL with the ACID guarantees of relational databases. This can be valuable for storing semi-structured data like product attributes:
+
+```sql
+ALTER TABLE products ADD COLUMN attributes jsonb;
+
+-- Store varied attributes based on product type
+UPDATE products
+SET attributes = '{"color": "red", "size": "XL", "material": "cotton"}'
+WHERE product_id = 123;
+
+-- Query by JSON attributes
+SELECT * FROM products WHERE attributes @> '{"color": "red"}';
+
+-- Create index for JSON queries
+CREATE INDEX idx_products_attributes ON products USING GIN (attributes);
+```
+
+This hybrid approach provides flexibility while maintaining the benefits of a relational structure for core business data.
+
+## Keys and Integrity
+
+Keys are fundamental to the structure and reliability of relational databases. They not only uniquely identify records but also enforce data integrity—both at the table level and the relationship level—by supporting and constraining the relationships between tables.
+
+### Types of Keys
+
+Relational databases use different types of keys—we’ll explore each in the sections ahead.
+
+#### Candidate Keys
+
+A **candidate key** is a column or combination of columns that could potentially serve as a primary key because it uniquely identifies each record in a table and contains no null values, such as email addresses, Social Security numbers, or product SKUs. A table can have multiple candidate keys, but only one will be designated as the primary key.
+
+#### Natural Keys
+
+**Natural keys** are candidate keys composed of data that has meaning in the real world, such as email addresses, Social Security numbers, or product SKUs. While natural keys have the advantage of being meaningful to people, they come with several issues:
+
+- They may change over time (e.g., a customer's email address can change).
+- They often contain more data than necessary for identification, making joins and indexes less efficient.
+- They may expose sensitive information.
+- They may be subject to business rule changes that could invalidate their uniqueness.
+
+#### Composite Keys
+
+**Composite keys** are candidate keys that consist of **two or more columns combined** to uniquely identify records. While composite keys can represent complex natural relationships, they also present challenges:
+
+- More complex query conditions when joining tables.
+- More storage space required in related tables that reference them.
+- More difficult to enforce relationships through foreign keys.
+- More cumbersome to work with in application code.
+
+#### Surrogate Keys
+
+A **surrogate key** is an artificially created field for the sole purpose of serving as a primary key. It has no business meaning and typically uses an **auto-incrementing number** or **UUID**. As we’ll see shortly, surrogate keys are often preferred over natural keys.
+
+When choosing between **auto-incrementing integers** and **UUIDs** for surrogate keys, consider these trade-offs:
+
+**Auto-incrementing integers:**
+
+- **Advantages:** More compact storage, better performance in indexes, and human-readability.
+- **Disadvantages:** Can reveal business information (like growth rates), require centralized generation (challenging in distributed systems).
+
+**UUIDs:**
+
+- **Advantages:** Globally unique without centralized coordination, hiding business information, ideal for distributed systems.
+- **Disadvantages:** Larger storage footprint (16 bytes vs 4 bytes for integers), potentially slower index performance, no human-readability.
+
+The choice depends on your specific requirements. Ecommerce systems that may need to merge databases or operate across multiple data centers often benefit from _`uuid`_ despite the performance trade-offs. For our ecommerce database, we'll use _`uuid`_ as the primary key type for all tables.
+
+#### Alternate Keys
+
+**Alternate keys** are candidate keys that were not selected as the primary key. They still uniquely identify records and are often enforced using unique constraints.
+
+#### Foreign Keys (FK)
+
+**Foreign keys** are used to establish relationships between tables. We’ll explore them in more detail later when we discuss how relationships are implemented in relational databases.
+
+#### Primary Keys (PK)
+
+A **primary key** is a column (or set of columns) in a table that uniquely identifies each row in that table. It cannot contain null values and must be unique across all rows. The primary key serves as the main identifier for a record and is essential for establishing relationships between tables.
+
+When a column is designated as a primary key, the database enforces two constraints:
+
+1. **Uniqueness constraint:** No two rows can have the same primary key value.
+2. **Not null constraint:** The primary key value cannot be null.
+
+Primary keys are central to both **table-level integrity** (ensuring each record's uniqueness) and **relationship-level integrity** (providing a reliable way to reference records across tables). In SQL, primary keys are defined using the _`PRIMARY KEY`_ constraint.
+
+For most modern designs, **surrogate keys** are preferred over natural keys because they:
+
+- Are immutable (don't change when business data changes).
+- Are typically smaller and more efficient for indexing and joins.
+- Avoid complications with composite keys.
+- Are independent of changing business rules.
+
+For our ShopSmart database, we'll use surrogate keys as primary keys for all tables. This approach provides stable, efficient identifiers that won't change even if business data changes.
+
+### Adding Primary Keys to the ER Diagram
+
+Let's update our ER diagram to include primary keys:
+
+<ImageWithCaption caption="Figure 3. ER diagram showing ShopSmart tables with fields and primary keys.">
+  ![Figure 3. ER diagram showing ShopSmart tables with fields and primary
+  keys.](/images/blog/mastering-relational-database-design-and-implementation/ERD-tables-fields-pk.png)
+</ImageWithCaption>
+
+Now each table has a clearly defined primary key that uniquely identifies each record within that table.
+
+Now that we’ve added **primary keys** to the ER diagram, it shifts into the **logical design** level. This introduces database-specific structure — we start thinking of **entities as tables** and **attributes as fields**. While **data types** are technically closer to physical design, they also make sense at the logical level, especially when specifying general types like strings or integers without tying them to a specific database system. We’re using specific data types because we’re generating diagrams from SQL.
+
+#### SQL Code
+
+Here's the SQL code used to generate the diagram above:
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  email varchar(255),
+  first_name varchar(100),
+  last_name varchar(100),
+  phone varchar(20),
+  birth_date date,
+  registered_at timestamp,
+  password_hash text,
+  has_marketing_subscription boolean
+);
+
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(255),
+  description text,
+  price decimal(10,2),
+  weight decimal(8,2),
+  dimensions varchar(50),
+  brand varchar(100),
+  stock_quantity integer,
+  sku varchar(50),
+  creation_date date,
+  is_featured boolean,
+  category_id integer
+);
+
+CREATE TABLE categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100),
+  description text,
+  parent_id integer
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  ordered_at timestamp,
+  status varchar(50),
+  customer_id integer,
+  shipping_address_id integer
+);
+
+CREATE TABLE shopping_carts (
+  cart_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  created_at timestamp,
+  updated_at timestamp,
+  customer_id integer
+);
+
+CREATE TABLE wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100),
+  created_at timestamp,
+  customer_id integer
+);
+
+CREATE TABLE payments (
+  payment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  amount decimal(10,2),
+  paid_at timestamp,
+  payment_method varchar(50),
+  status varchar(50),
+  order_id integer
+);
+
+CREATE TABLE reviews (
+  review_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  rating integer,
+  comment text,
+  reviewed_at timestamp,
+  product_id integer,
+  customer_id integer
+);
+
+CREATE TABLE promotions (
+  promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100),
+  description text,
+  discount_type varchar(20),
+  discount_value decimal(10,2),
+  started_at date,
+  ended_at date
+);
+
+CREATE TABLE addresses (
+  address_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  street varchar(255),
+  city varchar(100),
+  state varchar(100),
+  postal_code varchar(20),
+  country varchar(100),
+  address_type varchar(20),
+  customer_id integer
+);
+```
+
+### Table-Level Integrity
+
+**Table-level integrity** is a major component of overall data integrity, ensuring that a table has no duplicate records and that the values of the table’s primary key are unique, not null, and exclusively identify the table records.
+
+In our _`products`_ table, for example, we enforce table-level integrity by ensuring each product has a unique identifier, handled by the _`product_id`_ primary key.
+
+### Field-Level Integrity
+
+**Field-level integrity** focuses on ensuring that the data in each individual field is valid, consistent, and meaningful. This includes setting data type constraints, check constraints, default values, and valid ranges or formats for field values.
+
+Field-level constraints are usually not displayed in ER diagrams but are implemented in SQL and part of the physical database design. We’ll explore field-level constraints later.
+
+### Dealing with Problematic Field Types
+
+Certain field types can cause problems in relational databases if not handled properly:
+
+#### Multivalued fields
+
+**Multivalued fields** contain multiple values in a single field (e.g., storing multiple phone numbers in one field). This design breaks normalization rules, complicates querying, indexing, and updating individual values. They should be avoided by creating separate fields or tables to store the multiple values.
+
+#### Multipart fields
+
+**Multipart fields** contain several distinct data elements (e.g., storing full name instead of separate first and last name fields). Multipart fields make it harder to sort, filter, or search by individual elements and reduce flexibility in data manipulation. They should be split into their component parts (e.g. separate _`first_name`_ and _`last_name`_ fields).
+
+#### Calculated fields
+
+**Calculated fields (derived data)** store values that can be derived from other fields in the database (e.g., storing the total price of an order instead of calculating it from the associated order items, or storing a customer's age instead of deriving it from their birth date). Storing calculated values can lead to data inconsistency and redundancy if the source data changes but the calculated value is not updated accordingly. To maintain data integrity, these values should typically be calculated on demand using queries or views, rather than stored directly in the table.
+
+For our ShopSmart database, we'll avoid these problematic field types. For example:
+
+- Instead of storing a comma-separated list of product ids in a single field for the related products feature, we'll create a separate _`related_products`_ table.
+- We'll store customer names as separate _`first_name`_ and _`last_name`_ fields rather than a single combined field.
+- We won't store the total amount of an order as a separate field, since it can be calculated by summing the prices of its related _`order_items`_ records.
+
+## Business Rules and Database Constraints
+
+Business rules are policies, guidelines, or conditions that define how an organization operates. In the context of database design, these rules are enforced as **constraints** that preserve data integrity, consistency, and quality—no matter how the data is accessed or manipulated.
+
+Database constraints serve as **guardrails** that enforce business rules directly at the data layer. This minimizes the risk of invalid data entering the system and ensures consistent enforcement across all applications and users.
+
+While primary keys and foreign keys are fundamental constraints, several other types of constraints can enhance your database design:
+
+### Types of Constraints
+
+**1. Not Null Constraint**
+
+Ensures that a column cannot contain null values, forcing users to provide a value when inserting or updating records:
+
+```sql
+CREATE TABLE products (
+  name varchar(100) NOT NULL,
+  description text NOT NULL,
+  price decimal(10,2) NOT NULL,
+  -- other fields
+);
+```
+
+This prevents products from being created without essential information like a description.
+
+**2. Unique Constraints**
+
+Ensure the uniqueness of column values across rows, commonly used for identifiers like SKUs or emails:
+
+```sql
+CREATE TABLE products (
+  sku varchar(50) UNIQUE,
+  -- other fields
+);
+```
+
+This prevents duplicate SKUs within the products table.
+
+**3. Check Constraints**
+
+[Check constraints](https://en.wikipedia.org/wiki/Check_constraint) are used for simple validations that restrict column values based on a boolean condition. For example:
+
+```sql
+CREATE TABLE products (
+  price numeric(10,2) CHECK (price >= 0),
+  weight numeric(8,3) CHECK (weight > 0),
+  stock_quantity integer CHECK (stock_quantity >= 0)
+);
+```
+
+These constraints prevent invalid entries like negative prices or weights.
+
+**4. Multi-Column Constraints**
+
+Enable more advanced validations that span multiple fields:
+
+```sql
+CREATE TABLE order_items (
+  quantity integer CHECK (quantity > 0),
+  -- Ensure the total quantity makes sense for the product's availability
+  CONSTRAINT check_sufficient_stock
+    CHECK (quantity <= (SELECT stock_quantity FROM products WHERE product_id = order_items.product_id))
+);
+```
+
+The check constraint above attempts to ensure ordered quantities don't exceed available stock, though in production systems this would typically be handled at the application level with transaction controls due to concurrency considerations.
+
+**5. Triggers and Stored Procedures**
+
+For complex business logic that can't be captured by simple constraints—such as enforcing rules involving multiple tables or conditional workflows—triggers, stored procedures, or application-level logic are more appropriate.
+
+### Best Practices
+
+- **Enforce simple rules at the database level** using constraints like _`NOT NULL`_, _`UNIQUE`_, and _`CHECK`_.
+- **Use triggers, stored procedures, or application-level logic** for more complex logic requiring conditional checks or cross-table validation.
+- **Name your constraints explicitly** to make debugging easier:
+
+```sql
+ALTER TABLE products
+  ADD CONSTRAINT products_price_check CHECK (price >= 0);
+```
+
+When a named constraint is violated, the error message includes the constraint name, making it easier to identify violated business rules.
+
+By implementing business rules as database constraints wherever possible, you ensure **consistent enforcement**, reduce application complexity, and protect the integrity of your data from all entry points.
+
+### Examples of Business Rules
+
+In a database like ShopSmart, business rules might include:
+
+- A product cannot be sold if inventory is zero.
+- Customers must be at least 13 years old to create an account.
+- Shipping addresses must include postal code and country.
+- Product relationships must be categorized as 'accessory', 'alternative', or 'frequently bought together'.
+
+Some of these rules can be implemented with check constraints, while others are better handled using validation tables, or enforced via application logic in combination with database transactions. We’ll explore validation tables later.
+
+## Relationships
+
+Relationships represent **associations between entities** and are fundamental to relational databases. They enable us to connect related data across tables, eliminating redundancy while maintaining access to all necessary information.
+
+### Foreign Keys
+
+To implement relationships in relational databases, we use **foreign keys**. A foreign key is a column (or set of columns) in one table that refers to the primary key of another table. Foreign keys allow us to connect and query related data across tables.
+
+For example, in our ecommerce database, we store customer data in the _`customers`_ table and order data in the _`orders`_ table. To represent which customer placed a given order, we include a _`customer_id`_ field in the _`orders`_ table that references the _`customer_id`_ primary key in the _`customers`_ table. This relationship is defined using the _`REFERENCES`_ clause in SQL, which enforces referential integrity by linking the child and parent tables. We’ll look at an example in just a moment.
+
+### Entity-Entity Matrix Technique
+
+The Entity-Entity Matrix is a systematic approach to identifying relationships between entities. It creates a grid with entities on both axes and examines each potential relationship pair.
+
+For our ShopSmart database, we would create a matrix with our identified entities on both axes. Let's start with a simple example focusing on just a few of our core entities:
+
+```
+               | Customers | Products | Categories | Orders | ShoppingCarts
+---------------|-----------|----------|------------|--------|--------------
+Customers      |     -     |     ?    |     ?      |    ?   |       ?
+Products       |     ?     |     -    |     ?      |    ?   |       ?
+Categories     |     ?     |     ?    |     -      |    ?   |       ?
+Orders         |     ?     |     ?    |     ?      |    -   |       ?
+ShoppingCarts  |     ?     |     ?    |     ?      |    ?   |       -
+```
+
+For each cell marked with "?", we ask: _Does this entity relate to that entity?_ For example, at the intersection of _`customers`_ and _`shopping_carts`_, we'd ask: _Does a customer relate to a shopping cart?_ The answer is yes—each customer can have a shopping cart.
+
+Let's fill in this specific relationship:
+
+```
+               | Customers | Products | ...
+---------------|-----------|----------|-----------
+Customers      |     -     |    ?     | ...
+ShoppingCarts  |  "has a"  |    ?     | ...
+...            |    ...    |   ...    | ...
+```
+
+We've identified that a customer _has a_ shopping cart. This methodical approach ensures no important relationships are overlooked. By systematically working through each cell in the matrix, we can identify all necessary relationships in our database.
+
+The matrix also helps us determine the cardinality of relationships—whether they're one-to-one, one-to-many, or many-to-many—which we discuss next.
+
+### Types of Relationships
+
+#### One-to-One (1:1) Relationships
+
+In a **one-to-one relationship**, one record in the first table is related to one record in the second table, and vice versa. In this type of relationship, one table serves as the _parent_ table and the other serves as the _child_ table. The foreign key is placed in the child table, referencing the primary key in the parent table.
+
+In our ShopSmart database, we have a one-to-one relationship between _`customers`_ and _`shopping_carts`_, as we’ve just seen when applying the entity-entity matrix technique. Each customer has exactly one shopping cart, and each shopping cart belongs to exactly one customer. In this relationship, the _`customers`_ table is the parent table and the _`shopping_carts`_ table is the child table. We implement this by including a _`customer_id`_ foreign key in the _`shopping_carts`_ table and ensuring that each customer has at most one cart through a unique constraint.
+
+##### Adding One-to-One Relationships to the ER Diagram
+
+Here's how the above relationship is represented in the ER diagram:
+
+<ImageWithCaption caption="Figure 4. ER diagram showing a one-to-one relationship between customers and shopping carts.">
+  ![Figure 4. ER diagram showing a one-to-one relationship between customers and
+  shopping
+  carts.](/images/blog/mastering-relational-database-design-and-implementation/ERD-one-to-one-example.png)
+</ImageWithCaption>
+
+In the diagram, the relationship is represented by the lines connecting the tables, which show how the entities are associated with each other. The cardinality is represented by the single dash _`|`_ on both ends of the relationship line, indicating _exactly one_ in the [crow's foot notation](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model#Crow's_foot_notation) system. This notation is one of many standard ways to visually represent the numerical constraints between related entities in ER diagrams.
+
+Note that I’ve omitted fields unrelated to the relationship in this diagram.
+
+##### SQL Code
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE shopping_carts (
+  cart_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid UNIQUE NOT NULL REFERENCES customers(customer_id)
+)
+```
+
+The _`UNIQUE`_ constraint on _`customer_id`_ ensures the one-to-one nature of the relationship by preventing multiple shopping carts from having the same _`customer_id`_. The _`NOT NULL`_ constraint indicates that the shopping cart must belong to a customer, making the customer side of the relationship mandatory. In other words, a shopping cart cannot exist without being associated with a customer, but a customer might exist without having a shopping cart.
+
+#### One-to-Many (1:N) Relationships
+
+**One-to-many relationships** are the most common type of relationships in relational databases. In this relationship, one record in the first table can be related to many records in the second table, but each record in the second table is related to only one record in the first table.
+
+Our database contains several one-to-many relationships:
+
+- A customer can place many orders (a customer has many orders).
+- A category can contain many products (a category has many products).
+- A product can have many reviews (a product has many reviews).
+
+These relationships are implemented by placing a foreign key in the _many_ side of the relationship (the child table) that references the primary key of the _one_ side (the parent table).
+
+##### Adding One-to-Many Relationships to the ER Diagram
+
+Here's how the above relationships are represented in the ER diagram:
+
+<ImageWithCaption caption="Figure 5. An ER diagram showing a few one-to-many relationships.">
+  ![Figure 5. An ER diagram showing a few one-to-many
+  relationships.](/images/blog/mastering-relational-database-design-and-implementation/ERD-one-to-many-example.png)
+</ImageWithCaption>
+
+In the diagram, the relationships are represented by the lines connecting the tables, with the cardinality indicated using crow's foot notation: a single dash _`|`_ on the _one_ side of the relationship and a crow's foot _`ɛ`_ on the _many_ side. The single dash symbolizes _exactly one,_ while the crow's foot symbolizes _many_ in this notation system, visually resembling multiple branches spreading from a single point.
+
+Note that I’ve omitted fields unrelated to the relationship in this diagram.
+
+##### SQL Code
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id)
+);
+
+CREATE TABLE categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  category_id uuid NOT NULL REFERENCES categories(category_id)
+);
+
+CREATE TABLE reviews (
+  review_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  customer_id uuid NOT NULL REFERENCES customers(customer_id)
+);
+```
+
+Note that the only implementation difference between these one-to-many relationships and the previous one-to-one example is **the absence of a** _`UNIQUE`_ **constraint** on the foreign key. By not enforcing uniqueness, we allow multiple records in the child table to reference the same record in the parent table.
+
+#### Many-to-Many (M:N) Relationships
+
+In a **many-to-many relationship**, one record in the first table can be related to many records in the second table, and vice versa. In relational databases, these relationships are implemented using an [associative entity](https://en.wikipedia.org/wiki/Associative_entity) (also called _associative table_ or _join table_) that contains foreign keys to both related tables.
+
+A many-to-many relationship is effectively implemented as **two one-to-many relationships**: one between **the first entity and the associative entity**, and another between **the second entity and the associative entity**. The associative entity is a **new table** created specifically to support this relationship.
+
+For ShopSmart, we have several many-to-many relationships:
+
+- _`products`_ and _`orders`_: A single order can contain multiple products (an order has many products), and a single product can appear in multiple orders (a product belongs to many orders).
+- _`products`_ and _`wish_lists`_: A customer can have multiple products in a wish list (a wish list has many products), and a product can appear in multiple customers' wish lists (a product belongs to many with lists).
+
+To implement the many-to-many relationship between _`products`_ and _`orders`_, we create an associative table called _`order_items`_. This table has foreign keys to both the _`products`_ table and the _`orders`_ table, allowing each order to contain multiple products and each product to appear in multiple orders.
+
+To implement the many-to-many relationship between _`wish_lists`_ and _`products`_, we create an associative table called _`wish_list_items`_. This table has foreign keys to both the _`wish_lists`_ table and the _`products`_ table, allowing each wish list to contain multiple products and each product to appear in multiple wish lists.
+
+##### Adding Many-to-Many Relationships to the ER Diagram
+
+Here's how the above relationships are represented in the ER diagram:
+
+<ImageWithCaption caption="Figure 6. ER diagram showing a few many-to-many relationships.">
+  ![Figure 6. ER diagram showing a few many-to-many
+  relationships.](/images/blog/mastering-relational-database-design-and-implementation/ERD-many-to-many-example.png)
+</ImageWithCaption>
+
+These associative tables enable us to model many-to-many relationships while maintaining the integrity of the data model.
+
+Note that I’ve omitted fields unrelated to the relationship in this diagram.
+
+##### SQL Code
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  product_id uuid NOT NULL REFERENCES products(product_id)
+);
+
+CREATE TABLE wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id)
+);
+
+CREATE TABLE wish_list_items (
+  wish_list_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  wish_list_id uuid NOT NULL REFERENCES wish_lists(wish_list_id),
+  product_id uuid NOT NULL REFERENCES products(product_id)
+);
+```
+
+##### Enhancing Associative Tables with Additional Fields
+
+Associative tables often need additional fields beyond just foreign keys. These fields can store information specific to the relationship between the entities.
+
+For example, in our _`order_items`_ associative table, we need to track the quantity of each product ordered and the price at the time of purchase. Similarly, in our _`wish_list_items`_ table, we might want to track when each item was added to the wish list.
+
+##### Adding the Additional Fields to the ER Diagram
+
+Let’s enhance our associative tables by adding these fields:
+
+<ImageWithCaption caption="Figure 7. An ER diagram showing associative tables with additional fields.">
+  ![Figure 7. An ER diagram showing associative tables with additional
+  fields.](/images/blog/mastering-relational-database-design-and-implementation/ERD-associative-tables-with-fields.png)
+</ImageWithCaption>
+
+By adding these fields to our associative tables, we enrich the data model and enable tracking of key details about the relationships. For instance, the _`unit_price`_ field in _`order_items`_ lets us preserve the product’s price at the time of purchase, even if it changes later."
+
+##### SQL Code
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders(order_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  quantity integer,
+  unit_price decimal(10,2)
+);
+
+CREATE TABLE wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers(customer_id)
+);
+
+CREATE TABLE wish_list_items (
+  wish_list_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  wish_list_id uuid NOT NULL REFERENCES wish_lists(wish_list_id),
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  added_at timestamp
+);
+```
+
+#### Self-Referencing Relationships
+
+A self-referencing (or recursive) relationship happens when records in a table are related to other records in the same table. These relationships are useful for representing hierarchical structures, such as organizational charts or category trees, as well as network relationships, like friend connections or products associated with other products.
+
+The implementation of self-referencing relationships follows the same patterns as relationships between different tables, but with both foreign and primary keys in the same table. What makes these relationships unique is how they're traversed—often requiring recursive queries to process entire hierarchies.
+
+##### Self-Referencing One-to-Many Relationships
+
+Let's create a self-referencing relationship in our _`categories`_ table to represent the category hierarchy: each category (except top-level categories) has one parent category, and each category can have multiple subcategories. This creates a tree-like structure of categories and subcategories:
+
+```
+Electronics
+├── Computers
+│   ├── Laptops
+│   └── Desktops
+├── Phones
+│   ├── Smartphones
+│   └── Accessories
+└── Cameras
+```
+
+Each subcategory has one **parent category**, and each parent can have **many subcategories**—exactly what a self-referencing one-to-many relationship models.
+
+##### Adding a Self-Referencing One-to-Many Relationship to the ER Diagram
+
+Here's how the above relationships are represented in the ER diagram:
+
+<ImageWithCaption caption="Figure 8. ER diagram showing a self-referencing one-to-many relationship between categories.">
+  ![Figure 8. ER diagram showing a self-referencing one-to-many relationship
+  between
+  categories.](/images/blog/mastering-relational-database-design-and-implementation/ERD-self-referencing-one-to-many-example.png)
+</ImageWithCaption>
+
+Note that I’ve omitted fields unrelated to the relationship in this diagram.
+
+##### SQL Code
+
+```sql
+CREATE TABLE categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  parent_id uuid REFERENCES categories(category_id)
+);
+```
+
+The _`parent_id`_ column is a foreign key that references the primary key _`category_id`_ of the same table. This allows us to create hierarchical relationships between categories. For top-level categories, _`parent_id`_ would be null. (Note that we're _not_ using _`NOT NULL`_ on the foreign key.)
+
+##### Self-Referencing Many-to-Many Relationships
+
+For product relationships, we might want to represent related products in a many-to-many fashion. A product can be related to multiple other products (such as accessories, complementary items, or alternatives), and each of those products can be related to multiple products as well.
+
+##### Adding a Self-Referencing Many-to-Many Relationship to the ER Diagram
+
+To implement this self-referencing many-to-many relationship, we need to create an associative table just like we do with relationships between two tables:
+
+<ImageWithCaption caption="Figure 9. ER diagram showing a self-referencing many-to-many relationship for related products.">
+  ![Figure 9. ER diagram showing a self-referencing many-to-many relationship
+  for related
+  products.](/images/blog/mastering-relational-database-design-and-implementation/ERD-self-referencing-many-to-many-products.png)
+</ImageWithCaption>
+
+The _`related_products`_ associative table contains foreign keys to the _`products`_ table twice: once for the main product and once for the related product. We've also added a _`relationship_type`_ field to describe how the products are related (e.g., "accessory," "alternative," "frequently bought together").
+
+##### SQL Code
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY
+);
+
+CREATE TABLE related_products (
+  related_product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products(product_id),
+  related_to_product_id uuid NOT NULL REFERENCES products(product_id),
+  relationship_type varchar(50) NOT NULL
+);
+```
+
+##### Common Table Expressions (CTEs)
+
+With PostgreSQL, you can efficiently query hierarchical data using [Common Table Expressions (CTEs)](https://www.postgresql.org/docs/current/queries-with.html) with the [_`RECURSIVE`_](https://www.postgresql.org/docs/current/queries-with.html#QUERIES-WITH-RECURSIVE) keyword. For example, to retrieve all subcategories of a given category:
+
+```sql
+WITH RECURSIVE category_tree AS (
+  -- Base case: start with the specified category
+  SELECT
+    category_id,
+    name,
+    parent_id,
+    0 AS depth
+  FROM
+    categories
+  WHERE
+    category_id = 123
+
+  UNION ALL
+
+  -- Recursive case: find all children of categories already in the CTE
+  SELECT
+    c.category_id,
+    c.name,
+    c.parent_id,
+    ct.depth + 1
+  FROM
+    categories c
+  JOIN
+    category_tree ct ON c.parent_id = ct.category_id
+)
+SELECT * FROM category_tree ORDER BY depth, name;
+```
+
+This query efficiently traverses the entire category hierarchy regardless of depth, starting from _`category_id = 123`_.
+
+### Relationship-Level Integrity
+
+**Relationship-level integrity**, also known as **referential integrity**, ensures that relationships between tables are valid. This is typically enforced through **foreign keys**, which guarantees that a value in one table references a valid, existing value in another.
+
+For example, in the _`orders`_ table, the _`customer_id`_ column should be defined as a foreign key referencing the primary key in the _`customers`_ table. This enforces referential integrity by ensuring that every order belongs to a valid, existing customer. Without this constraint, it would be possible to insert orders that reference non-existent customers, leading to orphaned records and unreliable data relationships. In a design allowing guest checkouts, the _`customer_id`_ could be nullable — but even then, any non-null value must still point to a valid customer.
+
+The SQL code in this article includes [_`REFERENCES`_](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK) clauses that implement these foreign key constraints, enforcing referential integrity at the database level.
+
+### Types of Participation
+
+The type of participation describes whether an entity's involvement in a relationship is optional or mandatory:
+
+- **Mandatory participation**: An entity instance must participate in the relationship. For example, in our database, every product must belong to a category (mandatory participation of _`products`_ in the _`products-categories`_ relationship). In implementation terms, this means the _`category_id`_ in the _`products`_ table cannot be _`null`_, which we enforce with a _`NOT NULL`_ constraint.
+
+- **Optional participation**: An entity instance may or may not participate in the relationship. For example, in our database, a category doesn't necessarily need to have products assigned (optional participation of _`categories`_ in the _`products-categories`_ relationship). In implementation terms, this means a category can exist without any products referring to it.
+
+Participation rules apply to self-referencing relationships as well. For instance, in our _`categories`_ table, a category may have a parent category (top-level categories don't), making the participation of _`categories`_ in the parent-child relationship optional on the child side.
+
+A SQL implementation for mandatory participation:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  category_id uuid NOT NULL REFERENCES categories(category_id)
+);
+```
+
+### Cascade Update and Delete Rules
+
+Cascade update and delete rules help ensure referential integrity by defining what happens to related (child) records when a referenced (parent) record is deleted or when its primary key is updated—since such changes directly affect the foreign key values in the child table. Common options include:
+
+- _`RESTRICT`_: Prevents changes to the parent record if related child records exist. In PostgreSQL, when you try to delete a product that has associated order items with _`ON DELETE RESTRICT`_, the delete operation will fail with a constraint violation error, protecting your order history data.
+- _`CASCADE`_: Propagates changes to related child records. When you delete an order with _`ON DELETE CASCADE`_ set on the _`order_id`_ foreign key of _`order_items`_, all related order items are automatically deleted along with the order.
+- _`SET NULL`_: Sets foreign key values to \_`NULL`\_when the referenced parent record changes. This preserves the child records but removes their association with the parent, effectively making them orphaned records.
+- _`SET DEFAULT`_: Sets foreign key values to a default value when the referenced parent record changes.
+
+These rules are crucial to relationship-level integrity because they help guard against **orphaned records**—child records that no longer have a corresponding parent record. Deletion rules are always set from the perspective of the parent table since the parent table is typically the more important of the two tables within the relationship.
+
+It's important to note that while we can set rules for both updates and deletes, in practice we rarely need _`ON UPDATE`_ rules for primary key references. This is because surrogate keys used as primary keys should never change—their sole purpose is stable identification. If business data changes (like a customer's email), only the data columns change, not the primary key.
+
+These rules are implemented through foreign key constraints as part of the physical database design. In SQL, they’re defined in the foreign key declaration:
+
+```sql
+CREATE TABLE order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid REFERENCES orders(order_id) ON DELETE CASCADE,
+  product_id uuid REFERENCES products(product_id) ON DELETE RESTRICT,
+  quantity integer,
+  unit_price decimal(10,2)
+);
+```
+
+In this example, if an order is deleted, all associated order items will also be deleted (_`ON DELETE CASCADE`_). However, attempts to delete a product that appears in any order item will be prevented (_`ON DELETE RESTRICT`_), preserving order history integrity.
+
+When implementing delete rules, it's important to consider the complete chain of cascading effects, especially with multi-level relationships. For example, if _`orders`_ cascade delete to _`order_items`_, and _`customers`_ cascade delete to _`orders`_, then deleting a customer would trigger deletion of all their orders and associated order items. This may or may not be the intended behavior.
+
+Best practices generally recommend:
+
+- Using _`RESTRICT`_ when deleting referenced records would lose valuable historical data.
+- Using _`CASCADE`_ when child records don't make sense without their parents.
+- Using _`SET NULL`_ when the relationship is optional and orphaned records can exist meaningfully.
+- Using _`SET DEFAULT`_ when you want orphaned child records to fall back to a predefined default parent record.
+
+#### Soft Deletes
+
+A common pattern for business applications is to use _soft deletes_ rather than physical row deletion. This involves adding a field like _`deleted_at timestamp`_ to mark records as deleted (inactive) without actually removing them:
+
+```sql
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+  deleted_at timestamp
+);
+```
+
+Then, instead of permanently deleting data, we set _`deleted_at`_ to the deletion timestamp. To query customers, we use _`WHERE deleted_at IS NULL`_ to select active users, or _`WHERE deleted_at IS NOT NULL`_ to select inactive ones.
+
+This approach preserves historical data while allowing applications to filter out “deleted” (inactive) records. It also sidesteps complex cascade delete rules, as the relationships remain intact in the database.
+
+### Indirect Relationships and Traversing the Data Model
+
+One of the most powerful aspects of relational databases is the ability to access related data across multiple levels of relationships—**even when there's no direct relationship between two tables**. By traversing the relationship paths through intermediary tables, we can answer complex business questions without modifying our database structure.
+
+For example, in our ShopSmart database, we don't have a direct relationship between _`customers`_ and _`products`_. However, through the order system, we can easily identify all products that a specific customer has purchased. This is possible because we can follow the relationship path:
+
+1. From _`customers`_ to _`orders`_ (via _`customer_id`_)
+2. From _`orders`_ to _`order_items`_ (via _`order_id`_)
+3. From _`order_items`_ to _`products`_ (via _`product_id`_)
+
+This query retrieves all products purchased by a specific customer:
+
+```sql
+SELECT DISTINCT
+  p.product_id,
+  p.name,
+  p.price
+FROM
+  customers c
+JOIN
+  orders o ON c.customer_id = o.customer_id
+JOIN
+  order_items oi ON o.order_id = oi.order_id
+JOIN
+  products p ON oi.product_id = p.product_id
+WHERE
+  c.customer_id = 123
+ORDER BY
+  p.name;
+```
+
+We could extend this further to answer questions like the following without creating direct relationships between these tables:
+
+- "Which categories are most popular among customers in a certain age group?"
+- "What products are frequently purchased together with products from a specific category?"
+
+These indirect relationships demonstrate the flexibility of the relational database model. By properly modeling the core entities and their immediate relationships, we create **a network of connected data** that can answer a wide range of business questions through SQL joins—a key advantage of the relational model.
+
+When designing your database, consider not only the direct relationships between entities but also the potential paths through intermediary tables that might be valuable for business intelligence and reporting.
+
+## Validation Tables
+
+**Validation tables**—also called _lookup tables_ or _reference tables_—store **predefined sets of values** that other tables can reference. They act as centralized repositories for standard codes, types, statuses, and classifications, helping enforce data consistency across your database while improving system maintainability.
+
+Common examples include tables for order statuses (e.g., _Pending_, _Shipped_, _Delivered_) or product categories (e.g., _Electronics_, _Clothing_, _Books_).
+
+Validation tables typically have at least two columns:
+
+- A primary key.
+- A name or description column (displayed to users).
+
+Optionally, they may also include metadata like display order, abbreviations, or an active/inactive flag.
+
+### Using a Check Constraint to Enforce Valid Relationship Types
+
+Earlier, we introduced the following business rule:
+
+- Product relationships must be categorized as “accessory”, “alternative”, or “frequently bought together”.
+
+The _`related_products`_ table already includes a _`relationship_type`_ field. To enforce this rule using a **check constraint**, we can add the following to the table:
+
+```sql
+ALTER TABLE related_products
+  ADD CONSTRAINT chk_relationship_type CHECK (
+    relationship_type IN (accessory, alternative, frequently bought together)
+  );
+```
+
+While simple, this method **hard-codes** allowed values into the schema, requiring changes to SQL code to update valid types. Let’s look at a more flexible and scalable approach using a validation table.
+
+### Using a Validation Table for Relationship Types
+
+Instead of enforcing the rule through a check constraint, we’ll create a **validation table**—_`product_relationship_types`_—to store all allowed values. The _`related_products`_ table will then reference this validation table using a foreign key.
+
+This setup establishes a **one-to-many relationship** between _`related_products`_ and _`product_relationship_types`_: one related product has one relationship type, and one relationship type belongs to many related products.
+
+Here's the SQL code including all the required changes:
+
+```sql
+CREATE TABLE product_relationship_types (
+  product_relationship_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  inactivated_at timestamp
+);
+
+-- Populate with valid values
+INSERT INTO product_relationship_types (name, description, display_order)
+VALUES
+  ('accessory', 'Products that complement the main product', 10),
+  ('alternative', 'Similar products that could substitute the main product', 20),
+  ('frequently_bought_together', 'Products often purchased together with the main product', 30);
+
+-- Update the related_products table to reference the validation table
+ALTER TABLE related_products DROP COLUMN relationship_type;
+ALTER TABLE related_products ADD COLUMN product_relationship_type_id uuid NOT NULL REFERENCES product_relationship_types(product_relationship_type_id) ON DELETE RESTRICT;
+
+CREATE INDEX idx_related_products_type ON related_products(product_relationship_type_id);
+```
+
+This approach offers several advantages over a simple check constraint:
+
+1. **User interface integration**: The validation table can easily populate dropdown menus in application interfaces.
+2. **UI-driven updates**: Changing valid relationship types no longer requires altering SQL code—you can simply add, remove, or edit records through a user interface.
+3. **Extensibility**: You can include metadata like descriptions, display order, and status for each value.
+4. **Performance**: Lookups using indexed foreign keys are faster and more efficient than repeated string comparisons.
+
+By replacing the check constraint with hard-coded values with a foreign key reference, we maintain referential integrity while gaining flexibility and improving maintainability.
+
+## Supertype and Subtype Tables
+
+**Supertype and subtype tables** are used to implement **inheritance-like relationships** in relational databases. They address scenarios where a general entity (the supertype) has specialized variations that require **unique attributes** (the subtypes), without duplicating common attributes across multiple tables. This approach follows the object-oriented principle of inheritance but adapts it for relational database structures.
+
+### When to Use Subtype Tables
+
+Consider using subtype tables when:
+
+- A subset of entities requires additional attributes that don't apply to all instances.
+- You need to enforce rules specific to certain types of an entity.
+- You want to avoid tables with many nullable columns.
+
+### Subtyping Our Products Table
+
+For our ShopSmart ecommerce database, products provide an excellent example for implementing subtypes. While all products share basic attributes like name, price, and category, specific product types require specialized attributes:
+
+- **Physical products** need attributes like _`weight`_, _`dimensions`_, and _`shipping_class`_.
+- **Digital products** need attributes like _`download_url`_ and _`file_size`_.
+- **Subscription products** need attributes like _`billing_period`_ and _`subscription_length`_.
+
+Instead of adding all these attributes to our main _`products`_ table, which would result in many _`NULL`_ values, we can implement a supertype-subtype structure.
+
+Here's how we can implement this in our ecommerce database:
+
+```sql
+-- Add a product_type column to the main products table
+ALTER TABLE products ADD COLUMN product_type varchar(20) NOT NULL DEFAULT 'physical';
+ALTER TABLE products ADD CONSTRAINT chk_products_type  CHECK (product_type IN ('physical', 'digital', 'subscription'));
+CREATE INDEX idx_products_product_type ON products(product_type);
+
+-- Remove redundant columns from the main products table
+ALTER TABLE products DROP COLUMN weight;
+ALTER TABLE products DROP COLUMN dimensions;
+
+-- Create a subtype table for physical products
+CREATE TABLE physical_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+  weight decimal(8,3) NOT NULL,
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL,
+  country_of_origin varchar(100),
+  CONSTRAINT chk_physical_products_weight CHECK (weight > 0)
+);
+CREATE INDEX idx_physical_products ON physical_products(product_id);
+
+-- Create a subtype table for digital products
+CREATE TABLE digital_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL,
+  file_format varchar(20) NOT NULL,
+  download_limit integer,
+  CONSTRAINT chk_digital_products_size CHECK (file_size > 0)
+);
+CREATE INDEX idx_digital_products ON digital_products(product_id);
+
+-- Create a subtype table for subscription products
+CREATE TABLE subscription_products (
+  product_id uuid PRIMARY KEY REFERENCES products(product_id) ON DELETE CASCADE,
+  billing_period varchar(20) NOT NULL,
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0,
+  CONSTRAINT chk_subscription_products_period  CHECK (billing_period IN ('monthly', 'quarterly', 'annual'))
+);
+CREATE INDEX idx_subscription_products ON subscription_products(product_id);
+```
+
+<ImageWithCaption caption="Figure 12. Subtype tables for different product types.">
+  ![Figure 12. Subtype tables for different product
+  types.](/images/blog/mastering-relational-database-design-and-implementation/subtype-tables-diagram.png)
+</ImageWithCaption>
+
+This structure offers several advantages:
+
+- **Reduced _`NULL`_ values**: Each subtype table only contains the attributes relevant to that product type.
+- **Data integrity**: Type-specific validation can be applied to each subtype table.
+- **Maintainability**: New product types can be added without modifying existing tables.
+
+When retrieving complete product data, you would join the main products table with the appropriate subtype table based on the _`product_type`_ value. For example:
+
+```sql
+-- Retrieve complete data for a digital product
+SELECT
+  p.*,
+  d.*
+FROM
+  products p
+JOIN
+  digital_products d ON p.product_id = d.product_id
+WHERE
+  p.product_id = 123
+```
+
+This design provides flexibility while maintaining data integrity, allowing our ecommerce platform to handle diverse product types efficiently.
+
+#### Creating a _`product_types`_ Validation Table
+
+A clear improvement to this design is creating a new _`product_types`_ validation table as we did with _`product_relationship_types`_, and use it instead of hard-coding those values as a check constraint. This would provide both flexibility and referential integrity:
+
+```sql
+CREATE TABLE product_types (
+  product_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  inactivated_at timestamp
+);
+
+INSERT INTO product_types (name, description) VALUES
+  ('physical', 'Tangible products that require shipping'),
+  ('digital', 'Downloadable products'),
+  ('subscription', 'Recurring service products');
+
+ALTER TABLE products DROP CONSTRAINT chk_products_type;
+ALTER TABLE products DROP COLUMN product_type;
+ALTER TABLE products ADD COLUMN product_type_id uuid NOT NULL REFERENCES product_types(product_type_id);
+CREATE INDEX idx_products_product_type_id ON products(product_type_id);
+```
+
+## Normalization and Denormalization
+
+### Normalization
+
+**Normalization** is a systematic process of structuring a relational database to minimize data redundancy and improve data integrity by decomposing tables into smaller, well-structured tables that are less prone to anomalies. It follows a series of normal forms, with the most commonly used being First Normal Form (1NF), Second Normal Form (2NF), and Third Normal Form (3NF). While the theoretical framework includes higher normal forms (BCNF, 4NF, 5NF, and 6NF), most practical database designs achieve sufficient quality by reaching 3NF.
+
+Each normal form addresses specific types of anomalies:
+
+- **First Normal Form (1NF)** focuses on atomicity of data. It eliminates repeating groups by ensuring that each column contains only single, indivisible values and that each record is unique.
+- **Second Normal Form (2NF)** builds on 1NF by removing partial dependencies. It ensures that non-key attributes are fully dependent on the entire primary key, not just part of it. This form is only relevant for tables with composite primary keys.
+- **Third Normal Form (3NF)** eliminates transitive dependencies by ensuring that non-key attributes depend only on the primary key and not on other non-key attributes.
+
+While powerful, the formal normalization process can be complex and time-consuming, requiring deep analysis of functional dependencies within your data.
+
+### Normalization Built Into the Design Process
+
+Interestingly, by following the design approach presented in this article—based on the book [_Database Design for Mere Mortals_](https://www.amazon.com/Database-Design-Mere-Mortals-Anniversary/dp/0136788041/), by Michael J. Hernandez, and focused on systematically identifying entities, attributes, and relationships—we can build reasonably normalized database structures naturally, without explicitly working through the formal normalization process. The entity-relationship modeling approach inherently leads to a reasonably normalized database design. If specific optimization needs arise, we can further normalize or denormalize particular tables as required.
+
+For our ecommerce database, an example of normalization in action is our separation of _`orders`_ and _`order_items`_ into distinct tables. While we could have included product information directly in the _`orders`_ table (denormalized approach), we've normalized by creating a separate associative table that maintains referential integrity while eliminating redundancy.
+
+### Denormalization
+
+While normalization improves data integrity and consistency, it can sometimes lead to performance issues, particularly with complex queries that require joining multiple tables. **Denormalization** is the process of intentionally introducing redundancy into a database design to improve read performance.
+
+#### Denormalization Techniques
+
+- **Duplicating data:** Storing the same data in multiple tables to reduce joins.
+- **Pre-aggregating data:** Storing calculated values rather than computing them on-the-fly.
+- **Creating summary tables:** Maintaining tables with precomputed summaries or statistics.
+- **Collapsing tables:** Combining normalized tables back together.
+
+#### When to Consider Denormalization
+
+- When read performance is significantly more important than write performance.
+- For reporting and analytical systems where data is read-heavy.
+- When _`JOIN`_ operations become a bottleneck.
+- When the application requires specific access patterns that normalization impedes.
+
+A balanced approach often involves designing a normalized database first, then strategically denormalizing specific areas based on performance needs, data volume, and query patterns.
+
+#### Denormalization Example
+
+Let's consider a practical example of denormalization in our ecommerce database. One performance-critical query might be displaying products with their average review rating:
+
+```sql
+SELECT
+  p.product_id,
+  p.name,
+  p.price,
+  AVG(r.rating) as avg_rating
+FROM
+  products p
+LEFT JOIN
+  reviews r ON p.product_id = r.product_id
+GROUP BY
+  p.product_id,
+  p.name,
+  p.price;
+```
+
+This query requires a join and aggregation, which can be expensive for frequently accessed product listings. A denormalization approach would be to add calculated fields to the products table:
+
+```sql
+ALTER TABLE products
+ADD COLUMN review_count integer NOT NULL DEFAULT 0,
+ADD COLUMN avg_rating decimal(3,2) NOT NULL DEFAULT 0;
+```
+
+These columns would be updated via triggers or application code whenever a review is added, modified, or deleted.
+
+Here's an example of a trigger and function that automatically updates the _`review_count`_ and _`avg_rating`_ columns in the _`products`_ table whenever the _`reviews`_ table changes:
+
+```sql
+CREATE OR REPLACE FUNCTION update_product_ratings()
+RETURNS TRIGGER AS $$
+DECLARE
+  product_id_to_update integer;
+BEGIN
+  -- Determine which product_id needs updating
+  IF TG_OP = 'DELETE' THEN
+    product_id_to_update := OLD.product_id;
+  ELSE
+    product_id_to_update := NEW.product_id;
+  END IF;
+
+  -- Update the denormalized columns in the products table
+  UPDATE products
+  SET
+    review_count = (SELECT COUNT(*) FROM reviews WHERE product_id = product_id_to_update),
+    avg_rating = (SELECT COALESCE(AVG(rating), 0) FROM reviews WHERE product_id = product_id_to_update)
+  WHERE product_id = product_id_to_update;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_review_change
+AFTER INSERT OR UPDATE OR DELETE ON reviews
+FOR EACH ROW EXECUTE FUNCTION update_product_ratings();
+```
+
+This approach trades some write performance and data redundancy for significantly faster read performance on a critical query path.
+
+## Implementing Schemas (Namespaces)
+
+Let's implement PostgreSQL schemas to organize our ecommerce database objects effectively. This approach helps us structure our database by business features and control access more precisely.
+
+### Creating a Schema Structure
+
+For our ShopSmart database, we'll create schemas that reflect different functional areas:
+
+```sql
+-- Create schemas for different functional areas
+CREATE SCHEMA customers;
+CREATE SCHEMA products;
+CREATE SCHEMA orders;
+CREATE SCHEMA inventory;
+CREATE SCHEMA analytics;
+```
+
+Each schema acts as a container for related database objects, providing logical separation and organization.
+
+### Implementing Some Tables with Schemas
+
+Let's implement a few tables in their respective schemas to demonstrate the approach:
+
+```sql
+-- Customer-related tables in the customers schema
+CREATE TABLE customers.customers (
+    customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    -- Other fields
+);
+CREATE INDEX idx_customers_name ON customers.customers(last_name, first_name);
+
+CREATE TABLE customers.addresses (
+    address_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    customer_id uuid NOT NULL REFERENCES customers.customers(customer_id),
+    -- Other fields
+);
+CREATE INDEX idx_addresses_customer ON addresses.addresses(customer_id);
+
+-- Product-related tables in the products schema
+CREATE TABLE products.products (
+    product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    -- Other fields
+);
+CREATE INDEX idx_products_category ON products.products(category_id);
+```
+
+Notice how we prefix table names with the schema name and use the same approach with cross-schema references.
+
+### Schema Access Control
+
+One of the key benefits of using schemas is the ability to control access at the schema level:
+
+```sql
+-- Create application roles
+CREATE ROLE customer_service;
+CREATE ROLE inventory_manager;
+CREATE ROLE sales_analyst;
+
+-- Grant schema-level permissions
+GRANT USAGE ON SCHEMA customers TO customer_service;
+GRANT SELECT ON ALL TABLES IN SCHEMA customers TO customer_service;
+
+GRANT USAGE ON SCHEMA inventory TO inventory_manager;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA inventory TO inventory_manager;
+
+GRANT USAGE ON SCHEMA analytics TO sales_analyst;
+GRANT SELECT ON ALL TABLES IN SCHEMA analytics TO sales_analyst;
+```
+
+This approach allows us to implement role-based access control aligned with business functions, improving security and simplifying permission management.
+
+### Schema Management Considerations
+
+When implementing schemas in PostgreSQL, keep these considerations in mind:
+
+1. **Cross-Schema References:** Always use fully qualified names (_`schema_name.table_name`_) in foreign key constraints to avoid ambiguity.
+2. **Search Path:** Configure the search path to control which schemas are searched when unqualified object names are used:
+
+```sql
+SET search_path TO customers, products, orders, public;
+```
+
+3. **Naming Conventions:** Establish clear naming conventions for schemas and objects within schemas to maintain consistency.
+4. **Schema Migration:** When implementing schemas in an existing database, plan the migration carefully to minimize disruption.
+5. **Schema Organization:** Group related functionality together rather than creating too many granular schemas, which can become hard to manage.
+
+By implementing a well-organized schema structure for our ShopSmart ecommerce database, we create a more manageable and secure database design that aligns with business features and access requirements.
+
+## Indexes
+
+Indexes are special data structures that improve the speed of data retrieval operations on database tables. They work similarly to an index in a book, providing a quick way to look up information without scanning every row in a table. While indexes greatly enhance query performance, they come with trade-offs that database designers must consider.
+
+### How Indexes Work
+
+When a table has an index on a column, the database management system creates and maintains a separate data structure (commonly a [B-tree](https://en.wikipedia.org/wiki/B-tree)) that contains the indexed column's values and pointers to the corresponding rows in the table. When a query includes a condition on an indexed column, the database can use the index to quickly locate the relevant rows instead of scanning the entire table.
+
+### When to Use Indexes
+
+Consider creating indexes for:
+
+1. **Primary keys**: Automatically indexed in most database systems, including PostgreSQL.
+2. **Foreign keys**: Improves _`JOIN`_ performance.
+3. Columns used in _`JOIN`_ conditions (any column, not only foreign keys).
+4. Columns frequently used in _`WHERE`_ clauses.
+5. Columns used in _`ORDER BY`_ or _`GROUP BY`_ operations.
+
+PostgreSQL automatically creates indexes for columns with _`PRIMARY KEY`_ and _`UNIQUE`_, so there's no need to add them manually.
+
+### Index Types
+
+Different database systems offer various types of indexes. While [B-tree indexes](https://www.postgresql.org/docs/current/indexes-types.html#INDEXES-TYPES-BTREE) are universally supported and the most versatile, many systems also support specialized types like [Hash indexes](https://www.postgresql.org/docs/current/indexes-types.html#INDEXES-TYPES-HASH) (efficient for equality operations), [GiST](https://www.postgresql.org/docs/current/indexes-types.html#INDEXES-TYPE-GIST)/[GIN](https://www.postgresql.org/docs/current/indexes-types.html#INDEXES-TYPES-GIN) indexes (for full-text search or complex data types), and [BRIN](https://www.postgresql.org/docs/current/indexes-types.html#INDEXES-TYPES-BRIN) indexes (for large tables with naturally ordered data). Each index type uses a different algorithm best suited to specific query patterns.
+
+By default, the _`CREATE INDEX`_ command creates B-tree indexes in most DBMSs, including PostgreSQL. Other index types are selected by writing the keyword _`USING`_ followed by the index type name:
+
+```sql
+-- Hash index (good for exact equality comparisons)
+CREATE INDEX name ON table USING HASH (column);
+
+-- GIN index (good for full-text search or jsonb data)
+CREATE INDEX name ON table USING GIN (column);
+
+-- BRIN index (Block Range INdex - space-efficient for ordered large tables)
+CREATE INDEX name ON table USING BRIN (column);
+```
+
+### Index-Only Scans and Covering Indexes
+
+An important optimization technique is creating [**covering indexes**](https://www.postgresql.org/docs/current/indexes-index-only-scans.html) that include all the columns needed by a query. When a query can be satisfied entirely from an index without accessing the table itself, the database can perform an **index-only scan**, which is significantly faster.
+
+For example, if a common query on our products table looks for items by category and only needs the name and price:
+
+```sql
+SELECT name, price FROM products WHERE category_id = 123;
+```
+
+We could create a covering index that includes all these columns:
+
+```sql
+CREATE INDEX idx_products_category_covering ON products(category_id) INCLUDE (name, price);
+```
+
+In PostgreSQL and other modern databases, the _`INCLUDE`_ clause adds columns to the index without making them part of the key, making them available for index-only scans while keeping the index efficient.
+
+### Index Considerations and Best Practices
+
+While indexes speed up data retrieval, they also:
+
+- **Consume disk space**: Each index creates additional storage requirements.
+- **Slow down write operations**: When data is inserted, updated, or deleted, all relevant indexes must be updated.
+- **Require maintenance**: Large indexes may need occasional rebuilding to maintain efficiency.
+
+Best practices for indexing include:
+
+- **Index selectivity**: Indexes work best on columns with many unique values.
+- **Multicolumn (composite) indexes**: When queries filter on multiple columns, consider a single, composite index on those columns (in the correct order).
+- **Index size**: Consider the width of indexed columns; smaller is generally better.
+- **Avoid over-indexing**: Each additional index slows down write operations.
+- **Choose columns wisely**: Prioritize columns used most frequently in query conditions.
+
+### Anti-Patterns to Avoid
+
+- **Indexing everything**: Adds overhead without proportional benefit.
+- **Redundant indexes**: Creating multiple indexes that serve similar purposes.
+- **Indexing small tables**: Tables with few rows typically don't benefit much from indexes.
+- **Indexing columns with low selectivity**: Columns with few unique values may not benefit from indexing.
+
+### Examples in Our Ecommerce Database
+
+For our ShopSmart database, here are some strategic indexing decisions:
+
+1. **Product search optimization**:
+
+   ```sql
+   CREATE INDEX idx_products_name ON products(name);
+   CREATE INDEX idx_products_category ON products(category_id);
+   ```
+
+   These indexes would improve performance when users search for products by name or browse by category.
+
+2. **Order processing efficiency**:
+
+   ```sql
+   CREATE INDEX idx_orders_customer ON orders(customer_id);
+   CREATE INDEX idx_orders_status ON orders(status);
+   ```
+
+   These indexes help quickly retrieve a customer's order history or find orders with a specific status.
+
+3. **Inventory management**:
+
+   ```sql
+   CREATE INDEX idx_products_stock ON products(stock_quantity) WHERE stock_quantity > 0;
+   ```
+
+   This partial index only indexes products that are in stock, which is useful for availability searches and would be smaller than indexing all products.
+
+4. **Multiple-column (composite) index**:
+   ```sql
+   CREATE INDEX idx_orders_customer_date ON orders(customer_id, ordered_at);
+   ```
+   This composite index would be efficient for queries that filter by both customer and date range.
+
+By strategically applying indexes to our ecommerce database, we can significantly improve performance for common operations like product searches, order processing, and inventory management, while minimizing the overhead on write operations.
+
+## Views
+
+**Views** are database objects that present data stored in **base tables**—the **underlying tables** where data is physically stored—through the lens of a predefined SQL query. They provide a custom, often simplified representation of data that can be tailored to specific application needs or business logic.
+
+In essence, a view acts as a _virtual table_ or a _stored query_. While it appears and behaves like a table when queried, it does not store data physically (except in the case of materialized views). Views are a crucial abstraction layer between the physical database schema and the various applications that access the data.
+
+### Key Benefits of Views
+
+- **Abstraction:** Views can simplify complex joins, filters, and calculations, presenting a clean interface to consumers while hiding implementation details of the underlying schema.
+- **Security:** Views can restrict access to sensitive data by exposing only selected columns or rows, enabling row-level and column-level security without modifying the underlying tables.
+- **Consistency:** Views enforce consistent access patterns and logic across different applications or queries, avoiding code duplication and preventing inconsistencies caused by diverging implementations.
+- **Adaptability:** When schema changes occur in base tables, views can often be updated to preserve existing interfaces for consuming applications, promoting decoupling and reducing maintenance overhead.
+
+### Types of Views
+
+There are two primary types of views, each with different characteristics and use cases.
+
+#### Standard Views
+
+**Standard views** (also called _regular views_ or _virtual views_) do not store data themselves. Instead, the view’s SQL query is executed on demand every time the view is queried.
+
+**Characteristics:**
+
+- Do not consume storage beyond their metadata definition.
+- Always reflect the current state of the underlying tables.
+- Can encapsulate arbitrarily complex SQL logic.
+- May impact performance if based on complex or unindexed queries.
+
+##### Example – Filtering Active Products
+
+```sql
+CREATE VIEW active_products AS
+SELECT *
+FROM products
+WHERE stock_quantity > 0 AND inactivated_at IS NULL;
+```
+
+This view simplifies querying only currently available products, reducing the need for repetitive filtering logic in application code.
+
+##### Example – Limiting Access to Sensitive Data
+
+```sql
+CREATE VIEW customer_public_info AS
+SELECT
+  customer_id,
+  first_name,
+  last_name
+FROM
+  customers;
+```
+
+Applications or users with access only to this view cannot see sensitive information like email addresses or birth dates.
+
+##### Example – Summarizing Product Reviews
+
+```sql
+CREATE VIEW product_review_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  COUNT(r.review_id) AS review_count,
+  COALESCE(AVG(r.rating), 0) AS average_rating,
+  MIN(r.rating) AS lowest_rating,
+  MAX(r.rating) AS highest_rating
+FROM
+  products p
+LEFT JOIN
+  reviews r ON p.product_id = r.product_id
+GROUP BY
+  p.product_id,
+  p.name;
+```
+
+This view provides a concise summary of product review data for UI display or analytics.
+
+#### Materialized Views
+
+**Materialized views** physically store their query results, making them ideal for optimizing performance in scenarios involving read-heavy workloads or complex computations, such as reporting and data warehousing.
+
+**Characteristics:**
+
+- Store query results physically on disk.
+- Require storage space similar to tables.
+- Must be refreshed periodically to remain in sync with the base data.
+- Offer significantly improved performance for complex aggregations or joins.
+
+In PostgreSQL, materialized views must be refreshed manually or via scheduled jobs.
+
+##### Example – Monthly Sales Summary
+
+```sql
+CREATE MATERIALIZED VIEW monthly_sales AS
+SELECT
+  p.category_id,
+  c.name AS category_name,
+  DATE_TRUNC('month', o.ordered_at) AS month,
+  SUM(oi.quantity * oi.unit_price) AS total_sales
+FROM
+  order_items oi
+JOIN
+  orders o ON oi.order_id = o.order_id
+JOIN
+  products p ON oi.product_id = p.product_id
+JOIN
+  categories c ON p.category_id = c.category_id
+GROUP BY
+  p.category_id, c.name, DATE_TRUNC('month', o.ordered_at);
+```
+
+This example demonstrates how a materialized view can be used to precompute and store monthly sales aggregates by category, enabling fast and efficient access to sales summaries for reporting and analytics.
+
+Run the following SQL code to refresh this materialized view and keep the data up to date:
+
+```sql
+REFRESH MATERIALIZED VIEW monthly_sales;
+```
+
+##### Example – Product Sales Summary
+
+```sql
+CREATE MATERIALIZED VIEW product_sales_summary AS
+SELECT
+  p.product_id,
+  p.name,
+  COUNT(DISTINCT o.order_id) AS orders_count,
+  SUM(oi.quantity) AS total_quantity_sold,
+  SUM(oi.quantity * oi.unit_price) AS total_revenue
+FROM
+  products p
+JOIN
+  order_items oi ON p.product_id = oi.product_id
+JOIN
+  orders o ON oi.order_id = o.order_id
+WHERE
+  o.status = 'completed'
+GROUP BY
+  p.product_id,
+  p.name;
+```
+
+This materialized view supports analytics and dashboards by precomputing aggregate metrics on sales data. Depending on business requirements, it can be refreshed nightly or hourly.
+
+### Views in Database Design
+
+Views are typically not included in traditional ER diagrams, as ER diagrams focus on the persistent data structures and relationships of base tables. However, in more comprehensive data modeling or documentation efforts, views may be represented in logical or derived diagrams, often using different notations or shapes to distinguish them from base entities.
+
+Including views in documentation is beneficial when:
+
+- They encapsulate important business logic.
+- They serve as a public interface to the database.
+- They are used across multiple teams or applications.
+
+Views are a foundational part of modern relational database design, providing both flexibility and control. They help simplify application code, enforce access policies, encapsulate business rules, and improve performance—especially when used strategically with materialized views.
+
+## Transaction Management
+
+[Transaction management](https://www.ibm.com/think/topics/transaction-management) is a cornerstone of database integrity, particularly in complex systems like ecommerce platforms where multiple related operations must succeed or fail as a cohesive unit.
+
+### Understanding Database Transactions
+
+A transaction is a logical unit of work that adheres to the [ACID](​​https://en.wikipedia.org/wiki/ACID) properties:
+
+- **Atomicity**: All operations within a transaction either complete successfully or fail entirely, leaving the database unchanged.
+- **Consistency**: Transactions transform the database from one valid state to another, preserving all defined rules and constraints.
+- **Isolation**: Concurrent transactions operate independently, without interference, as if executed sequentially.
+- **Durability**: Once committed, transaction changes permanently persist, surviving system failures.
+
+### Transaction Management Best Practices
+
+#### Keep Transactions Short and Focused
+
+Transactions should encompass only logically related operations that must succeed or fail together. Long-running transactions increase the risk of locks and deadlocks, which occur when two or more transactions are waiting for each other to release resources. This situation reduces concurrency—the database's ability to process multiple transactions simultaneously—and degrades overall system performance.
+
+In our ShopSmart ecommerce system, a customer checkout process should ideally separate browsing operations (which don't require transactions) from the actual order submission. For example, calculating shipping costs, checking product availability, or retrieving product information should happen outside the transaction, while the actual order creation, inventory update, and payment recording should be within a single transaction.
+
+#### Use Appropriate Isolation Levels
+
+Different isolation levels offer varying trade-offs between data consistency and system concurrency. Higher isolation levels provide stronger consistency guarantees but may reduce performance by limiting concurrent operations.
+
+PostgreSQL offers four isolation levels:
+
+```sql
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;   -- Default
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED; -- Behaves like READ COMMITTED in PostgreSQL
+```
+
+For ShopSmart's inventory management, _`READ COMMITTED`_ might be sufficient for viewing product information, while _`SERIALIZABLE`_ would be more appropriate when processing orders to ensure accurate inventory counts when multiple customers order simultaneously.
+
+#### Handle Errors Properly
+
+Comprehensive error handling should exist at both the database and application levels. At the database level, SQL code should include explicit _`ROLLBACK`_ statements when errors occur. At the application level, use programming language constructs like try-catch blocks to catch exceptions and ensure transactions are properly ended.
+
+For example, when processing an order in ShopSmart, the application code might look like:
+
+1. Begin by opening a database transaction.
+2. Use application-level try-catch blocks to handle exceptions.
+3. In the catch block, execute a SQL _`ROLLBACK`_ and log the error.
+4. In the try block's success path, execute a SQL _`COMMIT`_.
+
+This dual-layer approach ensures that both application and database errors are properly managed, preventing partial transactions from being committed.
+
+#### Consider Performance Impact
+
+Lock contention occurs when multiple transactions compete for the same database resources, causing some transactions to wait. Highly contested locks—those frequently sought by many transactions—can severely impact performance.
+
+To manage this:
+
+1. Monitor lock wait times using PostgreSQL's built-in views like _`pg_locks`_ and _`pg_stat_activity`_.
+2. Identify frequently locked tables or rows.
+3. Consider optimistic concurrency control for high-contention resources.
+
+Optimistic concurrency uses version numbers or timestamps rather than locks. In our product catalog, instead of locking a product record during price updates, we could check if the version number has changed since we read it, only proceeding if it hasn't changed. This allows many transactions to proceed simultaneously without blocking each other.
+
+#### Use Savepoints for Complex Transactions
+
+Savepoints establish markers within a transaction to which you can return (roll back) without aborting the entire transaction. This functionality is particularly valuable for complex operations with multiple distinct phases.
+
+For example, in processing a ShopSmart order with multiple payment methods:
+
+```sql
+BEGIN;
+-- Process main credit card payment
+SAVEPOINT after_main_payment;
+
+-- Process gift card portion
+-- If gift card processing fails:
+ROLLBACK TO SAVEPOINT after_main_payment;
+-- Continue with alternative payment method or without the gift card
+
+COMMIT;
+```
+
+When the code executes _`ROLLBACK TO SAVEPOINT after_main_payment`_, the database reverts to the exact state it was in when the savepoint was created. All changes made after the savepoint are undone, but changes made before remain intact. The transaction then continues executing from that point, allowing for alternative paths to be taken without starting the entire transaction over.
+
+### Common Transaction Anti-Patterns
+
+#### Transaction Splitting
+
+**Problem:** Breaking a logical unit of work across multiple transactions can leave the database in an inconsistent state if some transactions succeed while others fail. For instance, in ShopSmart, creating an order in one transaction and updating inventory in another could result in orders without corresponding inventory changes if the second transaction fails.
+
+**Solution:** Design transactions to encompass complete business operations. For order processing, include order creation, inventory updates, and payment recording in a single transaction to ensure all-or-nothing execution.
+
+#### Unbounded Transactions
+
+**Problem:** Transactions that contain user interactions, external API calls, or long-running processes hold database locks for extended periods, reducing concurrency and increasing deadlock probability. For example, initiating a transaction, calling a payment gateway API, and then completing the transaction could lock order records while waiting for external responses.
+
+**Solution:** Perform preparation work before beginning the transaction. For payment processing:
+
+1. Collect and validate all order information.
+2. Pre-authorize the payment with the payment processor.
+3. Only then begin a database transaction to record the order and update inventory.
+4. Complete with payment capture after the database transaction succeeds.
+
+This approach minimizes the transaction duration to only include database operations.
+
+#### Nested Transactions Misuse
+
+**Problem:** Misunderstanding how nested transactions commit or roll back can lead to unexpected behavior. In PostgreSQL, nested transactions using _`SAVEPOINT`_ don't truly create independent transactions—a _`ROLLBACK`_ of the outer transaction will rollback everything, regardless of inner transaction _commits_.
+
+**Solution:** Use savepoints to create rollback points within a transaction, but understand that they don't provide true nested transaction isolation. In ShopSmart's order processing, use savepoints to mark phases of the order process, but don't rely on them to commit partial work if the main transaction aborts.
+
+#### Isolation Level Mismatch
+
+**Problem:** Using isolation levels that don't match the application's requirements can cause either data inconsistencies or unnecessary performance penalties. For example, using _`READ COMMITTED`_ isolation when processing concurrent orders could allow inventory to become negative if two customers order the last item simultaneously.
+
+**Solution:** Carefully assess the consistency requirements of each operation. For inventory-critical operations in ShopSmart, use _`SERIALIZABLE`_ isolation to prevent concurrent modifications from creating inconsistencies. For read-heavy operations like browsing products, use _`READ COMMITTED`_ for better performance.
+
+#### Inadequate Error Handling
+
+**Problem:** Missing or improper handling of transaction failures can lead to inconsistent data or silent failures. If a ShopSmart order process fails to roll back properly when inventory updates fail, customers might receive confirmations for orders that cannot be fulfilled.
+
+**Solution:** Implement comprehensive error handling with appropriate logging. Every transaction should have clear success and failure paths, with explicit _`COMMIT`_ or _`ROLLBACK`_ actions and detailed error logging that includes the transaction context.
+
+### Transactions in Our Ecommerce Database
+
+In the ShopSmart ecommerce system, transactions are critical for:
+
+1. **Order Processing**: Ensuring all steps of order creation succeed or fail together.
+2. **Inventory Management**: Maintaining accurate stock levels.
+3. **Payment Processing**: Properly handling financial transactions.
+4. **Concurrent User Operations**: Managing multiple simultaneous operations.
+
+Let's examine a few key transaction scenarios:
+
+#### Order Placement Transaction
+
+The order placement process requires multiple database operations that must be treated as a single atomic unit:
+
+```sql
+BEGIN;
+
+-- Declare variables
+DO $$
+DECLARE
+    v_order_id uuid;
+    v_cart_id uuid := 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
+    v_customer_id uuid := '98765432-abcd-efgh-ijkl-1234567890ab';
+    v_shipping_address_id uuid := 'abc12345-1234-5678-90ab-cdef12345678';
+    v_billing_address_id uuid := 'def98765-5678-1234-ab90-fedcba987654';
+    v_payment_success boolean;
+    v_insufficient_stock boolean := FALSE;
+    v_low_stock_products text := '';
+BEGIN
+    -- Check inventory availability first
+    SELECT EXISTS (
+        SELECT 1
+        FROM orders.cart_items ci
+        JOIN products.products p ON ci.product_id = p.product_id
+        WHERE ci.cart_id = v_cart_id AND ci.quantity > p.stock_quantity
+    ) INTO v_insufficient_stock;
+
+    -- Identify products with low stock
+    SELECT string_agg(p.name || ' (requested: ' || ci.quantity || ', available: ' || p.stock_quantity || ')', ', ')
+    FROM orders.cart_items ci
+    JOIN products.products p ON ci.product_id = p.product_id
+    WHERE ci.cart_id = v_cart_id AND ci.quantity > p.stock_quantity
+    INTO v_low_stock_products;
+
+    -- Fail early if inventory is insufficient
+    IF v_insufficient_stock THEN
+        RAISE EXCEPTION 'Insufficient inventory for products: %', v_low_stock_products;
+    END IF;
+
+    -- Create order
+    INSERT INTO orders.orders (
+        customer_id,
+        shipping_address_id,
+        billing_address_id,
+        status
+    ) VALUES (
+        v_customer_id,
+        v_shipping_address_id,
+        v_billing_address_id,
+        'pending'
+    ) RETURNING order_id INTO v_order_id;
+
+    -- Add order items from cart
+    INSERT INTO orders.order_items (
+        order_id,
+        product_id,
+        quantity,
+        unit_price
+    )
+    SELECT
+        v_order_id,
+        ci.product_id,
+        ci.quantity,
+        p.price
+    FROM orders.cart_items ci
+    JOIN products.products p ON ci.product_id = p.product_id
+    WHERE ci.cart_id = v_cart_id;
+
+    -- Update inventory
+    UPDATE products.products p
+    SET
+        stock_quantity = p.stock_quantity - ci.quantity,
+        updated_at = CURRENT_TIMESTAMP
+    FROM orders.cart_items ci
+    WHERE ci.cart_id = v_cart_id AND p.product_id = ci.product_id;
+
+    -- Record inventory changes
+    INSERT INTO inventory.inventory_history (
+        product_id,
+        quantity_change,
+        previous_quantity,
+        new_quantity,
+        reason,
+        changed_by
+    )
+    SELECT
+        p.product_id,
+        -ci.quantity,
+        p.stock_quantity + ci.quantity,
+        p.stock_quantity,
+        'sale',
+        'order_system'
+    FROM products.products p
+    JOIN orders.cart_items ci ON p.product_id = ci.product_id
+    WHERE ci.cart_id = v_cart_id;
+
+    -- Clear cart
+    DELETE FROM orders.cart_items WHERE cart_id = v_cart_id;
+
+    -- Process payment (simulated)
+    -- In a real system, this would call an external payment processor
+    -- and should happen BEFORE beginning the transaction or use a two-phase approach
+    v_payment_success := TRUE; -- Simulated successful payment
+
+    IF v_payment_success THEN
+        -- Record payment
+        INSERT INTO orders.payments (
+            order_id,
+            amount,
+            payment_method,
+            status,
+            transaction_id
+        ) VALUES (
+            v_order_id,
+            (SELECT SUM(quantity * unit_price) FROM orders.order_items WHERE order_id = v_order_id),
+            'credit_card',
+            'completed',
+            'txn_' || v_order_id
+        );
+
+        -- Update order status
+        UPDATE orders.orders
+        SET status = 'processing', updated_at = CURRENT_TIMESTAMP
+        WHERE order_id = v_order_id;
+
+        -- Commit the transaction
+        -- COMMIT is handled automatically at the end of the DO block when successful
+    ELSE
+        -- Payment failed, roll back the entire transaction
+        RAISE EXCEPTION 'Payment processing failed';
+        -- ROLLBACK happens automatically when an exception is raised
+    END IF;
+END $$;
+
+COMMIT;
+```
+
+This transaction demonstrates several best practices:
+
+1. **Early validation**: Checking inventory availability before making any changes.
+2. **Proper error handling**: Using exceptions to trigger rollbacks.
+3. **Complete transaction**: Including all related operations (order creation, inventory updates, payment recording).
+4. **Maintaining history**: Recording inventory changes for audit purposes.
+
+#### Handling Concurrent Orders
+
+A common challenge in ecommerce systems is handling concurrent orders for the same product. Consider two customers attempting to purchase the last available unit simultaneously:
+
+```sql
+-- For Customer A
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+-- Check and update inventory with row locks
+UPDATE products.products
+SET stock_quantity = stock_quantity - 1
+WHERE product_id = 'product123' AND stock_quantity >= 1
+RETURNING product_id, stock_quantity;
+
+-- If no rows affected, the product is out of stock
+-- Continue with order creation if successful
+-- ...
+
+COMMIT;
+
+-- For Customer B (running concurrently)
+BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+-- This will either succeed or wait until Customer A's transaction completes
+-- If Customer A took the last item, this will return no rows
+UPDATE products.products
+SET stock_quantity = stock_quantity - 1
+WHERE product_id = 'product123' AND stock_quantity >= 1
+RETURNING product_id, stock_quantity;
+
+-- Handle the case where no rows were affected (out of stock)
+-- ...
+
+COMMIT;
+```
+
+This approach uses:
+
+- **SERIALIZABLE isolation**: Prevents phantom reads and other anomalies.
+- **Pessimistic locking**: The UPDATE statement acquires row locks.
+- **Check-and-act pattern**: Verifying stock and decrementing it in one atomic operation.
+
+#### Handling Distributed Transactions
+
+For complex operations involving external systems (like payment gateways), consider using a two-phase approach:
+
+```sql
+-- Phase 1: Validate and reserve inventory
+BEGIN;
+
+-- Reserve inventory with status "reserved"
+INSERT INTO inventory.reservations (
+    product_id,
+    quantity,
+    reservation_expiry,
+    session_id
+)
+SELECT
+    ci.product_id,
+    ci.quantity,
+    CURRENT_TIMESTAMP + INTERVAL '15 minutes',
+    'session123'
+FROM orders.cart_items ci
+WHERE ci.cart_id = 'cart123';
+
+-- Create pending order
+INSERT INTO orders.orders (
+    customer_id,
+    status,
+    -- other fields
+) VALUES (
+    'customer123',
+    'pending',
+    -- other values
+) RETURNING order_id INTO v_order_id;
+
+COMMIT;
+
+-- External payment processing happens here
+
+-- Phase 2: Complete the order or release inventory
+BEGIN;
+
+IF payment_succeeded THEN
+    -- Update inventory
+    UPDATE products.products p
+    SET stock_quantity = p.stock_quantity - r.quantity
+    FROM inventory.reservations r
+    WHERE r.session_id = 'session123' AND r.product_id = p.product_id;
+
+    -- Update order status
+    UPDATE orders.orders
+    SET status = 'processing'
+    WHERE order_id = v_order_id;
+
+    -- Delete reservations
+    DELETE FROM inventory.reservations
+    WHERE session_id = 'session123';
+ELSE
+    -- Just delete reservations (inventory not affected)
+    DELETE FROM inventory.reservations
+    WHERE session_id = 'session123';
+
+    -- Update order status
+    UPDATE orders.orders
+    SET status = 'payment_failed'
+    WHERE order_id = v_order_id;
+END IF;
+
+COMMIT;
+```
+
+This pattern:
+
+- Separates inventory reservation from actual deduction
+- Handles external system failures gracefully
+- Uses time-limited reservations to prevent indefinite holds
+
+### Advanced Transaction Management
+
+#### Advisory Locks for Application-Level Exclusion
+
+For operations that span multiple transactions or require coordinated access:
+
+```sql
+-- Acquire an advisory lock (application-level lock not tied to a specific table)
+SELECT pg_advisory_xact_lock(hashtext('process_order_12345'));
+
+-- Perform exclusive operations
+-- The lock is automatically released when the transaction ends
+```
+
+#### Optimistic Concurrency Control
+
+For scenarios with low contention:
+
+```sql
+BEGIN;
+
+-- Read the current version/timestamp
+SELECT version FROM products.products WHERE product_id = 'product123' INTO v_current_version;
+
+-- Perform business logic
+
+-- Update with version check
+UPDATE products.products
+SET price = 29.99, version = version + 1
+WHERE product_id = 'product123' AND version = v_current_version;
+
+-- Check if our update succeeded
+IF NOT FOUND THEN
+    -- Handle concurrency conflict
+    ROLLBACK;
+    RAISE EXCEPTION 'Concurrent update detected';
+END IF;
+
+COMMIT;
+```
+
+#### Deferred Constraints
+
+For cases where referential integrity must be maintained but the order of operations is flexible:
+
+```sql
+BEGIN;
+
+-- Defer foreign key constraints until commit time
+SET CONSTRAINTS ALL DEFERRED;
+
+-- Operations can now be performed in any order
+INSERT INTO orders.order_items (order_id, product_id, quantity, unit_price)
+VALUES ('new_order_id', 'product123', 1, 19.99);
+
+-- The related order doesn't exist yet, but that's OK with deferred constraints
+INSERT INTO orders.orders (order_id, customer_id, status)
+VALUES ('new_order_id', 'customer456', 'pending');
+
+-- At COMMIT time, all constraints will be checked
+COMMIT;
+```
+
+### Transaction Monitoring and Management
+
+For production systems, implement transaction monitoring:
+
+```sql
+-- Create a transaction log table
+CREATE TABLE system.transaction_log (
+    log_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    transaction_type varchar(50) NOT NULL,
+    started_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    completed_at timestamp,
+    success boolean,
+    error_message text,
+    details jsonb
+);
+
+-- Example usage in a transaction
+BEGIN;
+
+-- Log transaction start
+INSERT INTO system.transaction_log (transaction_type, details)
+VALUES ('order_placement', '{"order_ref": "ORD-12345", "customer_id": "cust789"}')
+RETURNING log_id INTO v_log_id;
+
+-- Transaction operations...
+
+-- On success:
+UPDATE system.transaction_log
+SET completed_at = CURRENT_TIMESTAMP, success = TRUE
+WHERE log_id = v_log_id;
+
+COMMIT;
+
+-- On error (in exception handler):
+UPDATE system.transaction_log
+SET completed_at = CURRENT_TIMESTAMP, success = FALSE, error_message = v_error_text
+WHERE log_id = v_log_id;
+```
+
+This approach provides:
+
+- Transaction audit trail
+- Performance monitoring capabilities
+- Debugging information for failed transactions
+
+### Summary
+
+Effective transaction management is crucial for maintaining data integrity in complex database systems. By following best practices like keeping transactions short, properly handling errors, and considering concurrency implications, you can build robust, scalable database applications. In ecommerce systems specifically, transaction management becomes essential for handling order processing, inventory management, and payment processing in a way that ensures consistency across all related operations.
+
+Remember that each database system has its own transaction management features and limitations. Always consult your specific database's documentation for platform-specific details and optimizations.
+
+## Database Security
+
+Database security is a critical aspect of database design and management that protects data from unauthorized access, corruption, or loss. While comprehensive database security deserves its own dedicated coverage, here we'll introduce key concepts and best practices.
+
+### Core Security Principles
+
+1. [**Principle of Least Privilege (PoLP)**](https://en.wikipedia.org/wiki/Principle_of_least_privilege): Grant users and applications only the minimum access rights necessary to perform their functions.
+2. [**Defense in Depth**](<https://en.wikipedia.org/wiki/Defense_in_depth_(computing)>): Implement multiple layers of security controls to protect your database.
+3. **Regular Auditing**: Monitor and review database activity to detect suspicious behavior.
+
+### Security Best Practices
+
+#### 1. Authentication and Authorization
+
+- Use strong password policies.
+- Implement [role-based access control (RBAC)](https://en.wikipedia.org/wiki/Role-based_access_control).
+- Consider multi-factor authentication for sensitive environments.
+
+#### 2. Data Encryption
+
+- Encrypt sensitive data at rest.
+- Use TLS/SSL for data in transit.
+- Consider [column-level encryption](https://en.wikipedia.org/wiki/Column_level_encryption) for highly sensitive information.
+
+#### 3. Secure Configuration
+
+- Disable unnecessary services and features.
+- Keep the database system updated with security patches.
+- Use network security controls (firewalls, VPNs).
+
+#### 4. Backup and Recovery
+
+- Maintain regular, tested backups.
+- Implement [point-in-time recovery](https://en.wikipedia.org/wiki/Point-in-time_recovery) capabilities.
+- Store backups securely, preferably encrypted.
+
+### Common Security Anti-Patterns
+
+#### 1. Using a single database account for all connections
+
+- **Problem:** No accountability or fine-grained access control.
+- **Solution:** Create separate roles for different application components.
+
+#### 2. Storing plain-text passwords
+
+- **Problem:** Exposes users to credential theft.
+- **Solution:** Use secure hashing algorithms (e.g., [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [Argon2](https://en.wikipedia.org/wiki/Argon2)).
+
+#### 3. Hard-coding connection strings in application code
+
+- **Problem:** Credentials may be exposed in source code repositories.
+- **Solution:** Use [environment variables](https://en.wikipedia.org/wiki/Environment_variable) or secure credential stores.
+
+#### 4. Excessive permissions
+
+- **Problem:** Users or processes have more access than needed.
+- **Solution:** Follow the principle of least privilege.
+
+#### 5. SQL injection vulnerabilities
+
+- **Problem:** [Malicious SQL](https://en.wikipedia.org/wiki/SQL_injection) can be injected through user inputs.
+- **Solution:** Use [prepared statement](https://en.wikipedia.org/wiki/Prepared_statement) and [input validation](https://en.wikipedia.org/wiki/Data_validation).
+
+### Row-Level Security
+
+PostgreSQL offers [Row-Level Security (RLS)](https://www.postgresql.org/docs/current/ddl-rowsecurity.html), a powerful feature that restricts which rows a user can access in a table. This allows for fine-grained access control based on the data itself.
+
+For our ecommerce database, we might implement RLS to ensure:
+
+- Customer service representatives can only view orders from customers they are assigned to.
+- Regional managers can only access inventory in their region.
+- Vendors can only see their own products.
+
+Here's a practical implementation for our ShopSmart database:
+
+```sql
+-- Enable row-level security on the orders table
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+-- Create a policy that restricts customer service reps to only see orders
+-- from customers they are assigned to
+CREATE POLICY customer_rep_orders ON orders
+    FOR SELECT
+    USING (customer_id IN (
+        SELECT customer_id FROM customer_representatives
+        WHERE rep_id = current_setting('app.current_rep_id')::integer
+    ));
+
+-- Create a policy for regional managers to see all orders from their region
+CREATE POLICY region_manager_orders ON orders
+    FOR SELECT
+    USING ((
+        SELECT region_id FROM customers WHERE customer_id = orders.customer_id
+    ) IN (
+        SELECT region_id FROM region_managers
+        WHERE manager_id = current_setting('app.current_manager_id')::integer
+    ));
+
+-- Create a catch-all policy for administrators
+CREATE POLICY admin_orders ON orders
+    FOR ALL
+    USING (pg_has_role(current_user, 'administrator', 'member'));
+```
+
+To use RLS effectively:
+
+1. Set the application context before executing queries:
+
+```sql
+SET app.current_rep_id = '42';
+```
+
+2. Create appropriate roles and grant them to users:
+
+```sql
+CREATE ROLE customer_rep;
+GRANT customer_rep TO user1, user2;
+```
+
+3. Ensure all tables with sensitive data have RLS enabled and appropriate policies.
+
+Row-Level Security provides an additional security layer that moves access control from the application to the database, ensuring consistent enforcement regardless of how the data is accessed.
+
+### Security in Our Ecommerce Database
+
+For the ShopSmart database, we should implement these security measures:
+
+**1. Role-based access:**
+
+```sql
+CREATE ROLE customer_service;
+GRANT SELECT ON customers, orders, order_items TO customer_service;
+GRANT UPDATE ON customers TO customer_service;
+
+CREATE ROLE inventory_manager;
+GRANT SELECT, INSERT, UPDATE ON products, inventory TO inventory_manager;
+```
+
+**2. Password protection for sensitive data:**
+
+```sql
+-- Store hashed passwords, not plaintext
+CREATE TABLE customers (
+  -- other fields
+    password_hash VARCHAR(255) NOT NULL,  -- Store bcrypt or similar hash
+    account_locked BOOLEAN DEFAULT false,
+);
+```
+
+**3. Audit logging:**
+
+```sql
+CREATE TABLE audit_log (
+    log_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    table_name VARCHAR(50) NOT NULL,
+    operation VARCHAR(10) NOT NULL,
+    record_id INTEGER NOT NULL,
+    changed_by VARCHAR(50) NOT NULL,
+    changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    old_values JSONB,
+    new_values JSONB
+);
+
+-- Example trigger function for auditing
+CREATE OR REPLACE FUNCTION audit_trigger_function()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'UPDATE' THEN
+        INSERT INTO audit_log (
+            table_name, operation, record_id, changed_by,
+            old_values, new_values
+        ) VALUES (
+            TG_TABLE_NAME, TG_OP, OLD.id, current_user,
+            to_jsonb(OLD), to_jsonb(NEW)
+        );
+        RETURN NEW;
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO audit_log (
+            table_name, operation, record_id, changed_by,
+            old_values
+        ) VALUES (
+            TG_TABLE_NAME, TG_OP, OLD.id, current_user,
+            to_jsonb(OLD)
+        );
+        RETURN OLD;
+    ELSIF TG_OP = 'INSERT' THEN
+        INSERT INTO audit_log (
+            table_name, operation, record_id, changed_by,
+            new_values
+        ) VALUES (
+            TG_TABLE_NAME, TG_OP, NEW.id, current_user,
+            to_jsonb(NEW)
+        );
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Apply audit trigger to sensitive tables
+CREATE TRIGGER audit_orders_trigger
+AFTER INSERT OR UPDATE OR DELETE ON orders
+FOR EACH ROW EXECUTE FUNCTION audit_trigger_function();
+```
+
+Remember that database security should be part of a comprehensive security strategy that includes application security, network security, and operational security practices.
+
+## Putting It All Together
+
+### ShopSmart Tables
+
+Based on our analysis and design process, our ShopSmart ecommerce database includes the following 22 tables:
+
+- _`customers`_: A _data table_ representing an entity of type _object_, storing customer information.
+- _`addresses`_: A _data table_ representing an entity of type _object_, containing customer billing and shipping addresses (with a foreign key to _`customers`_).
+- _`categories`_: A _validation table_ that stores product categories with a self-referencing foreign key to support hierarchical categories.
+- _`product_types`_: A _validation table_ storing product types (e.g., physical, digital, subscription), used to classify products.
+- _`product_images`_: A _data table_ representing an entity of type _object_, storing image URLs and metadata related to products.
+- _`products`_: A _data table_ representing an entity of type _object_. It acts as a _supertype table_ for _`physical_products`_, _`digital_products`_, and _`subscription_products`_. It includes common fields like _`product_id`_, _`name`_, and _`price`_.
+  - _`physical_products`_: A _data table_ and _subtype_ of _`products`_, storing attributes specific to tangible items like _`weight`_ and _`dimensions`_.
+  - _`digital_products`_: A _data table_ and _subtype_ of _`products`_, storing attributes like _`download_url`_ and _`file_size`_.
+  - _`subscription_products`_: A _data table_ and _subtype_ of _`products`_, storing recurring billing details like _`billing_period`_ and _`subscription_length`_.
+- _`related_products`_: An _associative table_ linking products to other related products with different relationship types (“accessories”, “alternatives”, or “frequently bought together”).
+- _`product_relationship_types`_: A _validation table_ defining the types of relationships between products (“accessories”, “alternatives”, or “frequently bought together”).
+- _`shopping_carts`_: A _data table_ representing an entity of type _object_, storing shopping cart data for users.
+- _`cart_items`_: An _associative table_ between _`shopping_carts`_ and _`products`_, representing items in a shopping cart with _`quantity`_.
+- _`orders`_: A _data table_ representing an entity of type _event_, tracking purchases with foreign keys to _`customers`_ and _`addresses`_.
+- _`order_items`_: An _associative table_ between _`orders`_ and _`products`_, storing the _`quantity`_ and _`unit_price`_ for each ordered item.
+- _`payments`_: A _data table_ representing an entity of type _event_, recording payment information related to orders.
+- _`reviews`_: A _data table_ representing an entity of type _event_, storing user-generated product reviews, with foreign keys to _`customers`_ and _`products`_.
+- _`wish_lists`_: A _data table_ representing an entity of type _object_, storing user wish lists with a foreign key to _`customers`_.
+- _`wish_list_items`_: An _associative table_ between _`wish_lists`_ and _`products`_.
+- _`promotions`_: A _data table_ that represents an entity of type _event_, storing marketing campaigns and discount offers.
+- _`product_promotions`_: An _associative table_ connecting _`products`_ with _`promotions`_, indicating which promotions apply to which products.
+- _`inventory_history`_: A _data table_ that represents an entity of type _event_, tracking changes to inventory over time.
+
+### ShopSmart ER Diagram
+
+Here's the complete database design represented in an ER diagram:
+
+<ImageWithCaption caption="Figure 10. ER diagram showing the entire database design.">
+  ![Figure 10. ER diagram showing the entire database
+  design.](/images/blog/mastering-relational-database-design-and-implementation/ERD-complete-design.png)
+</ImageWithCaption>
+
+### ShopSmart SQL Code
+
+Here's the complete SQL implementation with all details, constraints, indexes, and schemas (namespaces) ready to build an entire database from scratch:
+
+```sql
+-- Create schemas for organization
+CREATE SCHEMA customers;
+CREATE SCHEMA products;
+CREATE SCHEMA orders;
+CREATE SCHEMA inventory;
+CREATE SCHEMA promotions;
+
+-- Customer schema objects
+CREATE TABLE customers.customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  email varchar(255) UNIQUE NOT NULL,
+  password_hash text NOT NULL,
+  first_name varchar(100) NOT NULL,
+  last_name varchar(100) NOT NULL,
+  phone varchar(20),
+  birth_date date,
+  last_logged_in_at timestamp,
+  inactivated_at timestamp,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_customers_age CHECK (
+    birth_date IS NULL OR
+    (birth_date <= CURRENT_DATE - INTERVAL '13 years' AND birth_date > CURRENT_DATE - INTERVAL '120 years')
+  )
+);
+CREATE INDEX idx_customers_name ON customers.customers(last_name, first_name);
+CREATE INDEX idx_customers_inactivated_at ON customers.customers(inactivated_at);
+
+CREATE TABLE customers.addresses (
+  address_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  address_type varchar(20) NOT NULL DEFAULT 'shipping',
+  street_address varchar(255) NOT NULL,
+  city varchar(100) NOT NULL,
+  state varchar(100),
+  postal_code varchar(20) NOT NULL,
+  country varchar(100) NOT NULL,
+  is_default boolean NOT NULL DEFAULT FALSE,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_addresses_type CHECK (address_type IN ('shipping', 'billing', 'both'))
+);
+CREATE INDEX idx_addresses_customer ON customers.addresses(customer_id);
+
+CREATE TABLE customers.wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  name varchar(100) NOT NULL DEFAULT 'My Wishlist',
+  is_public boolean NOT NULL DEFAULT FALSE,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_wishlists_customer ON customers.wish_lists(customer_id);
+
+CREATE TABLE customers.reviews (
+  review_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  rating integer NOT NULL,
+  title varchar(255),
+  comment text,
+  is_verified_purchase boolean NOT NULL DEFAULT FALSE,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_reviews_rating CHECK (rating BETWEEN 1 AND 5)
+);
+CREATE INDEX idx_reviews_product ON customers.reviews(product_id);
+CREATE INDEX idx_reviews_customer ON customers.reviews(customer_id);
+CREATE INDEX idx_reviews_rating ON customers.reviews(product_id, rating);
+
+-- Product schema objects
+CREATE TABLE products.categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  description text,
+  parent_id uuid REFERENCES products.categories(category_id) ON DELETE SET NULL,
+  inactivated_at timestamp,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_categories_parent ON products.categories(parent_id);
+CREATE INDEX idx_categories_inactivated_at ON products.categories(inactivated_at);
+
+CREATE TABLE products.product_types (
+  product_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  inactivated_at timestamp,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_product_types_display_order ON products.product_types(display_order);
+CREATE INDEX idx_product_types_inactivated_at ON products.product_types(inactivated_at);
+
+INSERT INTO products.product_types (name, description) VALUES
+  ('physical', 'Tangible products that require shipping'),
+  ('digital', 'Downloadable products'),
+  ('subscription', 'Recurring service products');
+
+CREATE TABLE products.products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_type_id uuid NOT NULL REFERENCES products.product_types(product_type_id),
+  name varchar(255) NOT NULL,
+  description text,
+  price decimal(10,2) NOT NULL,
+  cost decimal(10,2),
+  sku varchar(50) UNIQUE,
+  stock_quantity integer NOT NULL DEFAULT 0,
+  category_id uuid NOT NULL REFERENCES products.categories(category_id) ON DELETE RESTRICT,
+  is_featured boolean NOT NULL DEFAULT FALSE,
+  inactivated_at timestamp,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_products_price CHECK (price >= 0),
+  CONSTRAINT chk_products_cost CHECK (cost >= 0),
+  CONSTRAINT chk_products_stock CHECK (stock_quantity >= 0)
+);
+CREATE INDEX idx_products_category ON products.products(category_id);
+CREATE INDEX idx_products_name ON products.products(name);
+CREATE INDEX idx_products_type_id ON products.products(product_type_id);
+CREATE INDEX idx_products_price ON products.products(price);
+CREATE INDEX idx_products_stock ON products.products(stock_quantity) WHERE stock_quantity > 0;
+CREATE INDEX idx_products_active_featured ON products.products(inactivated_at NULLS LAST, is_featured);
+
+CREATE TABLE products.physical_products (
+  product_id uuid PRIMARY KEY REFERENCES products.products(product_id) ON DELETE CASCADE,
+  weight decimal(8,3) NOT NULL,
+  dimensions varchar(50),
+  shipping_class varchar(50) NOT NULL,
+  country_of_origin varchar(100),
+  CONSTRAINT chk_physical_products_weight CHECK (weight > 0)
+);
+CREATE INDEX idx_physical_products ON products.physical_products(product_id);
+
+CREATE TABLE products.digital_products (
+  product_id uuid PRIMARY KEY REFERENCES products.products(product_id) ON DELETE CASCADE,
+  download_url varchar(255) NOT NULL,
+  file_size integer NOT NULL,
+  file_format varchar(20) NOT NULL,
+  download_limit integer,
+  CONSTRAINT chk_digital_products_size CHECK (file_size > 0)
+);
+CREATE INDEX idx_digital_products ON products.digital_products(product_id);
+
+CREATE TABLE products.subscription_products (
+  product_id uuid PRIMARY KEY REFERENCES products.products(product_id) ON DELETE CASCADE,
+  billing_period varchar(20) NOT NULL,
+  subscription_length integer,
+  trial_period_days integer DEFAULT 0,
+  CONSTRAINT chk_subscription_products_period CHECK (billing_period IN ('monthly', 'quarterly', 'annual'))
+);
+CREATE INDEX idx_subscription_products ON products.subscription_products(product_id);
+
+CREATE TABLE products.product_images (
+  image_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  image_url varchar(255) NOT NULL,
+  alt_text varchar(255),
+  is_primary boolean NOT NULL DEFAULT FALSE,
+  display_order integer NOT NULL DEFAULT 0,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_product_images ON products.product_images(product_id);
+
+CREATE TABLE products.product_relationship_types (
+  product_relationship_type_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(50) UNIQUE NOT NULL,
+  description text,
+  display_order integer NOT NULL DEFAULT 0,
+  inactivated_at timestamp,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_product_relationship_types_name ON products.product_relationship_types(name);
+
+CREATE TABLE products.related_products (
+  related_product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  related_to_product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  product_relationship_type_id uuid NOT NULL REFERENCES products.product_relationship_types(product_relationship_type_id) ON DELETE RESTRICT,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_related_product UNIQUE (product_id, related_to_product_id),
+  CONSTRAINT chk_different_products CHECK (product_id <> related_to_product_id)
+);
+CREATE INDEX idx_related_products ON products.related_products(product_id);
+CREATE INDEX idx_related_to_products ON products.related_products(related_to_product_id);
+CREATE INDEX idx_related_products_relationship_type ON products.related_products(product_relationship_type_id);
+
+CREATE TABLE customers.wish_list_items (
+  wish_list_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  wish_list_id uuid NOT NULL REFERENCES customers.wish_lists(wish_list_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  added_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  notes text,
+  CONSTRAINT unique_wishlist_item UNIQUE (wish_list_id, product_id)
+);
+CREATE INDEX idx_wishlist_items_wishlist ON customers.wish_list_items(wish_list_id);
+CREATE INDEX idx_wishlist_items_product ON customers.wish_list_items(product_id);
+
+-- Order schema objects
+CREATE TABLE orders.orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid NOT NULL REFERENCES customers.customers(customer_id) ON DELETE RESTRICT,
+  ordered_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  shipping_address_id uuid NOT NULL REFERENCES customers.addresses(address_id) ON DELETE RESTRICT,
+  billing_address_id uuid REFERENCES customers.addresses(address_id) ON DELETE RESTRICT,
+  status varchar(20) NOT NULL DEFAULT 'pending',
+  shipping_cost decimal(8,2) NOT NULL DEFAULT 0,
+  tax_amount decimal(8,2) NOT NULL DEFAULT 0,
+  notes text,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_orders_status CHECK (status IN ('pending', 'processing', 'shipped', 'delivered', 'cancelled')),
+  CONSTRAINT chk_orders_shipping CHECK (shipping_cost >= 0),
+  CONSTRAINT chk_orders_tax CHECK (tax_amount >= 0)
+);
+CREATE INDEX idx_orders_customer_date ON orders.orders(customer_id, status, ordered_at);
+
+CREATE TABLE orders.order_items (
+  order_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders.orders(order_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE RESTRICT,
+  quantity integer NOT NULL,
+  unit_price decimal(10,2) NOT NULL,
+  discount_amount decimal(8,2) NOT NULL DEFAULT 0,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_order_items_quantity CHECK (quantity > 0),
+  CONSTRAINT chk_order_items_price CHECK (unit_price >= 0),
+  CONSTRAINT chk_order_items_discount CHECK (discount_amount >= 0)
+);
+CREATE INDEX idx_order_items_order ON orders.order_items(order_id);
+CREATE INDEX idx_order_items_product ON orders.order_items(product_id);
+
+CREATE TABLE orders.shopping_carts (
+  cart_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  customer_id uuid UNIQUE NOT NULL REFERENCES customers.customers(customer_id) ON DELETE CASCADE,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_shopping_carts_customer ON orders.shopping_carts(customer_id);
+
+CREATE TABLE orders.cart_items (
+  cart_item_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  cart_id uuid NOT NULL REFERENCES orders.shopping_carts(cart_id) ON DELETE CASCADE,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  quantity integer NOT NULL,
+  added_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_cart_items_quantity CHECK (quantity > 0),
+  CONSTRAINT unique_cart_product UNIQUE (cart_id, product_id)
+);
+CREATE INDEX idx_cart_items_cart ON orders.cart_items(cart_id);
+CREATE INDEX idx_cart_items_product ON orders.cart_items(product_id);
+
+CREATE TABLE orders.payments (
+  payment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id uuid NOT NULL REFERENCES orders.orders(order_id) ON DELETE RESTRICT,
+  paid_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  amount decimal(10,2) NOT NULL,
+  payment_method varchar(50) NOT NULL,
+  status varchar(20) NOT NULL DEFAULT 'pending',
+  transaction_id varchar(100) UNIQUE,
+  CONSTRAINT chk_payments_amount CHECK (amount > 0),
+  CONSTRAINT chk_payments_status CHECK (status IN ('pending', 'completed', 'failed', 'refunded'))
+);
+CREATE INDEX idx_payments_order ON orders.payments(order_id);
+CREATE INDEX idx_payments_transaction ON orders.payments(transaction_id);
+
+-- Promotions schema objects
+CREATE TABLE promotions.promotions (
+  promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name varchar(100) NOT NULL,
+  description text,
+  discount_type varchar(20) NOT NULL,
+  discount_value decimal(10,2) NOT NULL,
+  started_at timestamp NOT NULL,
+  ended_at timestamp NOT NULL,
+  inactivated_at timestamp,
+  usage_limit integer,
+  usage_count integer NOT NULL DEFAULT 0,
+  minimum_order_amount decimal(10,2) DEFAULT 0,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_promotions_discount_type CHECK (discount_type IN ('percentage', 'fixed_amount')),
+  CONSTRAINT chk_promotions_discount_value CHECK (discount_value > 0),
+  CONSTRAINT chk_promotions_percentage CHECK (discount_type != 'percentage' OR discount_value <= 100),
+  CONSTRAINT chk_promotions_dates CHECK (ended_at > started_at)
+);
+CREATE INDEX idx_promotions_active_dates ON promotions.promotions(inactivated_at, started_at, ended_at);
+
+CREATE TABLE promotions.product_promotions (
+  product_promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  promotion_id uuid NOT NULL REFERENCES promotions.promotions(promotion_id) ON DELETE CASCADE,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_product_promotion UNIQUE (product_id, promotion_id)
+);
+CREATE INDEX idx_product_promotions_product ON promotions.product_promotions(product_id);
+CREATE INDEX idx_product_promotions_promotion ON promotions.product_promotions(promotion_id);
+
+-- Inventory schema objects
+CREATE TABLE inventory.inventory_history (
+  inventory_history_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  product_id uuid NOT NULL REFERENCES products.products(product_id) ON DELETE CASCADE,
+  quantity_change integer NOT NULL,
+  previous_quantity integer NOT NULL,
+  new_quantity integer NOT NULL,
+  reason varchar(50) NOT NULL,
+  changed_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  changed_by varchar(100) NOT NULL,
+  CONSTRAINT chk_inventory_reason CHECK (reason IN ('purchase', 'sale', 'return', 'adjustment', 'loss'))
+);
+CREATE INDEX idx_inventory_history_product ON inventory.inventory_history(product_id);
+CREATE INDEX idx_inventory_history_date_brin ON inventory.inventory_history USING BRIN (changed_at);
+
+-- Create application roles
+CREATE ROLE customer_service;
+CREATE ROLE inventory_manager;
+CREATE ROLE sales_analyst;
+CREATE ROLE product_manager;
+
+-- Grant schema-level permissions
+GRANT USAGE ON SCHEMA customers TO customer_service;
+GRANT SELECT, UPDATE ON ALL TABLES IN SCHEMA customers TO customer_service;
+GRANT SELECT ON ALL TABLES IN SCHEMA orders TO customer_service;
+
+GRANT USAGE ON SCHEMA inventory TO inventory_manager;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA inventory TO inventory_manager;
+GRANT SELECT ON ALL TABLES IN SCHEMA products TO inventory_manager;
+
+GRANT USAGE ON SCHEMA analytics TO sales_analyst;
+GRANT SELECT ON ALL TABLES IN SCHEMA analytics TO sales_analyst;
+
+GRANT USAGE ON SCHEMA products TO product_manager;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA products TO product_manager;
+```
+
+### Database Maintenance
+
+Even a well-designed database requires ongoing maintenance:
+
+- **Monitoring performance**: Identifying and resolving bottlenecks, especially during high-traffic periods like sales events.
+- **Managing growth**: Planning for increasing data volumes as product catalogs and customer bases grow.
+- **Schema evolution**: Adapting the database as business requirements change (new features, new product types, etc.).
+- **Data archiving**: Moving historical order and inventory data to maintain performance.
+
+## Conclusion
+
+Database design is a crucial skill that impacts the success of any data-driven application. By understanding the principles of relational database design and following a systematic approach, you can create database structures that efficiently store data while maintaining integrity and supporting business operations.
+
+The ShopSmart ecommerce database we designed demonstrates how to translate business requirements into a practical database model and implementation. From identifying entities and attributes to establishing relationships and implementing constraints, each step contributes to a robust design that serves the needs of the organization.
+
+Remember that database design is both an art and a science—while following best practices is important, the best design is ultimately the one that meets your specific requirements and constraints. For ecommerce systems in particular, finding the right balance between normalization (for data integrity and consistency) and performance optimization is key to creating a database that can support a growing business.
+
+<InfoBox>
+Writing and refining this article took a lot of effort—even with the help of AI tools. I hope you found it valuable! If you did, please give it a thumbs up, leave your feedback in the [comments below](#post-comments), and share it with others.
+
+Spotted a mistake or have a suggestion? I’d love to hear from you!
+
+I'm using [Giscus](https://giscus.app/), so you can react and comment using your GitHub account. 😉
+
+<br />
+
+<SocialMediaShareButtons
+  hashtags={["database", "sql", "postgresql"]}
+  tweetText="Learn fundamental and advanced relational database design concepts—including entities, relationships, ER diagrams, SQL, and more—as you build a robust ecommerce database from the ground up. #DatabaseDesign #PostgreSQL #SQL"
+  tweetVia="flsilva7"
+  url="https://flsilva.com/blog/mastering-relational-database-design-theory-and-practice"
+/>
+
+<br />
+
+Thanks for reading!
+
+</InfoBox>
+
+<br />
+
+## Related posts
+
+- [Introduction to NoSQL](/blog/introduction-to-nosql)
+- [Introduction to UML](/blog/introduction-to-uml-concepts)
+- [What is software architecture?](/blog/what-is-software-architecture)
+- [Nexar: application architecture for Next.js App Router apps](/blog/nexar-application-architecture-for-nextjs-app-router-apps)
+- [React Server Components and a new hybrid web app model](/blog/react-server-components-and-a-new-hybrid-web-app-model)
+- [Building OpenTask with Next.js App Router and RSCs](/blog/building-opentask-nextjs-app-router-react-server-components/)
+
+## Bibliography
+
+- Captain, Fidel A. (2013). _Six-Step Relational Database Design_. 2nd Edition.
+
+- Hernandez, Michael J. (2020). _Database Design for Mere Mortals_. 4th Edition. Addison-Wesley Professional.
+
+- "A brief history of databases: From relational, to NoSQL, to distributed SQL" _Cockroach Labs_ , n.d. Web. 2 April 2025 &#60;<a href="https://www.cockroachlabs.com/blog/history-of-databases-distributed-sql/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.cockroachlabs.com/blog/history-of-databases-distributed-sql/</a>&#62;
+
+- "Data Consistency vs Data Integrity: Similarities and Differences" _IBM_ , n.d. Web. 4 April 2025 &#60;<a href="https://www.ibm.com/think/topics/data-consistency-vs-data-integrity" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.ibm.com/think/topics/data-consistency-vs-data-integrity</a>&#62;
+
+- "PostgreSQL Documentation" _The PostgreSQL Global Development Group_ , n.d. Web. 16 April 2025 &#60;<a href="https://www.postgresql.org/docs/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.postgresql.org/docs/</a>&#62;
+
+- "The History Of Databases" _ThinkAutomation_ , n.d. Web. 2 April 2025 &#60;<a href="https://www.thinkautomation.com/histories/the-history-of-databases/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.thinkautomation.com/histories/the-history-of-databases/</a>&#62;
+
+- "What is an Entity Relationship (ER) Diagram?" _Miro_ , n.d. Web. 2 April 2025 &#60;<a href="https://miro.com/diagramming/what-is-an-er-diagram/" style={{ lineBreak: 'anywhere' }}>ht<span />tps://miro.com/diagramming/what-is-an-er-diagram/</a>&#62;
+
+- "What is transaction management?" _IBM_ , n.d. Web. 16 April 2025 &#60;<a href="https://www.ibm.com/think/topics/transaction-management" style={{ lineBreak: 'anywhere' }}>ht<span />tps://www.ibm.com/think/topics/transaction-management</a>&#62;
+
+<br />
+<br />
+<br />
+
+<AITools />

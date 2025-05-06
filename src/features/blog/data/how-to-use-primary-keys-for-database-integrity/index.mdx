@@ -1,0 +1,334 @@
+export const author = "Flavio Silva";
+
+export const authorImage = "flavio-thumb.jpg";
+
+export const authorUrl = "https://www.flsilva.com";
+
+export const changefreq = "monthly";
+
+export const contentType = "blog-post";
+
+export const date = "2025-04-08T00:00:00";
+
+export const description =
+  "Learn how database keys establish and maintain data integrity in relational databases. Master primary keys, foreign keys, and other constraints for reliable data structures.";
+
+export const heroImage = "hero.png";
+
+export const heroImageCreditText = "";
+
+export const heroImageCreditUrl = "";
+
+export const heroImageWidth = 853;
+
+export const heroImageHeight = 517;
+
+export const priority = 0.6;
+
+export const slug = "how-to-use-primary-keys-for-database-integrity";
+
+export const tags = ["database", "sql", "postgresql"];
+
+export const title = "How to use primary keys for database integrity";
+
+export const tweetText =
+  "Discover how database keys form the backbone of data integrity in relational systems. Learn about primary keys, foreign keys, and other constraints that ensure your database remains reliable and consistent. #DatabaseDesign #DataIntegrity #SQLKeys";
+
+export const tweetVia = "flsilva7";
+
+export const tweetCardImage = "tweet-card.png";
+
+import { ImageWithCaption } from "@/features/shared/ui/ImageWithCaption";
+import { SocialMediaShareButtons } from "@/features/shared/ui/social-media-share/SocialMediaShareButtons";
+import { AITools } from "@/features/shared/ui/boxes/AITools";
+import { InfoBox } from "@/features/shared/ui/boxes/InfoBox";
+import { InfoBoxQuotation } from "@/features/shared/ui/boxes/InfoBoxQuotation";
+import { A } from "@/features/shared/ui/typography/Typography";
+
+<br />
+<br />
+
+<InfoBox>
+  This is **Part 5** of the "Mastering Relational Database Design" series. In
+  [Part 4](LINK_HERE), we learned PostgreSQL's rich type system and provided
+  best practices on choosing the optimal data type for different scenarios.
+</InfoBox>
+
+## Introduction
+
+Keys are fundamental to the structure and reliability of relational databases. They not only uniquely identify records but also enforce data integrity—both at the table level and the relationship level—by supporting and constraining the relationships between tables.
+
+In this article, we'll explore the various types of keys used in relational databases, understand how they maintain data integrity, and implement them in our ShopSmart ecommerce database. We'll also examine common pitfalls and best practices for key selection and implementation.
+
+## Understanding database keys
+
+Keys play a critical role in relational databases:
+
+1. **Uniquely identifying records:** Ensuring every row in a table can be distinctly identified.
+2. **Establishing relationships:** Linking rows in one table to rows in another table.
+3. **Enforcing data integrity:** Guaranteeing uniqueness and valid references.
+4. **Query optimization**: Providing paths for efficient data retrieval.
+
+<InfoBoxQuotation>
+  Database keys transform independent tables into an interconnected data model
+  that accurately represents complex real-world relationships.
+</InfoBoxQuotation>
+
+Let's explore the various types of keys and how they serve these purposes.
+
+## Types of keys
+
+Let's clarify the different key types:
+
+### Candidate keys
+
+A column (or set of columns) that _could_ serve as a primary key. It must satisfy two conditions:
+
+1.  It uniquely identifies each row in the table.
+2.  It contains no _`NULL`_ values (implicitly or via a _`NOT NULL`_ constraint).
+
+A table can have multiple candidate keys. Examples: _`customer_id`_, _`email`_ (if unique and not null) could both be candidate keys for the _`customers`_ table.
+
+### Primary keys (PK)
+
+The **chosen** candidate key selected to be the _main identifier_ for rows in a table.
+
+- There can be **only one** primary key per table.
+- It **cannot** contain _`NULL`_ values.
+- Its values **must** be unique across all rows in the table.
+- Databases typically automatically create an index on the primary key for fast lookups.
+- **Crucial** for table-level integrity and as the target for foreign keys.
+
+<InfoBoxQuotation>
+  The primary key is the cornerstone of both table-level integrity (ensuring
+  each record is unique) and relationship-level integrity (providing a reliable
+  way to reference records across tables).
+</InfoBoxQuotation>
+
+In SQL, primary keys are defined using the _`PRIMARY KEY`_ constraint:
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other columns
+);
+```
+
+### Alternate keys
+
+Any candidate key that was _not_ chosen as the primary key. Alternate keys still guarantee uniqueness and are often enforced using a _`UNIQUE`_ constraint. Example: If _`customer_id`_ is the PK for _`customers`_, then _`email`_ (if defined as _`UNIQUE NOT NULL`_) is an alternate key.
+
+### Surrogate keys
+
+An artificial key added to a table solely for the purpose of being the primary key. It has no business meaning itself. Typically, it's an auto-incrementing integer (_`integer GENERATED AS IDENTITY`_) or a UUID (_`uuid`_).
+
+- **Advantages:** Stable (doesn't change if business data changes), often simple (single column), efficient for joins/indexing, independent of business rules.
+- **Disadvantages (integer):** Can reveal business information (e.g., growth rate), requires central generation (can be complex in distributed systems).
+- **Disadvantages (UUID):** Larger storage (16 bytes vs 4/8 for int/bigint), can lead to slightly slower index performance due to size and randomness (fragmentation), not human-readable.
+
+The choice depends on your specific requirements. Ecommerce systems that may need to merge databases or operate across multiple data centers often benefit from _`uuid`_ despite the performance trade-offs.
+
+<InfoBox>
+  For our ShopSmart database, we'll use surrogate keys as primary keys for all
+  tables as they provide stability and simplicity. Unlike natural keys that may
+  change when business data changes (like email addresses), surrogate keys
+  remain constant throughout a record's lifecycle, simplifying relationships and
+  maintenance.
+</InfoBox>
+
+### Natural keys
+
+A candidate key composed of one or more existing attributes that have inherent business meaning (e.g., _`email`_, _`sku`_, _`isbn`_).
+
+- **Disadvantages:** Can change (email changes), might be large/composite (inefficient), could expose sensitive info, might be subject to changing business rules affecting uniqueness.
+
+### Composite keys
+
+A primary key (or candidate key) composed of **two or more columns** combined. Necessary when a single column cannot uniquely identify a row (often seen in associative tables linking two other tables).
+
+- **Disadvantages:** More complex joins, larger foreign keys in referencing tables, potentially more cumbersome in application code.
+
+### Foreign keys (FK)
+
+A column (or set of columns) in one table (the _child_ or _referencing_ table) that refers to the primary key of another table (the _parent_ or _referenced_ table). Foreign keys are the mechanism used to **implement relationships** between tables and enforce **referential integrity**. (We will cover FKs in detail when discussing relationships).
+
+<InfoBox>
+  **Best Practice:** For most tables, prefer using **surrogate keys** (_`uuid`_
+  or _`integer GENERATED AS IDENTITY`_) as primary keys over **natural keys**.
+  They provide stability and efficiency. We will use _`uuid`_ generated via
+  _`gen_random_uuid()`_ as the primary key type for all tables in our ShopSmart
+  database. This offers global uniqueness, beneficial for potential future
+  scaling or distribution, at the cost of slightly larger storage and
+  potentially less optimal index locality compared to sequential integers.
+</InfoBox>
+
+## Data integrity
+
+As discussed in a previous article, data integrity ensures that information in a database remains accurate, consistent, and reliable throughout its lifecycle. It's enforced at multiple levels through various mechanisms, with keys playing a central role.
+
+### Table-level integrity
+
+**Table-level integrity** focuses on ensuring that individual tables maintain consistent, valid data. It includes:
+
+- **Entity integrity**: Ensures each row in a table is uniquely identifiable (enforced by primary keys).
+- **Domain integrity**: Ensures all values in a column fall within defined constraints (enforced by data types, check constraints).
+- **User-defined integrity**: Enforces business rules specific to the application (implemented through check constraints, triggers).
+
+In our _`products`_ table, we enforce table-level integrity by ensuring each product has a unique identifier with the _`product_id`_ primary key. In a later article, we'll explore how to implement user-defined integrity using check constraints—for example, ensuring the _`price`_ field is non-negative.
+
+```sql
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  -- other fields
+);
+```
+
+### Relationship-level integrity
+
+Instruction: We should have a single paragraph here briefly mentioning relationship-level integrity and explaining that we'll approach it in the article “Modeling Relationships”.
+
+### Field-level integrity
+
+Instruction: We should have a single paragraph here briefly mentioning field-level integrity and explaining that we'll approach it in the article “Constraints & Validation Tables”.
+
+## Implementing keys in the ShopSmart database
+
+Let's implement primary keys for all tables in our ShopSmart ecommerce database:
+
+```sql
+-- Adding Primary Keys (PK) using UUIDs to our tables
+
+-- Ensure the pgcrypto extension is available for gen_random_uuid()
+-- CREATE EXTENSION IF NOT EXISTS "pgcrypto"; -- Run this once per database if needed
+
+CREATE TABLE customers (
+  customer_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  email varchar(255),
+  first_name varchar(100),
+  last_name varchar(100),
+  phone varchar(20),
+  birth_date date,
+  registered_at timestamp,
+  has_marketing_subscription boolean
+);
+
+CREATE TABLE products (
+  product_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  name varchar(255),
+  description text,
+  price decimal(10,2),
+  weight decimal(8,2),
+  dimensions varchar(50),
+  brand varchar(100),
+  stock_quantity integer,
+  sku varchar(50),
+  is_featured boolean
+);
+
+CREATE TABLE categories (
+  category_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  name varchar(100),
+  description text
+);
+
+CREATE TABLE orders (
+  order_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  ordered_at timestamp,
+  status varchar(50)
+);
+
+CREATE TABLE shopping_carts (
+  cart_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  created_at timestamp
+);
+
+CREATE TABLE wish_lists (
+  wish_list_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  name varchar(100),
+  created_at timestamp
+);
+
+CREATE TABLE payments (
+  payment_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  amount decimal(10,2),
+  paid_at timestamp,
+  payment_method varchar(50),
+  status varchar(50)
+);
+
+CREATE TABLE reviews (
+  review_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  rating integer,
+  comment text,
+  reviewed_at timestamp
+);
+
+CREATE TABLE promotions (
+  promotion_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  name varchar(100),
+  description text,
+  discount_type varchar(20),
+  discount_value decimal(10,2),
+  started_at date,
+  ended_at date
+);
+
+CREATE TABLE addresses (
+  address_id uuid DEFAULT gen_random_uuid() PRIMARY KEY, -- PK Definition
+  street varchar(255),
+  city varchar(100),
+  state varchar(100),
+  postal_code varchar(20),
+  country varchar(100)
+);
+```
+
+### Updating the ER diagram with PKs
+
+<ImageWithCaption caption="Figure 3. ER diagram showing ShopSmart tables with fields and designated Primary Keys (PK).">
+  ![Figure 3. ER diagram showing ShopSmart tables with fields and primary
+  keys.](/images/blog/mastering-relational-database-design-defining-structure-attributes-data-types-keys/ERD-tables-fields-pk.png)
+</ImageWithCaption>
+
+With primary keys defined, our ER diagram clearly represents a **logical model**. Each table now has a unique identifier for its records.
+
+## Best practices for primary key design
+
+Based on our exploration of keys and integrity constraints, here are some best practices:
+
+1. **Use surrogate keys for most tables**: They provide stability and simplicity.
+2. **Choose UUIDs for distributed systems**: Particularly valuable for microservices or systems that span multiple databases.
+3. **Enforce uniqueness on natural keys**: Even when using surrogate keys, maintain uniqueness on business identifiers.
+4. **Document key selection rationale**: Explain why particular key strategies were chosen for your system
+
+## Key takeaways
+
+- **Keys are fundamental** to relational database design, establishing identity and relationships.
+- **Primary keys uniquely identify** each record in a table and cannot contain null values.
+- **Foreign keys implement relationships** between tables and enforce referential integrity.
+- **Surrogate keys (like UUIDs)** provide stability and simplicity compared to natural keys.
+- **Data integrity operates at multiple levels**: table, relationship, and field level.
+- **Well-designed keys and constraints** prevent invalid data from entering your database
+
+## Next up in the series
+
+In the next article, [How to model table relationships with foreign keys and SQL](LINK_HERE), we'll explore the various types of relationships between entities and how to implement them in a relational database. We'll cover one-to-one, one-to-many, and many-to-many relationships, as well as self-referencing relationships that create hierarchical or network structures.
+
+## Complete series
+
+- SERIES ARTICLE 01 (This article.)
+- [SERIES ARTICLE 02](/blog/SERIES ARTICLE 02)
+- [SERIES ARTICLE 03](/blog/SERIES ARTICLE 03)
+  …
+
+## Bibliography
+
+- Captain, Fidel A. (2013). _Six-Step Relational Database Design_. 2nd Edition.
+
+- Hernandez, Michael J. (2020). _Database Design for Mere Mortals_. 4th Edition. Addison-Wesley Professional.
+
+<br />
+<br />
+<br />
+
+<AITools />
