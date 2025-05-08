@@ -126,7 +126,7 @@ export default function OpenTaskShowcase() {
           <P>
             I designed <A href="https://nexar.dev/">Nexar</A> while building
             OpenTask. It&#39;s a{" "}
-            <A href="/what-is-software-architecture/#modules-and-modular-architectures">
+            <A href="/blog/what-is-software-architecture/#modules-and-modular-architectures">
               layered and modular application architecture
             </A>{" "}
             for Next.js App Router apps.
