@@ -43,9 +43,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const { slug } = await params;
-    const postModule = await import(`@/features/blog/data/${slug}/index.mdx`);
+    const postModule: BlogPostModule = await import(
+      `@/features/blog/data/${slug}/index.mdx`
+    );
     return {
-      title: postModule.name,
+      title: postModule.title,
       description: postModule.description,
       alternates: {
         canonical: `/blog/${slug}`,

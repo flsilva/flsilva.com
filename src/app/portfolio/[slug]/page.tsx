@@ -15,6 +15,7 @@ import { PortfolioProjectCarousel } from "@/features/portfolio/ui/PortfolioProje
 interface PortfolioProjectModule {
   default: ComponentType;
   name: string;
+  description: string;
   shortInfo: string;
   images?: string[];
   heroImage?: string;
@@ -36,7 +37,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const { slug } = await params;
-    const postModule = await import(
+    const postModule: PortfolioProjectModule = await import(
       `@/features/portfolio/data/${slug}/index.mdx`
     );
     return {
