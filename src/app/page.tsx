@@ -41,11 +41,11 @@ export default function HomePage() {
             designers to drive business results.
           </P>
           <P>
-            Recently, I built <A href="/opentask-showcase/">OpenTask</A>, an{" "}
-            <A href="https://github.com/flsilva/opentask/">open-source</A> and
+            Recently, I built <A href="/opentask-showcase">OpenTask</A>, an{" "}
+            <A href="https://github.com/flsilva/opentask">open-source</A> and
             responsive task management MVP showcasing modern web development
             practices with{" "}
-            <A href="/blog/react-server-components-and-a-new-hybrid-web-app-model/">
+            <A href="/blog/react-server-components-and-a-new-hybrid-web-app-model">
               React Server Components
             </A>{" "}
             and the new{" "}
@@ -54,12 +54,12 @@ export default function HomePage() {
         </article>
         <article className="grid gap-y-6 mt-10">
           <P>
-            OpenTask implements <A href="https://nexar.dev/">Nexar</A>, a{" "}
-            <A href="/blog/what-is-software-architecture/#modules-and-modular-architectures">
+            OpenTask implements <A href="https://nexar.dev">Nexar</A>, a{" "}
+            <A href="/blog/what-is-software-architecture#modules-and-modular-architectures">
               modular
             </A>{" "}
             and{" "}
-            <A href="/blog/what-is-software-architecture/#layers-and-layered-architectures">
+            <A href="/blog/what-is-software-architecture#layers-and-layered-architectures">
               layered
             </A>{" "}
             application architecture I designed to help teams build scalable and

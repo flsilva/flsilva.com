@@ -24,7 +24,7 @@ export const MainMenu = ({ onItemClick }: MainMenuProps) => {
       <ul className="flex flex-col items-center m-0 p-0 md:flex-row md:items-start md:m-[-0.375rem_0_0_4rem]">
         <li className={twMerge(menuItemClassName, "md:first:ml-0")}>
           <Link
-            href="/blog/"
+            href="/blog"
             className={twMerge(textClassName, menuItemLinkClassName)}
             {...dynamicProps}
           >
@@ -33,7 +33,7 @@ export const MainMenu = ({ onItemClick }: MainMenuProps) => {
         </li>
         <li className={menuItemClassName}>
           <Link
-            href="/portfolio/"
+            href="/portfolio"
             className={twMerge(textClassName, menuItemLinkClassName)}
             {...dynamicProps}
           >
@@ -42,7 +42,7 @@ export const MainMenu = ({ onItemClick }: MainMenuProps) => {
         </li>
         <li className={menuItemClassName}>
           <Link
-            href="/open-source/"
+            href="/open-source"
             className={twMerge(textClassName, menuItemLinkClassName)}
             {...dynamicProps}
           >
@@ -60,7 +60,7 @@ export const MainMenu = ({ onItemClick }: MainMenuProps) => {
         </li>
         <li className={menuItemClassName}>
           <Link
-            href="/opentask-showcase/"
+            href="/opentask-showcase"
             className={twMerge(
               textClassName,
               menuItemLinkClassName,

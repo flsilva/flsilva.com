@@ -52,9 +52,9 @@ That's probably due to factors such as the evolution of the IT industry and its 
 
 ## What is a VPS?
 
-A VPS (Virtual Private Server) is a private (only you have access) [virtual machine](http://en.wikipedia.org/wiki/Virtual_machine) sold as a service by an [Internet hosting service](http://en.wikipedia.org/wiki/Internet_hosting_service). ("Virtual Private Server - Wikipedia")
+A VPS (Virtual Private Server) is a private (only you have access) [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) sold as a service by an [Internet hosting service](https://en.wikipedia.org/wiki/Internet_hosting_service). ("Virtual Private Server - Wikipedia")
 
-A VPS hosting service is a hosting service sitting between a [shared](http://en.wikipedia.org/wiki/Shared_web_hosting_service) and a [didicated](http://en.wikipedia.org/wiki/Dedicated_hosting_service) server hosting.
+A VPS hosting service is a hosting service sitting between a [shared](https://en.wikipedia.org/wiki/Shared_web_hosting_service) and a [didicated](https://en.wikipedia.org/wiki/Dedicated_hosting_service) server hosting.
 It mimics a dedicated server because you have your own OS (Operating System) instance, which allows you to do anything you want at a software level.
 But simultaneously, your VPS shares hardware (CPU, RAM, I/O operations, etc.) with other VPSs running in the same physical machine.
 Depending on the hosting service and virtualization technique, you have more or less a guarantee for dedicated resources.
@@ -78,7 +78,7 @@ Since Ubuntu (and Ubuntu Server) are built on top of Debian, both are virtually 
 <WarningBoxNoRunDollarSign />
 
 macOS comes with an SSH client by default, so you don't need to install one yourself.
-But if you're running Windows on your local machine, you must install one. [PuTTY](http://www.putty.org/) is the most popular, but choose whatever you want.
+But if you're running Windows on your local machine, you must install one. [PuTTY](https://www.putty.org/) is the most popular, but choose whatever you want.
 
 To connect to your VPS, you run a command using the following format:
 
@@ -128,7 +128,7 @@ You can and should run those two commands occasionally to keep your Linux distro
 
 ## Step 4. Setting the Hostname and FQDN
 
-Now you'll set your system's hostname and [FQDN](http://en.wikipedia.org/wiki/Fully_qualified_domain_name) (fully qualified domain name).
+Now you'll set your system's hostname and [FQDN](https://en.wikipedia.org/wiki/Fully_qualified_domain_name) (fully qualified domain name).
 Don't worry about this, it's just a name for your Linux machine, and it doesn't directly relate to what you'll host.
 But make it a unique name (also, do not use the same name for other Linux users).
 
@@ -180,7 +180,7 @@ Now, if you run _`$ sudo`_ again you **shouldn't** see that message again.
 
 You can change the timezone of your Linux server.
 You can set the timezone if your website or application is local to a city or country.
-If you're dealing with users from several countries or want more flexibility, you can set the timezone to [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time).
+If you're dealing with users from several countries or want more flexibility, you can set the timezone to [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time).
 Then, when you retrieve or show time-related data to your users, you can translate time from UTC to your users' local timezone.
 
 You can run _`$ date`_ to check what's the time in your server.
@@ -198,7 +198,7 @@ Tip: UTC is inside the _`Etc`_ option.
 
 Now it's time to start securing your server.
 A basic firewall will limit what ports your server allow traffic, blocking all unecessary ones.
-Linux provides [iptables](http://en.wikipedia.org/wiki/Iptables) (for IPv4 rules) and ip6tables (for IPv6 rules) tools that allow us to define rules that take care of what to do with net packets.
+Linux provides [iptables](https://en.wikipedia.org/wiki/Iptables) (for IPv4 rules) and ip6tables (for IPv6 rules) tools that allow us to define rules that take care of what to do with net packets.
 
 First, let's check our current rules:
 
@@ -490,7 +490,7 @@ Great! Now, when you restart your server your rules will be active!
 
 ## Step 7. Install Fail2ban
 
-[Fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page) is a tool to protect servers from single source brute force attacks.
+[Fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page) is a tool to protect servers from single source brute force attacks.
 It bans IPs that show malicious signs, like too many password failures.
 
 Install Fail2ban:
@@ -556,7 +556,7 @@ $ logout
 Then, go ahead and follow that step-by-step guide, then come back here to proceed.
 
 Now that you have your SSH keys, let's upload your **public key** to your server using the [_security copy_](https://www.ssh.com/academy/ssh/scp) command (_`$ scp`_).
-For Windows you can use [WinSCP](http://winscp.net/eng/index.php).
+For Windows you can use [WinSCP](https://winscp.net/eng/index.php).
 
 ```shell
 $ scp ~/.ssh/id_ed25519.pub deploy@123.456.78.90:
@@ -665,10 +665,10 @@ Happy sysadmin! 🙃
 
 ## Interesting links
 
-- [SSH (Secure Shell)](http://en.wikipedia.org/wiki/Secure_Shell)<br />
-- [iptables](http://en.wikipedia.org/wiki/Iptables)<br />
-- [Fail2ban](http://en.wikipedia.org/wiki/Fail2ban)
+- [SSH (Secure Shell)](https://en.wikipedia.org/wiki/Secure_Shell)<br />
+- [iptables](https://en.wikipedia.org/wiki/Iptables)<br />
+- [Fail2ban](https://en.wikipedia.org/wiki/Fail2ban)
 
 ## Bibliography
 
-- "Virtual Private Server - Wikipedia" _Wikipedia_ , n.d. Web. 06 May 2014 &#60;<A href="http://en.wikipedia.org/wiki/Virtual_private_server" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Virtual_private_server</A>&#62;
+- "Virtual Private Server - Wikipedia" _Wikipedia_ , n.d. Web. 06 May 2014 &#60;<A href="https://en.wikipedia.org/wiki/Virtual_private_server" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Virtual_private_server</A>&#62;

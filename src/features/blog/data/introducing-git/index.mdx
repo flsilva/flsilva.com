@@ -42,19 +42,19 @@ import { A } from "@/features/shared/ui/typography/Typography";
 
 ## Introduction
 
-If you are already familiar with [Git](http://git-scm.com/) and its distributed model, you can skip this brief introduction and move on to the [Git Workflow](/blog/git-workflow) article.
+If you are already familiar with [Git](https://git-scm.com/) and its distributed model, you can skip this brief introduction and move on to the [Git Workflow](/blog/git-workflow) article.
 
 ## What is Git?
 
-[Git](http://git-scm.com/) is popularly known as a [Version Control System (VCS)](http://en.wikipedia.org/wiki/Revision_control), but it's more than that. Git is a [Software Configuration Management (SCM)](http://en.wikipedia.org/wiki/Software_configuration_management) system, because besides file version control, it also has software development process features such as integration team facilities, merging changes on files, tagging, branching, and more.
+[Git](https://git-scm.com/) is popularly known as a [Version Control System (VCS)](https://en.wikipedia.org/wiki/Revision_control), but it's more than that. Git is a [Software Configuration Management (SCM)](https://en.wikipedia.org/wiki/Software_configuration_management) system, because besides file version control, it also has software development process features such as integration team facilities, merging changes on files, tagging, branching, and more.
 
 ## A brief history
 
-[Linus Torvalds](http://en.wikipedia.org/wiki/Linus_Torvalds) started Git development in 2005 with some goals in mind: speed, simple design, strong support for non-linear development, fully distribution and ability to handle large projects (Chacon 5). 75 days after the beginning of its development, Git managed the release of the Linux Kernel 2.6.12 (["Git Software"](<http://en.wikipedia.org/wiki/Git_(software)>)).
+[Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) started Git development in 2005 with some goals in mind: speed, simple design, strong support for non-linear development, fully distribution and ability to handle large projects (Chacon 5). 75 days after the beginning of its development, Git managed the release of the Linux Kernel 2.6.12 (["Git Software"](<https://en.wikipedia.org/wiki/Git_(software)>)).
 
 ## Git = Distributed Version Control System (DVCS)
 
-Unlike many VCSs (such as [SVN](http://subversion.apache.org/)) that are Centralized Version Control Systems (CVCS), Git is a [Distributed Version Control System (DVCS)](http://en.wikipedia.org/wiki/Distributed_revision_control). This is a crucial difference that sets Git apart from most VCSs (that are CVCSs).
+Unlike many VCSs (such as [SVN](https://subversion.apache.org/)) that are Centralized Version Control Systems (CVCS), Git is a [Distributed Version Control System (DVCS)](https://en.wikipedia.org/wiki/Distributed_revision_control). This is a crucial difference that sets Git apart from most VCSs (that are CVCSs).
 
 Git's model implies that there's no central repository, so each client is a repository, and not only has a copy of the versioned files. Typically, each client has its own local repository, and in fact all the work can be done by this way (in a single person project). But this is not recommended because any local hard disk issue might become a huge problem. You should have at least one more repository, in another machine, typically a remote repository on a web server.
 
@@ -68,7 +68,7 @@ Because each client has a full local repository, nearly every operation is done 
 
 To really understand how Git works and use it effectively, it's essential to understand its basic concepts about storage and file versioning.
 
-The way some other VCSs (e.g. [SVN](http://subversion.apache.org/)) handle files and versions is storing the base files and then saving the changes that were made (Chacon 6). So you have the original file and subsequent deltas for each change. Git works differently, for each file change (commit) Git stores a snapshot of all files, but it has intelligence to not duplicate unmodified files. (Chacon 6). So Git works much more like a mini filesystem.
+The way some other VCSs (e.g. [SVN](https://subversion.apache.org/)) handle files and versions is storing the base files and then saving the changes that were made (Chacon 6). So you have the original file and subsequent deltas for each change. Git works differently, for each file change (commit) Git stores a snapshot of all files, but it has intelligence to not duplicate unmodified files. (Chacon 6). So Git works much more like a mini filesystem.
 
 That is the key about how Git works, and it's what makes it better and richer than other VCSs.
 
@@ -85,14 +85,14 @@ Now, head to [Git Workflow](/blog/git-workflow/) to learn about the three file s
 
 ## Interesting links
 
-- [Git](http://git-scm.com/)<br />
+- [Git](https://git-scm.com/)<br />
 - [Pro Git Book](https://git-scm.com/book/en/v2)<br />
-- [Version Control System (VCS) (Wikipedia)](http://en.wikipedia.org/wiki/Revision_control)<br />
-- [Distributed Version Control System (DVCS) (Wikipedia)](http://en.wikipedia.org/wiki/Distributed_revision_control)<br />
-- [Software Configuration Management (SCM) (Wikipedia)](http://en.wikipedia.org/wiki/Software_configuration_management)
+- [Version Control System (VCS) (Wikipedia)](https://en.wikipedia.org/wiki/Revision_control)<br />
+- [Distributed Version Control System (DVCS) (Wikipedia)](https://en.wikipedia.org/wiki/Distributed_revision_control)<br />
+- [Software Configuration Management (SCM) (Wikipedia)](https://en.wikipedia.org/wiki/Software_configuration_management)
 
 ## Bibliography
 
 - Chacon, Scott. _Pro Git_. Apress, 2009.
 
-- "Git Software" _Wikipedia_ , n.d. Web. 19 January 2011 &#60;<A href="http://en.wikipedia.org/wiki/Git_(software)" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Git\_(software)</A>&#62;
+- "Git Software" _Wikipedia_ , n.d. Web. 19 January 2011 &#60;<A href="https://en.wikipedia.org/wiki/Git_(software)" style={{ lineBreak: 'anywhere' }}>ht<span />tp://en.wikipedia.org/wiki/Git\_(software)</A>&#62;

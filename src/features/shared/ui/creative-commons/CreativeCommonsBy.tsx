@@ -17,7 +17,7 @@ export const CreativeCommonsBy: React.FC<CreativeCommonsByProps> = ({
   workTitle,
 }) => (
   <InfoBox className={className}>
-    <A rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+    <A rel="license" href="https://creativecommons.org/licenses/by/4.0/">
       <div className="flex flex-row gap-4">
         <CreativeCommonsCcSvg className="w-12 h-12 md:w-[3rem] md:h-[3rem]" />
         <CreativeCommonsBySvg className="w-12 h-12 md:w-[3rem] md:h-[3rem]" />
@@ -25,14 +25,14 @@ export const CreativeCommonsBy: React.FC<CreativeCommonsByProps> = ({
     </A>
     <P>
       <span
-        {...{ "xmlns:dct": "http://purl.org/dc/terms/" }}
+        {...{ "xmlns:dct": "https://purl.org/dc/terms/" }}
         property="dct:title"
       >
         <em>{workTitle}</em>
       </span>{" "}
       by{" "}
       <A
-        {...{ "xmlns:cc": "http://creativecommons.org/ns#" }}
+        {...{ "xmlns:cc": "https://creativecommons.org/ns#" }}
         href={authorUrl}
         property="cc:attributionName"
         rel="cc:attributionURL"
@@ -40,7 +40,7 @@ export const CreativeCommonsBy: React.FC<CreativeCommonsByProps> = ({
         {authorName}
       </A>{" "}
       is licensed under a{" "}
-      <A rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+      <A rel="license" href="https://creativecommons.org/licenses/by/4.0/">
         Creative Commons Attribution 4.0 International License
       </A>
       .

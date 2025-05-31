@@ -11,13 +11,16 @@ export const MainFooter = () => (
       <nav className="justify-between">
         <ul className="flex flex-row items-center justify-between mt-8 mb-8 pl-0">
           <li className="flex m-0 ml-0">
-            <a href="http://www.github.com/flsilva" className="gtm-footer-link">
+            <a
+              href="https://www.github.com/flsilva"
+              className="gtm-footer-link"
+            >
               <GitHubLogoSvg />
             </a>
           </li>
           <li className="flex m-0 ml-8">
             <a
-              href="http://www.twitter.com/flsilva7"
+              href="https://www.twitter.com/flsilva7"
               className="gtm-footer-link"
             >
               <TwitterLogoSvg />
@@ -25,7 +28,7 @@ export const MainFooter = () => (
           </li>
           <li className="flex m-0 ml-8">
             <a
-              href="http://www.linkedin.com/in/flsilva"
+              href="https://www.linkedin.com/in/flsilva"
               className="gtm-footer-link"
             >
               <LinkedInLogoSvg />

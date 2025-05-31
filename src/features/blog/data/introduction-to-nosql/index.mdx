@@ -41,14 +41,14 @@ export const tweetCardImage = "hero.jpg";
 
 ## Introduction
 
-In this article I'll present a brief introduction to what [NoSQL](http://en.wikipedia.org/wiki/NoSQL) is, why to use it, and the basics of its four main data models: [Key-Value](#key-value-model), [Document](#document-model), [Column-Family](#column-family-model) and [Graph](#graph-model).
+In this article I'll present a brief introduction to what [NoSQL](https://en.wikipedia.org/wiki/NoSQL) is, why to use it, and the basics of its four main data models: [Key-Value](#key-value-model), [Document](#document-model), [Column-Family](#column-family-model) and [Graph](#graph-model).
 
 Keep in mind that NoSQL is a vast topic, comprising several different implementations, so you'll see the work "usually" several times here, as this article is not an exhaustive study about all the different databases, but an overview about their features and data models.
 Hopefully, after reading it you'll get a better overview about all the hype around NoQSL and be able to research more effectively about it.
 
 ## RDBMSs
 
-In the last three decades, RDBMSs ([Relational Database Management Systems](http://en.wikipedia.org/wiki/Relational_database_management_system)) were virtually omnipresent in computer software and web applications.
+In the last three decades, RDBMSs ([Relational Database Management Systems](https://en.wikipedia.org/wiki/Relational_database_management_system)) were virtually omnipresent in computer software and web applications.
 The concern of architects and developers regarding databases was usually _what_ RDBMS to use, but not _if_ they should use that paradigm or a different one.
 Well, that time is gone now, and the mature architect / developer of today need to know other production-ready alternatives.
 This is not to say relational databases are gone, or will be some day.
@@ -66,20 +66,20 @@ The term wasn't intended to be used after that, but we know what happened. (Sada
 Because it's not a descriptive term, but nonetheless it was largely adopted, there's no generally accepted definition.
 Some say it means "No SQL", some say it means "Not Only SQL" and others say it means "Non Relational Database".
 For me, the later makes more sense, since NoSQL databases are an alternative to relational ones, not to SQL itself.
-[SQL](http://en.wikipedia.org/wiki/SQL) is an API, a special-purpose programming language designed to manage data held in RDBMSs.
+[SQL](https://en.wikipedia.org/wiki/SQL) is an API, a special-purpose programming language designed to manage data held in RDBMSs.
 Obviously, because NoSQL databases are not relational, they don't use SQL.
 Nonetheless, it may be possible to implement a SQL layer over a non-relational database.
 
 Although the term began to gain popularity by 2009, the idea of non-relational databases is much older.
-Oracle's [BerkeleyDB](http://www.oracle.com/technetwork/products/berkeleydb/overview/index.html) (80's) and Google's [Bigtable](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf) (publicly uncovered on 2006) are just two examples.
-In fact, the largest web-based companies are behind this new NoSQL movement, as they need to handle a huge amount of data - [Big Data](http://en.wikipedia.org/wiki/Big_data) - and this is the main issue with relational databases.
-We have [Bigtable](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf) from Google, [Cassandra](http://cassandra.apache.org/) from Facebook, [DynamoDB](http://aws.amazon.com/dynamodb/) from Amazon and [FlockDB](http://en.wikipedia.org/wiki/FlockDB) from Twitter, as some examples.
+Oracle's [BerkeleyDB](https://www.oracle.com/technetwork/products/berkeleydb/overview/index.html) (80's) and Google's [Bigtable](https://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf) (publicly uncovered on 2006) are just two examples.
+In fact, the largest web-based companies are behind this new NoSQL movement, as they need to handle a huge amount of data - [Big Data](https://en.wikipedia.org/wiki/Big_data) - and this is the main issue with relational databases.
+We have [Bigtable](https://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf) from Google, [Cassandra](https://cassandra.apache.org/) from Facebook, [DynamoDB](https://aws.amazon.com/dynamodb/) from Amazon and [FlockDB](https://en.wikipedia.org/wiki/FlockDB) from Twitter, as some examples.
 
 So, NoSQL is not a technology or a product, or even a data model.
 It's just a term to define a new movement towards non-relational databases, mostly developed in the early 21st century in the context of large-scale data provided by the web, usually sacrificing some consistency for availability and scalability.
 So, when you see the term in this article, keep in mind that I want to mean just that.
 
-Currently, there are [dozens](http://nosql-database.org/) of databases under the NoSQL umbrella, so it just doesn't help to use that term when you want to understand it in details. But there's something that really helps to get a better picture: the data models used by databases.
+Currently, there are [dozens](https://nosql-database.org/) of databases under the NoSQL umbrella, so it just doesn't help to use that term when you want to understand it in details. But there's something that really helps to get a better picture: the data models used by databases.
 
 ## NoSQL data models
 
@@ -89,12 +89,12 @@ The first three share more or less a common characteristic: they use keys to sto
 
 ## Aggregates
 
-The term _Aggregate_ was borrowed from Eric Evans (author of [Domain-Driven Design](http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/ref=sr_1_1?ie=UTF8&qid=1380749653&sr=8-1&keywords=domain-driven+design)) by Sadalage and Fowler to name complex records: a collection of related objects, i.e., records that may contain nested data, as nested objects and lists of data. (Sadalage and Fowler 14)
+The term _Aggregate_ was borrowed from Eric Evans (author of [Domain-Driven Design](https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215/ref=sr_1_1?ie=UTF8&qid=1380749653&sr=8-1&keywords=domain-driven+design)) by Sadalage and Fowler to name complex records: a collection of related objects, i.e., records that may contain nested data, as nested objects and lists of data. (Sadalage and Fowler 14)
 
-It's very common to application developers to interact with data as aggregates, an approach that resembles objects on [Object-Oriented programming](http://en.wikipedia.org/wiki/Object-oriented_programming).
+It's very common to application developers to interact with data as aggregates, an approach that resembles objects on [Object-Oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming).
 
 Consider an example where we have a _Customer_ that has doctor's _Appointments_.
-As several NoSQL databases support [JSON](http://www.json.org/), let's represent data as such:
+As several NoSQL databases support [JSON](https://www.json.org/), let's represent data as such:
 
 ```json
 {
@@ -137,22 +137,22 @@ Nonetheless, application developers have to think carefully about how data will 
 ### Disadvantages
 
 - Sometimes you need to access data in several ways, which may be a problem.
-- Usually, they have no [ACID](http://en.wikipedia.org/wiki/ACID) (Atomicity, Consistency, Isolation, Durability) support crossing aggregates.
+- Usually, they have no [ACID](https://en.wikipedia.org/wiki/ACID) (Atomicity, Consistency, Isolation, Durability) support crossing aggregates.
 
 ## Key-Value Model
 
-The Key-Value model is a kind of [Hash Table](http://en.wikipedia.org/wiki/Hash_table), where keys are mapped to values.
+The Key-Value model is a kind of [Hash Table](https://en.wikipedia.org/wiki/Hash_table), where keys are mapped to values.
 To use this model you basically use a unique key (some kind of ID, usually a string) to store an aggregate (value).
 Aggregates on key-value databases are usually opaques (the database don't know its structure), what means we can store several data types, but can only retrieve it through its key (no elaborated query support).
-Nonetheless, it's possible to integrate query / search solutions like [Apache Solr](http://lucene.apache.org/solr/) to such databases (for some data types like JSON, XML).
+Nonetheless, it's possible to integrate query / search solutions like [Apache Solr](https://lucene.apache.org/solr/) to such databases (for some data types like JSON, XML).
 
 Key-Value databases are the simplest NoSQL solutions.
 Due to its simplistic nature and usually great performance, they are heavily used not as a primary storage, but rather as some kind of cache for highly accessed data.
 Other common use cases include job queue ([resque](https://github.com/blog/542-introducing-resque), [kue](https://github.com/learnboost/kue)), real time analysis (data analyzed in short amounts of time and them disposed or archived on disk), session management, etc.
 
-Nonetheless, I found [this post (archived)](https://web.archive.org/web/20130620/https://moot.it/blog/technology/redis-as-primary-datastore-wtf.html) from [moot.it](https://moot.it), where they managed to use [Redis](http://redis.io/) as their primary data store. Very impressive.
+Nonetheless, I found [this post (archived)](https://web.archive.org/web/20130620/https://moot.it/blog/technology/redis-as-primary-datastore-wtf.html) from [moot.it](https://moot.it), where they managed to use [Redis](https://redis.io/) as their primary data store. Very impressive.
 
-Example databases: [Memcached](http://memcached.org/), [Redis](http://redis.io/), [Riak](http://basho.com/riak/), [Vedis](http://vedis.symisc.net/).
+Example databases: [Memcached](https://memcached.org/), [Redis](https://redis.io/), [Riak](https://basho.com/riak/), [Vedis](https://vedis.symisc.net/).
 
 ## Document Model
 
@@ -167,7 +167,7 @@ On the other hand, the relational model has more flexibility to return data in s
 Document databases have broader use cases than Key-Value ones.
 They can be used on content management systems and content-based websites, user generated content (e.g. comments), monitoring systems, product catalog, online gaming (player state, level state, etc), social-network apps (reasonable support for relationships), etc.
 
-Example databases: [CouchDB](http://couchdb.apache.org/), [MongoDB](http://www.mongodb.org/), [RethinkDB](http://www.rethinkdb.com/).
+Example databases: [CouchDB](https://couchdb.apache.org/), [MongoDB](https://www.mongodb.org/), [RethinkDB](https://www.rethinkdb.com/).
 
 ## Column-Family Model
 
@@ -218,7 +218,7 @@ That structure allows querying a row as a whole, and also for a particular colum
 Column-Family databases were designed to handle massive amounts of data, thus they run on clusters (distributed), providing high availability with no single point of failure.
 Not surprisingly, some of the biggest companies in the world are behind most of them: Google, Facebook, Amazon, etc.
 
-Example databases: [Bigtable](http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf), [Cassandra](http://cassandra.apache.org/), [Hbase](http://hbase.apache.org/), [SimpleDB](http://aws.amazon.com/simpledb/).
+Example databases: [Bigtable](https://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en//archive/bigtable-osdi06.pdf), [Cassandra](https://cassandra.apache.org/), [Hbase](https://hbase.apache.org/), [SimpleDB](https://aws.amazon.com/simpledb/).
 
 ## Graph Model
 
@@ -240,7 +240,7 @@ Particularly, graph databases seem amazing for me.
 They match Object-Oriented programming much better than any other model.
 I'm looking forward to use it in a domain model rich on relationships.
 
-Example databases: [DEX (archived)](https://web.archive.org/web/20131005/https://www.sparsity-technologies.com/dex), [FlockDB](http://en.wikipedia.org/wiki/FlockDB), [Neo4J](https://neo4j.com/), [OrientDB](http://www.orientdb.org/).
+Example databases: [DEX (archived)](https://web.archive.org/web/20131005/https://www.sparsity-technologies.com/dex), [FlockDB](https://en.wikipedia.org/wiki/FlockDB), [Neo4J](https://neo4j.com/), [OrientDB](https://www.orientdb.org/).
 
 ## Schemaless or implicit schema?
 
@@ -278,7 +278,7 @@ Thus, most NoSQL databases are designed explicitly to run on clusters.
 
 ### Application Development Productivity
 
-As the majority of applications written on the last decades use some sort of Object-Oriented programming language, using a relational database results in what's commonly called [_object-relational impedance mismatch_](http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch): the difference between the relational model and the in-memory data structures (usually objects of an Object-Oriented language), considered a major frustration to application developers (Sadalage and Fowler 5).
+As the majority of applications written on the last decades use some sort of Object-Oriented programming language, using a relational database results in what's commonly called [_object-relational impedance mismatch_](https://en.wikipedia.org/wiki/Object-relational_impedance_mismatch): the difference between the relational model and the in-memory data structures (usually objects of an Object-Oriented language), considered a major frustration to application developers (Sadalage and Fowler 5).
 That problem requires a non trivial amount of work to translate data to and from those models, and usually means some limitation on your OO modeling, and/or performance issues.
 By freeing up itself from the relational paradigm, NoSQL databases simplifies data mapping.
 
@@ -294,12 +294,12 @@ Keep in mind that everything is still fresh and changing in this topic.
 
 ## Interesting links
 
-- [NoSQL - Wikipedia](http://en.wikipedia.org/wiki/NoSQL)<br />
-- [What is NoSQL - MongoDB](http://www.mongodb.com/nosql)<br />
-- [NoSQL Databases](http://nosql-database.org/)<br />
-- [Big Data - Wikipedia](http://en.wikipedia.org/wiki/Big_data)<br />
+- [NoSQL - Wikipedia](https://en.wikipedia.org/wiki/NoSQL)<br />
+- [What is NoSQL - MongoDB](https://www.mongodb.com/nosql)<br />
+- [NoSQL Databases](https://nosql-database.org/)<br />
+- [Big Data - Wikipedia](https://en.wikipedia.org/wiki/Big_data)<br />
 - [Vertical and Horizontal Scaling - DNS Made Easy](https://social.dnsmadeeasy.com/blog/vertical-and-horizontal-scaling/)<br />
-- [Object-relational impedance mismatch - Wikipedia](http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch)
+- [Object-relational impedance mismatch - Wikipedia](https://en.wikipedia.org/wiki/Object-relational_impedance_mismatch)
 
 ## Bibliography
 

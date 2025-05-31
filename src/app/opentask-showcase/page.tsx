@@ -15,7 +15,7 @@ import opentaskScreenshot2 from "./screenshot-iphone-14-2024-02-07-project-no-br
 import opentaskScreenshot3 from "./screenshot-ipad-landscape-14-2024-02-07-task-date-picker.png";
 
 export const metadata: Metadata = {
-  title: "OpenTask: A Next.js App Router Showcase",
+  title: "OpenTask – Task Manager Demo with Next.js App Router",
   description:
     "Discover how I leverage the new Next.js App Router to build successful products for startups in record time.",
   alternates: {
@@ -126,7 +126,7 @@ export default function OpenTaskShowcase() {
           <P>
             I designed <A href="https://nexar.dev/">Nexar</A> while building
             OpenTask. It&#39;s a{" "}
-            <A href="/blog/what-is-software-architecture/#modules-and-modular-architectures">
+            <A href="/blog/what-is-software-architecture#modules-and-modular-architectures">
               layered and modular application architecture
             </A>{" "}
             for Next.js App Router apps.

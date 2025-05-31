@@ -44,7 +44,7 @@ import WarningBoxNoRunDollarSign from "@/features/shared/ui/boxes/WarningBoxNoRu
 ## Introduction
 
 It's not uncommon the need to protect some content on a webserver, you might want to protect some client's content, for example, but you don't have, or want, a webapp and all the burden to implement an app level authentication.
-Hopefully, Nginx provides a very simple way to protect files and directories using [HTTP Authentication](http://en.wikipedia.org/wiki/Basic_access_authentication).
+Hopefully, Nginx provides a very simple way to protect files and directories using [HTTP Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication).
 
 <WarningBoxNoRunDollarSign />
 
@@ -53,7 +53,7 @@ Hopefully, Nginx provides a very simple way to protect files and directories usi
 I know what you're thinking: "What? I'm not using Apache, I'm using Nginx!".
 Dont' worry, I know! To use HTTP Authentication, Nginx needs a file which stores the username and encrypted password, and _htpasswd_, an Apache utility inside _apache2-utils_ package, is the easiest way to do that, although there are alternatives.
 Don't worry, you're not installing the whole Apache package, just the _apache2-utils_ one.
-You can [click here](https://packages.debian.org/sid/apache2-utils) to see more information about that package on [Debian](https://www.debian.org/) (probably the same package for [Ubuntu](http://www.ubuntu.com/)).
+You can learn more about [apache2-utils](https://packages.debian.org/sid/apache2-utils).
 
 If you're on macOS, Apache already comes installed, so you can skip to the next step.
 If you're on a Linux system (Debian or Ubuntu), and it doesn't have Apache installed, install _apache2-utils_ running:
@@ -143,6 +143,6 @@ Where _`/etc/nginx/.htpasswd`_ is the path of your file and _`user_a`_ is the us
 
 ## Interesting links
 
-- [Nginx HttpAuthBasic Module](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html)<br />
-- [Basic access authentication (Wikipedia)](http://en.wikipedia.org/wiki/Basic_access_authentication)<br />
+- [Nginx HttpAuthBasic Module](https://nginx.org/en/docs/http/ngx_http_auth_basic_module.html)<br />
+- [Basic access authentication (Wikipedia)](https://en.wikipedia.org/wiki/Basic_access_authentication)<br />
 - [HTTP Authentication: Basic and Digest Access Authentication (IETF)](https://www.rfc-editor.org/rfc/rfc2617)

@@ -60,11 +60,11 @@ export default function OpenSourcePage() {
       <P>
         VostokFramework was a great case study for me as it allowed me to study
         and apply several software engineering topics, including{" "}
-        <A href="http://en.wikipedia.org/wiki/Software_design_pattern">
+        <A href="https://en.wikipedia.org/wiki/Software_design_pattern">
           Design Patterns
         </A>
         ,{" "}
-        <A href="http://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613">
+        <A href="https://www.amazon.com/Framework-Design-Guidelines-Conventions-Libraries/dp/0321545613">
           Framework Design Guidelines
         </A>
         ,{" "}
